@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F93B1B8C5D71E09F3D4E3B4 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2462721E473987C7D75C22 /* Pods_MixLedgerTests.framework */; };
+		98479A51822E469C09CDAC15 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DE94CF5C6B2450B20819E1 /* Pods_MixLedger.framework */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
 		9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379822B037BE5001D6BAF /* HomeViewController.swift */; };
@@ -17,6 +19,7 @@
 		9A2379992B037BE6001D6BAF /* MixLedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379982B037BE6001D6BAF /* MixLedgerTests.swift */; };
 		9A2379A32B037BE6001D6BAF /* MixLedgerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */; };
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
+		E6B46F9654FDBF9A07DB7D0F /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CCDF8836B67DAB869D5144 /* Pods_MixLedger_MixLedgerUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4522745B7528846AF66E8877 /* Pods-MixLedgerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.release.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.release.xcconfig"; sourceTree = "<group>"; };
+		50DE94CF5C6B2450B20819E1 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EA2956F7C3EED154D156F16 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.release.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2379802B037BE5001D6BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +57,12 @@
 		9A23799E2B037BE6001D6BAF /* MixLedgerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MixLedgerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITests.swift; sourceTree = "<group>"; };
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BB5BDB5FFA1C9734E762184D /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CA6B2D8D68F7BE48919B5970 /* Pods-MixLedger-MixLedgerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E8D38596216FBD8810922766 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
+		EF2462721E473987C7D75C22 /* Pods_MixLedgerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedgerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1CCDF8836B67DAB869D5144 /* Pods_MixLedger_MixLedgerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger_MixLedgerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE369AA9DEAC77387AAFE5F1 /* Pods-MixLedger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.debug.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98479A51822E469C09CDAC15 /* Pods_MixLedger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F93B1B8C5D71E09F3D4E3B4 /* Pods_MixLedgerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +86,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6B46F9654FDBF9A07DB7D0F /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		225123296BD75F498D6670DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50DE94CF5C6B2450B20819E1 /* Pods_MixLedger.framework */,
+				F1CCDF8836B67DAB869D5144 /* Pods_MixLedger_MixLedgerUITests.framework */,
+				EF2462721E473987C7D75C22 /* Pods_MixLedgerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		982246AE0FCFC244BDF6DFD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FE369AA9DEAC77387AAFE5F1 /* Pods-MixLedger.debug.xcconfig */,
+				E8D38596216FBD8810922766 /* Pods-MixLedger.release.xcconfig */,
+				CA6B2D8D68F7BE48919B5970 /* Pods-MixLedger-MixLedgerUITests.debug.xcconfig */,
+				8EA2956F7C3EED154D156F16 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */,
+				BB5BDB5FFA1C9734E762184D /* Pods-MixLedgerTests.debug.xcconfig */,
+				4522745B7528846AF66E8877 /* Pods-MixLedgerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9A2379722B037BE5001D6BAF = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +123,8 @@
 				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
 				9A2379A12B037BE6001D6BAF /* MixLedgerUITests */,
 				9A23797C2B037BE5001D6BAF /* Products */,
+				982246AE0FCFC244BDF6DFD4 /* Pods */,
+				225123296BD75F498D6670DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,9 +177,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A2379A82B037BE6001D6BAF /* Build configuration list for PBXNativeTarget "MixLedger" */;
 			buildPhases = (
+				7816138517E78A142C1267B3 /* [CP] Check Pods Manifest.lock */,
 				9A2379772B037BE5001D6BAF /* Sources */,
 				9A2379782B037BE5001D6BAF /* Frameworks */,
 				9A2379792B037BE5001D6BAF /* Resources */,
+				9A2379B12B04AB31001D6BAF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -154,6 +196,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A2379AB2B037BE6001D6BAF /* Build configuration list for PBXNativeTarget "MixLedgerTests" */;
 			buildPhases = (
+				0634CD4DE63D0C712591E578 /* [CP] Check Pods Manifest.lock */,
 				9A2379902B037BE6001D6BAF /* Sources */,
 				9A2379912B037BE6001D6BAF /* Frameworks */,
 				9A2379922B037BE6001D6BAF /* Resources */,
@@ -172,6 +215,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A2379AE2B037BE6001D6BAF /* Build configuration list for PBXNativeTarget "MixLedgerUITests" */;
 			buildPhases = (
+				CEDA9B3E2AC7FE838301CD0E /* [CP] Check Pods Manifest.lock */,
 				9A23799A2B037BE6001D6BAF /* Sources */,
 				9A23799B2B037BE6001D6BAF /* Frameworks */,
 				9A23799C2B037BE6001D6BAF /* Resources */,
@@ -255,6 +299,92 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0634CD4DE63D0C712591E578 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MixLedgerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7816138517E78A142C1267B3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MixLedger-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A2379B12B04AB31001D6BAF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CEDA9B3E2AC7FE838301CD0E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MixLedger-MixLedgerUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9A2379772B037BE5001D6BAF /* Sources */ = {
@@ -436,6 +566,7 @@
 		};
 		9A2379A92B037BE6001D6BAF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE369AA9DEAC77387AAFE5F1 /* Pods-MixLedger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -463,6 +594,7 @@
 		};
 		9A2379AA2B037BE6001D6BAF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8D38596216FBD8810922766 /* Pods-MixLedger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -490,6 +622,7 @@
 		};
 		9A2379AC2B037BE6001D6BAF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB5BDB5FFA1C9734E762184D /* Pods-MixLedgerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -509,6 +642,7 @@
 		};
 		9A2379AD2B037BE6001D6BAF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4522745B7528846AF66E8877 /* Pods-MixLedgerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -528,6 +662,7 @@
 		};
 		9A2379AF2B037BE6001D6BAF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA6B2D8D68F7BE48919B5970 /* Pods-MixLedger-MixLedgerUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -545,6 +680,7 @@
 		};
 		9A2379B02B037BE6001D6BAF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EA2956F7C3EED154D156F16 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
