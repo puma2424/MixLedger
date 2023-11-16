@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class HomeViewController: UIViewController {
 
@@ -13,9 +14,25 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationItem.title = "我的帳本"
+        setuupLayout()
+        
         
     }
 
+    let billStatus = SharedBillStatusSmallView()
+    
+    func setuupLayout(){
+        billStatus.layer.cornerRadius = 10
+        view.addSubview(billStatus)
+        billStatus.snp.makeConstraints{(make) in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.height.equalTo(110)
+            make.centerX.equalTo(view)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            print("\(billStatus.bounds.size)")
+        }
+        
+    }
     
 
 }
