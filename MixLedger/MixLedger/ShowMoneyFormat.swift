@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum Money{
+enum MoneyType{
     case money(Double)
     
     var text: String {
