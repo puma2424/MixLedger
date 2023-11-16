@@ -7,6 +7,8 @@ target 'MixLedger' do
 
   # Pods for MixLedger
   pod 'SwiftLint'
+  pod 'SnapKit', '~> 5.6.0'
+
   target 'MixLedgerTests' do
     inherit! :search_paths
     # Pods for testing
