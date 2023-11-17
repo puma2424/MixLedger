@@ -75,9 +75,15 @@ class AccountTableViewCell: UITableViewCell {
         editButton.snp.makeConstraints{(mark) in
             mark.centerY.equalTo(contentView)
             mark.width.height.equalTo(24)
-            mark.trailing.equalTo(contentView).offset(-12)
+            mark.trailing.equalTo(contentView).offset(-20)
         }
     }
-    
+    func setButton(){
+        editButton.addTarget(self, action: #selector(eaitActive), for: .touchUpInside)
+    }
+        
+    @objc func eaitActive(){
+        
+    }
     
 }

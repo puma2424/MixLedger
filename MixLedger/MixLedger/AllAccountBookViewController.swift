@@ -24,7 +24,7 @@ class AllAccountBookViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+    var accountInfo: ((Any) -> ())?
     let table = UITableView()
     var selectedIndexPath: IndexPath?
     func setTable(){
@@ -84,11 +84,11 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
         guard let accountCell = cell as? AccountTableViewCell else{ return cell }
         // 判斷是否為當前選中的 cell
-                if indexPath == selectedIndexPath {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
+        if indexPath == selectedIndexPath {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
 
         let data = allAccount[indexPath.row]
         if let name = data["name"] as? String{
@@ -114,8 +114,8 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
 
                // 在選中的 cell 上顯示勾勾
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? AccountTableViewCell else {return}
+        accountInfo?(allAccount[indexPath.row])
         selectedCell.checkmarkImageView.isHidden = false
-//        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
 }

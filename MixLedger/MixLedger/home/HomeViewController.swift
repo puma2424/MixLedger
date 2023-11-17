@@ -44,7 +44,13 @@ class HomeViewController: UIViewController{
         print("addNewBill")
     }
     @objc func editAccountBook(){
-        navigationController?.pushViewController(AllAccountBookViewController(), animated: true)
+        let accountBookView = AllAccountBookViewController()
+        accountBookView.accountInfo = { info in
+            print("\(info)")
+            return
+        }
+        navigationController?.pushViewController(accountBookView, animated: true)
+        
     }
     @objc func shareAccountBook(){
         print("shareAccountBook")
