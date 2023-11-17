@@ -12,19 +12,24 @@ class HomeViewController: UIViewController{
     
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.navigationItem.title = "我的帳本"
-        setuupLayout()
+        setupShareBillView()
+        setupLayout()
         setupTable()
-        
+        setNavigation()
+        setupButton()
         
         
     }
     
-    let billStatus = SharedBillStatusSmallView()
-    
+    let billStatusSmallView = SharedBillStatusSmallView()
+    let billStatusOpenView = SharedBillStatusOpenView()
+    var showView: UIView?
     let billTable = UITableView()
     let addButton: UIButton = {
         let button = UIButton()
@@ -36,38 +41,76 @@ class HomeViewController: UIViewController{
         addButton.addTarget(self, action: #selector(addNewBill), for: .touchUpInside)
     }
     @objc func addNewBill(){
-        
+        print("addNewBill")
     }
+    @objc func editAccountBook(){
+        print("editAccountBook")
+    }
+    @objc func shareAccountBook(){
+        print("shareAccountBook")
+    }
+    func setupShareBillView(){
+        showView = billStatusOpenView
+        billStatusSmallView.layer.cornerRadius = 10
+        billStatusOpenView.layer.cornerRadius = 10
+        billStatusSmallView.smallDelegate = self
+        billStatusOpenView.openDelegate = self
+    }
+    
+    func setNavigation(){
+        // 導覽列左邊按鈕
+        let editAccountBookButton = UIBarButtonItem(
+            image: UIImage(named:"storytelling")?.withRenderingMode(.alwaysOriginal),
+          style:.plain ,
+          target:self ,
+          action: #selector(editAccountBook))
+        // 加到導覽列中
+        self.navigationItem.leftBarButtonItem = editAccountBookButton
+
+        // 導覽列右邊按鈕
+        let shareButton = UIBarButtonItem(
+//          title:"設定",
+            image: UIImage(named:"share")?.withRenderingMode(.alwaysOriginal),
+          style:.plain,
+          target:self,
+          action:#selector(shareAccountBook))
+        // 加到導覽列中
+        self.navigationItem.rightBarButtonItem = shareButton
+    }
+    
     func setupTable(){
         billTable.delegate = self
         billTable.dataSource = self
         billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billCell")
     }
     
-    func setuupLayout(){
-        billStatus.layer.cornerRadius = 10
-        view.addSubview(billStatus)
-        view.addSubview(billTable)
-        view.addSubview(addButton)
-        billStatus.snp.makeConstraints{(make) in
-            make.width.equalTo(view.bounds.size.width * 0.9)
-            make.height.equalTo(110)
-            make.centerX.equalTo(view)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-        }
-        
-        billTable.snp.makeConstraints{(make) in
-            make.centerX.equalTo(view)
-            make.top.equalTo(billStatus.snp.bottom).offset(10)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.width.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        addButton.snp.makeConstraints{(make) in
+    func setupLayout(){
+        if let showView = showView{
+            view.addSubview(showView)
+            view.addSubview(billTable)
+            view.addSubview(addButton)
+            showView.snp.makeConstraints{(make) in
+                make.width.equalTo(view.bounds.size.width * 0.9)
+                make.height.equalTo(150)
+                make.centerX.equalTo(view)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
+            }
             
-            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
-            make.width.height.equalTo(80)
+            billTable.snp.makeConstraints{(make) in
+                make.centerX.equalTo(view)
+                make.top.equalTo(showView.snp.bottom).offset(10)
+                make.bottom.equalTo(view.safeAreaLayoutGuide)
+                make.width.equalTo(view.safeAreaLayoutGuide)
+            }
+            
+            addButton.snp.makeConstraints{(make) in
+                
+                make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
+                make.width.height.equalTo(80)
+            }
         }
+        
+        
     }
     struct BillTag{
         var icon: UIImage?
@@ -115,6 +158,31 @@ class HomeViewController: UIViewController{
     ]
 }
 
+extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate{
+    
+    func openView() {
+////        showView = nil
+//        showView?.snp.updateConstraints{(mark) in
+//            mark.height.equalTo(300)
+//        }
+//        showView = billStatusOpenView
+//        // 顯式告訴視圖重新佈局
+//            self.view.layoutIfNeeded()
+//       
+//        
+    }
+    func closeView() {
+//        showView?.snp.updateConstraints{(mark) in
+//            mark.height.equalTo(100)
+//        }
+//        showView = billStatusSmallView
+//
+//        // 顯式告訴視圖重新佈局
+//            self.view.layoutIfNeeded()
+        
+    }
+}
+
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let bill = billArray[section]
@@ -134,7 +202,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         dateFont.dateFormat = "yyyy-MM-dd"
         if let date = billArray[section]["日期"]?[0] as? Date{
             let dateString = dateFont.string(from: date)
-            print(dateString)
+//            print(dateString)
             return dateString
         }else{
             return ""

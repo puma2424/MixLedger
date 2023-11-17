@@ -29,3 +29,8 @@ enum MoneyType{
         }
     }
 }
+
+struct UsersInfo{
+    var name: String
+    var image: UIImage
+}
