@@ -6,18 +6,39 @@
 //
 
 import UIKit
-
+import SnapKit
 class BillStatusTableViewCell: UITableViewCell {
+    // 初始化方法
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            commonInit()
+        }
 
+        // 如果是使用 Interface Builder，這個初始化方法會被呼叫
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+            commonInit()
+            
+        }
+
+
+        // 共用的初始化邏輯
+        private func commonInit() {
+            // 在這裡放置需要在初始化時執行的程式碼
+            setupLayout()
+            setButtonTarge()
+        }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupLayout()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
     }
     let lastMonthButton: UIButton = {
         let button = UIButton()
@@ -81,6 +102,7 @@ class BillStatusTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "NT$ 3000"
         // 設置 UILabel 的大小
+        
         label.sizeToFit()
         return label
     }()
@@ -159,10 +181,20 @@ class BillStatusTableViewCell: UITableViewCell {
         }
         monthLabel.text = dateString
     }
-    func setpuLayout(){
-        print("-\(self.frame.size)-")
-        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
-        addToView(superV: self, subs: openOrCloseButton)
+    func setupLayout(){
+        adjustDate(by: 0)
+        addToView(superV: contentView, subs: lastMonthButton, monthLabel, nextMonthButton, moneyStackView)
+//        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
+//        addToView(superV: contentView, subs: openOrCloseButton)
+        totalStackView.addArrangedSubview(totalMoneyLabel)
+        totalStackView.addArrangedSubview(totalTitleLabel)
+        payStackView.addArrangedSubview(payMoneyLabel)
+        payStackView.addArrangedSubview(payTitleLabel)
+        revenueStackView.addArrangedSubview(revenueMoneyLabel)
+        revenueStackView.addArrangedSubview(revenueTitleLabel)
+        moneyStackView.addArrangedSubview(totalStackView)
+        moneyStackView.addArrangedSubview(payStackView)
+        moneyStackView.addArrangedSubview(revenueStackView)
 //        addToView(superV: totalStackView, subs: totalMoneyLabel, totalTitleLabel)
 //        addToView(superV: payStackView, subs:  payMoneyLabel, payTitleLabel)
 //        addToView(superV: revenueStackView, subs: revenueMoneyLabel, revenueTitleLabel)
@@ -170,8 +202,8 @@ class BillStatusTableViewCell: UITableViewCell {
 //        addToView(superV: self, subs: moneyStackView)
         lastMonthButton.snp.makeConstraints {(make) -> Void in
             make.width.height.equalTo(16)
-            make.leading.equalTo(self).offset(16)
-            make.top.equalTo(self).offset(16)
+            make.leading.equalTo(contentView).offset(16)
+            make.top.equalTo(contentView).offset(16)
         }
         
         monthLabel.snp.makeConstraints{(make) -> Void in
@@ -184,50 +216,45 @@ class BillStatusTableViewCell: UITableViewCell {
             make.leading.equalTo(monthLabel.snp.trailing).offset(8)
             make.centerY.equalTo(lastMonthButton)
         }
-//        moneyStackView.snp.makeConstraints{(make) -> Void in
-//            make.leading.equalTo(self).offset(8)
-//                    make.trailing.equalTo(self).offset(-8)
-//                    make.top.equalTo(monthLabel.snp.bottom).offset(-8)
-//                    make.bottom.equalTo(self).offset(-8)
-//        }
+        moneyStackView.snp.makeConstraints{(make) -> Void in
+            make.leading.equalTo(contentView).offset(16)
+                    make.trailing.equalTo(contentView).offset(-16)
+                    make.top.equalTo(monthLabel.snp.bottom).offset(16)
+                    make.bottom.equalTo(contentView).offset(-16)
+        }
         
-        totalMoneyLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(self).offset(self.bounds.width/4)
-            make.leading.equalTo(self).offset(16)
-            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-        }
-
-        totalTitleLabel.snp.makeConstraints{(make) -> Void in
-            make.centerX.equalTo(totalMoneyLabel)
-            make.top.equalTo(totalMoneyLabel.snp.bottom).offset(8)
-        }
-
-        payMoneyLabel.snp.makeConstraints{(make) -> Void in
-            make.centerX.equalTo(self)
-            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-        }
-
-        payTitleLabel.snp.makeConstraints{(make) -> Void in
-            make.centerX.equalTo(payMoneyLabel)
-            make.top.equalTo(payMoneyLabel.snp.bottom).offset(8)
-        }
-
-        revenueMoneyLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(self.snp_centerXWithinMargins).offset(self.frame.width/4)
-            make.trailing.equalTo(self.snp.trailing).offset(-16)
-            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-        }
-
-        revenueTitleLabel.snp.makeConstraints{(make) -> Void in
-            make.centerX.equalTo(revenueMoneyLabel)
-            make.top.equalTo(revenueMoneyLabel.snp.bottom).offset(8)
-        }
-        print("\(self.frame.size)--")
-        openOrCloseButton.snp.makeConstraints{(make) -> Void in
-            make.width.height.equalTo(16)
-            make.bottom.equalTo(self).offset(-8)
-            make.trailing.equalTo(self).offset(-8)
-        }
+//        totalMoneyLabel.snp.makeConstraints{(make) -> Void in
+////            make.centerX.equalTo(self).offset(self.bounds.width/4)
+//            make.leading.equalTo(self).offset(16)
+//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
+//        }
+//
+//        totalTitleLabel.snp.makeConstraints{(make) -> Void in
+//            make.centerX.equalTo(totalMoneyLabel)
+//            make.top.equalTo(totalMoneyLabel.snp.bottom).offset(8)
+//        }
+//
+//        payMoneyLabel.snp.makeConstraints{(make) -> Void in
+//            make.centerX.equalTo(self)
+//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
+//        }
+//
+//        payTitleLabel.snp.makeConstraints{(make) -> Void in
+//            make.centerX.equalTo(payMoneyLabel)
+//            make.top.equalTo(payMoneyLabel.snp.bottom).offset(8)
+//        }
+//
+//        revenueMoneyLabel.snp.makeConstraints{(make) -> Void in
+////            make.centerX.equalTo(self.snp_centerXWithinMargins).offset(self.frame.width/4)
+//            make.trailing.equalTo(self.snp.trailing).offset(-16)
+//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
+//        }
+//
+//        revenueTitleLabel.snp.makeConstraints{(make) -> Void in
+//            make.centerX.equalTo(revenueMoneyLabel)
+//            make.top.equalTo(revenueMoneyLabel.snp.bottom).offset(8)
+//        }
+       
     }
     
    

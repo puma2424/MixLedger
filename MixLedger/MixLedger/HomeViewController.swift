@@ -81,7 +81,8 @@ class HomeViewController: UIViewController{
     func setupTable(){
         billTable.delegate = self
         billTable.dataSource = self
-        billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billCell")
+        billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
+        billTable.register(BillStatusTableViewCell.self, forCellReuseIdentifier: "billCell")
     }
     
     func setupLayout(){
@@ -185,22 +186,32 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let bill = billArray[section]
-        return bill["item"]?.count ?? 0
+        if section == 0{
+            return 1
+        }else{
+            let bill = billArray[section - 1]
+            return bill["item"]?.count ?? 0
+        }
+        
         
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return billArray.count
+        return billArray.count + 1
     }
     func tableView(tableView: UITableView,
       heightForHeaderInSection section: Int) -> CGFloat {
-        return 80
+        if section == 0 {
+            return 00
+        }else{
+            return 80
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let dateFont = DateFormatter()
         dateFont.dateFormat = "yyyy-MM-dd"
-        if let date = billArray[section]["日期"]?[0] as? Date{
+        if section != 0{
+            guard let date = billArray[section - 1]["日期"]?[0] as? Date else{ return ""}
             let dateString = dateFont.string(from: date)
 //            print(dateString)
             return dateString
@@ -212,32 +223,38 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = billTable.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
-        guard let billCell = cell as? BillTableViewCell else { return cell }
-        let datas = billArray[indexPath.row]["item"]
-        if let data = datas?[indexPath.row] as? [String: Any] {
-            if let money = data["金額"] as? Int {
-                let moneyType: MoneyType = .money(Double(money))
-                billCell.moneyLabel.text = moneyType.text
-                billCell.moneyLabel.textColor = moneyType.color
+        if indexPath.section == 0{
+            let cell = billTable.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
+            guard let billCell = cell as? BillStatusTableViewCell else { return cell }
+            return cell
+        }else{
+            let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
+            guard let billCell = cell as? BillTableViewCell else { return cell }
+            let datas = billArray[indexPath.row]["item"]
+            if let data = datas?[indexPath.row] as? [String: Any] {
+                if let money = data["金額"] as? Int {
+                    let moneyType: MoneyType = .money(Double(money))
+                    billCell.moneyLabel.text = moneyType.text
+                    billCell.moneyLabel.textColor = moneyType.color
+                }
+                if let moneyNote = data["幣別"] as? String {
+                    billCell.moneyNoteLabel.text = moneyNote
+                }
+                if let title = data["類型"] as? BillTag {
+                    billCell.titleLabel.text = title.name
+                    billCell.sortImageView.image = title.icon
+                }
+                if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
+                    var note = ""
+                    pay.forEach{note += "\($0) "}
+                    note += "/\(titleNote)"
+                    billCell.titleNoteLabel.text = note
+                }
+                
             }
-            if let moneyNote = data["幣別"] as? String {
-                billCell.moneyNoteLabel.text = moneyNote
-            }
-            if let title = data["類型"] as? BillTag {
-                billCell.titleLabel.text = title.name
-                billCell.sortImageView.image = title.icon
-            }
-            if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
-                var note = ""
-                pay.forEach{note += "\($0) "}
-                note += "/\(titleNote)"
-                billCell.titleNoteLabel.text = note
-            }
-            
+            return cell
         }
         
-        
-        return cell
+//        return cell
     }
 }
