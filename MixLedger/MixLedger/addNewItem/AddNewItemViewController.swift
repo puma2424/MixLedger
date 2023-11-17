@@ -41,17 +41,29 @@ class AddNewItemViewController: UIViewController {
         view.backgroundColor = UIColor(named: "G2")
         return view
     }()
+    
+    let checkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("確      認", for: .normal)
+        button.backgroundColor = UIColor(named: "G1")
+        button.layer.cornerRadius = 10
+        return button
+    }()
     func setTable(){
         table.backgroundColor = .clear
         table.delegate = self
         table.dataSource = self
-        table.register(MoneyTableViewCell.self, forCellReuseIdentifier: "moneyCell")
+        table.register(ANIMoneyTableViewCell.self, forCellReuseIdentifier: "moneyCell")
+        table.register(ANITypeTableViewCell.self, forCellReuseIdentifier: "typeCell")
+        table.register(ANIMemberTableViewCell.self, forCellReuseIdentifier: "memberCell")
     }
     
     func setLayout(){
         view.addSubview(table)
         view.addSubview(lineView)
+        view.addSubview(checkButton)
         view.addSubview(closeButton)
+        
         
         closeButton.snp.makeConstraints{(mark) in
             mark.width.height.equalTo(24)
@@ -66,16 +78,20 @@ class AddNewItemViewController: UIViewController {
             mark.centerX.equalTo(view)
         }
         
+        checkButton.snp.makeConstraints{(mark) in
+            mark.width.equalTo(view.bounds.size.width * 0.8)
+            mark.height.equalTo(50)
+            mark.centerX.equalTo(view)
+            mark.bottom.equalTo(view.safeAreaLayoutGuide).offset(-12)
+        }
+        
         table.snp.makeConstraints{(mark) in
             mark.top.equalTo(lineView.snp.bottom)
             mark.leading.equalTo(view)
-            mark.bottom.equalTo(view)
+            mark.bottom.equalTo(checkButton.snp.top)
             mark.trailing.equalTo(view)
         }
-        
     }
-    
-
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
@@ -84,10 +100,22 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
-        guard let monryCell = cell as? MoneyTableViewCell else { return cell }
-        monryCell.iconImageView.image = UIImage(named: AllIcons.more.rawValue)
-        return monryCell
+        var cell: UITableViewCell
+        if indexPath.row == 0{
+            cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
+            guard let monryCell = cell as? ANIMoneyTableViewCell else { return cell }
+            monryCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
+            
+        }else if indexPath.row == 1{
+            cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
+            guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
+            typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
+        }else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
+            guard let typeCell = cell as? ANIMemberTableViewCell else { return cell }
+            typeCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
+        }
+        return cell
     }
     
     

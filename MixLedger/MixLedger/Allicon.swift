@@ -22,5 +22,7 @@ enum AllIcons: String{
     case edit
     case checkmark
     case close
-    
+    case person
+    case foodRice
+    case moneyAndCoin
 }

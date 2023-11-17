@@ -1,5 +1,5 @@
 //
-//  MoneyTableViewCell.swift
+//  AddNewItemModelTableViewCell.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/11/17.
@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-class MoneyTableViewCell: UITableViewCell {
+class AddNewItemModelTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
@@ -36,8 +36,6 @@ class MoneyTableViewCell: UITableViewCell {
     
     let inputText: UITextField = {
         let textField = UITextField()
-        // 尚未輸入時的預設顯示提示文字
-        textField.placeholder = "請輸入文字"
 
         // 輸入框右邊顯示清除按鈕時機 這邊選擇當編輯時顯示
         textField.clearButtonMode = .whileEditing
