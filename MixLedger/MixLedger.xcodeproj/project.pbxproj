@@ -27,6 +27,8 @@
 		9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */; };
 		9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */; };
 		9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */; };
+		9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F802B07335C00DF5DFF /* AllAccountBookViewController.swift */; };
+		9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F822B07349400DF5DFF /* Allicon.swift */; };
 		E6B46F9654FDBF9A07DB7D0F /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CCDF8836B67DAB869D5144 /* Pods_MixLedger_MixLedgerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusOpenView.swift; sourceTree = "<group>"; };
 		9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSVUsersTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillStatusTableViewCell.swift; sourceTree = "<group>"; };
+		9AEB5F802B07335C00DF5DFF /* AllAccountBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAccountBookViewController.swift; sourceTree = "<group>"; };
+		9AEB5F822B07349400DF5DFF /* Allicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Allicon.swift; sourceTree = "<group>"; };
 		BB5BDB5FFA1C9734E762184D /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA6B2D8D68F7BE48919B5970 /* Pods-MixLedger-MixLedgerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8D38596216FBD8810922766 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9AEB5F802B07335C00DF5DFF /* AllAccountBookViewController.swift */,
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
@@ -167,6 +172,7 @@
 				9A2379872B037BE5001D6BAF /* MixLedger.xcdatamodeld */,
 				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
 				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
+				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -469,8 +475,10 @@
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
+				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
+				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
