@@ -44,7 +44,7 @@ class HomeViewController: UIViewController{
         print("addNewBill")
     }
     @objc func editAccountBook(){
-        print("editAccountBook")
+        navigationController?.pushViewController(AllAccountBookViewController(), animated: true)
     }
     @objc func shareAccountBook(){
         print("shareAccountBook")
@@ -98,10 +98,11 @@ class HomeViewController: UIViewController{
             }
             
             billTable.snp.makeConstraints{(make) in
+                make.width.equalTo(view.bounds.size.width * 0.9)
                 make.centerX.equalTo(view)
                 make.top.equalTo(showView.snp.bottom).offset(10)
                 make.bottom.equalTo(view.safeAreaLayoutGuide)
-                make.width.equalTo(view.safeAreaLayoutGuide)
+//                make.width.equalTo(view.safeAreaLayoutGuide)
             }
             
             addButton.snp.makeConstraints{(make) in
@@ -113,50 +114,11 @@ class HomeViewController: UIViewController{
         
         
     }
-    struct BillTag{
-        var icon: UIImage?
-        var name: String
-    }
+    
     
     //struct billItem{
     //}
-    var billArray: [[String: [Any]]] = [["日期": [Date()],
-                                         "item": [["金額": -3000000,
-                                                   "付費者": ["puma","niw"],
-                                                   "分費者": ["puma"],
-                                                   "備註": "草莓欸",
-                                                   "幣別": "新台幣",
-                                                   "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
-                                                   "照片": UIImage(named: "more"),
-                                                   "from":""],
-                                                  ["金額": -300,
-                                                   "付費者": ["puma","niw"],
-                                                   "分費者": ["puma"],
-                                                   "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
-                                                   "幣別": "新台幣",
-                                                   "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
-                                                   "照片": UIImage(named: "more"),
-                                                   "from":""]]
-                                        ],
-                                        ["日期": [Date()],
-                                         "item": [["金額": 3000000,
-                                                   "付費者": ["puma","niw"],
-                                                   "分費者": ["puma"],
-                                                   "備註": "草莓欸",
-                                                   "幣別": "新台幣",
-                                                   "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
-                                                   "照片": UIImage(named: "more"),
-                                                   "from":""],
-                                                  ["金額": 300,
-                                                   "付費者": ["puma","niw"],
-                                                   "分費者": ["puma"],
-                                                   "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
-                                                   "幣別": "新台幣",
-                                                   "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
-                                                   "照片": UIImage(named: "more"),
-                                                   "from":""]]
-                                        ]
-    ]
+    
 }
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate{
@@ -229,8 +191,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }else{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
+            
             guard let billCell = cell as? BillTableViewCell else { return cell }
+            
             let datas = billArray[indexPath.row]["item"]
+            
             if let data = datas?[indexPath.row] as? [String: Any] {
                 if let money = data["金額"] as? Int {
                     let moneyType: MoneyType = .money(Double(money))

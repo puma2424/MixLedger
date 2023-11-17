@@ -8,7 +8,24 @@
 import UIKit
 import SnapKit
 class BillTableViewCell: UITableViewCell {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
 
+    // 如果是使用 Interface Builder，這個初始化方法會被呼叫
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+        
+    }
+
+
+    // 共用的初始化邏輯
+    private func commonInit() {
+        // 在這裡放置需要在初始化時執行的程式碼
+        setupView()
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -18,7 +35,7 @@ class BillTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        setupView()
+        
     }
     let sortImageView = UIImageView()
     let titleLabel = UILabel()

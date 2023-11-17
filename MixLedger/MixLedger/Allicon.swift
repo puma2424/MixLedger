@@ -9,6 +9,7 @@ import Foundation
 
 enum AllIcons: String{
     case add
+    case add2
     case bookAndPencil
     case calendar
     case fundAccounting
@@ -17,5 +18,8 @@ enum AllIcons: String{
     case share
     case storytelling
     case wallet
+    case icons8Back
+    case edit
+    case checkmark
     
 }
