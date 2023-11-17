@@ -157,15 +157,9 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
-				9A2379822B037BE5001D6BAF /* HomeViewController.swift */,
-				9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */,
-				9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */,
-				9AEB5F702B06041400DF5DFF /* BillTableViewCell.xib */,
-				9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */,
-				9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */,
-				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
 				9A23798A2B037BE6001D6BAF /* Assets.xcassets */,
 				9A23798C2B037BE6001D6BAF /* LaunchScreen.storyboard */,
@@ -192,6 +186,20 @@
 				9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */,
 			);
 			path = MixLedgerUITests;
+			sourceTree = "<group>";
+		};
+		9AEB5F7F2B0731D500DF5DFF /* home */ = {
+			isa = PBXGroup;
+			children = (
+				9A2379822B037BE5001D6BAF /* HomeViewController.swift */,
+				9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */,
+				9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */,
+				9AEB5F702B06041400DF5DFF /* BillTableViewCell.xib */,
+				9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */,
+				9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */,
+				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
+			);
+			path = home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
