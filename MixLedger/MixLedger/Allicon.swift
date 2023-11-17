@@ -21,5 +21,6 @@ enum AllIcons: String{
     case icons8Back
     case edit
     case checkmark
+    case close
     
 }

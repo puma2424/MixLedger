@@ -42,6 +42,8 @@ class HomeViewController: UIViewController{
     }
     @objc func addNewBill(){
         print("addNewBill")
+        let addNewView = AddNewItemViewController()
+        present(addNewView, animated: true)
     }
     @objc func editAccountBook(){
         let accountBookView = AllAccountBookViewController()
