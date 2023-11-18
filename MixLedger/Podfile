@@ -1,5 +1,8 @@
+# 添加主規格庫配置
+source 'https://cdn.cocoapods.org/'
+
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '16.0'
 
 target 'MixLedger' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -8,7 +11,16 @@ target 'MixLedger' do
   # Pods for MixLedger
   pod 'SwiftLint'
   pod 'SnapKit', '~> 5.6.0'
-
+ 
+  # 核心功能
+  pod 'Firebase/Core'
+  
+  # 身份驗證
+  pod 'Firebase/Auth'
+  
+  # Firebase Cloud Messaging（FCM）
+  pod 'Firebase/Messaging'
+  
   target 'MixLedgerTests' do
     inherit! :search_paths
     # Pods for testing

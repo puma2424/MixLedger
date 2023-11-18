@@ -19,6 +19,7 @@
 		9A2379992B037BE6001D6BAF /* MixLedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379982B037BE6001D6BAF /* MixLedgerTests.swift */; };
 		9A2379A32B037BE6001D6BAF /* MixLedgerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */; };
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
+		9ACA6EF12B08513900201A44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */; };
 		9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */; };
 		9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */; };
 		9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */; };
@@ -74,6 +75,7 @@
 		9A23799E2B037BE6001D6BAF /* MixLedgerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MixLedgerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITests.swift; sourceTree = "<group>"; };
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusSmallView.swift; sourceTree = "<group>"; };
 		9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex-image.swift"; sourceTree = "<group>"; };
 		9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		9A2379722B037BE5001D6BAF = {
 			isa = PBXGroup;
 			children = (
+				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
 				9A23797D2B037BE5001D6BAF /* MixLedger */,
 				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
 				9A2379A12B037BE6001D6BAF /* MixLedgerUITests */,
@@ -349,6 +352,7 @@
 			files = (
 				9AEB5F722B06041400DF5DFF /* BillTableViewCell.xib in Resources */,
 				9A23798E2B037BE6001D6BAF /* LaunchScreen.storyboard in Resources */,
+				9ACA6EF12B08513900201A44 /* GoogleService-Info.plist in Resources */,
 				9A23798B2B037BE6001D6BAF /* Assets.xcassets in Resources */,
 				9A2379862B037BE5001D6BAF /* Main.storyboard in Resources */,
 			);
