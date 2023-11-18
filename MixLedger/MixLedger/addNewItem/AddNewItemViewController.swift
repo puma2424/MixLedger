@@ -30,6 +30,11 @@ class AddNewItemViewController: UIViewController {
     */
     let table = UITableView()
     
+    var amount: Double?
+    var member: String?
+    var selectDate: Date?
+    var type: String?
+    
     let closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: AllIcons.close.rawValue), for: .normal)
@@ -49,6 +54,15 @@ class AddNewItemViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
+    
+    @objc func checkButtonActive(){
+        
+    }
+    
+    func setCheckButton(){
+        checkButton.addTarget(self, action: #selector(checkButtonActive), for: .touchUpInside)
+    }
+    
     func setTable(){
         table.backgroundColor = .clear
         table.delegate = self
@@ -56,6 +70,7 @@ class AddNewItemViewController: UIViewController {
         table.register(ANIMoneyTableViewCell.self, forCellReuseIdentifier: "moneyCell")
         table.register(ANITypeTableViewCell.self, forCellReuseIdentifier: "typeCell")
         table.register(ANIMemberTableViewCell.self, forCellReuseIdentifier: "memberCell")
+        table.register(ANISelectDateTableViewCell.self, forCellReuseIdentifier: "dateCell")
     }
     
     func setLayout(){
@@ -96,7 +111,7 @@ class AddNewItemViewController: UIViewController {
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,11 +120,25 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
             guard let monryCell = cell as? ANIMoneyTableViewCell else { return cell }
             monryCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
+            if let inputAmount = monryCell.inputText.text as?  Double {
+                amount = inputAmount
+            }
             
         }else if indexPath.row == 1{
+            
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
             typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
+            
+            
+                type = typeCell.inputText.text
+            
+            
+        }else if indexPath.row == 2{
+            cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+            guard let typeCell = cell as? ANISelectDateTableViewCell else { return cell }
+            typeCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
+            
         }else{
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
             guard let typeCell = cell as? ANIMemberTableViewCell else { return cell }
@@ -118,5 +147,11 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 2{
+            guard let selectedCell = tableView.cellForRow(at: indexPath) as? ANISelectDateTableViewCell else {return}
+            print("\(selectedCell.datePicker.date)")
+        }
+    }
     
 }

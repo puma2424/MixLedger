@@ -24,6 +24,8 @@ class HomeViewController: UIViewController{
         setNavigation()
         setupButton()
         
+        let firebaseManager = FirebaseManager.shared
+        firebaseManager.getData()
         
     }
     
