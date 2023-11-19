@@ -15,8 +15,8 @@ class FirebaseManager{
     
     let db = Firestore.firestore()
     
-    var accountData: TransactionsResponse?
-    var userInfoData: [UsersInfoResponse]?
+    let saveData = SaveData.shared
+    
     @Published var errorMessage: String?
     
     let dateFont = DateFormatter()
@@ -88,10 +88,10 @@ class FirebaseManager{
             else {
               if let document = document {
                 do {
-                    print("----\n\(document.data())")
-                  self.accountData = try document.data(as: TransactionsResponse.self)
-                    print("-----------")
-                    print("\(self.accountData)")
+//                    print("----\n\(document.data())")
+                    self.saveData.accountData = try document.data(as: TransactionsResponse.self)
+                    print("-----get account Data------")
+                    print("\(self.saveData.accountData?.accountName)")
                 }
                 catch {
                   print(error)
@@ -100,54 +100,10 @@ class FirebaseManager{
             }
           }
         
-//        docRef.getDocument(as: TransactionsResponse.self) { result in
-//            switch result {
-//            case .success(let data):
-//
-//                print("rqqqqq------")
-//              self.data = data
-//              self.errorMessage = nil
-//                print(data)
-//            case .failure(let error):
-//              // A Book value could not be initialized from the DocumentSnapshot.
-//              self.errorMessage = "Error decoding document: \(error.localizedDescription)"
-//            }
-//          }
-        
-//        docRef.getDocument { (document, error) in
-//          if let document = document, document.exists {
-//            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//            print("Document data: \(dataDescription)")
-//              if let jsonData = dataDescription.data(using: .utf8) {
-//                  do {
-//                      let transactionsResponse = try JSONDecoder().decode(TransactionsResponse.self, from: jsonData)
-//                      // 現在，transactionsResponse 包含了轉換後的資料
-//                      print(transactionsResponse)
-//                  } catch {
-//                      print("解碼 JSON 時出錯：\(error.localizedDescription)")
-//
-//                  }
-//              }
-//          } else {
-//            print("Document does not exist")
-//          }
-//        }
-        
-        
-//        injuryRef.observeSingleEvent(of: .value) { snapshot in
-//            if let injuryDictionary = snapshot.value as? [String: Any] {
-//                do {
-//                    let injury = try FirebaseDecoder().decode(Injury.self, from: injuryDictionary)
-//                    print("Received injury from Firebase: \(injury)")
-//                } catch {
-//                    print("Error decoding injury: \(error.localizedDescription)")
-//                }
-//            }
-//        }
     }
     
     func findUser(userID: [String]){
-        userInfoData?.removeAll()
+        saveData.userInfoData.removeAll()
         for id in userID{
             let docRef = db.collection("users").document(id)
             docRef.getDocument { document, error in
@@ -156,11 +112,14 @@ class FirebaseManager{
                 }
                 else {
                   if let document = document {
+                      print("-----find User------")
+                      print(document.data())
                     do {
                         let responseData = try document.data(as: UsersInfoResponse.self)
-                        self.userInfoData?.append(responseData)
-                        print("-----------")
-                        print("\(self.userInfoData)")
+                        print(responseData)
+                        self.saveData.userInfoData.append(responseData)
+                        print("-----find User decode------")
+                        print("\(self.saveData.userInfoData)")
                     }
                     catch {
                       print(error)

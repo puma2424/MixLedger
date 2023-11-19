@@ -10,9 +10,9 @@ import SnapKit
 
 class HomeViewController: UIViewController{
     
+    var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh"]
     
-    
-    
+    let saveData = SaveData.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,7 @@ class HomeViewController: UIViewController{
         
         let firebaseManager = FirebaseManager.shared
         firebaseManager.getData()
+        firebaseManager.findUser(userID: userID)
         
     }
     
@@ -132,6 +133,12 @@ class HomeViewController: UIViewController{
 }
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate{
+    func inputData(view: SharedBillStatusOpenView) {
+        view.usersInfo = saveData.userInfoData
+        print(view.usersInfo)
+    }
+   
+    
     
     func openView() {
 ////        showView = nil

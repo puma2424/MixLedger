@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 protocol SharedBillStatusOpenViewDelegate{
     func closeView()
+    func inputData(view: SharedBillStatusOpenView)
 }
 
 class SharedBillStatusOpenView: SharedBillStatusSmallView{
@@ -16,11 +17,13 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        openDelegate?.inputData(view: self)
         setpuLayout()
 //        adjustDate(by: 0)
         self.backgroundColor = .white
         setButtonTarge()
         setupTable()
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -38,6 +41,7 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
     var users: [UsersInfo]? = nil
     var openDelegate: SharedBillStatusOpenViewDelegate?
     let table = UITableView()
+    var usersInfo: [UsersInfoResponse]?
     
     func setupTable(){
         table.delegate = self
@@ -73,6 +77,10 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
+        if let userInfo = usersInfo{
+            userCell.nameLable.text = userInfo[indexPath.row].name
+        }
+        
         return userCell
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		01EBB0B9A7305DEA87360C56 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 975F30207A008B0F17873F3D /* Pods_MixLedger_MixLedgerUITests.framework */; };
 		5580EDC1627AC37FC7C19ED4 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F37628CF8D56525795321181 /* Pods_MixLedgerTests.framework */; };
+		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
 		9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379822B037BE5001D6BAF /* HomeViewController.swift */; };
@@ -92,6 +93,7 @@
 		5E3987EB6FF7F91E47339F11 /* Pods-MixLedgerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.release.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.release.xcconfig"; sourceTree = "<group>"; };
 		65658333490A865A2A6FCDD7 /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		975F30207A008B0F17873F3D /* Pods_MixLedger_MixLedgerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger_MixLedgerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2379802B037BE5001D6BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
+				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
+				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
