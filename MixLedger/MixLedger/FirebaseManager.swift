@@ -44,12 +44,24 @@ class FirebaseManager{
 //        let injuryDictionary = try! FirebaseEncoder().encode(injury)
 //        injuryRef.setValue(injuryDictionary)
 
-        let postData:Transaction = Transaction(amount: 300, date: Date(), note: "早餐", payUser: ["aaa"], shareUser: ["aaa","puma"], type: ["飲食"])
+//        let postData:Transaction = Transaction(amount: 300, date: Date(), note: "早餐", payUser: ["aaa"], shareUser: ["aaa","puma"], type: ["飲食"])
+        let postData = ["accountID": "SUyJNUlNOAI26DREgF0T",
+                        "accountName": "去嘉義玩",
+                        "shareUsersID": ["QJeplpxVXBca5xhXWgbT", "bGzuwR00sPRNmBamK91D"],
+                        "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0],
+                        "transaction.\(Date())":[]] as [String : Any]
         
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
         
         
         
+//        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").setData(postData){ err in
+//            if let err = err {
+//              print("Error writing document: \(err)")
+//            } else {
+//              print("Document successfully written!")
+//            }
+//          }
         
         db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
           "transactions.\(Date())": transaction
