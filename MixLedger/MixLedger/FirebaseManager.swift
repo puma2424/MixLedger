@@ -12,12 +12,28 @@ import FirebaseFirestore
 
 class FirebaseManager{
     struct Transaction: Codable {
-        var amo: String
-        var severity: String
+        var amount: Double
+        var date: Date
+        var note: String
+        var payUser: [String]
+        var shareUser: [String]
+        var type: [String]
+    }
+
+    struct TransactionsResponse: Codable {
+        var transactions: [String: Transaction]?
+        var shareUser: String
     }
     static let shared = FirebaseManager()
     let db = Firestore.firestore()
-
+    let transaction = [
+    "amount": 100.0,
+    "date": Date(),
+    "payUser": ["puma","aaa"],
+    "shareUser":["puma"],
+    "note":"葡萄",
+    "type": ["飲食"],
+    "from":""] as [String : Any]
 //    // 創建一個 Injury 實例
 //    let injury = Injury(type: "Cut", severity: "Moderate")
 //    let injuryRef = Database.database().reference().child("injuries")
@@ -27,19 +43,84 @@ class FirebaseManager{
         
 //        let injuryDictionary = try! FirebaseEncoder().encode(injury)
 //        injuryRef.setValue(injuryDictionary)
-    }
 
+        let postData:Transaction = Transaction(amount: 300, date: Date(), note: "早餐", payUser: ["aaa"], shareUser: ["aaa","puma"], type: ["飲食"])
+        
+        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
+        
+        
+        
+        
+        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
+          "transactions.\(Date())": transaction
+        ]) { err in
+          if let err = err {
+            print("Error updating document: \(err)")
+          } else {
+            print("Document successfully updated")
+          }
+        }
+        getData()
+    }
+    @Published var errorMessage: String?
+    var data: TransactionsResponse?
     func getData(){
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
-        docRef.getDocument { (document, error) in
-          if let document = document, document.exists {
-            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-            print("Document data: \(dataDescription)")
-          } else {
-            print("Document does not exist")
+        
+        
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+              self.errorMessage = "Error getting document: \(error.localizedDescription)"
+            }
+            else {
+              if let document = document {
+                do {
+                  self.data = try document.data(as: TransactionsResponse.self)
+                    print("-----------")
+                    print("\(self.data)")
+                }
+                catch {
+                  print(error)
+                }
+              }
+            }
           }
-        }
+        
+//        docRef.getDocument(as: TransactionsResponse.self) { result in
+//            switch result {
+//            case .success(let data):
+//
+//                print("rqqqqq------")
+//              self.data = data
+//              self.errorMessage = nil
+//                print(data)
+//            case .failure(let error):
+//              // A Book value could not be initialized from the DocumentSnapshot.
+//              self.errorMessage = "Error decoding document: \(error.localizedDescription)"
+//            }
+//          }
+        
+//        docRef.getDocument { (document, error) in
+//          if let document = document, document.exists {
+//            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+//            print("Document data: \(dataDescription)")
+//              if let jsonData = dataDescription.data(using: .utf8) {
+//                  do {
+//                      let transactionsResponse = try JSONDecoder().decode(TransactionsResponse.self, from: jsonData)
+//                      // 現在，transactionsResponse 包含了轉換後的資料
+//                      print(transactionsResponse)
+//                  } catch {
+//                      print("解碼 JSON 時出錯：\(error.localizedDescription)")
+//
+//                  }
+//              }
+//          } else {
+//            print("Document does not exist")
+//          }
+//        }
+        
+        
 //        injuryRef.observeSingleEvent(of: .value) { snapshot in
 //            if let injuryDictionary = snapshot.value as? [String: Any] {
 //                do {

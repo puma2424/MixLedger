@@ -16,6 +16,7 @@ class AddNewItemViewController: UIViewController {
         view.backgroundColor = UIColor(named: "G3")
         setLayout()
         setTable()
+        setCheckButton()
     }
     
 
@@ -28,12 +29,16 @@ class AddNewItemViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    let table = UITableView()
     
+    
+    
+    let firebase = FirebaseManager.shared
     var amount: Double?
     var member: String?
     var selectDate: Date?
     var type: String?
+    
+    let table = UITableView()
     
     let closeButton: UIButton = {
         let button = UIButton()
@@ -56,7 +61,7 @@ class AddNewItemViewController: UIViewController {
     }()
     
     @objc func checkButtonActive(){
-        
+        firebase.postData()
     }
     
     func setCheckButton(){
