@@ -217,7 +217,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 if let title = data["類型"] as? BillTag {
                     billCell.titleLabel.text = title.name
-                    billCell.sortImageView.image = title.icon
+                    billCell.sortImageView.image = UIImage(named: title.iconName)
                 }
                 if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
                     var note = ""

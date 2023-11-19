@@ -11,60 +11,61 @@ import FirebaseFirestore
 
 
 class FirebaseManager{
-    struct Transaction: Codable {
-        var amount: Double
-        var date: Date
-        var note: String
-        var payUser: [String]
-        var shareUser: [String]
-        var type: [String]
-    }
-
-    struct TransactionsResponse: Codable {
-        var transactions: [String: Transaction]?
-        var shareUser: String
-    }
     static let shared = FirebaseManager()
+    
     let db = Firestore.firestore()
+    
+    var accountData: TransactionsResponse?
+    var userInfoData: [UsersInfoResponse]?
+    @Published var errorMessage: String?
+    
+    let dateFont = DateFormatter()
+    let date = Date()
+    
+    
+    
     let transaction = [
     "amount": 100.0,
     "date": Date(),
     "payUser": ["puma","aaa"],
     "shareUser":["puma"],
     "note":"葡萄",
-    "type": ["飲食"],
+    "type": ["name" : "飲食",
+             "iconName" : AllIcons.foodRice.rawValue],
+    "currency": "新台幣",
     "from":""] as [String : Any]
-//    // 創建一個 Injury 實例
-//    let injury = Injury(type: "Cut", severity: "Moderate")
-//    let injuryRef = Database.database().reference().child("injuries")
+    
+    let accountInfo = ["accountID": "SUyJNUlNOAI26DREgF0T",
+                    "accountName": "去嘉義玩",
+                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 300.0],
+                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : -300.0]
+                           ]],
+                       "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
+//                    "transaction.\(Date())":[]
+    ] as [String : Any]
+
     
     func postData(){
         // 上傳到 Firebase
-        
-//        let injuryDictionary = try! FirebaseEncoder().encode(injury)
-//        injuryRef.setValue(injuryDictionary)
-
-//        let postData:Transaction = Transaction(amount: 300, date: Date(), note: "早餐", payUser: ["aaa"], shareUser: ["aaa","puma"], type: ["飲食"])
-        let postData = ["accountID": "SUyJNUlNOAI26DREgF0T",
-                        "accountName": "去嘉義玩",
-                        "shareUsersID": ["QJeplpxVXBca5xhXWgbT", "bGzuwR00sPRNmBamK91D"],
-                        "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0],
-                        "transaction.\(Date())":[]] as [String : Any]
-        
-        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: date)
         
         
-        
-//        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").setData(postData){ err in
-//            if let err = err {
-//              print("Error writing document: \(err)")
-//            } else {
-//              print("Document successfully written!")
-//            }
+//        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").setData(accountInfo) { err in
+//          if let err = err {
+//            print("Error writing document: \(err)")
+//          } else {
+//            print("Document successfully written!")
 //          }
+//        }
+       
+        
         
         db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
-          "transactions.\(Date())": transaction
+          "transactions.\(dateM).\(dateD).\(Date())": transaction,
+          "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0
         ]) { err in
           if let err = err {
             print("Error updating document: \(err)")
@@ -74,8 +75,7 @@ class FirebaseManager{
         }
         getData()
     }
-    @Published var errorMessage: String?
-    var data: TransactionsResponse?
+    
     func getData(){
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
@@ -88,9 +88,10 @@ class FirebaseManager{
             else {
               if let document = document {
                 do {
-                  self.data = try document.data(as: TransactionsResponse.self)
+                    print("----\n\(document.data())")
+                  self.accountData = try document.data(as: TransactionsResponse.self)
                     print("-----------")
-                    print("\(self.data)")
+                    print("\(self.accountData)")
                 }
                 catch {
                   print(error)
@@ -145,5 +146,113 @@ class FirebaseManager{
 //        }
     }
     
+    func findUser(userID: [String]){
+        userInfoData?.removeAll()
+        for id in userID{
+            let docRef = db.collection("users").document(id)
+            docRef.getDocument { document, error in
+                if let error = error as NSError? {
+                  self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                }
+                else {
+                  if let document = document {
+                    do {
+                        let responseData = try document.data(as: UsersInfoResponse.self)
+                        self.userInfoData?.append(responseData)
+                        print("-----------")
+                        print("\(self.userInfoData)")
+                    }
+                    catch {
+                      print(error)
+                    }
+                  }
+                }
+              }
+        }
+        
+    }
     
+    //MARK: -如果用子集合的寫法
+    func getDate2(){
+        // 從 Firebase 獲取數據
+        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").collection("")
+        
+        
+        docRef.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting subcollection documents: \(error.localizedDescription)")
+            } else {
+                for document in querySnapshot!.documents {
+                    do {
+                        // 解析子集合的每個文件的數據
+                        let transactionData = try document.data(as: TransactionsResponse.self)
+                        print("Transaction Data: \(transactionData)")
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+        }
+    }
+    
+    func postData2(){
+        
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: date)
+        
+        
+        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").collection("transactions")
+        
+        docRef.document(dateM).updateData([dateM:transaction])
+    }
+}
+
+
+struct TransactionsResponse: Codable {
+    var transactions: [String: [String: [String: Transaction]]]
+    var accountID: String
+    var accountInfo: AccountInfo
+    var accountName: String
+    var shareUsersID: ShareUsers
+}
+
+struct AccountInfo: Codable {
+    var budget: Double
+    var expense: Double
+    var income: Double
+    var total: Double
+}
+
+struct ShareUsers: Codable {
+    var users: [ShareUser]
+}
+
+struct ShareUser: Codable {
+    var unbalance: Double
+    var userID: String
+}
+
+struct Transaction: Codable {
+    let amount: Double
+    let currency: String
+    let date: Date
+    let from: String
+    let note: String
+    let payUser: [String]
+    let shareUser: [String]
+    let type: TransactionType
+}
+
+struct TransactionType: Codable {
+    let iconName: String
+    let name: String
+}
+
+struct UsersInfoResponse: Codable{
+    var name: String
+    var ownAccount: String
+    var shareAccount: String
+    var userID: String
 }

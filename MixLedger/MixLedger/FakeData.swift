@@ -9,9 +9,11 @@ import Foundation
 import UIKit
 
 struct BillTag{
-    var icon: UIImage?
+    var iconName: String
     var name: String
 }
+
+
 
 var billArray: [[String: [Any]]] = [["日期": [Date()],
                                      "item": [["金額": -3000000,
@@ -19,7 +21,7 @@ var billArray: [[String: [Any]]] = [["日期": [Date()],
                                                "分費者": ["puma"],
                                                "備註": "草莓欸",
                                                "幣別": "新台幣",
-                                               "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
+                                               "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
                                                "from":""],
                                               ["金額": -300,
@@ -27,7 +29,7 @@ var billArray: [[String: [Any]]] = [["日期": [Date()],
                                                "分費者": ["puma"],
                                                "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
                                                "幣別": "新台幣",
-                                               "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
+                                               "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
                                                "from":""]]
                                     ],
@@ -37,7 +39,7 @@ var billArray: [[String: [Any]]] = [["日期": [Date()],
                                                "分費者": ["puma"],
                                                "備註": "草莓欸",
                                                "幣別": "新台幣",
-                                               "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
+                                               "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
                                                "from":""],
                                               ["金額": 300,
@@ -45,7 +47,7 @@ var billArray: [[String: [Any]]] = [["日期": [Date()],
                                                "分費者": ["puma"],
                                                "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
                                                "幣別": "新台幣",
-                                               "類型": BillTag(icon: UIImage(named: "more"), name: "飲食"),
+                                               "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
                                                "from":""]]
                                     ]
