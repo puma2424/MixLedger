@@ -64,7 +64,7 @@ class AddNewItemViewController: UIViewController {
         if amount == nil {
             
         }else{
-            let type = TransactionType(iconName: AllIcons.edit.rawValue, name: "讀書")
+//            let type = TransactionType(iconName: AllIcons.edit.rawValue, name: "讀書")
             firebase.postData(amount: amount ?? 0 , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "你想活出怎樣的人生", type: type){ result in
                 self.dismiss(animated: true)
             }

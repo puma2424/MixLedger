@@ -277,6 +277,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
             billCell.delegate = self
             billCell.showDate = selectDate
+            billCell.revenueMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).text
+            billCell.revenueMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).color
+            
+            billCell.totalMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).text
+            billCell.totalMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).color
+            
+            billCell.payMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).text
+            billCell.payMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).color
             return cell
         }else{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)

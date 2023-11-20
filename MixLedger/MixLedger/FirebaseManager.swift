@@ -47,7 +47,7 @@ class FirebaseManager{
 //        }
        
         let transaction = [
-        "amount": amount,
+        "amount": -amount,
         "date": date,
         "payUser": payUser,
         "shareUser": shareUser,
@@ -56,6 +56,9 @@ class FirebaseManager{
         "currency": "新台幣",
         "from":""] as [String : Any]
         
+        let expense = ((saveData.accountData?.accountInfo.expense) ?? 0) - amount
+        let total = ((saveData.accountData?.accountInfo.total) ?? 0) - amount
+        print(expense)
         dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: date)
         dateFont.dateFormat = "yyyy-MM-dd"
@@ -63,13 +66,16 @@ class FirebaseManager{
         
         db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
           "transactions.\(dateM).\(dateD).\(Date())": transaction,
-          "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0
+          "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0,
+          "accountInfo.expense": expense,
+          "accountInfo.total": total,
         ]) { err in
           if let err = err {
             print("Error updating document: \(err)")
           } else {
             print("Document successfully updated")
               completion(.success("Sent successfully"))
+              
           }
         }
 //        getData()
