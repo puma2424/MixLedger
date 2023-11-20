@@ -7,6 +7,10 @@
 
 import UIKit
 import SnapKit
+protocol BillStatusTableViewCellDelegate{
+    func changeMonth(cell: BillStatusTableViewCell, date: Date)
+}
+
 class BillStatusTableViewCell: UITableViewCell {
     // 初始化方法
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -40,6 +44,9 @@ class BillStatusTableViewCell: UITableViewCell {
         // Configure the view for the selected state
         
     }
+    
+    var delegate: BillStatusTableViewCellDelegate?
+    
     let lastMonthButton: UIButton = {
         let button = UIButton()
         if let image = UIImage(systemName: "triangle.fill") {
@@ -155,9 +162,10 @@ class BillStatusTableViewCell: UITableViewCell {
         return button
     }()
     
-    let dateFont = DateFormatter()
-    var showDate = Date()
     
+    let dateFont = DateFormatter()
+    var showDate: Date?
+    var dateString: String = ""
     func setButtonTarge(){
         nextMonthButton.addTarget(self, action: #selector(nextMonthActive) , for: .touchUpInside)
         lastMonthButton.addTarget(self, action: #selector(lastMonthActive) , for: .touchUpInside)
@@ -174,12 +182,15 @@ class BillStatusTableViewCell: UITableViewCell {
     }
     func adjustDate(by months: Int) {
         dateFont.dateFormat = "yyyy-MM"
-        let dateString = dateFont.string(from: showDate)
         
-        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showDate) {
+        guard let showMon = showDate else { return }
+        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showMon) {
             showDate = newDate
+            dateString = dateFont.string(from: newDate)
+            monthLabel.text = dateString
+            delegate?.changeMonth(cell: self, date: newDate)
         }
-        monthLabel.text = dateString
+        
     }
     func setupLayout(){
         adjustDate(by: 0)

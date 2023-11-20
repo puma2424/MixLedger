@@ -300,8 +300,8 @@
 				9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */,
 				9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */,
 				9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */,
-				9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */,
 				9ACA6F012B08AFA700201A44 /* SelectDateViewController.swift */,
+				9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */,
 			);
 			path = addNewItem;
 			sourceTree = "<group>";

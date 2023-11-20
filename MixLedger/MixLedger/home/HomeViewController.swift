@@ -9,10 +9,13 @@ import UIKit
 import SnapKit
 
 class HomeViewController: UIViewController{
+   
+    
     
     var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh", "bGzuwR00sPRNmBamK91D"]
     
     let saveData = SaveData.shared
+    let firebaseManager = FirebaseManager.shared
     
     var transactionsMonKeyArr: [String] = []
     var transactionsDayDatasKeys: [String] = []
@@ -25,13 +28,14 @@ class HomeViewController: UIViewController{
         setupTable()
         setNavigation()
         setupButton()
+//        showMonBill()
         
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let firebaseManager = FirebaseManager.shared
+        
         firebaseManager.getData{ result in
             switch result {
             case .success(let data):
@@ -60,6 +64,9 @@ class HomeViewController: UIViewController{
     
     let billStatusSmallView = SharedBillStatusSmallView()
     let billStatusOpenView = SharedBillStatusOpenView()
+    
+    var selectDate: Date = Date()
+    
     var showView: UIView?
     let billTable = UITableView()
     let addButton: UIButton = {
@@ -68,14 +75,23 @@ class HomeViewController: UIViewController{
         return button
     }()
     
+    func showMonBill(date: Date)-> String{
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy-MM"
+        let selectDateString = dateFont.string(from: date)
+        return selectDateString
+    }
+    
     func setupButton(){
         addButton.addTarget(self, action: #selector(addNewBill), for: .touchUpInside)
     }
+    
     @objc func addNewBill(){
         print("addNewBill")
         let addNewView = AddNewItemViewController()
         present(addNewView, animated: true)
     }
+    
     @objc func editAccountBook(){
         let accountBookView = AllAccountBookViewController()
         accountBookView.accountInfo = { info in
@@ -85,9 +101,11 @@ class HomeViewController: UIViewController{
         navigationController?.pushViewController(accountBookView, animated: true)
         
     }
+    
     @objc func shareAccountBook(){
         print("shareAccountBook")
     }
+    
     func setupShareBillView(){
         showView = billStatusOpenView
         billStatusSmallView.layer.cornerRadius = 10
@@ -197,7 +215,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         }else{
 //            let bill = billArray[section - 1]
-            if let datas = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[section - 1]]{
+            if let datas = saveData.accountData?.transactions[showMonBill(date: selectDate)]?[transactionsMonKeyArr[section - 1]]{
 //
 //                
 //                for dataKey in datas.keys{
@@ -215,7 +233,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard var number = saveData.accountData?.transactions["2023-11"]?.keys.count else { return 1 }
+        guard var number = saveData.accountData?.transactions[showMonBill(date: selectDate)]?.keys.count else { return 1 }
         number += 1
         return number
     }
@@ -229,9 +247,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let dateFont = DateFormatter()
-        dateFont.dateFormat = "yyyy-MM-dd"
-        guard let data = saveData.accountData?.transactions["2023-11"] else{ return ""}
+        
+        guard let data = saveData.accountData?.transactions[showMonBill(date: selectDate)] else{ return ""}
         transactionsMonKeyArr = []
         for key in data.keys{
             transactionsMonKeyArr.append(key)
@@ -258,15 +275,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 0{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
+            billCell.delegate = self
+            billCell.showDate = selectDate
             return cell
         }else{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
             guard let billCell = cell as? BillTableViewCell else { return cell }
             
-            if let datas = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]]{
+            if let datas = saveData.accountData?.transactions[showMonBill(date: selectDate)]?[transactionsMonKeyArr[indexPath.section - 1]]{
 //                print("-------------data.keys--------")
 //                print(transactionsMonKeyArr[indexPath.section - 1])
-                print(datas)
+                print(showMonBill(date: selectDate))
 //                var transactionsDayDatasKeys: [String] = []
                 transactionsDayDatasKeys = []
                 for dataKey in datas.keys{
@@ -293,30 +312,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 billCell.titleNoteLabel.text = titleNote
                 billCell.moneyLabel.text = "\(data.amount)"
-//                let datas = billArray[indexPath.row]["item"]
-                
-//                if let data = datas?[indexPath.row] as? [String: Any] {
-//                    if let money = data["金額"] as? Int {
-//                        let moneyType: MoneyType = .money(Double(money))
-//                        billCell.moneyLabel.text = moneyType.text
-//                        billCell.moneyLabel.textColor = moneyType.color
-//                    }
-//                    if let moneyNote = data["幣別"] as? String {
-//                        billCell.moneyNoteLabel.text = moneyNote
-//                    }
-//                    if let title = data["類型"] as? BillTag {
-//                        billCell.titleLabel.text = title.name
-//                        billCell.sortImageView.image = UIImage(named: title.iconName)
-//                    }
-//                    if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
-//                        var note = ""
-//                        pay.forEach{note += "\($0) "}
-//                        note += "/\(titleNote)"
-//                        billCell.titleNoteLabel.text = note
-//                    }
-//                    
-//                }
-                
+//
             }
             return cell
             
@@ -324,3 +320,24 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
 }
+
+extension HomeViewController: BillStatusTableViewCellDelegate{
+    func changeMonth(cell: BillStatusTableViewCell, date: Date) {
+        selectDate = date
+        billTable.reloadData()
+//        firebaseManager.getData{ result in
+//            switch result {
+//            case .success(let data):
+//                // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+//                print("getData Success: \(data)")
+//                print("\(self.saveData.accountData?.transactions)")
+//                //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+//                self.billTable.reloadData()
+//            case .failure(let error):
+//                // 失敗時的處理
+//                print("Failure: \(error)")
+//            }
+//        }
+    }
+}
+
