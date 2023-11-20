@@ -204,10 +204,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 //                    transactionsDayDatasKeys.append(dataKey)
 //                }
 //                datas[]
+                print("-------datas of numberOfRowsInSelection ------")
+                print("\(section)" + "\(datas.keys)")
                 return datas.keys.count
 //                guard let data = datas[transactionsDayDatasKeys[indexPath]] else { return cell }
             }
-            return 1
+            return 0
         }
         
         
@@ -239,7 +241,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 //            let dateString = dateFont.string(from: date)
 ////            print(dateString)
 //            return dateString
-            guard transactionsMonKeyArr.count >= section  else { return "" }
+//            guard transactionsMonKeyArr.count >= section  else { return "" }
           
             return transactionsMonKeyArr[section - 1]
         }else{
@@ -266,7 +268,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 //                print(transactionsMonKeyArr[indexPath.section - 1])
                 print(datas)
 //                var transactionsDayDatasKeys: [String] = []
-                
+                transactionsDayDatasKeys = []
                 for dataKey in datas.keys{
                     transactionsDayDatasKeys.append(dataKey)
                 }
@@ -276,13 +278,16 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 billCell.sortImageView.image = UIImage(named: data.type.iconName)
                 billCell.titleLabel.text = data.type.name
                 var titleNote = ""
-                for payerID in data.payUser{
-                    if let name = saveData.userInfoData[payerID]?.name{
-                        titleNote += "\(name) "
+                if let payUser = data.payUser{
+                    for payerID in payUser{
+                        if let name = saveData.userInfoData[payerID]?.name{
+                            titleNote += "\(name) "
+                        }
                     }
                 }
+               
                 if titleNote == ""{
-                    titleNote = data.note
+                    titleNote = data.note ?? ""
                 }else{
                     titleNote += "/\(data.note)"
                 }

@@ -20,20 +20,11 @@ class FirebaseManager{
     @Published var errorMessage: String?
     
     let dateFont = DateFormatter()
-    let date = Date()
+//    let date = Date()
     
     
     
-    let transaction = [
-    "amount": 100.0,
-    "date": Date(),
-    "payUser": ["puma","aaa"],
-    "shareUser":["puma"],
-    "note":"葡萄",
-    "type": ["name" : "飲食",
-             "iconName" : AllIcons.foodRice.rawValue],
-    "currency": "新台幣",
-    "from":""] as [String : Any]
+    
     
     let accountInfo = ["accountID": "SUyJNUlNOAI26DREgF0T",
                     "accountName": "去嘉義玩",
@@ -45,14 +36,8 @@ class FirebaseManager{
     ] as [String : Any]
 
     
-    func postData(){
+    func postData( amount: Double, date: Date, payUser: [String]?, shareUser: [String]?, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>)-> Void){
         // 上傳到 Firebase
-        dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: date)
-        dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: date)
-        
-        
 //        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").setData(accountInfo) { err in
 //          if let err = err {
 //            print("Error writing document: \(err)")
@@ -61,7 +46,20 @@ class FirebaseManager{
 //          }
 //        }
        
+        let transaction = [
+        "amount": amount,
+        "date": date,
+        "payUser": payUser,
+        "shareUser": shareUser,
+        "note": note,
+        "type": ["iconName": type?.iconName, "name": type?.name],
+        "currency": "新台幣",
+        "from":""] as [String : Any]
         
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: date)
         
         db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
           "transactions.\(dateM).\(dateD).\(Date())": transaction,
@@ -71,6 +69,7 @@ class FirebaseManager{
             print("Error updating document: \(err)")
           } else {
             print("Document successfully updated")
+              completion(.success("Sent successfully"))
           }
         }
 //        getData()
@@ -160,15 +159,15 @@ class FirebaseManager{
     
     func postData2(){
         
-        dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: date)
-        dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: date)
+//        dateFont.dateFormat = "yyyy-MM"
+//        let dateM = dateFont.string(from: date)
+//        dateFont.dateFormat = "yyyy-MM-dd"
+//        let dateD = dateFont.string(from: date)
         
         
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").collection("transactions")
         
-        docRef.document(dateM).updateData([dateM:transaction])
+//        docRef.document(dateM).updateData([dateM:transaction])
     }
 }
 
@@ -198,19 +197,19 @@ struct ShareUser: Codable {
 }
 
 struct Transaction: Codable {
-    let amount: Double
-    let currency: String
-    let date: Date
-    let from: String
-    let note: String
-    let payUser: [String]
-    let shareUser: [String]
-    let type: TransactionType
+    var amount: Double
+    var currency: String
+    var date: Date
+    var from: String?
+    var note: String?
+    var payUser: [String]?
+    var shareUser: [String]?
+    var type: TransactionType
 }
 
 struct TransactionType: Codable {
-    let iconName: String
-    let name: String
+    var iconName: String
+    var name: String
 }
 
 struct UsersInfoResponse: Codable{

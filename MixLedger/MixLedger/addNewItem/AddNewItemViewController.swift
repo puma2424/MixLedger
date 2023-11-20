@@ -36,7 +36,7 @@ class AddNewItemViewController: UIViewController {
     var amount: Double?
     var member: String?
     var selectDate: Date?
-    var type: String?
+    var type: TransactionType?
     
     let table = UITableView()
     
@@ -61,7 +61,16 @@ class AddNewItemViewController: UIViewController {
     }()
     
     @objc func checkButtonActive(){
-        firebase.postData()
+        if amount == nil {
+            
+        }else{
+            let type = TransactionType(iconName: AllIcons.edit.rawValue, name: "讀書")
+            firebase.postData(amount: amount ?? 0 , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "你想活出怎樣的人生", type: type){ result in
+                
+            }
+            
+        }
+        
     }
     
     func setCheckButton(){
@@ -125,9 +134,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
             guard let monryCell = cell as? ANIMoneyTableViewCell else { return cell }
             monryCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
-            if let inputAmount = monryCell.inputText.text as?  Double {
-                amount = inputAmount
-            }
+            monryCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
             
         }else if indexPath.row == 1{
             
@@ -135,14 +142,19 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
             typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
             
+            if let text =  typeCell.inputText.text{
+                type?.name = text
+            }
             
-                type = typeCell.inputText.text
+            
             
             
         }else if indexPath.row == 2{
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
-            guard let typeCell = cell as? ANISelectDateTableViewCell else { return cell }
-            typeCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
+            guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
+            dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
+             selectDate = dateCell.datePicker.date
+            dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
             
         }else{
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
@@ -152,6 +164,17 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+        @objc func getAmount(_ textField: UITextField) {
+            amount = Double(textField.text ?? "")
+        }
+
+        // DatePicker 的值變化時的動作
+        @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
+            // 更新數據結構中相應 cell 的數據
+            selectDate = datePicker.date
+            
+        }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 2{
             guard let selectedCell = tableView.cellForRow(at: indexPath) as? ANISelectDateTableViewCell else {return}
