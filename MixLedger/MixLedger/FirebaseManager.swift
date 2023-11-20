@@ -73,10 +73,10 @@ class FirebaseManager{
             print("Document successfully updated")
           }
         }
-        getData()
+//        getData()
     }
     
-    func getData(){
+    func getData(completion: @escaping (Result<Any, Error>) -> Void){
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
         
@@ -87,23 +87,24 @@ class FirebaseManager{
             }
             else {
               if let document = document {
-                do {
-//                    print("----\n\(document.data())")
-                    self.saveData.accountData = try document.data(as: TransactionsResponse.self)
-                    print("-----get account Data------")
-                    print("\(self.saveData.accountData?.accountName)")
-                }
-                catch {
-                  print(error)
-                }
+                  do {
+                      // print("----\n\(document.data())")
+                      self.saveData.accountData = try document.data(as: TransactionsResponse.self)
+                      print("-----get account Data------")
+                      print("\(self.saveData.accountData?.accountName)")
+                      completion(.success(self.saveData.accountData))
+                  } catch {
+                      print(error)
+                      completion(.failure(error))
+                  }
               }
             }
           }
         
     }
     
-    func findUser(userID: [String]){
-        saveData.userInfoData.removeAll()
+    func findUser(userID: [String], completion: @escaping (Result<[String : UsersInfoResponse], Error>) -> Void){
+        saveData.userInfoData = [:]
         for id in userID{
             let docRef = db.collection("users").document(id)
             docRef.getDocument { document, error in
@@ -117,9 +118,10 @@ class FirebaseManager{
                     do {
                         let responseData = try document.data(as: UsersInfoResponse.self)
                         print(responseData)
-                        self.saveData.userInfoData.append(responseData)
+                        self.saveData.userInfoData[id] = responseData
                         print("-----find User decode------")
                         print("\(self.saveData.userInfoData)")
+                        completion(.success(self.saveData.userInfoData))
                     }
                     catch {
                       print(error)
@@ -128,6 +130,8 @@ class FirebaseManager{
                 }
               }
         }
+        print("\(self.saveData.userInfoData)")
+//        completion(.success(saveData.userInfoData))
         
     }
     

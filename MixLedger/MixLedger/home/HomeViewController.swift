@@ -10,10 +10,12 @@ import SnapKit
 
 class HomeViewController: UIViewController{
     
-    var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh"]
+    var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh", "bGzuwR00sPRNmBamK91D"]
     
     let saveData = SaveData.shared
     
+    var transactionsMonKeyArr: [String] = []
+    var transactionsDayDatasKeys: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -24,10 +26,36 @@ class HomeViewController: UIViewController{
         setNavigation()
         setupButton()
         
-        let firebaseManager = FirebaseManager.shared
-        firebaseManager.getData()
-        firebaseManager.findUser(userID: userID)
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let firebaseManager = FirebaseManager.shared
+        firebaseManager.getData{ result in
+            switch result {
+            case .success(let data):
+                // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+                print("getData Success: \(data)")
+                print("\(self.saveData.accountData?.transactions)")
+//                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+                self.billTable.reloadData()
+            case .failure(let error):
+                // 失敗時的處理
+                print("Failure: \(error)")
+            }
+        }
+        firebaseManager.findUser(userID: userID){ result in
+            switch result {
+            case .success(let data):
+                // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+                print("findUser Success: \(data)")
+                self.billStatusOpenView.usersInfo = data 
+            case .failure(let error):
+                // 失敗時的處理
+                print("Failure: \(error)")
+            }
+        }
     }
     
     let billStatusSmallView = SharedBillStatusSmallView()
@@ -168,14 +196,26 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if section == 0{
             return 1
         }else{
-            let bill = billArray[section - 1]
-            return bill["item"]?.count ?? 0
+//            let bill = billArray[section - 1]
+            if let datas = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[section - 1]]{
+//
+//                
+//                for dataKey in datas.keys{
+//                    transactionsDayDatasKeys.append(dataKey)
+//                }
+//                datas[]
+                return datas.keys.count
+//                guard let data = datas[transactionsDayDatasKeys[indexPath]] else { return cell }
+            }
+            return 1
         }
         
         
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return billArray.count + 1
+        guard var number = saveData.accountData?.transactions["2023-11"]?.keys.count else { return 1 }
+        number += 1
+        return number
     }
     func tableView(tableView: UITableView,
       heightForHeaderInSection section: Int) -> CGFloat {
@@ -189,11 +229,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let dateFont = DateFormatter()
         dateFont.dateFormat = "yyyy-MM-dd"
+        guard let data = saveData.accountData?.transactions["2023-11"] else{ return ""}
+        transactionsMonKeyArr = []
+        for key in data.keys{
+            transactionsMonKeyArr.append(key)
+        }
         if section != 0{
-            guard let date = billArray[section - 1]["日期"]?[0] as? Date else{ return ""}
-            let dateString = dateFont.string(from: date)
-//            print(dateString)
-            return dateString
+//            guard let date = billArray[section - 1]["日期"]?[0] as? Date else{ return ""}
+//            let dateString = dateFont.string(from: date)
+////            print(dateString)
+//            return dateString
+            guard transactionsMonKeyArr.count >= section  else { return "" }
+          
+            return transactionsMonKeyArr[section - 1]
         }else{
             return ""
         }
@@ -202,41 +250,72 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        
         if indexPath.section == 0{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
             return cell
         }else{
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
-            
             guard let billCell = cell as? BillTableViewCell else { return cell }
             
-            let datas = billArray[indexPath.row]["item"]
-            
-            if let data = datas?[indexPath.row] as? [String: Any] {
-                if let money = data["金額"] as? Int {
-                    let moneyType: MoneyType = .money(Double(money))
-                    billCell.moneyLabel.text = moneyType.text
-                    billCell.moneyLabel.textColor = moneyType.color
+            if let datas = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]]{
+//                print("-------------data.keys--------")
+//                print(transactionsMonKeyArr[indexPath.section - 1])
+                print(datas)
+//                var transactionsDayDatasKeys: [String] = []
+                
+                for dataKey in datas.keys{
+                    transactionsDayDatasKeys.append(dataKey)
                 }
-                if let moneyNote = data["幣別"] as? String {
-                    billCell.moneyNoteLabel.text = moneyNote
+
+                guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
+                
+                billCell.sortImageView.image = UIImage(named: data.type.iconName)
+                billCell.titleLabel.text = data.type.name
+                var titleNote = ""
+                for payerID in data.payUser{
+                    if let name = saveData.userInfoData[payerID]?.name{
+                        titleNote += "\(name) "
+                    }
                 }
-                if let title = data["類型"] as? BillTag {
-                    billCell.titleLabel.text = title.name
-                    billCell.sortImageView.image = UIImage(named: title.iconName)
+                if titleNote == ""{
+                    titleNote = data.note
+                }else{
+                    titleNote += "/\(data.note)"
                 }
-                if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
-                    var note = ""
-                    pay.forEach{note += "\($0) "}
-                    note += "/\(titleNote)"
-                    billCell.titleNoteLabel.text = note
-                }
+                billCell.titleNoteLabel.text = titleNote
+                billCell.moneyLabel.text = "\(data.amount)"
+//                let datas = billArray[indexPath.row]["item"]
+                
+//                if let data = datas?[indexPath.row] as? [String: Any] {
+//                    if let money = data["金額"] as? Int {
+//                        let moneyType: MoneyType = .money(Double(money))
+//                        billCell.moneyLabel.text = moneyType.text
+//                        billCell.moneyLabel.textColor = moneyType.color
+//                    }
+//                    if let moneyNote = data["幣別"] as? String {
+//                        billCell.moneyNoteLabel.text = moneyNote
+//                    }
+//                    if let title = data["類型"] as? BillTag {
+//                        billCell.titleLabel.text = title.name
+//                        billCell.sortImageView.image = UIImage(named: title.iconName)
+//                    }
+//                    if let titleNote = data["備註"] as? String , let pay = data["付費者"] as? [String]{
+//                        var note = ""
+//                        pay.forEach{note += "\($0) "}
+//                        note += "/\(titleNote)"
+//                        billCell.titleNoteLabel.text = note
+//                    }
+//                    
+//                }
                 
             }
             return cell
+            
         }
         
-//        return cell
     }
 }

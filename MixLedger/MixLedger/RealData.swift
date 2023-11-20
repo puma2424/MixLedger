@@ -11,5 +11,5 @@ class SaveData{
     static let shared = SaveData()
     
     var accountData: TransactionsResponse?
-    var userInfoData: [UsersInfoResponse] = []
+    var userInfoData: [String : UsersInfoResponse] = [:]
 }

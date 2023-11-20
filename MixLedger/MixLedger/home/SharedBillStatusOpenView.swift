@@ -38,10 +38,23 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
         // Drawing code
     }
     */
-    var users: [UsersInfo]? = nil
+//    var users: [UsersInfo]? = nil
     var openDelegate: SharedBillStatusOpenViewDelegate?
     let table = UITableView()
-    var usersInfo: [UsersInfoResponse]?
+    var userID: [String] = []
+    var usersInfo: [String : UsersInfoResponse]?{
+        didSet{
+            userID = []
+            if let userInfo = usersInfo {
+                for key in userInfo.keys{
+                    userID.append(key)
+                }
+            }
+            
+            print(usersInfo)
+            table.reloadData()
+        }
+    }
     
     func setupTable(){
         table.delegate = self
@@ -69,7 +82,7 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return userID.count ?? 0
         
     }
 
@@ -78,8 +91,9 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         if let userInfo = usersInfo{
-            userCell.nameLable.text = userInfo[indexPath.row].name
+            userCell.nameLable.text = userInfo[userID[indexPath.row]]?.name
         }
+        
         
         return userCell
     }
