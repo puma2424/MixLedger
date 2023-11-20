@@ -64,7 +64,8 @@ class AddNewItemViewController: UIViewController {
         if amount == nil {
             
         }else{
-//            let type = TransactionType(iconName: AllIcons.edit.rawValue, name: "讀書")
+//            type?.iconName = AllIcons.edit.rawValue
+//            print(type)
             firebase.postData(amount: amount ?? 0 , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "你想活出怎樣的人生", type: type){ result in
                 self.dismiss(animated: true)
             }
@@ -142,9 +143,10 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
             typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
             
-            if let text =  typeCell.inputText.text{
-                type?.name = text
-            }
+            typeCell.inputText.addTarget(self, action: #selector(getType(_:)), for: .editingChanged)
+//            if let text =  typeCell.inputText.text{
+//                type?.name = text
+//            }
             
             
             
@@ -164,16 +166,22 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-        @objc func getAmount(_ textField: UITextField) {
-            amount = Double(textField.text ?? "")
+    @objc func getType(_ textField: UITextField) {
+        if let text = textField.text{
+            type = TransactionType(iconName: AllIcons.edit.rawValue, name: text)
         }
-
-        // DatePicker 的值變化時的動作
-        @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
-            // 更新數據結構中相應 cell 的數據
-            selectDate = datePicker.date
-            
-        }
+       
+    }
+    @objc func getAmount(_ textField: UITextField) {
+        amount = Double(textField.text ?? "")
+    }
+    
+    // DatePicker 的值變化時的動作
+    @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
+        // 更新數據結構中相應 cell 的數據
+        selectDate = datePicker.date
+        
+    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 2{
