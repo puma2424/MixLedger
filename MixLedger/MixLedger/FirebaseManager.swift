@@ -47,7 +47,7 @@ class FirebaseManager{
 //        }
        
         let transaction = [
-        "amount": -amount,
+        "amount": amount,
         "date": date,
         "payUser": payUser,
         "shareUser": shareUser,
@@ -67,8 +67,8 @@ class FirebaseManager{
         db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
           "transactions.\(dateM).\(dateD).\(Date())": transaction,
           "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0,
-          "accountInfo.expense": expense,
-          "accountInfo.total": total,
+          "accountInfo.expense": FieldValue.increment(amount),
+          "accountInfo.total": FieldValue.increment(amount),
         ]) { err in
           if let err = err {
             print("Error updating document: \(err)")
@@ -86,7 +86,7 @@ class FirebaseManager{
         let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
         
         
-        docRef.getDocument { document, error in
+        docRef.addSnapshotListener { document, error in
             if let error = error as NSError? {
               self.errorMessage = "Error getting document: \(error.localizedDescription)"
             }
@@ -123,10 +123,10 @@ class FirebaseManager{
                     do {
                         let responseData = try document.data(as: UsersInfoResponse.self)
                         print(responseData)
-                        self.saveData.userInfoData[id] = responseData
-                        print("-----find User decode------")
-                        print("\(self.saveData.userInfoData)")
-                        completion(.success(self.saveData.userInfoData))
+//                        self.saveData.userInfoData[id] = responseData
+//                        print("-----find User decode------")
+//                        print("\(self.saveData.userInfoData)")
+                        completion(.success([id : responseData]))
                     }
                     catch {
                       print(error)
@@ -139,7 +139,33 @@ class FirebaseManager{
 //        completion(.success(saveData.userInfoData))
         
     }
-    
+    func findAccount(account: [String], completion: @escaping (Result<Any, Error>) -> Void){
+        print("-------account array---------")
+        print(account)
+        
+        let docRef = db.collection("accounts")
+        
+        docRef.whereField("accountID", in: account).getDocuments{  (querySnapshot, err) in
+            if let err = err {
+              print("Error getting documents: \(err)")
+            } else {
+              for document in querySnapshot!.documents {
+//                print("\(document.documentID) => \(document.data())")
+                  print(document.data()["accountName"])
+                  if let id = document.data()["accountID"] as? String/*, let name = [document.data()["accountName"]] as? String*/ {
+                      self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+                  }else{
+                      print(document.data()["accountID"])
+                      print(document.data()["accountName"])
+                  }
+                  
+              }
+                completion(.success("success"))
+            }
+            print(self.saveData.myShareAccount)
+        }
+        
+    }
     //MARK: -如果用子集合的寫法
     func getDate2(){
         // 從 Firebase 獲取數據
@@ -221,6 +247,6 @@ struct TransactionType: Codable {
 struct UsersInfoResponse: Codable{
     var name: String
     var ownAccount: String
-    var shareAccount: String
+    var shareAccount: [String]
     var userID: String
 }

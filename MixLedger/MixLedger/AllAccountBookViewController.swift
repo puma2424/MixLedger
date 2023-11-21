@@ -15,6 +15,26 @@ class AllAccountBookViewController: UIViewController {
         setTable()
         setLayout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        firebaseManager.findUser(userID: ["bGzuwR00sPRNmBamK91D"]){ result in
+            switch result{
+                
+            case .success(let data):
+                if let myData = data["bGzuwR00sPRNmBamK91D"]{
+                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
+                    self.firebaseManager.findAccount(account: myData.shareAccount){_ in
+                        self.table.reloadData()
+                    }
+                    
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -24,6 +44,8 @@ class AllAccountBookViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+     let firebaseManager = FirebaseManager.shared
+    let savaData = SaveData.shared
     var accountInfo: ((Any) -> ())?
     let table = UITableView()
     var selectedIndexPath: IndexPath?
@@ -77,7 +99,9 @@ class AllAccountBookViewController: UIViewController {
 
 extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        allAccount.count
+//        allAccount.count
+        guard let data = savaData.myInfo else { return 0 }
+        return savaData.myShareAccount.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,14 +114,18 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
             cell.accessoryType = .none
         }
 
-        let data = allAccount[indexPath.row]
-        if let name = data["name"] as? String{
-            accountCell.accountNameLable.text = name
+        if let id = savaData.myInfo?.shareAccount[indexPath.row]{
+            accountCell.accountNameLable.text = savaData.myShareAccount[id]
         }
         
-        if let iconName = data["iconName"] as? String{
-            accountCell.accountIconImageView.image = UIImage(named: iconName)
-        }
+        
+//        if let name = data["name"] as? String{
+//             = name
+//        }
+//        
+//        if let iconName = data["iconName"] as? String{
+//            accountCell.accountIconImageView.image = UIImage(named: iconName)
+//        }
         accountCell.checkmarkImageView.isHidden = true
         return accountCell
     }

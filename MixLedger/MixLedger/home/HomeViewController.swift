@@ -22,7 +22,7 @@ class HomeViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.navigationItem.title = "我的帳本"
+        self.navigationItem.title = ""
         setupShareBillView()
         setupLayout()
         setupTable()
@@ -44,6 +44,9 @@ class HomeViewController: UIViewController{
                 print("\(self.saveData.accountData?.transactions)")
 //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
                 self.billTable.reloadData()
+                self.billStatusOpenView.table.reloadData()
+                
+                self.navigationItem.title = self.saveData.accountData?.accountName
             case .failure(let error):
                 // 失敗時的處理
                 print("Failure: \(error)")
@@ -54,7 +57,10 @@ class HomeViewController: UIViewController{
             case .success(let data):
                 // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                 print("findUser Success: \(data)")
-                self.billStatusOpenView.usersInfo = data 
+                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
+                print("-----find User decode------")
+                print("\(self.saveData.userInfoData)")
+//                self.billStatusOpenView.usersInfo?[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
             case .failure(let error):
                 // 失敗時的處理
                 print("Failure: \(error)")
@@ -108,6 +114,8 @@ class HomeViewController: UIViewController{
     
     func setupShareBillView(){
         showView = billStatusOpenView
+        
+        billTable.layer.cornerRadius = 10
         billStatusSmallView.layer.cornerRadius = 10
         billStatusOpenView.layer.cornerRadius = 10
         billStatusSmallView.smallDelegate = self

@@ -12,5 +12,7 @@ class SaveData{
     
     var accountData: TransactionsResponse?
     var userInfoData: [String : UsersInfoResponse] = [:]
+    var myInfo: UsersInfoResponse?
+    var myShareAccount: [String : String] = [:]
 //    var accountInfo:
 }

@@ -66,7 +66,7 @@ class AddNewItemViewController: UIViewController {
         }else{
 //            type?.iconName = AllIcons.edit.rawValue
 //            print(type)
-            firebase.postData(amount: amount ?? 0 , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "你想活出怎樣的人生", type: type){ result in
+            firebase.postData(amount: -(amount ?? 0) , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "草莓", type: type){ result in
                 self.dismiss(animated: true)
             }
             
