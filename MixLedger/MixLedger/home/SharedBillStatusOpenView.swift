@@ -39,9 +39,11 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
     }
     */
 //    var users: [UsersInfo]? = nil
+    let saveData = SaveData.shared
     var openDelegate: SharedBillStatusOpenViewDelegate?
     let table = UITableView()
     var userID: [String] = []
+    
     var usersInfo: [String : UsersInfoResponse]?{
         didSet{
             userID = []
@@ -93,7 +95,6 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
         if let userInfo = usersInfo{
             userCell.nameLable.text = userInfo[userID[indexPath.row]]?.name
         }
-        
         
         return userCell
     }

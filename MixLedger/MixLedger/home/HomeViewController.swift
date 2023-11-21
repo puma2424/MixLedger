@@ -78,10 +78,16 @@ class HomeViewController: UIViewController{
             case .success(let data):
                 // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                 print("findUser Success: \(data)")
-                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
+                var id: [String] = []
+                for key in data.keys{
+                    id.append(key)
+                    self.saveData.userInfoData[key] = data[key]
+                }
+//                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
                 print("-----find User decode------")
                 print("\(self.saveData.userInfoData)")
-//                self.billStatusOpenView.usersInfo?[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
+
+                self.billStatusOpenView.usersInfo = self.saveData.userInfoData
             case .failure(let error):
                 // 失敗時的處理
                 print("Failure: \(error)")
@@ -212,6 +218,7 @@ class HomeViewController: UIViewController{
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate{
     func inputData(view: SharedBillStatusOpenView) {
         view.usersInfo = saveData.userInfoData
+//        view.usersInfo = userID
         print(view.usersInfo)
     }
    
@@ -304,7 +311,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         
         if indexPath.section == 0{
-            let cell = billTable.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
             billCell.delegate = self
             billCell.showDate = selectDate
