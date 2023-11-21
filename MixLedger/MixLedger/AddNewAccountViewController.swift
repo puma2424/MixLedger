@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class AddNewAccountViewController: UIViewController, UITextFieldDelegate{
+class AddNewAccountViewController: UIViewController{
     
     
 
@@ -225,14 +225,24 @@ class AddNewAccountViewController: UIViewController, UITextFieldDelegate{
         }else{
             checkButton.isHidden = true
         }
+//        textField.resignFirstResponder()
     }
     
     @objc func inputbudget(_ textField: UITextField){
         textField.text = accountBudget
+        print(textField.text)
     }
     
     @objc func checkButtonActive(){
-     
+        guard let name = accountName else {return}
+//        guard let budget = accountBudget as? Double else {return}
+        guard let icon = selectedIcon else {return}
+        if accountBudget != nil, let budget = accountBudget as? Double{
+            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon)
+        }else{
+            firebaseManager.addNewAccount(name: name, iconName: icon)
+        }
+        
     }
 }
 
@@ -271,4 +281,12 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
             checkButton.isHidden = false
         }
     }
+}
+
+extension AddNewAccountViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            // 隱藏鍵盤
+            textField.resignFirstResponder()
+            return true
+        }
 }

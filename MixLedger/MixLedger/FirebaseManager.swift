@@ -35,11 +35,11 @@ class FirebaseManager{
 //                    "transaction.\(Date())":[]
     ] as [String : Any]
 
-    func addNewAccount(){
+    func addNewAccount(name: String, budget: Double? = 0, iconName: String){
         let newAccount = db.collection("account").document()
         let sharesID = ShareUsers.init(users: [ShareUser(unbalance: 0, userID: myInfo.userID)])
         let accountInfo = AccountInfo(budget: 0, expense: 0, income: 0, total: 0)
-        let newAccountInfo = TransactionsResponse(accountID: newAccount.documentID, accountInfo: accountInfo, accountName: "newAccount", shareUsersID: sharesID )
+        let newAccountInfo = TransactionsResponse(accountID: newAccount.documentID, accountInfo: accountInfo, accountName: name, shareUsersID: sharesID, iconName: iconName )
         
         do {
             try db.collection("accounts").document(newAccount.documentID).setData(from: newAccountInfo) { err in
@@ -234,6 +234,7 @@ struct TransactionsResponse: Codable {
     var accountInfo: AccountInfo
     var accountName: String
     var shareUsersID: ShareUsers
+    var iconName: String?
 }
 
 struct AccountInfo: Codable {
