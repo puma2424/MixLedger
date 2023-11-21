@@ -223,7 +223,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         }else{
 //            let bill = billArray[section - 1]
-            if let datas = saveData.accountData?.transactions[showMonBill(date: selectDate)]?[transactionsMonKeyArr[section - 1]]{
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsMonKeyArr[section - 1]]{
 //
 //                
 //                for dataKey in datas.keys{
@@ -241,7 +241,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard var number = saveData.accountData?.transactions[showMonBill(date: selectDate)]?.keys.count else { return 1 }
+        guard var number = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?.keys.count else { return 1 }
         number += 1
         return number
     }
@@ -256,7 +256,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        guard let data = saveData.accountData?.transactions[showMonBill(date: selectDate)] else{ return ""}
+        guard let data = saveData.accountData?.transactions?[showMonBill(date: selectDate)] else{ return ""}
         transactionsMonKeyArr = []
         for key in data.keys{
             transactionsMonKeyArr.append(key)
@@ -298,7 +298,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
             guard let billCell = cell as? BillTableViewCell else { return cell }
             
-            if let datas = saveData.accountData?.transactions[showMonBill(date: selectDate)]?[transactionsMonKeyArr[indexPath.section - 1]]{
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsMonKeyArr[indexPath.section - 1]]{
 //                print("-------------data.keys--------")
 //                print(transactionsMonKeyArr[indexPath.section - 1])
                 print(showMonBill(date: selectDate))

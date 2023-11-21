@@ -23,7 +23,7 @@ class AllAccountBookViewController: UIViewController {
                 
             case .success(let data):
                 if let myData = data["bGzuwR00sPRNmBamK91D"]{
-                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
+//                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
                     self.firebaseManager.findAccount(account: myData.shareAccount){_ in
                         self.table.reloadData()
                     }
@@ -62,6 +62,7 @@ class AllAccountBookViewController: UIViewController {
     }
     @objc func addNewAccount(){
         print("shareAccountBook")
+        firebaseManager.addNewAccount()
     }
     
     func setLayout(){
@@ -101,7 +102,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        allAccount.count
         guard let data = savaData.myInfo else { return 0 }
-        return savaData.myShareAccount.count
+        return savaData.myInfo?.shareAccount.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

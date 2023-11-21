@@ -23,18 +23,36 @@ class FirebaseManager{
 //    let date = Date()
     
     
+    let myInfo = UsersInfoResponse(name: "Puma", ownAccount: "HbS5e81PWHRY41A8nBwl", shareAccount: ["SUyJNUlNOAI26DREgF0T"], userID: "bGzuwR00sPRNmBamK91D")
     
     
-    
-    let accountInfo = ["accountID": "SUyJNUlNOAI26DREgF0T",
+    let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
                     "accountName": "去嘉義玩",
-                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 300.0],
-                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : -300.0]
+                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 0.0],
+                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : 0.0]
                            ]],
                        "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
 //                    "transaction.\(Date())":[]
     ] as [String : Any]
 
+    func addNewAccount(){
+        let newAccount = db.collection("account").document()
+        let sharesID = ShareUsers.init(users: [ShareUser(unbalance: 0, userID: myInfo.userID)])
+        let accountInfo = AccountInfo(budget: 0, expense: 0, income: 0, total: 0)
+        let newAccountInfo = TransactionsResponse(accountID: newAccount.documentID, accountInfo: accountInfo, accountName: "newAccount", shareUsersID: sharesID )
+        
+        do {
+            try db.collection("accounts").document(newAccount.documentID).setData(from: newAccountInfo) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+        }catch let  error{
+            print("Error writing city to Firestore: \(error)")
+        }
+    }
     
     func postData( amount: Double, date: Date, payUser: [String]?, shareUser: [String]?, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>)-> Void){
         // 上傳到 Firebase
@@ -205,7 +223,7 @@ class FirebaseManager{
 
 
 struct TransactionsResponse: Codable {
-    var transactions: [String: [String: [String: Transaction]]]
+    var transactions: [String: [String: [String: Transaction]]]?
     var accountID: String
     var accountInfo: AccountInfo
     var accountName: String
