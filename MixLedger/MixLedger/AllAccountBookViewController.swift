@@ -64,6 +64,7 @@ class AllAccountBookViewController: UIViewController {
     @objc func addNewAccount(){
         print("shareAccountBook")
 //        firebaseManager.addNewAccount()
+        present(AddNewAccountViewController(), animated: true)
     }
     
     func setLayout(){
@@ -135,13 +136,13 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 取消先前選中的 cell 的勾勾
-               if let selectedIndexPath = selectedIndexPath {
-                   guard let previousSelectedCell = tableView.cellForRow(at: selectedIndexPath) as? AccountTableViewCell else {return}
-                   previousSelectedCell.checkmarkImageView.isHidden = true
-               }
-
-               // 更新當前選中的 indexPath
-               selectedIndexPath = indexPath
+        if let selectedIndexPath = selectedIndexPath {
+            guard let previousSelectedCell = tableView.cellForRow(at: selectedIndexPath) as? AccountTableViewCell else {return}
+            previousSelectedCell.checkmarkImageView.isHidden = true
+        }
+        
+        // 更新當前選中的 indexPath
+        selectedIndexPath = indexPath
 
                // 在選中的 cell 上顯示勾勾
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? AccountTableViewCell else {return}

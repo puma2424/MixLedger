@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UIKit
 
-enum AllIcons: String{
+enum AllIcons: String, CaseIterable{
     case add
     case add2
     case bookAndPencil
@@ -25,4 +26,8 @@ enum AllIcons: String{
     case person
     case foodRice
     case moneyAndCoin
+    
+    var icon: UIImage? {
+            return UIImage(named: self.rawValue)
+        }
 }

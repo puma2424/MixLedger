@@ -21,6 +21,7 @@
 		9A2379A32B037BE6001D6BAF /* MixLedgerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */; };
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
+		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
 		9AB3DC3A2B0905A3003E70D4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC392B0905A3003E70D4 /* FirebaseAnalytics */; };
 		9AB3DC3C2B0905A3003E70D4 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC3B2B0905A3003E70D4 /* FirebaseAnalyticsOnDeviceConversion */; };
 		9AB3DC3E2B0905A3003E70D4 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC3D2B0905A3003E70D4 /* FirebaseAnalyticsSwift */; };
@@ -110,6 +111,7 @@
 		9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITests.swift; sourceTree = "<group>"; };
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
+		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANISelectDateTableViewCell.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				9AEB5F802B07335C00DF5DFF /* AllAccountBookViewController.swift */,
 				9AEB5F842B073E8200DF5DFF /* AccountTableViewCell.swift */,
 				9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */,
+				9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */,
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
@@ -617,6 +620,7 @@
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
+				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
