@@ -104,9 +104,9 @@ class FirebaseManager{
 //        getData()
     }
     
-    func getData(completion: @escaping (Result<Any, Error>) -> Void){
+    func getData(accountID: String, completion: @escaping (Result<Any, Error>) -> Void){
         // 從 Firebase 獲取數據
-        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T")
+        let docRef = db.collection("accounts").document(accountID)
         
         
         docRef.addSnapshotListener { document, error in
@@ -135,7 +135,8 @@ class FirebaseManager{
         saveData.userInfoData = [:]
         for id in userID{
             let docRef = db.collection("users").document(id)
-            docRef.getDocument { document, error in
+            
+            docRef.addSnapshotListener { document, error in
                 if let error = error as NSError? {
                   self.errorMessage = "Error getting document: \(error.localizedDescription)"
                 }

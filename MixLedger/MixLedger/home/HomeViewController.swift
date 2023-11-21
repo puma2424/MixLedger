@@ -17,6 +17,27 @@ class HomeViewController: UIViewController{
     let saveData = SaveData.shared
     let firebaseManager = FirebaseManager.shared
     
+    var currentAccountID: String = "SUyJNUlNOAI26DREgF0T"{
+        didSet{
+            firebaseManager.getData(accountID: currentAccountID){ result in
+                switch result {
+                case .success(let data):
+                    // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+                    print("getData Success: \(data)")
+                    print("\(self.saveData.accountData?.transactions)")
+    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+                    self.billTable.reloadData()
+                    self.billStatusOpenView.table.reloadData()
+                    
+                    self.navigationItem.title = self.saveData.accountData?.accountName
+                case .failure(let error):
+                    // 失敗時的處理
+                    print("Failure: \(error)")
+                }
+            }
+        }
+    }
+    
     var transactionsMonKeyArr: [String] = []
     var transactionsDayDatasKeys: [String] = []
     override func viewDidLoad() {
@@ -36,7 +57,7 @@ class HomeViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         
-        firebaseManager.getData{ result in
+        firebaseManager.getData(accountID: currentAccountID){ result in
             switch result {
             case .success(let data):
                 // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
@@ -100,8 +121,9 @@ class HomeViewController: UIViewController{
     
     @objc func editAccountBook(){
         let accountBookView = AllAccountBookViewController()
-        accountBookView.accountInfo = { info in
-            print("\(info)")
+        accountBookView.accountInfo = { currentAccountID in
+            print("\(currentAccountID)")
+            self.currentAccountID = currentAccountID
             return
         }
         navigationController?.pushViewController(accountBookView, animated: true)

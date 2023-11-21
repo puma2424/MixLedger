@@ -23,7 +23,7 @@ class AllAccountBookViewController: UIViewController {
                 
             case .success(let data):
                 if let myData = data["bGzuwR00sPRNmBamK91D"]{
-//                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
+                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
                     self.firebaseManager.findAccount(account: myData.shareAccount){_ in
                         self.table.reloadData()
                     }
@@ -46,12 +46,13 @@ class AllAccountBookViewController: UIViewController {
     */
      let firebaseManager = FirebaseManager.shared
     let savaData = SaveData.shared
-    var accountInfo: ((Any) -> ())?
+    var accountInfo: ((String) -> ())?
     let table = UITableView()
     var selectedIndexPath: IndexPath?
     func setTable(){
         table.delegate = self
         table.dataSource = self
+        table.backgroundColor = UIColor(named: "G3")
         table.register(AccountTableViewCell.self, forCellReuseIdentifier: "accountCell")
     }
     
@@ -62,7 +63,7 @@ class AllAccountBookViewController: UIViewController {
     }
     @objc func addNewAccount(){
         print("shareAccountBook")
-        firebaseManager.addNewAccount()
+//        firebaseManager.addNewAccount()
     }
     
     func setLayout(){
@@ -102,11 +103,12 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        allAccount.count
         guard let data = savaData.myInfo else { return 0 }
-        return savaData.myInfo?.shareAccount.count ?? 0
+        return data.shareAccount.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
+        cell.backgroundColor = UIColor(named: "G3")
         guard let accountCell = cell as? AccountTableViewCell else{ return cell }
         // 判斷是否為當前選中的 cell
         if indexPath == selectedIndexPath {
@@ -143,7 +145,10 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
 
                // 在選中的 cell 上顯示勾勾
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? AccountTableViewCell else {return}
-        accountInfo?(allAccount[indexPath.row])
+        if let id = savaData.myInfo?.shareAccount[indexPath.row]{
+            accountInfo?(id)
+            print(savaData.myShareAccount[id])
+        }
         selectedCell.checkmarkImageView.isHidden = false
     }
     
