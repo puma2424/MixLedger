@@ -116,6 +116,7 @@ class HomeViewController: UIViewController{
     @objc func addNewBill(){
         print("addNewBill")
         let addNewView = AddNewItemViewController()
+        addNewView.currentAccountID = currentAccountID
         present(addNewView, animated: true)
     }
     

@@ -31,7 +31,7 @@ class AddNewItemViewController: UIViewController {
     */
     
     
-    
+    var currentAccountID: String = ""
     let firebase = FirebaseManager.shared
     var amount: Double?
     var member: String?
@@ -66,10 +66,11 @@ class AddNewItemViewController: UIViewController {
         }else{
 //            type?.iconName = AllIcons.edit.rawValue
 //            print(type)
-            firebase.postData(amount: -(amount ?? 0) , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "草莓", type: type){ result in
+            // swiftlint:disable line_length
+            firebase.postData(toAccountID: currentAccountID, amount: -(amount ?? 0) , date: selectDate ?? Date(), payUser: ["QJeplpxVXBca5xhXWgbT"], shareUser: ["QJeplpxVXBca5xhXWgbT"], note: "草莓", type: type){ result in
                 self.dismiss(animated: true)
             }
-            
+            // swiftlint:enable line_length
         }
         
     }

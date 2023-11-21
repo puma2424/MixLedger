@@ -59,16 +59,7 @@ class FirebaseManager{
         
     }
     
-    func postData( amount: Double, date: Date, payUser: [String]?, shareUser: [String]?, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>)-> Void){
-        // 上傳到 Firebase
-//        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").setData(accountInfo) { err in
-//          if let err = err {
-//            print("Error writing document: \(err)")
-//          } else {
-//            print("Document successfully written!")
-//          }
-//        }
-       
+    func postData(toAccountID: String, amount: Double, date: Date, payUser: [String]?, shareUser: [String]?, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>)-> Void){
         let transaction = [
         "amount": amount,
         "date": date,
@@ -87,7 +78,7 @@ class FirebaseManager{
         dateFont.dateFormat = "yyyy-MM-dd"
         let dateD = dateFont.string(from: date)
         
-        db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").updateData([
+        db.collection("accounts").document(toAccountID).updateData([
           "transactions.\(dateM).\(dateD).\(Date())": transaction,
           "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0,
           "accountInfo.expense": FieldValue.increment(amount),
