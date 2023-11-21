@@ -46,12 +46,17 @@ class FirebaseManager{
                 if let err = err {
                     print("Error writing document: \(err)")
                 } else {
+                    self.db.collection("users").document(self.myInfo.userID).updateData([
+                        "shareAccount" : FieldValue.arrayUnion([newAccount.documentID])
+                    ])
                     print("Document successfully written!")
                 }
             }
         }catch let  error{
             print("Error writing city to Firestore: \(error)")
         }
+        
+        
     }
     
     func postData( amount: Double, date: Date, payUser: [String]?, shareUser: [String]?, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>)-> Void){
