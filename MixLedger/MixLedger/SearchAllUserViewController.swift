@@ -31,12 +31,12 @@ class SearchAllUserViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    var name = ["puma","aaa"]
-    var searchResults: [UsersInfoResponse] = []
     
     let firebaseManager = FirebaseManager.shared
     
-//    var users: [String : UsersInfoResponse] = [:]
+    var accountIDWithShare: String = ""
+    
+    var searchResults: [UsersInfoResponse] = []
     
     var allUsers: [UsersInfoResponse] = []
     
@@ -111,6 +111,11 @@ extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSourc
         guard let searchCell = cell as? SearchUserTableViewCell else { return cell }
         
         searchCell.nameLabel.text = searchResults[indexPath.row].name
+        if searchCell.postShareInfo == nil {
+            searchCell.postShareInfo = {
+                print("post \(self.searchResults[indexPath.row].name)")
+            }
+        }
         return searchCell
     }
     

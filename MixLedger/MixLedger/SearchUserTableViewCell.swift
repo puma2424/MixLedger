@@ -13,6 +13,7 @@ class SearchUserTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         setupLayout()
+        setupButton()
     }
     
     required init?(coder: NSCoder) {
@@ -31,20 +32,30 @@ class SearchUserTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var postShareInfo: (() -> Void)?
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "G1")
         return label
     }()
     
-    var postButton: UIButton = {
+    let postButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(named: "G3")
         button.setTitleColor(UIColor(named: "G1"), for: .normal)
-        button.setTitle("post", for: .normal)
+        button.setTitle("Share", for: .normal)
         return button
     }()
+    
+    @objc func postButtonAction(){
+        postShareInfo?()
+    }
+    
+    func setupButton(){
+        postButton.addTarget(self, action: #selector(postButtonAction), for: .touchUpInside)
+    }
     
     func setupLayout(){
         contentView.addSubview(nameLabel)

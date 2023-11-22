@@ -140,6 +140,7 @@ class HomeViewController: UIViewController{
     @objc func shareAccountBook(){
         print("shareAccountBook")
         let searchView = SearchAllUserViewController()
+        searchView.accountIDWithShare = currentAccountID
         navigationController?.pushViewController(searchView, animated: true)
     }
     
