@@ -34,6 +34,29 @@ class FirebaseManager{
                        "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
 //                    "transaction.\(Date())":[]
     ] as [String : Any]
+    
+    func getAllUser(completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
+        db.collection("users").getDocuments() { (querySnapshot, err) in
+            var responeArray: [UsersInfoResponse] = []
+          if let err = err {
+            print("Error getting documents: \(err)")
+          } else {
+            for document in querySnapshot!.documents {
+              print("\(document.documentID) => \(document.data())")
+                do {
+                    // print("----\n\(document.data())")
+                    let data = try document.data(as: UsersInfoResponse.self)
+                    responeArray.append(data)
+                    
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+              completion(.success(responeArray))
+          }
+        }
+    }
 
     func addNewAccount(name: String, budget: Double? = 0, iconName: String){
         let newAccount = db.collection("account").document()
@@ -130,6 +153,7 @@ class FirebaseManager{
             docRef.addSnapshotListener { document, error in
                 if let error = error as NSError? {
                   self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                    completion(.failure(error))
                 }
                 else {
                   if let document = document {
@@ -144,7 +168,8 @@ class FirebaseManager{
                         completion(.success([id : responseData]))
                     }
                     catch {
-                      print(error)
+                        print(error)
+                        completion(.failure(error))
                     }
                   }
                 }

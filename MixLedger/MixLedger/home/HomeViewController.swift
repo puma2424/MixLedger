@@ -139,6 +139,8 @@ class HomeViewController: UIViewController{
     
     @objc func shareAccountBook(){
         print("shareAccountBook")
+        let searchView = SearchAllUserViewController()
+        navigationController?.pushViewController(searchView, animated: true)
     }
     
     func setupShareBillView(){
@@ -225,7 +227,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     
     
     func openView() {
-////        showView = nil
+//        showView = nil
 //        showView?.snp.updateConstraints{(mark) in
 //            mark.height.equalTo(300)
 //        }
