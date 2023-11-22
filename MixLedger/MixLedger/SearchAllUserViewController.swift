@@ -34,6 +34,8 @@ class SearchAllUserViewController: UIViewController {
     
     let firebaseManager = FirebaseManager.shared
     
+    let saveData = SaveData.shared
+    
     var accountIDWithShare: String = ""
     
     var searchResults: [UsersInfoResponse] = []
@@ -101,7 +103,18 @@ class SearchAllUserViewController: UIViewController {
     }
     
     func postInviteMessage(inviteeID: String){
-        firebaseManager.postShareAccountInivite(inviteeID: inviteeID, shareAccountID: accountIDWithShare)
+        if let accountName = saveData.accountData?.accountName, let myName = saveData.myInfo?.name{
+            
+            firebaseManager.postShareAccountInivite(inviteeID: inviteeID, shareAccountID: accountIDWithShare, shareAccountName: accountName, inviterName: myName){ result in
+                switch result{
+                case .success(_):
+                    return
+                case .failure(let error):
+                    return
+                }
+            }
+        }
+        
     }
 }
 

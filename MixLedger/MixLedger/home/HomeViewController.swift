@@ -97,6 +97,7 @@ class HomeViewController: UIViewController{
     
     let billStatusSmallView = SharedBillStatusSmallView()
     let billStatusOpenView = SharedBillStatusOpenView()
+    let savaData = SaveData.shared
     
     var selectDate: Date = Date()
     

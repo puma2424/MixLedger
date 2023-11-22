@@ -28,6 +28,28 @@ class MessageViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        firebaseManager.findUser(userID: ["bGzuwR00sPRNmBamK91D"]){ result in
+            switch result{
+                
+            case .success(let data):
+                if let myData = data["bGzuwR00sPRNmBamK91D"]{
+                    self.data = myData
+                }
+                print("成功取得用戶資訊")
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    let firebaseManager = FirebaseManager.shared
+    
+    var data: UsersInfoResponse?
+    
+    let saveData = SaveData.shared
+    
     let tableView = UITableView()
     
     func setupTable(){
@@ -53,13 +75,15 @@ class MessageViewController: UIViewController {
 
 extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        data?.inviteCard?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "inviteCell", for: indexPath)
         guard let inviteCell = cell as? InviteMessageTableViewCell else { return cell }
-        
+        if let data = data?.inviteCard?[indexPath.row]{
+            inviteCell.inviteMessageLabel.text = "\(data.inviterName)邀請你加入帳簿：\(data.accountName)"
+        }
         return inviteCell
     }
     

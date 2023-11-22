@@ -23,7 +23,7 @@ class FirebaseManager{
 //    let date = Date()
     
     
-    let myInfo = UsersInfoResponse(name: "Puma", ownAccount: "HbS5e81PWHRY41A8nBwl", shareAccount: ["SUyJNUlNOAI26DREgF0T"], userID: "bGzuwR00sPRNmBamK91D")
+    let myInfo = UsersInfoResponse(name: "Puma", ownAccount: "HbS5e81PWHRY41A8nBwl", shareAccount: ["SUyJNUlNOAI26DREgF0T"], userID: "bGzuwR00sPRNmBamK91D", inviteCard: [])
     
     
     let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
@@ -37,8 +37,10 @@ class FirebaseManager{
     
     
     func postShareAccountToInivitee(inviteeID: String, shareAccountID: String){
+        guard let myName = saveData.myInfo?.name else { return print("no myName") }
+        guard let accountName = saveData.accountData?.accountName else { return print("no accountName") }
         db.collection("users").document(inviteeID).updateData([
-            "inviteCard" : FieldValue.arrayUnion([["accountID":shareAccountID, "Inviter": saveData.myInfo?.userID]])
+            "inviteCard" : FieldValue.arrayUnion([["accountID":shareAccountID, "inviterID": saveData.myInfo?.userID, "inviterName": myName, "accountName": accountName]])
         ]) { err in
           if let err = err {
             print("Error updating document: \(err)")
@@ -49,7 +51,7 @@ class FirebaseManager{
         }
     }
     
-    func postShareAccountInivite(inviteeID: String, shareAccountID: String){
+    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName: String, inviterName: String, completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
         db.collection("accounts").document(shareAccountID).updateData([
             "invitees" : FieldValue.arrayUnion([inviteeID])
         ]) { err in
@@ -317,4 +319,12 @@ struct UsersInfoResponse: Codable{
     var ownAccount: String
     var shareAccount: [String]
     var userID: String
+    var inviteCard: [InviteCard]?
+}
+
+struct InviteCard: Codable{
+    var inviterID: String
+    var accountID: String
+    var accountName: String
+    var inviterName: String
 }
