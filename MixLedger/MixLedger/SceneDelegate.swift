@@ -24,14 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabbar = UITabBarController()
         tabbar.tabBar.backgroundColor = UIColor.clear
         let firstVC = UINavigationController(rootViewController: HomeViewController())
-           let secondVC = UINavigationController(rootViewController: HomeViewController())
+           let secondVC = UINavigationController(rootViewController: MessageViewController())
 
            
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
-        
+        secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
 //        secondVC.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "person"),selectedImage: UIImage(systemName: "person.fill"))
 
-        tabbar.viewControllers = [firstVC]
+        tabbar.viewControllers = [firstVC, secondVC]
         
         window?.rootViewController = tabbar
         // 將 UIWindow 設置為可見的
