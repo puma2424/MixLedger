@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
-class AddNewItemModelTableViewCell: UITableViewCell {
+class AddNewItemModelTableViewCell: UITableViewCell, UITextFieldDelegate {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         setupLayout()
+        inputText.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +48,7 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.returnKeyType = .done
 
         // 輸入文字的顏色
-        textField.textColor = UIColor.white
+        textField.textColor = UIColor(named: "G1")
         return textField
     }()
     
@@ -70,4 +71,13 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         }
         
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder()
+            return true
+      }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.endEditing(true)
+        }
 }

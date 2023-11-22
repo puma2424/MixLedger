@@ -242,7 +242,7 @@ class AddNewAccountViewController: UIViewController{
         }else{
             firebaseManager.addNewAccount(name: name, iconName: icon)
         }
-        
+//        dismiss(animated: true)
     }
 }
 

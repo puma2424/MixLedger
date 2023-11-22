@@ -30,6 +30,6 @@ class ANITypeTableViewCell: AddNewItemModelTableViewCell {
 
     func setForTypeCell(){
         inputText.placeholder = "請輸入類別"
-        
+        inputText.keyboardType = .emailAddress
     }
 }

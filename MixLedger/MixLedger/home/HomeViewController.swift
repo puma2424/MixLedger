@@ -63,7 +63,6 @@ class HomeViewController: UIViewController{
                 // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                 print("getData Success: \(data)")
                 print("\(self.saveData.accountData?.transactions)")
-//                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
                 self.billTable.reloadData()
                 self.billStatusOpenView.table.reloadData()
                 
@@ -83,7 +82,6 @@ class HomeViewController: UIViewController{
                     id.append(key)
                     self.saveData.userInfoData[key] = data[key]
                 }
-//                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
                 print("-----find User decode------")
                 print("\(self.saveData.userInfoData)")
 
@@ -297,7 +295,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 ////            print(dateString)
 //            return dateString
 //            guard transactionsMonKeyArr.count >= section  else { return "" }
-          
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+            transactionsMonKeyArr.sorted { (dateString1, dateString2) -> Bool in
+                if let date1 = dateFormatter.date(from: dateString1), let date2 = dateFormatter.date(from: dateString2) {
+                    return date1 > date2
+                } else {
+                    return false
+                }
+            }
+            print("titleForHeaderInSection---\(transactionsMonKeyArr)-----------------")
             return transactionsMonKeyArr[section - 1]
         }else{
             return ""
@@ -337,7 +345,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 for dataKey in datas.keys{
                     transactionsDayDatasKeys.append(dataKey)
                 }
-
+                print("--------before sort")
+                print(transactionsMonKeyArr)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                transactionsDayDatasKeys.sorted { (dateString1, dateString2) -> Bool in
+                    if let date1 = dateFormatter.date(from: dateString1), let date2 = dateFormatter.date(from: dateString2) {
+                        return date1 > date2
+                    } else {
+                        return false
+                    }
+                }
+                print("--------after sort")
+                print(transactionsMonKeyArr)
+                
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
                 
                 billCell.sortImageView.image = UIImage(named: data.type.iconName)
@@ -364,6 +387,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
         }
         
+    }
+    
+    func compareDates(_ date1: String, _ date2: String) -> Bool {
+        // 將日期字符串轉換為Date對象
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        if let d1 = formatter.date(from: date1), let d2 = formatter.date(from: date2) {
+            // 比較兩個日期
+            return d1 < d2
+        } else {
+            // 轉換日期失敗時，返回false
+            return false
+        }
     }
 }
 
