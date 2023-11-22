@@ -35,6 +35,33 @@ class FirebaseManager{
 //                    "transaction.\(Date())":[]
     ] as [String : Any]
     
+    
+    func postShareAccountToInivitee(inviteeID: String, shareAccountID: String){
+        db.collection("users").document(inviteeID).updateData([
+            "inviteCard" : FieldValue.arrayUnion([["accountID":shareAccountID, "Inviter": saveData.myInfo?.userID]])
+        ]) { err in
+          if let err = err {
+            print("Error updating document: \(err)")
+          } else {
+            print("Document successfully updated postShareAccountToInivitee")
+              
+          }
+        }
+    }
+    
+    func postShareAccountInivite(inviteeID: String, shareAccountID: String){
+        db.collection("accounts").document(shareAccountID).updateData([
+            "invitees" : FieldValue.arrayUnion([inviteeID])
+        ]) { err in
+          if let err = err {
+            print("Error updating document: \(err)")
+          } else {
+            print("Document successfully updated")
+              self.postShareAccountToInivitee(inviteeID: inviteeID, shareAccountID: shareAccountID)
+          }
+        }
+    }
+    
     func getAllUser(completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
         db.collection("users").getDocuments() { (querySnapshot, err) in
             var responeArray: [UsersInfoResponse] = []

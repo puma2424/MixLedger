@@ -22,6 +22,7 @@
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
 		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
 		9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */; };
+		9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
 		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
 		9AB3DC3A2B0905A3003E70D4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC392B0905A3003E70D4 /* FirebaseAnalytics */; };
@@ -114,6 +115,7 @@
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
 		9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTableViewCell.swift; sourceTree = "<group>"; };
+		9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
+				9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
 				9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */,
+				9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */,
 				9AEB5F742B0608D100DF5DFF /* ShowMoneyFormat.swift in Sources */,
 				9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */,
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,

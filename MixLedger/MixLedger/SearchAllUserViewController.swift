@@ -99,6 +99,10 @@ class SearchAllUserViewController: UIViewController {
             return isMatch
         })
     }
+    
+    func postInviteMessage(inviteeID: String){
+        firebaseManager.postShareAccountInivite(inviteeID: inviteeID, shareAccountID: accountIDWithShare)
+    }
 }
 
 extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSource{
@@ -114,6 +118,7 @@ extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSourc
         if searchCell.postShareInfo == nil {
             searchCell.postShareInfo = {
                 print("post \(self.searchResults[indexPath.row].name)")
+                self.postInviteMessage(inviteeID: self.searchResults[indexPath.row].userID)
             }
         }
         return searchCell
