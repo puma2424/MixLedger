@@ -6,13 +6,16 @@
 //
 
 import UIKit
-
+import SnapKit
 class MessageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupLayout()
+        setupTable()
+        self.navigationItem.title = "通知"
     }
     
 
@@ -25,5 +28,40 @@ class MessageViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    let tableView = UITableView()
+    
+    func setupTable(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(InviteMessageTableViewCell.self, forCellReuseIdentifier: "inviteCell")
+    }
+    
+    func setupLayout(){
+        view.addSubview(tableView)
+        
+        tableView.snp.makeConstraints{(mark) in
+            mark.leading.equalTo(view.safeAreaLayoutGuide)
+            mark.top.equalTo(view.safeAreaLayoutGuide)
+            mark.trailing.equalTo(view.safeAreaLayoutGuide)
+            mark.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+    }
 
+}
+
+extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "inviteCell", for: indexPath)
+        guard let inviteCell = cell as? InviteMessageTableViewCell else { return cell }
+        
+        return inviteCell
+    }
+    
+    
 }
