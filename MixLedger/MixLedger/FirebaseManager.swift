@@ -21,19 +21,23 @@ class FirebaseManager{
     
     let dateFont = DateFormatter()
     
-    
-    let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
-                    "accountName": "去嘉義玩",
-                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 0.0],
-                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : 0.0]
-                           ]],
-                       "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
+//    
+//    let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
+//                    "accountName": "去嘉義玩",
+//                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 0.0],
+//                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : 0.0]
+//                           ]],
+//                       "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
 //                    "transaction.\(Date())":[]
-    ] as [String : Any]
+//    ] as [String : Any]
     
-    func postAgareShareAccount(accountID: String, myID: String, completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
+    func postRespondToInvitation(respond: Bool, accountID: String, completion: @escaping (Result<String, Error>)-> Void){
+        
+    }
+    
+    private func postAgareShareAccount(accountID: String, myID: String, completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
         db.collection("accounts").document(accountID).updateData([
-            "shareUsersID.": ""
+            "shareUsersID.": FieldValue.arrayUnion([])
         ]){ err in
             if let err = err {
               print("Error updating document: \(err)")
@@ -44,7 +48,7 @@ class FirebaseManager{
           }
     }
     
-    func postShareAccountToInivitee(inviteeID: String, shareAccountID: String){
+    private func postShareAccountToInivitee(inviteeID: String, shareAccountID: String){
         guard let myName = saveData.myInfo?.name else { return print("no myName") }
         guard let accountName = saveData.accountData?.accountName else { return print("no accountName") }
         db.collection("users").document(inviteeID).updateData([
@@ -58,7 +62,7 @@ class FirebaseManager{
           }
         }
     }
-    
+    // 發送共享帳簿的邀請
     func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName: String, inviterName: String, completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
         db.collection("accounts").document(shareAccountID).updateData([
             "invitees" : FieldValue.arrayUnion([inviteeID])
@@ -98,7 +102,7 @@ class FirebaseManager{
     func addNewAccount(name: String, budget: Double? = 0, iconName: String){
         let newAccount = db.collection("account").document()
         guard let myInfo = saveData.myInfo else { return }
-        let sharesID = ShareUsers.init(users: [ShareUser(unbalance: 0, userID: myInfo.userID)])
+        let sharesID = [myInfo.userID: 0.0]
         let accountInfo = AccountInfo(budget: 0, expense: 0, income: 0, total: 0)
         let newAccountInfo = TransactionsResponse(accountID: newAccount.documentID, accountInfo: accountInfo, accountName: name, shareUsersID: sharesID, iconName: iconName )
         
@@ -141,7 +145,7 @@ class FirebaseManager{
         
         db.collection("accounts").document(toAccountID).updateData([
           "transactions.\(dateM).\(dateD).\(Date())": transaction,
-          "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0,
+//          "shareUsersID.\("QJeplpxVXBca5xhXWgbT").unbalance": -500.0,
           "accountInfo.expense": FieldValue.increment(amount),
           "accountInfo.total": FieldValue.increment(amount),
         ]) { err in
@@ -185,30 +189,32 @@ class FirebaseManager{
     
     func findUser(userID: [String], completion: @escaping (Result<[String : UsersInfoResponse], Error>) -> Void){
 
-        for id in userID{
-            let docRef = db.collection("users").document(id)
-            
-            docRef.addSnapshotListener { document, error in
-                if let error = error as NSError? {
-                  self.errorMessage = "Error getting document: \(error.localizedDescription)"
-                    completion(.failure(error))
-                }
-                else {
-                  if let document = document {
-                      print("-----find User------")
-                      print(document.data())
-                    do {
-                        let responseData = try document.data(as: UsersInfoResponse.self)
-                        print(responseData)
-                        completion(.success([id : responseData]))
-                    }
-                    catch {
-                        print(error)
+        if !userID.isEmpty{
+            for id in userID{
+                let docRef = db.collection("users").document(id)
+                
+                docRef.addSnapshotListener { document, error in
+                    if let error = error as NSError? {
+                      self.errorMessage = "Error getting document: \(error.localizedDescription)"
                         completion(.failure(error))
                     }
+                    else {
+                      if let document = document {
+                          print("-----find User------")
+                          print(document.data())
+                        do {
+                            let responseData = try document.data(as: UsersInfoResponse.self)
+                            print(responseData)
+                            completion(.success([id : responseData]))
+                        }
+                        catch {
+                            print(error)
+                            completion(.failure(error))
+                        }
+                      }
+                    }
                   }
-                }
-              }
+            }
         }
         print("\(self.saveData.userInfoData)")
 //        completion(.success(saveData.userInfoData))
@@ -219,25 +225,29 @@ class FirebaseManager{
         print(account)
         
         let docRef = db.collection("accounts")
-        
-        docRef.whereField("accountID", in: account).getDocuments{  (querySnapshot, err) in
-            if let err = err {
-              print("Error getting documents: \(err)")
-            } else {
-              for document in querySnapshot!.documents {
-//                print("\(document.documentID) => \(document.data())")
-                  print(document.data()["accountName"])
-                  if let id = document.data()["accountID"] as? String/*, let name = [document.data()["accountName"]] as? String*/ {
-                      self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
-                  }else{
-                      print(document.data()["accountID"])
-                      print(document.data()["accountName"])
+        if !account.isEmpty{
+            
+            docRef.whereField("accountID", in: account).getDocuments{  (querySnapshot, err) in
+                if let err = err {
+                  print("Error getting documents: \(err)")
+                } else {
+                    if let querySnapshot = querySnapshot{
+                        for document in querySnapshot.documents {
+        //                print("\(document.documentID) => \(document.data())")
+                          print(document.data()["accountName"])
+                          if let id = document.data()["accountID"] as? String/*, let name = [document.data()["accountName"]] as? String*/ {
+                              self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+                          }else{
+                              print(document.data()["accountID"])
+                              print(document.data()["accountName"])
+                          }
+                          
+                      }
                   }
-                  
-              }
-                completion(.success("success"))
+                    completion(.success("success"))
+                }
+                print(self.saveData.myShareAccount)
             }
-            print(self.saveData.myShareAccount)
         }
         
     }
@@ -284,7 +294,7 @@ struct TransactionsResponse: Codable {
     var accountID: String
     var accountInfo: AccountInfo
     var accountName: String
-    var shareUsersID: ShareUsers
+    var shareUsersID: [String: Double]?
     var iconName: String?
 }
 
@@ -294,6 +304,11 @@ struct AccountInfo: Codable {
     var income: Double
     var total: Double
 }
+
+//struct ShareUsers: Codable {
+//    var unbalance: Double
+//    var userID: String
+//}
 
 struct ShareUsers: Codable {
     var users: [ShareUser]
@@ -312,12 +327,12 @@ struct Transaction: Codable {
     var note: String?
     var payUser: [String]?
     var shareUser: [String]?
-    var type: TransactionType
+    var type: TransactionType?
 }
 
 struct TransactionType: Codable {
-    var iconName: String
-    var name: String
+    var iconName: String?
+    var name: String?
 }
 
 struct UsersInfoResponse: Codable{
