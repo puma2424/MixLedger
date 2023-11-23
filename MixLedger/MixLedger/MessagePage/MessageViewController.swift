@@ -30,19 +30,21 @@ class MessageViewController: UIViewController {
     */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        firebaseManager.findUser(userID: ["bGzuwR00sPRNmBamK91D"]){ result in
-            switch result{
-                
-            case .success(let data):
-                if let myData = data["bGzuwR00sPRNmBamK91D"]{
-                    self.data = myData
-                }
-                print("成功取得用戶資訊")
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        data = saveData.myInfo
+        tableView.reloadData()
+//        firebaseManager.findUser(userID: [myID]){ result in
+//            switch result{
+//                
+//            case .success(let data):
+//                if let myData = data[myID]{
+//                    self.data = myData
+//                }
+//                print("成功取得用戶資訊")
+//                self.tableView.reloadData()
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     let firebaseManager = FirebaseManager.shared
     
@@ -70,6 +72,17 @@ class MessageViewController: UIViewController {
         }
         
     }
+    
+    func agare(index: IndexPath){
+        print("agare in table \(index)")
+        print(data?.inviteCard?[index.row])
+        
+        
+    }
+    
+    func reject(index: IndexPath){
+        print("agare in table \(index)")
+    }
 
 }
 
@@ -84,6 +97,15 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource{
         if let data = data?.inviteCard?[indexPath.row]{
             inviteCell.inviteMessageLabel.text = "\(data.inviterName)邀請你加入帳簿：\(data.accountName)"
         }
+        
+        inviteCell.agreeClosure = { [weak self] in
+            self?.agare(index: indexPath)
+        }
+        
+        inviteCell.rejectClosure = { [weak self] in
+            self?.reject(index: indexPath)
+        }
+        
         return inviteCell
     }
     

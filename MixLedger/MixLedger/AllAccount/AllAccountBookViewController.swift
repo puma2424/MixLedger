@@ -18,12 +18,12 @@ class AllAccountBookViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        firebaseManager.findUser(userID: ["bGzuwR00sPRNmBamK91D"]){ result in
+        firebaseManager.findUser(userID: [myID]){ result in
             switch result{
                 
             case .success(let data):
-                if let myData = data["bGzuwR00sPRNmBamK91D"]{
-                    self.savaData.myInfo = data["bGzuwR00sPRNmBamK91D"]
+                if let myData = data[myID]{
+                    self.savaData.myInfo = myData
                     self.firebaseManager.findAccount(account: myData.shareAccount){_ in
                         self.table.reloadData()
                     }

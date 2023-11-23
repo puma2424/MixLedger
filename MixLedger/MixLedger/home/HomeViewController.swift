@@ -73,6 +73,19 @@ class HomeViewController: UIViewController{
                 print("Failure: \(error)")
             }
         }
+        // find my info
+        firebaseManager.findUser(userID: [myID]){ result in
+            self.saveData.myInfo = nil
+        
+            switch result{
+            case .success(let data):
+                self.saveData.myInfo = data[myID]
+            case .failure(let error):
+                print("Failure: \(error)\n cannot get myInfo")
+            }
+        }
+        
+        // find friend
         firebaseManager.findUser(userID: userID){ result in
             self.saveData.userInfoData = [:]
             switch result {

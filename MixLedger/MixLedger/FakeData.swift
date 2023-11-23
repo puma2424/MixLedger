@@ -13,8 +13,7 @@ struct BillTag{
     var name: String
 }
 
-
-
+var myID = "bGzuwR00sPRNmBamK91D"
 var billArray: [[String: [Any]]] = [["日期": [Date()],
                                      "item": [["金額": -3000000,
                                                "付費者": ["puma","niw"],

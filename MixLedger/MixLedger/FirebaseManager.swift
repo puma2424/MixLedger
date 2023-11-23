@@ -20,10 +20,6 @@ class FirebaseManager{
     @Published var errorMessage: String?
     
     let dateFont = DateFormatter()
-//    let date = Date()
-    
-    
-    let myInfo = UsersInfoResponse(name: "Puma", ownAccount: "HbS5e81PWHRY41A8nBwl", shareAccount: ["SUyJNUlNOAI26DREgF0T"], userID: "bGzuwR00sPRNmBamK91D", inviteCard: [])
     
     
     let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
@@ -35,6 +31,18 @@ class FirebaseManager{
 //                    "transaction.\(Date())":[]
     ] as [String : Any]
     
+    func postAgareShareAccount(accountID: String, myID: String, completion: @escaping (Result<[UsersInfoResponse],Error>)-> Void){
+        db.collection("accounts").document(accountID).updateData([
+            "shareUsersID.": ""
+        ]){ err in
+            if let err = err {
+              print("Error updating document: \(err)")
+            } else {
+              print("Document successfully updated postShareAccountToInivitee")
+                
+            }
+          }
+    }
     
     func postShareAccountToInivitee(inviteeID: String, shareAccountID: String){
         guard let myName = saveData.myInfo?.name else { return print("no myName") }
@@ -89,6 +97,7 @@ class FirebaseManager{
 
     func addNewAccount(name: String, budget: Double? = 0, iconName: String){
         let newAccount = db.collection("account").document()
+        guard let myInfo = saveData.myInfo else { return }
         let sharesID = ShareUsers.init(users: [ShareUser(unbalance: 0, userID: myInfo.userID)])
         let accountInfo = AccountInfo(budget: 0, expense: 0, income: 0, total: 0)
         let newAccountInfo = TransactionsResponse(accountID: newAccount.documentID, accountInfo: accountInfo, accountName: name, shareUsersID: sharesID, iconName: iconName )
@@ -98,7 +107,7 @@ class FirebaseManager{
                 if let err = err {
                     print("Error writing document: \(err)")
                 } else {
-                    self.db.collection("users").document(self.myInfo.userID).updateData([
+                    self.db.collection("users").document(myInfo.userID).updateData([
                         "shareAccount" : FieldValue.arrayUnion([newAccount.documentID])
                     ])
                     print("Document successfully written!")
@@ -175,7 +184,7 @@ class FirebaseManager{
     }
     
     func findUser(userID: [String], completion: @escaping (Result<[String : UsersInfoResponse], Error>) -> Void){
-        saveData.userInfoData = [:]
+
         for id in userID{
             let docRef = db.collection("users").document(id)
             
@@ -191,9 +200,6 @@ class FirebaseManager{
                     do {
                         let responseData = try document.data(as: UsersInfoResponse.self)
                         print(responseData)
-//                        self.saveData.userInfoData[id] = responseData
-//                        print("-----find User decode------")
-//                        print("\(self.saveData.userInfoData)")
                         completion(.success([id : responseData]))
                     }
                     catch {
@@ -206,8 +212,8 @@ class FirebaseManager{
         }
         print("\(self.saveData.userInfoData)")
 //        completion(.success(saveData.userInfoData))
-        
     }
+    
     func findAccount(account: [String], completion: @escaping (Result<Any, Error>) -> Void){
         print("-------account array---------")
         print(account)

@@ -32,6 +32,10 @@ class InviteMessageTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var agreeClosure: (() -> ())?
+    
+    var rejectClosure: (() -> ())?
+    
     let inviteMessageLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -59,10 +63,13 @@ class InviteMessageTableViewCell: UITableViewCell {
     
     @objc func agreeAction(){
         print("接受")
+        agreeClosure?()
     }
     
     @objc func rejectAvtion(){
         print("拒絕")
+        rejectClosure?()
+        
     }
     
     func setupButton(){
