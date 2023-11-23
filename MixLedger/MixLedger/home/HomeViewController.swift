@@ -74,6 +74,7 @@ class HomeViewController: UIViewController{
             }
         }
         firebaseManager.findUser(userID: userID){ result in
+            self.saveData.userInfoData = [:]
             switch result {
             case .success(let data):
                 // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型

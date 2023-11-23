@@ -252,8 +252,8 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
-				9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */,
-				9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */,
+				9A50ADC12B0EECB50099351D /* ShareAccount */,
+				9A50ADC02B0EEC900099351D /* MessagePage */,
 				9A524CD52B0DCE5800B232D4 /* AllAccount */,
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
@@ -270,8 +270,6 @@
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
-				9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */,
-				9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -291,6 +289,24 @@
 				9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */,
 			);
 			path = MixLedgerUITests;
+			sourceTree = "<group>";
+		};
+		9A50ADC02B0EEC900099351D /* MessagePage */ = {
+			isa = PBXGroup;
+			children = (
+				9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */,
+				9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */,
+			);
+			path = MessagePage;
+			sourceTree = "<group>";
+		};
+		9A50ADC12B0EECB50099351D /* ShareAccount */ = {
+			isa = PBXGroup;
+			children = (
+				9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */,
+				9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */,
+			);
+			path = ShareAccount;
 			sourceTree = "<group>";
 		};
 		9A524CD52B0DCE5800B232D4 /* AllAccount */ = {
