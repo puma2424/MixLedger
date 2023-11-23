@@ -1,20 +1,24 @@
 PODS:
+  - IQKeyboardManagerSwift (6.5.16)
   - SnapKit (5.6.0)
   - SwiftLint (0.54.0)
 
 DEPENDENCIES:
+  - IQKeyboardManagerSwift
   - SnapKit (~> 5.6.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManagerSwift
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 8e4a2364b532d8075a150f69bd2902cb9d2a4c52
+PODFILE CHECKSUM: 661a06d88307a530ec33cfc39e9791f713113f7f
 
 COCOAPODS: 1.14.2

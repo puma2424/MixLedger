@@ -11,8 +11,11 @@ target 'MixLedger' do
   # Pods for MixLedger
   pod 'SwiftLint'
   pod 'SnapKit', '~> 5.6.0'
- 
-  target 'MixLedgerTests' do
+  pod 'IQKeyboardManagerSwift'
+#pod 'FirebaseCore'
+  
+
+target 'MixLedgerTests' do
     inherit! :search_paths
 #pod 'Firebase'
     # Pods for testing
