@@ -14,22 +14,25 @@ class HomeViewController: UIViewController {
     let saveData = SaveData.shared
     let firebaseManager = FirebaseManager.shared
 
-    var currentAccountID: String = "SUyJNUlNOAI26DREgF0T" {
+    var currentAccountID: String = "" {
         didSet {
-            firebaseManager.getData(accountID: currentAccountID) { result in
-                switch result {
-                case let .success(data):
-                    // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-                    print("getData Success: \(data)")
-                    print("\(self.saveData.accountData?.transactions)")
-                    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
-                    self.billTable.reloadData()
-                    self.billStatusOpenView.table.reloadData()
+            if currentAccountID != ""{
+                firebaseManager.getData(accountID: currentAccountID) { result in
+                    switch result {
+                    case let .success(data):
+                        // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+                        print("getData Success: \(data)")
+                        print("\(self.saveData.accountData?.transactions)")
+                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+                        self.billStatusOpenView.table.reloadData()
 
-                    self.navigationItem.title = self.saveData.accountData?.accountName
-                case let .failure(error):
-                    // 失敗時的處理
-                    print("Failure: \(error)")
+                        self.navigationItem.title = self.saveData.accountData?.accountName
+                        self.billTable.reloadData()
+                    case let .failure(error):
+                        // 失敗時的處理
+                        print("Failure: \(error)")
+                    }
                 }
             }
         }
@@ -41,42 +44,36 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationItem.title = ""
+        getMyInfo()
         setupShareBillView()
         setupLayout()
         setupTable()
         setNavigation()
         setupButton()
 //        showMonBill()
+        
     }
 
     override func viewWillAppear(_: Bool) {
-        firebaseManager.getData(accountID: currentAccountID) { result in
-            switch result {
-            case let .success(data):
-                // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-                print("getData Success: \(data)")
-                print("\(self.saveData.accountData?.transactions)")
-//                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
-                self.billTable.reloadData()
-                self.billStatusOpenView.table.reloadData()
+       if currentAccountID != "" {
+           firebaseManager.getData(accountID: currentAccountID) { result in
+                switch result {
+                case let .success(data):
+                    // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+                    print("getData Success: \(data)")
+                    print("\(self.saveData.accountData?.transactions)")
+    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+                    self.billTable.reloadData()
+                    self.billStatusOpenView.table.reloadData()
 
-                self.navigationItem.title = self.saveData.accountData?.accountName
-            case let .failure(error):
-                // 失敗時的處理
-                print("Failure: \(error)")
+                    self.navigationItem.title = self.saveData.accountData?.accountName
+                case let .failure(error):
+                    // 失敗時的處理
+                    print("Failure: \(error)")
+                }
             }
         }
-        // find my info
-        firebaseManager.findUser(userID: [myID]) { result in
-            self.saveData.myInfo = nil
-
-            switch result {
-            case let .success(data):
-                self.saveData.myInfo = data[myID]
-            case let .failure(error):
-                print("Failure: \(error)\n cannot get myInfo")
-            }
-        }
+        
 
         saveData.userInfoData = [:]
         billStatusOpenView.usersInfo = [:]
@@ -131,6 +128,23 @@ class HomeViewController: UIViewController {
         button.setImage(UIImage(named: "add"), for: .normal)
         return button
     }()
+    
+    func getMyInfo(){
+        // find my info
+        firebaseManager.findUser(userID: [myID]) { result in
+            self.saveData.myInfo = nil
+
+            switch result {
+            case let .success(data):
+                self.saveData.myInfo = data[myID]
+                if self.currentAccountID == ""{
+                    self.currentAccountID = data[myID]?.ownAccount ?? ""
+                }
+            case let .failure(error):
+                print("Failure: \(error)\n cannot get myInfo")
+            }
+        }
+    }
 
     func showMonBill(date: Date) -> String {
         let dateFont = DateFormatter()
@@ -240,11 +254,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate {
     func inputData(view: SharedBillStatusOpenView) {
-        view.billStatus = savaData.accountData?.shareUsersID
-        view.usersInfo = saveData.userInfoData
-
-//        view.usersInfo = userID
-        print(view.usersInfo)
+//        view.billStatus = savaData.accountData?.shareUsersID
+//        view.usersInfo = saveData.userInfoData
+//
+////        view.usersInfo = userID
+//        print(view.usersInfo)
     }
 
     func openView() {
@@ -387,18 +401,6 @@ extension HomeViewController: BillStatusTableViewCellDelegate {
     func changeMonth(cell _: BillStatusTableViewCell, date: Date) {
         selectDate = date
         billTable.reloadData()
-//        firebaseManager.getData{ result in
-//            switch result {
-//            case .success(let data):
-//                // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-//                print("getData Success: \(data)")
-//                print("\(self.saveData.accountData?.transactions)")
-//                //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
-//                self.billTable.reloadData()
-//            case .failure(let error):
-//                // 失敗時的處理
-//                print("Failure: \(error)")
-//            }
-//        }
+
     }
 }
