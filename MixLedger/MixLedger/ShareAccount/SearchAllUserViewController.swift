@@ -5,10 +5,9 @@
 //  Created by 莊羚羊 on 2023/11/22.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 class SearchAllUserViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,70 +16,70 @@ class SearchAllUserViewController: UIViewController {
         setupTable()
         setupSearch()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getAllUser()
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+    /*
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // Get the new view controller using segue.destination.
+         // Pass the selected object to the new view controller.
+     }
+     */
+
     let firebaseManager = FirebaseManager.shared
-    
+
     let saveData = SaveData.shared
-    
+
     var accountIDWithShare: String = ""
-    
+
     var searchResults: [UsersInfoResponse] = []
-    
+
     var allUsers: [UsersInfoResponse] = []
-    
+
     let searchController = UISearchController(searchResultsController: nil)
-    
+
     let tableView = UITableView()
-    
-    func getAllUser(){
+
+    func getAllUser() {
         allUsers = []
-        firebaseManager.getAllUser{result in
-            switch result{
-            case .success(let data):
+        firebaseManager.getAllUser { result in
+            switch result {
+            case let .success(data):
                 self.allUsers = data
                 return
-            case .failure(let error):
+            case let .failure(error):
                 print(error)
             }
-            
         }
     }
-    
-    func setupLayout(){
+
+    func setupLayout() {
         view.addSubview(tableView)
-        
-        tableView.snp.makeConstraints{(mark) in
+
+        tableView.snp.makeConstraints { mark in
             mark.top.equalTo(view.safeAreaLayoutGuide)
             mark.leading.equalTo(view.safeAreaLayoutGuide)
             mark.trailing.equalTo(view.safeAreaLayoutGuide)
             mark.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    func setupTable(){
+
+    func setupTable() {
         tableView.tableHeaderView = searchController.searchBar
-        
+
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         tableView.register(SearchUserTableViewCell.self, forCellReuseIdentifier: "cell")
     }
-    
-    func setupSearch(){
+
+    func setupSearch() {
         // 將更新搜尋結果的對象設為 self
         searchController.searchResultsUpdater = self
         // 搜尋時是否隱藏 NavigationBar
@@ -90,43 +89,41 @@ class SearchAllUserViewController: UIViewController {
         // 設置搜尋框的尺寸為自適應
         // 因為會擺在 tableView 的 header
         // 所以尺寸會與 tableView 的 header 一樣
-        self.searchController.searchBar.sizeToFit()
+        searchController.searchBar.sizeToFit()
     }
-    
+
     func filterContent(for searchText: String) {
-        searchResults = allUsers.filter({ (userInfo) -> Bool in
+        searchResults = allUsers.filter { userInfo -> Bool in
             let isMatch = userInfo.name.localizedCaseInsensitiveContains(searchText)
             print(isMatch)
             print(userInfo.name)
             return isMatch
-        })
+        }
     }
-    
-    func postInviteMessage(inviteeID: String){
-        if let accountName = saveData.accountData?.accountName, let myName = saveData.myInfo?.name{
-            
-            firebaseManager.postShareAccountInivite(inviteeID: inviteeID, shareAccountID: accountIDWithShare, shareAccountName: accountName, inviterName: myName){ result in
-                switch result{
-                case .success(_):
+
+    func postInviteMessage(inviteeID: String) {
+        if let accountName = saveData.accountData?.accountName, let myName = saveData.myInfo?.name {
+            firebaseManager.postShareAccountInivite(inviteeID: inviteeID, shareAccountID: accountIDWithShare, shareAccountName: accountName, inviterName: myName) { result in
+                switch result {
+                case .success:
                     return
-                case .failure(let error):
+                case let .failure(error):
                     return
                 }
             }
         }
-        
     }
 }
 
-extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         searchResults.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         guard let searchCell = cell as? SearchUserTableViewCell else { return cell }
-        
+
         searchCell.nameLabel.text = searchResults[indexPath.row].name
         if searchCell.postShareInfo == nil {
             searchCell.postShareInfo = {
@@ -136,18 +133,13 @@ extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSourc
         }
         return searchCell
     }
-    
-    
 }
 
-extension SearchAllUserViewController: UISearchResultsUpdating{
+extension SearchAllUserViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             filterContent(for: searchText)
             tableView.reloadData()
         }
-        
     }
-    
-    
 }

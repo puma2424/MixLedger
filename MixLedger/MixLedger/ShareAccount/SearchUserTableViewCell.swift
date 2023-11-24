@@ -8,19 +8,18 @@
 import UIKit
 
 class SearchUserTableViewCell: UITableViewCell {
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         setupLayout()
         setupButton()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,15 +30,15 @@ class SearchUserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     var postShareInfo: (() -> Void)?
-    
+
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "G1")
         return label
     }()
-    
+
     let postButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
@@ -48,32 +47,30 @@ class SearchUserTableViewCell: UITableViewCell {
         button.setTitle("Share", for: .normal)
         return button
     }()
-    
-    @objc func postButtonAction(){
+
+    @objc func postButtonAction() {
         postShareInfo?()
     }
-    
-    func setupButton(){
+
+    func setupButton() {
         postButton.addTarget(self, action: #selector(postButtonAction), for: .touchUpInside)
     }
-    
-    func setupLayout(){
+
+    func setupLayout() {
         contentView.addSubview(nameLabel)
         contentView.addSubview(postButton)
-        
-        nameLabel.snp.makeConstraints{(mark) in
+
+        nameLabel.snp.makeConstraints { mark in
             mark.leading.equalTo(contentView).offset(16)
 //            mark.centerY.equalTo(contentView)
             mark.top.equalTo(contentView).offset(16)
             mark.bottom.equalTo(contentView).offset(-16)
         }
-        
-        postButton.snp.makeConstraints{(mark) in
+
+        postButton.snp.makeConstraints { mark in
             mark.trailing.equalTo(contentView).offset(-16)
             mark.centerY.equalTo(contentView)
             mark.width.equalTo(80)
-            
         }
     }
-
 }

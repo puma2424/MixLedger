@@ -5,23 +5,22 @@
 //  Created by 莊羚羊 on 2023/11/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class SelectMemberTableViewCell: UITableViewCell {
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         setupLayout()
         setupTextField()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -33,15 +32,15 @@ class SelectMemberTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    var changeMoney: ((String) -> ())?
-    
+    var changeMoney: ((String) -> Void)?
+
     let nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = "hihihihihihihihihihi"
         return label
     }()
-    
+
     let moneyTextField: UITextField = {
         let textField = UITextField()
         textField.keyboardType = .decimalPad
@@ -57,45 +56,40 @@ class SelectMemberTableViewCell: UITableViewCell {
         textField.textColor = UIColor(named: "G1")
         return textField
     }()
-    
-    
-    @objc func inputMoney(_ textField: UITextField){
-        if let text = textField.text{
+
+    @objc func inputMoney(_ textField: UITextField) {
+        if let text = textField.text {
             print(textField.text)
             changeMoney?(text)
         }
-       
     }
-    
-    func setupTextField(){
+
+    func setupTextField() {
         moneyTextField.delegate = self
         moneyTextField.addTarget(self, action: #selector(inputMoney(_:)), for: .editingDidEnd)
-        
     }
-    
-    func setupLayout(){
+
+    func setupLayout() {
         contentView.addSubview(moneyTextField)
         contentView.addSubview(nameLabel)
-        
-        nameLabel.snp.makeConstraints{(mark) in
+
+        nameLabel.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(12)
             mark.bottom.equalTo(contentView).offset(-12)
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(moneyTextField.snp.leading).offset(-12)
         }
-        
-        moneyTextField.snp.makeConstraints{(mark) in
+
+        moneyTextField.snp.makeConstraints { mark in
             mark.centerY.equalTo(contentView)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.width.equalTo(100)
             mark.height.equalTo(35)
         }
     }
-    
-    
 }
 
-extension SelectMemberTableViewCell: UITextFieldDelegate{
+extension SelectMemberTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // 隱藏鍵盤
         textField.resignFirstResponder()

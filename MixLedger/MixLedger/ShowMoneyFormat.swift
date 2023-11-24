@@ -8,29 +8,29 @@
 import Foundation
 import UIKit
 
-enum MoneyType{
+enum MoneyType {
     case money(Double)
-    
+
     var text: String {
         switch self {
-        case .money(let int):
+        case let .money(int):
             return String(int)
         }
     }
-    
+
     var color: UIColor {
         switch self {
-        case .money(let int):
-            if int > 0{
+        case let .money(int):
+            if int > 0 {
                 return UIColor.blue
-            }else{
+            } else {
                 return UIColor.red
             }
         }
     }
 }
 
-struct UsersInfo{
+struct UsersInfo {
     var name: String
     var image: UIImage
 }

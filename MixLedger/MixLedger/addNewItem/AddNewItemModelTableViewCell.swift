@@ -5,19 +5,20 @@
 //  Created by 莊羚羊 on 2023/11/17.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 class AddNewItemModelTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         setupLayout()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,12 +29,12 @@ class AddNewItemModelTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    
+
     let inputText: UITextField = {
         let textField = UITextField()
 
@@ -50,24 +51,23 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.textColor = UIColor.white
         return textField
     }()
-    
-    func setupLayout(){
+
+    func setupLayout() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(inputText)
-        
-        iconImageView.snp.makeConstraints{(mark) in
+
+        iconImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(50)
             mark.top.equalTo(contentView).offset(12)
             mark.bottom.equalTo(contentView).offset(-12)
             mark.leading.equalTo(contentView).offset(12)
         }
-        
-        inputText.snp.makeConstraints{(mark) in
+
+        inputText.snp.makeConstraints { mark in
             mark.width.equalTo(150)
             mark.height.equalTo(45)
             mark.centerY.equalTo(contentView)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
         }
-        
     }
 }

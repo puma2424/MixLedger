@@ -8,52 +8,49 @@
 import Foundation
 import UIKit
 
-struct BillTag{
+struct BillTag {
     var iconName: String
     var name: String
 }
 
-//var myID = "bGzuwR00sPRNmBamK91D" //puma
-var myID  = "qmgOOutGItrZyzKqQOrh"  //porter
+// var myID = "bGzuwR00sPRNmBamK91D" //puma
+var myID = "qmgOOutGItrZyzKqQOrh" // porter
 var billArray: [[String: [Any]]] = [["日期": [Date()],
-                                     "item": [["金額": -3000000,
-                                               "付費者": ["puma","niw"],
+                                     "item": [["金額": -3_000_000,
+                                               "付費者": ["puma", "niw"],
                                                "分費者": ["puma"],
                                                "備註": "草莓欸",
                                                "幣別": "新台幣",
                                                "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
-                                               "from":""],
+                                               "from": ""],
                                               ["金額": -300,
-                                               "付費者": ["puma","niw"],
+                                               "付費者": ["puma", "niw"],
                                                "分費者": ["puma"],
                                                "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
                                                "幣別": "新台幣",
                                                "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
-                                               "from":""]]
-                                    ],
+                                               "from": ""]]],
                                     ["日期": [Date()],
-                                     "item": [["金額": 3000000,
-                                               "付費者": ["puma","niw"],
+                                     "item": [["金額": 3_000_000,
+                                               "付費者": ["puma", "niw"],
                                                "分費者": ["puma"],
                                                "備註": "草莓欸",
                                                "幣別": "新台幣",
                                                "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
-                                               "from":""],
+                                               "from": ""],
                                               ["金額": 300,
-                                               "付費者": ["puma","niw"],
+                                               "付費者": ["puma", "niw"],
                                                "分費者": ["puma"],
                                                "備註": "草莓好好吃誒誒誒誒誒誒誒誒誒誒欸誒誒誒誒誒誒誒誒誒",
                                                "幣別": "新台幣",
                                                "類型": BillTag(iconName: "more", name: "飲食"),
                                                "照片": UIImage(named: "more"),
-                                               "from":""]]
-                                    ]
-]
+                                               "from": ""]]]]
 
 var allAccount: [[String: Any]] = [["name": "我的帳本",
-                                 "iconName": AllIcons.bookAndPencil.rawValue],
+                                    "iconName": AllIcons.bookAndPencil.rawValue],
                                    ["name": "嘉義好好玩",
                                     "iconName": AllIcons.human.rawValue]]

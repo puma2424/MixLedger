@@ -7,12 +7,12 @@
 
 import Foundation
 
-class SaveData{
+class SaveData {
     static let shared = SaveData()
-    
+
     var accountData: TransactionsResponse?
-    var userInfoData: [String : UsersInfoResponse] = [:]
+    var userInfoData: [String: UsersInfoResponse] = [:]
     var myInfo: UsersInfoResponse?
-    var myShareAccount: [String : String] = [:]
+    var myShareAccount: [String: String] = [:]
 //    var accountInfo:
 }

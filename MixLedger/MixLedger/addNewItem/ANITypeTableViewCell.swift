@@ -1,5 +1,5 @@
 //
-//  TypeTableViewCell.swift
+//  ANITypeTableViewCell.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/11/17.
@@ -12,11 +12,12 @@ class ANITypeTableViewCell: AddNewItemModelTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setForTypeCell()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,8 +29,7 @@ class ANITypeTableViewCell: AddNewItemModelTableViewCell {
         // Configure the view for the selected state
     }
 
-    func setForTypeCell(){
+    func setForTypeCell() {
         inputText.placeholder = "請輸入類別"
-        
     }
 }
