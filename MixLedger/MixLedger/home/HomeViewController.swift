@@ -35,6 +35,18 @@ class HomeViewController: UIViewController {
                     }
                 }
             }
+//            if currentAccountID == savaData.myInfo?.ownAccount{
+//                showView?.isHidden = true
+//                showView?.snp.makeConstraints{(mark) in
+//                    mark.height.equalTo(0)
+//                }
+//            }else{
+//                showView?.snp.makeConstraints{(mark) in
+//                    mark.height.equalTo(150)
+//                }
+//                showView?.isHidden = false
+//                
+//            }
         }
     }
 

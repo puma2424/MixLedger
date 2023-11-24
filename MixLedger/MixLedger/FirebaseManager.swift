@@ -247,7 +247,56 @@ class FirebaseManager {
                 completion(.success("Sent successfully"))
             }
         }
-        getData(accountID: saveData.accountData?.accountID ?? "") { _ in
+        
+        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount{
+            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: date, note: note, type: type){result in
+                switch result{
+                case .success(_):
+                    print("同步到付費者的個人帳本：成功")
+                case .failure(let err):
+                    print("同步到付費者的個人帳本：失敗")
+                    print(err)
+                    print("-----------------------")
+                }
+            }
+        }
+    }
+    
+    private func updatePayerAccount(isMyAccount: Bool, memberPayMoney: [String: Double], date: Date, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>) -> Void){
+        if isMyAccount == false{
+            for payerID in memberPayMoney.keys{
+                guard let amount = memberPayMoney[payerID] else { return }
+                let transaction = [
+                    "amount": amount,
+                    "date": date,
+                    "note": note,
+                    "type": ["iconName": type?.iconName, "name": type?.name],
+                    "currency": "新台幣",
+                    "from": "\(saveData.accountData?.accountName)",
+                ] as [String: Any]
+                
+                dateFont.dateFormat = "yyyy-MM"
+                let dateM = dateFont.string(from: date)
+                dateFont.dateFormat = "yyyy-MM-dd"
+                let dateD = dateFont.string(from: date)
+                
+                guard let payerAccountID = saveData.userInfoData[payerID]?.ownAccount else{return}
+                
+                db.collection("accounts").document(payerAccountID).updateData([
+                    "transactions.\(dateM).\(dateD).\(Date())": transaction,
+                    "accountInfo.expense": FieldValue.increment(amount),
+                    "accountInfo.total": FieldValue.increment(amount),
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                        completion(.failure(err))
+                    } else {
+                        print("Document successfully updated")
+                        completion(.success("Sent successfully"))
+                    }
+                }
+                
+            }
         }
     }
 
