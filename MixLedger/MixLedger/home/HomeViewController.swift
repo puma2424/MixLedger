@@ -113,6 +113,8 @@ class HomeViewController: UIViewController{
                         print("\(self.saveData.userInfoData)")
 
                         self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+                        
                         self.billStatusOpenView.table.reloadData()
                     case .failure(let error):
                         // 失敗時的處理
@@ -126,6 +128,7 @@ class HomeViewController: UIViewController{
     
     let billStatusSmallView = SharedBillStatusSmallView()
     let billStatusOpenView = SharedBillStatusOpenView()
+    
     let savaData = SaveData.shared
     
     var selectDate: Date = Date()
@@ -250,7 +253,9 @@ class HomeViewController: UIViewController{
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate{
     func inputData(view: SharedBillStatusOpenView) {
+        view.billStatus = savaData.accountData?.shareUsersID
         view.usersInfo = saveData.userInfoData
+        
 //        view.usersInfo = userID
         print(view.usersInfo)
     }
@@ -378,13 +383,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 billCell.titleLabel.text = data.type?.name
                 var titleNote = ""
-//                if let payUser = data.payUser{
-//                    for payerID in payUser{
-//                        if let name = saveData.userInfoData[payerID]?.name{
-//                            titleNote += "\(name) "
-//                        }
-//                    }
-//                }
+           
                 if let payUser = data.payUser{
                     for key in payUser.keys{
                         titleNote += "\(savaData.userInfoData[key]?.name)/" ?? ""

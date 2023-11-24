@@ -58,6 +58,14 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView{
         }
     }
     
+    var billStatus: [[String : Double]]?{
+        didSet{
+            return
+        }
+    }
+    
+    
+    
     func setupTable(){
         table.delegate = self
         table.dataSource = self
@@ -93,7 +101,15 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         if let userInfo = usersInfo{
-            userCell.nameLable.text = userInfo[userID[indexPath.row]]?.name
+            let id = userID[indexPath.row]
+            userCell.nameLable.text = userInfo[id]?.name
+//            userCell.moneyLable.text = "\(billStatus?[userID[indexPath.row]])"
+           
+                if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }){
+                    userCell.moneyLable.text = "\(billStatus?[index][id])"
+                      
+                }
+            
         }
         
         return userCell
