@@ -46,6 +46,12 @@ class AddNewItemViewController: UIViewController {
             }
         }
     }
+    
+    struct ProductInfo {
+        var name: String
+        var quantity: Int
+        var price: Int
+    }
 
     var currentAccountID: String = ""
 
@@ -80,6 +86,8 @@ class AddNewItemViewController: UIViewController {
     var invoiceTotalAmount: String = ""
     
     var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
+    
+    var productDetails: [ProductInfo] = []
 
     let closeButton: UIButton = {
         let button = UIButton()
@@ -251,6 +259,7 @@ class AddNewItemViewController: UIViewController {
     }
     
     func processInvoiceInfo(invioiceText: [String]){
+        productDetails = []
         if invioiceText == []{
             invoiceNumber = ""
             invoiceDate = ""
@@ -272,7 +281,7 @@ class AddNewItemViewController: UIViewController {
         }else{
             for text in invioiceText{
                 if text.contains("==") {
-                    if let range = text.range(of: "==") {
+                    guard var range = text.range(of: "==") else {return}
                         let mainInfo = String(text.prefix(upTo: range.lowerBound))
                         invoiceNumber =  String(mainInfo.prefix(10))
                         
@@ -296,7 +305,49 @@ class AddNewItemViewController: UIViewController {
                             invoiceTotalAmount = "\(intValue)"
                         }
     //                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
+                    
+                    if let productsRange = text.range(of: "==:"){
+                        let details = String(text.suffix(from: productsRange.upperBound))
+                        var product = details.components(separatedBy: ":")
+                        product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+                        product = Array(product.dropFirst(4))
+                        
+                        if product.count % 3 == 0{
+                            for index in stride(from: 0, to: product.count, by: 3) {
+                                let name = product[index]
+                                let quantityStr = product[index + 1]
+                                let priceStr = product[index + 2]
+                                
+                                if let quantity = Int(quantityStr), let price = Int(priceStr) {
+                                    let productItem = ProductInfo(name: name, quantity: quantity, price: price)
+                                    productDetails.append(productItem)
+                                }
+                            }
+                        }
                     }
+                    
+                    
+                }else if String(text.prefix(2)) == "**"{
+                     guard let range = text.range(of: "**") else { return }
+                    let details = String(text.suffix(from: range.upperBound))
+                    
+                    var product = details.components(separatedBy: ":")
+                    
+                    product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+                    
+                    if product.count % 3 == 0{
+                        for index in stride(from: 0, to: product.count, by: 3) {
+                            let name = product[index]
+                            let quantityStr = product[index + 1]
+                            let priceStr = product[index + 2]
+                            
+                            if let quantity = Int(quantityStr), let price = Int(priceStr) {
+                                let productItem = ProductInfo(name: name, quantity: quantity, price: price)
+                                productDetails.append(productItem)
+                            }
+                        }
+                    }
+
                 }
             }
         }
@@ -362,7 +413,10 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             if invoiceTotalAmount != "" {
                 text += "\n金額：\(invoiceTotalAmount)"
             }
-            
+            print(productDetails)
+            for product in productDetails{
+                text += "\n 商品： \(product.name) \(product.price) * \(product.quantity)"
+            }
             invoiceCell.invoiceLabel.text = text
             
 
