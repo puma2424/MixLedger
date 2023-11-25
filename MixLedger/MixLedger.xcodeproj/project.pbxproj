@@ -20,6 +20,8 @@
 		9A2379992B037BE6001D6BAF /* MixLedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379982B037BE6001D6BAF /* MixLedgerTests.swift */; };
 		9A2379A32B037BE6001D6BAF /* MixLedgerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */; };
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
+		9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */; };
+		9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
 		9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */; };
 		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
@@ -117,6 +119,8 @@
 		9A23799E2B037BE6001D6BAF /* MixLedgerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MixLedgerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A2379A22B037BE6001D6BAF /* MixLedgerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITests.swift; sourceTree = "<group>"; };
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceViewController.swift; sourceTree = "<group>"; };
+		9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIInvoiceTableViewCell.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
@@ -295,6 +299,15 @@
 			path = MixLedgerUITests;
 			sourceTree = "<group>";
 		};
+		9A3042EF2B11D02400FFEEB0 /* ScanInvoice */ = {
+			isa = PBXGroup;
+			children = (
+				9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */,
+				9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */,
+			);
+			path = ScanInvoice;
+			sourceTree = "<group>";
+		};
 		9A50ADC02B0EEC900099351D /* MessagePage */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,8 +364,9 @@
 		9AEB5F8A2B07630000DF5DFF /* addNewItem */ = {
 			isa = PBXGroup;
 			children = (
-				9A83B1982B0F887100C4C263 /* member */,
 				9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */,
+				9A3042EF2B11D02400FFEEB0 /* ScanInvoice */,
+				9A83B1982B0F887100C4C263 /* member */,
 				9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */,
 				9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */,
 				9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */,
@@ -664,6 +678,7 @@
 				9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */,
 				9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */,
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
+				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
 				9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */,
 				9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */,
@@ -674,6 +689,7 @@
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
+				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
 				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,

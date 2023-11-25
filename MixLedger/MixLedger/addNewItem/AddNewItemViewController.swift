@@ -7,7 +7,7 @@
 
 import SnapKit
 import UIKit
-class AddNewItemViewController: UIViewController {
+class AddNewItemViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +48,8 @@ class AddNewItemViewController: UIViewController {
     var type: TransactionType?
 
     let table = UITableView()
+    
+    let imagePicker = UIImagePickerController()
 
     let closeButton: UIButton = {
         let button = UIButton()
@@ -92,6 +94,7 @@ class AddNewItemViewController: UIViewController {
         table.dataSource = self
         table.register(ANIMoneyTableViewCell.self, forCellReuseIdentifier: "moneyCell")
         table.register(ANITypeTableViewCell.self, forCellReuseIdentifier: "typeCell")
+        table.register(ANIInvoiceTableViewCell.self, forCellReuseIdentifier: "invoiceCell")
         table.register(ANIMemberTableViewCell.self, forCellReuseIdentifier: "memberCell")
         table.register(ANISelectDateTableViewCell.self, forCellReuseIdentifier: "dateCell")
     }
@@ -140,11 +143,46 @@ class AddNewItemViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - 拍攝發票
+    func selectPhotoButtonTapped() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        alertController.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { _ in
+            self.showImagePicker(sourceType: .photoLibrary)
+        })
+
+        alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
+            self.showImagePicker(sourceType: .camera)
+        })
+
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
+
+        present(alertController, animated: true)
+    }
+        
+    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
+        if sourceType == .photoLibrary {
+            imagePicker.sourceType = sourceType
+            present(imagePicker, animated: true, completion: nil)
+        } else if sourceType == .camera {
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePicker.sourceType = sourceType
+                present(imagePicker, animated: true, completion: nil)
+            } else {
+                print("設備不支援相機")
+            }
+        } else {
+            print("相機不可用或其他情况")
+        }
+    }
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        5
+        6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -165,14 +203,20 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 //                type?.name = text
 //            }
 
-        } else if indexPath.row == 2 {
+        }else if indexPath.row == 2 {
+            // 掃描發票
+            cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
+            guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
+            invoiceCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
+
+        }else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
             dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
             selectDate = dateCell.datePicker.date
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
 
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 4 {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
 
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
@@ -206,13 +250,15 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 3 {
+        if indexPath.row == 2{
+            selectPhotoButtonTapped()
+        }else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
             selectMemberView.usersMoney = memberPayMoney
             selectMemberView.delegate = self
             selectMemberView.payOrShare = .pay
             present(selectMemberView, animated: true)
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 5 {
             let selectMemberView = SelectMemberViewController()
             selectMemberView.usersMoney = memberShareMoney
             selectMemberView.delegate = self
