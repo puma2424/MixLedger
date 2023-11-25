@@ -40,23 +40,37 @@ class ANIInvoiceTableViewCell: UITableViewCell {
         label.text = "掃描發票"
         return label
     }()
+    
+    let invoiceLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.numberOfLines = 0
+         return label
+    }()
 
     func setupLayout() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
-
+        contentView.addSubview(invoiceLabel)
+        
         iconImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(50)
             mark.top.equalTo(contentView).offset(12)
-            mark.bottom.equalTo(contentView).offset(-12)
+//            mark.bottom.equalTo(contentView).offset(-12)
             mark.leading.equalTo(contentView).offset(12)
         }
 
         titleLabel.snp.makeConstraints { mark in
-            mark.width.equalTo(150)
-            mark.height.equalTo(45)
-            mark.centerY.equalTo(contentView)
+            mark.top.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
+        }
+        
+        invoiceLabel.snp.makeConstraints { mark in
+            mark.leading.equalTo(contentView).offset(12)
+            mark.trailing.equalTo(contentView).offset(-12)
+            mark.top.equalTo(titleLabel.snp.bottom).offset(12)
+            mark.bottom.equalTo(contentView)
+            
         }
     }
 }

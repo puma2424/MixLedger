@@ -7,7 +7,9 @@
 
 import SnapKit
 import UIKit
-class AddNewItemViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+import Vision
+
+class AddNewItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +30,22 @@ class AddNewItemViewController: UIViewController, UIImagePickerControllerDelegat
          // Pass the selected object to the new view controller.
      }
      */
+    enum ChineseEncodingParameter: Int {
+        case big5 = 0
+        case utf8 = 1
+        case base64 = 2
+
+        var encodingParameter: String {
+            switch self {
+            case .big5:
+                return "Big5"
+            case .utf8:
+                return "UTF-8"
+            case .base64:
+                return "Base64"
+            }
+        }
+    }
 
     var currentAccountID: String = ""
 
@@ -50,6 +68,18 @@ class AddNewItemViewController: UIViewController, UIImagePickerControllerDelegat
     let table = UITableView()
     
     let imagePicker = UIImagePickerController()
+    
+    var invoiceString: [String] = []
+    
+    var invoiceNumber: String = ""
+    
+    var invoiceDate: String = ""
+    
+    var invoiceRandomNumber: String = ""
+    
+    var invoiceTotalAmount: String = ""
+    
+    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
 
     let closeButton: UIButton = {
         let button = UIButton()
@@ -178,6 +208,70 @@ class AddNewItemViewController: UIViewController, UIImagePickerControllerDelegat
             print("相機不可用或其他情况")
         }
     }
+    
+    func decodeBarcode(from image: UIImage) throws -> [String] {
+            var results: [String] = []
+            let barcodeRequest = VNDetectBarcodesRequest()
+            barcodeRequest.symbologies = [.qr, .ean13, .code39]
+            
+            guard let cgImage = image.cgImage else {
+//                throw BarcodeScannerError.invalidImage
+                return []
+            }
+            
+            let requestHandler = VNImageRequestHandler(cgImage: cgImage)
+            try requestHandler.perform([barcodeRequest])
+            
+            if let observations = barcodeRequest.results as? [VNBarcodeObservation] {
+                for observation in observations {
+                    print(observation)
+                    if let content = observation.payloadStringValue {
+                        results.append(content)
+                    }
+                }
+            }
+            
+            return results
+        }
+    
+    func displayBarcodeResults(selectedImage: UIImage) {
+//            guard let selectedImage = selectedImage else { return }
+        invoiceString = []
+            do {
+                invoiceString = try decodeBarcode(from: selectedImage)
+                
+                print(invoiceString)
+                table.reloadData()
+            } catch {
+                print("解碼時發生錯誤: \(error)")
+                invoiceString = []
+            }
+        processInvoiceInfo(invioiceText: invoiceString)
+    }
+    
+    func processInvoiceInfo(invioiceText: [String]){
+        for text in invioiceText{
+            if text.contains("==") {
+                if let range = text.range(of: "==") {
+                    let mainInfo = String(text.prefix(upTo: range.lowerBound))
+                    invoiceNumber =  String(mainInfo.prefix(10))
+                    
+                    invoiceDate = String(mainInfo.prefix(10 + 7).suffix(7))
+                    
+                    invoiceRandomNumber = String(mainInfo.prefix(10 + 7 + 4).suffix(4))
+                    
+                    //金額被以16進位記載
+                    let totalAmount = String(mainInfo.prefix(10 + 7 + 4 + 16).suffix(8))
+                    var intValue: UInt32 = 0
+                    if Scanner(string: totalAmount).scanHexInt32(&intValue){
+                        invoiceTotalAmount = "\(intValue)"
+                    }
+//                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
+                }
+            }
+        }
+        
+    }
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
@@ -208,6 +302,30 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
             invoiceCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
+            invoiceCell.invoiceLabel.text = ""
+            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
+//            for index in 0..<invoiceString.count{
+//                invoiceCell.invoiceLabel.text? += "\(index)：\n\(invoiceString[index])\n"
+//            }
+            var text = ""
+            if invoiceNumber != ""{
+                text = "發票號碼： \(invoiceNumber)"
+            }
+            
+            if invoiceDate != ""{
+                text += "\n購買日期：\(invoiceDate)"
+            }
+            
+            if invoiceRandomNumber != ""{
+                text += "\n隨機碼：\(invoiceRandomNumber)"
+            }
+            
+            if invoiceTotalAmount != "" {
+                text += "\n金額：\(invoiceTotalAmount)"
+            }
+            
+            invoiceCell.invoiceLabel.text = text
+            
 
         }else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
@@ -279,5 +397,23 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
         memberShareMoney = cell.usersMoney ?? memberPayMoney
         print(memberShareMoney)
         table.reloadData()
+    }
+}
+
+extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+//            self.selectedImage = selectedImage
+//            selectedImageView.image = selectedImage
+//            selectedImageView.clipsToBounds = true
+//            selectedImageView.contentMode = .scaleAspectFit
+//            selectedImageView.layer.cornerRadius = 5
+//            addSearchButton()
+            displayBarcodeResults(selectedImage: selectedImage)
+            self.table.reloadData()
+        }
+        
+        dismiss(animated: true, completion: nil)
+//        present(ScanInvoiceViewController(), animated: true)
     }
 }
