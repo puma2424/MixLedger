@@ -50,7 +50,7 @@ class AddNewItemViewController: UIViewController {
     struct ProductInfo {
         var name: String
         var quantity: Int
-        var price: Int
+        var price: Double
     }
 
     var currentAccountID: String = ""
@@ -318,7 +318,7 @@ class AddNewItemViewController: UIViewController {
                                 let quantityStr = product[index + 1]
                                 let priceStr = product[index + 2]
                                 
-                                if let quantity = Int(quantityStr), let price = Int(priceStr) {
+                                if let quantity = Int(quantityStr), let price = Double(priceStr) {
                                     let productItem = ProductInfo(name: name, quantity: quantity, price: price)
                                     productDetails.append(productItem)
                                 }
@@ -341,7 +341,7 @@ class AddNewItemViewController: UIViewController {
                             let quantityStr = product[index + 1]
                             let priceStr = product[index + 2]
                             
-                            if let quantity = Int(quantityStr), let price = Int(priceStr) {
+                            if let quantity = Int(quantityStr), let price = Double(priceStr) {
                                 let productItem = ProductInfo(name: name, quantity: quantity, price: price)
                                 productDetails.append(productItem)
                             }
