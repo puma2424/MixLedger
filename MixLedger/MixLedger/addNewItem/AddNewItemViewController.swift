@@ -245,33 +245,64 @@ class AddNewItemViewController: UIViewController {
             } catch {
                 print("解碼時發生錯誤: \(error)")
                 invoiceString = []
+                
             }
-        processInvoiceInfo(invioiceText: invoiceString)
+     
     }
     
     func processInvoiceInfo(invioiceText: [String]){
-        for text in invioiceText{
-            if text.contains("==") {
-                if let range = text.range(of: "==") {
-                    let mainInfo = String(text.prefix(upTo: range.lowerBound))
-                    invoiceNumber =  String(mainInfo.prefix(10))
-                    
-                    invoiceDate = String(mainInfo.prefix(10 + 7).suffix(7))
-                    
-                    invoiceRandomNumber = String(mainInfo.prefix(10 + 7 + 4).suffix(4))
-                    
-                    //金額被以16進位記載
-                    let totalAmount = String(mainInfo.prefix(10 + 7 + 4 + 16).suffix(8))
-                    var intValue: UInt32 = 0
-                    if Scanner(string: totalAmount).scanHexInt32(&intValue){
-                        invoiceTotalAmount = "\(intValue)"
+        if invioiceText == []{
+            invoiceNumber = ""
+            invoiceDate = ""
+            invoiceRandomNumber = ""
+            invoiceTotalAmount = ""
+            selectDate = Date()
+            let alertController = UIAlertController(title: "偵測發票失敗", message: "請重新載入發票照片", preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { _ in
+                self.showImagePicker(sourceType: .photoLibrary)
+            })
+
+            alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
+                self.showImagePicker(sourceType: .camera)
+            })
+
+            alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
+
+            present(alertController, animated: true)
+        }else{
+            for text in invioiceText{
+                if text.contains("==") {
+                    if let range = text.range(of: "==") {
+                        let mainInfo = String(text.prefix(upTo: range.lowerBound))
+                        invoiceNumber =  String(mainInfo.prefix(10))
+                        
+                        var dateString = String(mainInfo.prefix(10 + 7).suffix(7))
+                        if var dateInt = Int(dateString){
+                            dateInt += 19110000
+                            dateString = "\(dateInt)"
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyyMMdd"
+                            let date = dateFormatter.date(from: dateString)
+                            selectDate = date
+                        }
+                        invoiceDate = dateString
+                        
+                        invoiceRandomNumber = String(mainInfo.prefix(10 + 7 + 4).suffix(4))
+                        
+                        //金額被以16進位記載
+                        let totalAmount = String(mainInfo.prefix(10 + 7 + 4 + 16).suffix(8))
+                        var intValue: UInt32 = 0
+                        if Scanner(string: totalAmount).scanHexInt32(&intValue){
+                            invoiceTotalAmount = "\(intValue)"
+                        }
+    //                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
                     }
-//                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
                 }
             }
         }
         
     }
+    
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
@@ -283,9 +314,17 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
         var cell: UITableViewCell
         if indexPath.row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
-            guard let monryCell = cell as? ANIMoneyTableViewCell else { return cell }
-            monryCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
-            monryCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
+            moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
+            if invoiceTotalAmount != ""{
+                moneyCell.inputText.text = invoiceTotalAmount
+                
+            }else{
+                moneyCell.inputText.text = ""
+            }
+            moneyCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            
+            
 
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
@@ -331,7 +370,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
             dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
-            selectDate = dateCell.datePicker.date
+//            selectDate = dateCell.datePicker.date
+            dateCell.datePicker.date = selectDate ?? Date()
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
 
         } else if indexPath.row == 4 {
@@ -403,17 +443,13 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-//            self.selectedImage = selectedImage
-//            selectedImageView.image = selectedImage
-//            selectedImageView.clipsToBounds = true
-//            selectedImageView.contentMode = .scaleAspectFit
-//            selectedImageView.layer.cornerRadius = 5
-//            addSearchButton()
             displayBarcodeResults(selectedImage: selectedImage)
             self.table.reloadData()
         }
         
         dismiss(animated: true, completion: nil)
-//        present(ScanInvoiceViewController(), animated: true)
+        processInvoiceInfo(invioiceText: invoiceString)
+        
+        
     }
 }
