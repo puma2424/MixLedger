@@ -30,28 +30,8 @@ class AddNewItemViewController: UIViewController {
          // Pass the selected object to the new view controller.
      }
      */
-    enum ChineseEncodingParameter: Int {
-        case big5 = 0
-        case utf8 = 1
-        case base64 = 2
-
-        var encodingParameter: String {
-            switch self {
-            case .big5:
-                return "Big5"
-            case .utf8:
-                return "UTF-8"
-            case .base64:
-                return "Base64"
-            }
-        }
-    }
     
-    struct ProductInfo {
-        var name: String
-        var quantity: Int
-        var price: Double
-    }
+    let scanInvoiceManager = ScanInvoiceManager.shared
 
     var currentAccountID: String = ""
 
@@ -217,142 +197,142 @@ class AddNewItemViewController: UIViewController {
         }
     }
     
-    func decodeBarcode(from image: UIImage) throws -> [String] {
-            var results: [String] = []
-            let barcodeRequest = VNDetectBarcodesRequest()
-            barcodeRequest.symbologies = [.qr, .ean13, .code39]
-            
-            guard let cgImage = image.cgImage else {
-//                throw BarcodeScannerError.invalidImage
-                return []
-            }
-            
-            let requestHandler = VNImageRequestHandler(cgImage: cgImage)
-            try requestHandler.perform([barcodeRequest])
-            
-            if let observations = barcodeRequest.results as? [VNBarcodeObservation] {
-                for observation in observations {
-                    print(observation)
-                    if let content = observation.payloadStringValue {
-                        results.append(content)
-                    }
-                }
-            }
-            
-            return results
-        }
-    
-    func displayBarcodeResults(selectedImage: UIImage) {
-//            guard let selectedImage = selectedImage else { return }
-        invoiceString = []
-            do {
-                invoiceString = try decodeBarcode(from: selectedImage)
-                
-                print(invoiceString)
-                table.reloadData()
-            } catch {
-                print("解碼時發生錯誤: \(error)")
-                invoiceString = []
-                
-            }
-     
-    }
-    
-    func processInvoiceInfo(invioiceText: [String]){
-        productDetails = []
-        if invioiceText == []{
-            invoiceNumber = ""
-            invoiceDate = ""
-            invoiceRandomNumber = ""
-            invoiceTotalAmount = ""
-            selectDate = Date()
-            let alertController = UIAlertController(title: "偵測發票失敗", message: "請重新載入發票照片", preferredStyle: .actionSheet)
-            alertController.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { _ in
-                self.showImagePicker(sourceType: .photoLibrary)
-            })
-
-            alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
-                self.showImagePicker(sourceType: .camera)
-            })
-
-            alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
-
-            present(alertController, animated: true)
-        }else{
-            for text in invioiceText{
-                if text.contains("==") {
-                    guard var range = text.range(of: "==") else {return}
-                        let mainInfo = String(text.prefix(upTo: range.lowerBound))
-                        invoiceNumber =  String(mainInfo.prefix(10))
-                        
-                        var dateString = String(mainInfo.prefix(10 + 7).suffix(7))
-                        if var dateInt = Int(dateString){
-                            dateInt += 19110000
-                            dateString = "\(dateInt)"
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyyMMdd"
-                            let date = dateFormatter.date(from: dateString)
-                            selectDate = date
-                        }
-                        invoiceDate = dateString
-                        
-                        invoiceRandomNumber = String(mainInfo.prefix(10 + 7 + 4).suffix(4))
-                        
-                        //金額被以16進位記載
-                        let totalAmount = String(mainInfo.prefix(10 + 7 + 4 + 16).suffix(8))
-                        var intValue: UInt32 = 0
-                        if Scanner(string: totalAmount).scanHexInt32(&intValue){
-                            invoiceTotalAmount = "\(intValue)"
-                        }
-    //                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
-                    
-                    if let productsRange = text.range(of: "==:"){
-                        let details = String(text.suffix(from: productsRange.upperBound))
-                        var product = details.components(separatedBy: ":")
-                        product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
-                        product = Array(product.dropFirst(4))
-                        
-                        if product.count % 3 == 0{
-                            for index in stride(from: 0, to: product.count, by: 3) {
-                                let name = product[index]
-                                let quantityStr = product[index + 1]
-                                let priceStr = product[index + 2]
-                                
-                                if let quantity = Int(quantityStr), let price = Double(priceStr) {
-                                    let productItem = ProductInfo(name: name, quantity: quantity, price: price)
-                                    productDetails.append(productItem)
-                                }
-                            }
-                        }
-                    }
-                    
-                    
-                }else if String(text.prefix(2)) == "**"{
-                     guard let range = text.range(of: "**") else { return }
-                    let details = String(text.suffix(from: range.upperBound))
-                    
-                    var product = details.components(separatedBy: ":")
-                    
-                    product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
-                    
-                    if product.count % 3 == 0{
-                        for index in stride(from: 0, to: product.count, by: 3) {
-                            let name = product[index]
-                            let quantityStr = product[index + 1]
-                            let priceStr = product[index + 2]
-                            
-                            if let quantity = Int(quantityStr), let price = Double(priceStr) {
-                                let productItem = ProductInfo(name: name, quantity: quantity, price: price)
-                                productDetails.append(productItem)
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-        
-    }
+//    func decodeBarcode(from image: UIImage) throws -> [String] {
+//            var results: [String] = []
+//            let barcodeRequest = VNDetectBarcodesRequest()
+//            barcodeRequest.symbologies = [.qr, .ean13, .code39]
+//            
+//            guard let cgImage = image.cgImage else {
+////                throw BarcodeScannerError.invalidImage
+//                return []
+//            }
+//            
+//            let requestHandler = VNImageRequestHandler(cgImage: cgImage)
+//            try requestHandler.perform([barcodeRequest])
+//            
+//            if let observations = barcodeRequest.results as? [VNBarcodeObservation] {
+//                for observation in observations {
+//                    print(observation)
+//                    if let content = observation.payloadStringValue {
+//                        results.append(content)
+//                    }
+//                }
+//            }
+//            
+//            return results
+//        }
+//    
+//    func displayBarcodeResults(selectedImage: UIImage) {
+////            guard let selectedImage = selectedImage else { return }
+//        invoiceString = []
+//            do {
+//                invoiceString = try decodeBarcode(from: selectedImage)
+//                
+//                print(invoiceString)
+//                table.reloadData()
+//            } catch {
+//                print("解碼時發生錯誤: \(error)")
+//                invoiceString = []
+//                
+//            }
+//     
+//    }
+//    
+//    func processInvoiceInfo(invioiceText: [String]){
+//        productDetails = []
+//        if invioiceText == []{
+//            invoiceNumber = ""
+//            invoiceDate = ""
+//            invoiceRandomNumber = ""
+//            invoiceTotalAmount = ""
+//            selectDate = Date()
+//            let alertController = UIAlertController(title: "偵測發票失敗", message: "請重新載入發票照片", preferredStyle: .actionSheet)
+//            alertController.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { _ in
+//                self.showImagePicker(sourceType: .photoLibrary)
+//            })
+//
+//            alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
+//                self.showImagePicker(sourceType: .camera)
+//            })
+//
+//            alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
+//
+//            present(alertController, animated: true)
+//        }else{
+//            for text in invioiceText{
+//                if text.contains("==") {
+//                    guard var range = text.range(of: "==") else {return}
+//                        let mainInfo = String(text.prefix(upTo: range.lowerBound))
+//                        invoiceNumber =  String(mainInfo.prefix(10))
+//                        
+//                        var dateString = String(mainInfo.prefix(10 + 7).suffix(7))
+//                        if var dateInt = Int(dateString){
+//                            dateInt += 19110000
+//                            dateString = "\(dateInt)"
+//                            let dateFormatter = DateFormatter()
+//                            dateFormatter.dateFormat = "yyyyMMdd"
+//                            let date = dateFormatter.date(from: dateString)
+//                            selectDate = date
+//                        }
+//                        invoiceDate = dateString
+//                        
+//                        invoiceRandomNumber = String(mainInfo.prefix(10 + 7 + 4).suffix(4))
+//                        
+//                        //金額被以16進位記載
+//                        let totalAmount = String(mainInfo.prefix(10 + 7 + 4 + 16).suffix(8))
+//                        var intValue: UInt32 = 0
+//                        if Scanner(string: totalAmount).scanHexInt32(&intValue){
+//                            invoiceTotalAmount = "\(intValue)"
+//                        }
+//    //                    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
+//                    
+//                    if let productsRange = text.range(of: "==:"){
+//                        let details = String(text.suffix(from: productsRange.upperBound))
+//                        var product = details.components(separatedBy: ":")
+//                        product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+//                        product = Array(product.dropFirst(4))
+//                        
+//                        if product.count % 3 == 0{
+//                            for index in stride(from: 0, to: product.count, by: 3) {
+//                                let name = product[index]
+//                                let quantityStr = product[index + 1]
+//                                let priceStr = product[index + 2]
+//                                
+//                                if let quantity = Int(quantityStr), let price = Double(priceStr) {
+//                                    let productItem = ProductInfo(name: name, quantity: quantity, price: price)
+//                                    productDetails.append(productItem)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    
+//                    
+//                }else if String(text.prefix(2)) == "**"{
+//                     guard let range = text.range(of: "**") else { return }
+//                    let details = String(text.suffix(from: range.upperBound))
+//                    
+//                    var product = details.components(separatedBy: ":")
+//                    
+//                    product = product.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+//                    
+//                    if product.count % 3 == 0{
+//                        for index in stride(from: 0, to: product.count, by: 3) {
+//                            let name = product[index]
+//                            let quantityStr = product[index + 1]
+//                            let priceStr = product[index + 2]
+//                            
+//                            if let quantity = Int(quantityStr), let price = Double(priceStr) {
+//                                let productItem = ProductInfo(name: name, quantity: quantity, price: price)
+//                                productDetails.append(productItem)
+//                            }
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//        
+//    }
     
 }
 
@@ -497,12 +477,30 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            displayBarcodeResults(selectedImage: selectedImage)
-            self.table.reloadData()
+            scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage){results in
+                switch results{
+                    
+                case .success(let result):
+                    switch result{
+                    case .formQRCode(_):
+                        self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
+                        self.invoiceDate = self.scanInvoiceManager.invoiceDateString
+                        self.selectDate = self.scanInvoiceManager.invoiceDate
+                        self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
+                        self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
+                    case .formText(_):
+                        self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
+                    }
+                    self.table.reloadData()
+                case .failure(_):
+                    return
+                }
+            }
+            
+//            self.table.reloadData()
         }
         
         dismiss(animated: true, completion: nil)
-        processInvoiceInfo(invioiceText: invoiceString)
         
         
     }

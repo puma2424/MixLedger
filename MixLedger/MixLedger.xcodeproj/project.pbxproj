@@ -22,6 +22,7 @@
 		9A2379A52B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */; };
 		9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */; };
 		9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */; };
+		9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
 		9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */; };
 		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
@@ -121,6 +122,7 @@
 		9A2379A42B037BE6001D6BAF /* MixLedgerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixLedgerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceViewController.swift; sourceTree = "<group>"; };
 		9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIInvoiceTableViewCell.swift; sourceTree = "<group>"; };
+		9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceManager.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
+				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
+				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
