@@ -23,6 +23,8 @@
 		9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */; };
 		9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */; };
 		9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */; };
+		9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */; };
+		9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
 		9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */; };
 		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
@@ -123,6 +125,8 @@
 		9A3042EC2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceViewController.swift; sourceTree = "<group>"; };
 		9A3042F02B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIInvoiceTableViewCell.swift; sourceTree = "<group>"; };
 		9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceManager.swift; sourceTree = "<group>"; };
+		9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModleView.swift; sourceTree = "<group>"; };
+		9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
+				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
+				9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -681,6 +687,7 @@
 				9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */,
 				9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */,
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
+				9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */,
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
 				9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */,
@@ -699,6 +706,7 @@
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
+				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
