@@ -7,13 +7,13 @@
 
 import UIKit
 import SnapKit
+import SwiftUI
 
 class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate {
     func change(to index: Int) {
         return
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +21,25 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         self.navigationItem.title = "圖表分析"
         setupSegmentedControl()
         setupLayout()
+        // 创建 SwiftUI 视图
+        let mySwiftUIView = LineMarkCharts()
+        
+        // 将 SwiftUI 视图包装在 UIHostingController 中
+        let hostingController = UIHostingController(rootView: mySwiftUIView)
+        
+        // 将 hosting controller 的视图添加到你的视图层次结构中
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        // 通知 hosting controller 已添加到父视图控制器
+        hostingController.didMove(toParent: self)
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 400)
+        ])
     }
     
 

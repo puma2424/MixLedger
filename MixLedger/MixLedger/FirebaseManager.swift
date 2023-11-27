@@ -451,7 +451,11 @@ struct AccountInfo: Codable {
 //    var userID: String
 // }
 
-struct Transaction: Codable {
+struct Transaction: Codable{
+//    var id = UUID().uuidString
+    
+    var year: String?
+//    var id = UUID().uuidString
     var amount: Double
     var currency: String
     var date: Date
@@ -460,6 +464,23 @@ struct Transaction: Codable {
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
     var type: TransactionType?
+    
+    
+    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType?, year: String) {
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy"
+        let dateString = dateFont.string(from: date)
+//        self.id = id
+        self.amount = amount
+        self.currency = currency
+        self.date = date
+        self.from = from
+        self.note = note
+        self.payUser = payUser
+        self.shareUser = shareUser
+        self.type = type
+        self.year = dateString
+    }
 }
 
 struct TransactionType: Codable {
