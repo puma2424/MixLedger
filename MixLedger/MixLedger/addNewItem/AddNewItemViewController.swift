@@ -68,6 +68,8 @@ class AddNewItemViewController: UIViewController {
     var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
     
     var productDetails: [ProductInfo] = []
+    
+    var note: String = ""
 
     let closeButton: UIButton = {
         let button = UIButton()
@@ -95,7 +97,7 @@ class AddNewItemViewController: UIViewController {
             // 找到對應的字典
 
             // swiftlint:disable line_length
-            firebase.postData(toAccountID: currentAccountID, amount: -(amount ?? 0), date: selectDate ?? Date(), note: "草莓", type: type, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
+            firebase.postData(toAccountID: currentAccountID, amount: -(amount ?? 0), date: selectDate ?? Date(), note: note, type: type, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
                 self.dismiss(animated: true)
             }
             // swiftlint:enable line_length
@@ -212,7 +214,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
             if invoiceTotalAmount != ""{
                 moneyCell.inputText.text = invoiceTotalAmount
-                
+                amount = Double(invoiceTotalAmount)
             }else{
                 moneyCell.inputText.text = ""
             }
@@ -261,7 +263,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
                 text += "\n 商品： \(product.name) \(product.price) * \(product.quantity)"
             }
             invoiceCell.invoiceLabel.text = text
-            
+            note = text
 
         }else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
@@ -351,6 +353,7 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.selectDate = self.scanInvoiceManager.invoiceDate
                         self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
+                        self.productDetails = self.scanInvoiceManager.productDetails
                     case .formText(_):
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                     }

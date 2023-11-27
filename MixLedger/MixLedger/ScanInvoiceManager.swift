@@ -125,9 +125,7 @@ class ScanInvoiceManager {
                                 completion(.success(.formText([])))
                             }
                         }
-                        if self.invoiceNumber == ""{
-                            self.takePhotoAgain(view: view)
-                        }
+                        
                     case .failure(let error):
                         print(error)
                         self.takePhotoAgain(view: view)
