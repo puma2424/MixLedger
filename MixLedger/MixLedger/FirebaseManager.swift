@@ -190,7 +190,7 @@ class FirebaseManager {
     }
 
     // swiftlint:disable line_length
-    func postData(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType?, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void) {
+    func postData(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void) {
         print(saveData.accountData?.shareUsersID)
         for id in memberPayMoney.keys {
             if let index = saveData.accountData?.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
@@ -222,7 +222,7 @@ class FirebaseManager {
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": note,
-            "type": ["iconName": type?.iconName, "name": type?.name],
+            "type": ["iconName": type.iconName, "name": type.name],
             "currency": "新台幣",
             "from": "",
         ] as [String: Any]
@@ -463,10 +463,10 @@ struct Transaction: Codable{
     var note: String?
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
-    var type: TransactionType?
+    var type: TransactionType
     
     
-    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType?, year: String) {
+    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType, year: String) {
         let dateFont = DateFormatter()
         dateFont.dateFormat = "yyyy"
         let dateString = dateFont.string(from: date)
@@ -484,8 +484,8 @@ struct Transaction: Codable{
 }
 
 struct TransactionType: Codable {
-    var iconName: String?
-    var name: String?
+    var iconName: String
+    var name: String
 }
 
 struct UsersInfoResponse: Codable {

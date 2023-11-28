@@ -10,22 +10,10 @@ import Charts
 
 struct LineMarkCharts: View {
     @State private var saveData = SaveData.shared
-//    @State private var transactionsArray: [Transaction] = SaveData.shared.transactionsArray
-//    @EnvironmentObject var saveData: SaveData
-//    @EnvironmentObject private var transactionsArray: [Transaction]
     @State private var vm = StockEntityViewModel()
     var body: some View {
         VStack {
             Chart{
-                
-//                ForEach(saveData.transactionsArray) { data in
-//                    LineMark(
-//                        x: .value("Date", data.date),
-//                        y: .value("amount", data.amount)
-//                    )
-//                    .foregroundStyle(by: .value("Stock Name", data.year!)) // 4：左下角的圖例樣式 or 圖表的外觀樣式
-//                    .symbolSize(100)
-//                }
                 
                 ForEach(vm.stockData) { data in
                     LineMark(
@@ -40,7 +28,7 @@ struct LineMarkCharts: View {
                     
                 }
             }
-            .chartXAxisLabel("Date (2022/8/19~2022/9/8)", alignment: .leading)
+            .chartXAxisLabel("Date (2023)", alignment: .leading)
                         .chartYAxisLabel("Price (NTD)", alignment: .trailing)
                         .frame(height: 300)
                         .padding()
@@ -66,25 +54,42 @@ struct LineMarkCharts_Previews: PreviewProvider {
 //#Preview {
 //    LineMarkCharts()
 //}
-class StockEntityViewModel {
-//    var stockData: [test]
+class StockEntityViewModel: ObservableObject  {
     let saveData = SaveData.shared
-//    func test(){
-//        if let data = saveData.accountData {
-//            for xxxin in saveData.accountData{
-//                tt = xxxin.
-//            }
-//        }
-//        
-//    }
     var stockData: [Test] = [
         
         // MARK: TSMC Stock Price
-        .init(year: "2023", mon: 2, amount: 400, currency: "新台幣", date: Date(), from: "", note: "", payUser: [:], shareUser: [:], type: TransactionType()),
-        .init(year: "2023", mon: 2, amount: 400, currency: "新台幣", date: Date(), from: "", note: "", payUser: [:], shareUser: [:], type: TransactionType()),
+        .init(year: "2023", mon: 2, amount: 400, currency: "新台幣", date: Date(), from: "", note: "", payUser: [:], shareUser: [:], type: TransactionType(iconName: "food-icon", name: "food")),
+        .init(year: "2023", mon: 2, amount: 400, currency: "新台幣", date: Date(), from: "", note: "", payUser: [:], shareUser: [:], type: TransactionType(iconName: "play-icon", name: "play")),
+        .init(year: "2023", mon: 2, amount: 400, currency: "新台幣", date: Date(), from: "", note: "", payUser: [:], shareUser: [:], type: TransactionType(iconName: "play-icon", name: "play")),
     ]
-//    var stockData: [Transaction] = SaveData.shared.transactionsArray
+
     init() {
             self.stockData = SaveData.shared.transactionsArray
         }
+    
+    
+    
+//    let saveData = SaveData.shared
+//       
+//       // 使用 Double 類型的數據來初始化 PieChart 的 data
+//       @Published var pieChartData: [Double] = []
+//       
+//       // 使用 String 類型的數據來初始化 PieChart 的 labels
+//       @Published var pieChartLabels: [String] = []
+//       
+//       var stockData: [Test] = [] {
+//           didSet {
+//               updatePieChartData()
+//           }
+//       }
+//       
+//       init() {
+//           self.stockData = SaveData.shared.transactionsArray
+//       }
+//       
+//       private func updatePieChartData() {
+//           pieChartData = stockData.map { $0.amount }
+//           pieChartLabels = stockData.map { $0.type.name}
+//       }
 }

@@ -25,9 +25,9 @@
 		9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */; };
 		9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */; };
 		9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */; };
-		9A3042F92B147C6D00FFEEB0 /* PieChartModleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F82B147C6D00FFEEB0 /* PieChartModleView.swift */; };
 		9A3042FB2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */; };
 		9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */; };
+		9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3043002B15A8C700FFEEB0 /* PieChartView.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
 		9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */; };
 		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
@@ -130,9 +130,9 @@
 		9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceManager.swift; sourceTree = "<group>"; };
 		9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModleView.swift; sourceTree = "<group>"; };
 		9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
-		9A3042F82B147C6D00FFEEB0 /* PieChartModleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartModleView.swift; sourceTree = "<group>"; };
 		9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLLLLineMarkCharts.swift; sourceTree = "<group>"; };
 		9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineMarkCharts.swift; sourceTree = "<group>"; };
+		9A3043002B15A8C700FFEEB0 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +249,7 @@
 		9A2379722B037BE5001D6BAF = {
 			isa = PBXGroup;
 			children = (
+				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
 				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
 				9A23797D2B037BE5001D6BAF /* MixLedger */,
 				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
@@ -293,7 +294,6 @@
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
 				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
 				9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */,
-				9A3042F82B147C6D00FFEEB0 /* PieChartModleView.swift */,
 				9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */,
 				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
 			);
@@ -689,7 +689,6 @@
 				9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */,
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,
-				9A3042F92B147C6D00FFEEB0 /* PieChartModleView.swift in Sources */,
 				9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
@@ -702,6 +701,7 @@
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
+				9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */,
 				9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */,
 				9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */,
 				9AEB5F742B0608D100DF5DFF /* ShowMoneyFormat.swift in Sources */,

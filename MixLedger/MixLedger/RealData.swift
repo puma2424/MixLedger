@@ -38,7 +38,12 @@ class SaveData{
                     let dateString = dateFont.string(from: timeTransactions.date)
                     let calendar = Calendar.current
                     let monthNumber = calendar.component(.month, from: timeTransactions.date)
-                    transactionsArray.append(Test(year: dateString, mon: monthNumber, amount: timeTransactions.amount, currency: timeTransactions.currency, date: timeTransactions.date))
+                    transactionsArray.append(Test(year: dateString, 
+                                                  mon: monthNumber,
+                                                  amount: timeTransactions.amount, 
+                                                  currency: timeTransactions.currency,
+                                                  date: timeTransactions.date,
+                                                  type: timeTransactions.type))
                 }
             }
         }
@@ -59,5 +64,5 @@ struct Test: Identifiable {
     var note: String?
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
-    var type: TransactionType?
+    var type: TransactionType
 }

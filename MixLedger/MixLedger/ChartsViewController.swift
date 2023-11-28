@@ -11,7 +11,15 @@ import SwiftUI
 
 class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate {
     func change(to index: Int) {
-        return
+        // Remove the current chart view
+        currentChartView?.removeFromSuperview()
+        
+        // Add the new chart view based on the selected index
+        if index == 0 {
+            currentChartView = setupPie()
+        } else {
+            currentChartView = setupLineMarkView()
+        }
     }
     
     override func viewDidLoad() {
@@ -21,28 +29,14 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         self.navigationItem.title = "圖表分析"
         setupSegmentedControl()
         setupLayout()
-        // 创建 SwiftUI 视图
-        let mySwiftUIView = LineMarkCharts()
         
-        // 将 SwiftUI 视图包装在 UIHostingController 中
-        let hostingController = UIHostingController(rootView: mySwiftUIView)
-        
-        // 将 hosting controller 的视图添加到你的视图层次结构中
-        addChild(hostingController)
-        view.addSubview(hostingController.view)
-        // 通知 hosting controller 已添加到父视图控制器
-        hostingController.didMove(toParent: self)
-        
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 400)
-        ])
+        currentChartView = setupPie()
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -53,7 +47,16 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
     */
     
+    var currentChartView: UIView?
+    
     let segmentedView = SegmentedControlModleView()
+    
+    let pieChart = PieChart(data: .constant([30, 50, 20]),
+                            labels: .constant(["Label1", "Label2", "Label3"]),
+                            colors: [.red, .green, .blue],
+                            borderColor: .white)
+    
+    let mySwiftUIView = LineMarkCharts()
     
     func setupSegmentedControl(){
         segmentedView.delegate = self
@@ -70,5 +73,53 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             mark.height.equalTo(50)
         }
         
+    }
+//    private let stockEntityViewModel = StockEntityViewModel()
+    func setupLineMarkView() -> UIView {
+        
+        // 创建 SwiftUI 视图
+        
+
+        // 将 SwiftUI 视图包装在 UIHostingController 中
+        let hostingController = UIHostingController(rootView: mySwiftUIView)
+
+        // 将 hosting controller 的视图添加到你的视图层次结构中
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        // 通知 hosting controller 已添加到父视图控制器
+        hostingController.didMove(toParent: self)
+
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 400)
+        ])
+        return hostingController.view
+    }
+    
+    func setupPie() -> UIView {
+        
+        // Create a SwiftUI PieChart with some data
+        
+        
+        // Create a UIHostingController to wrap the SwiftUI view
+        let hostingController = UIHostingController(rootView: pieChart)
+        
+        // Add the SwiftUI view to the UIKit view hierarchy
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        // Set constraints if needed
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 400)
+        ])
+        return hostingController.view
     }
 }

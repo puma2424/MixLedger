@@ -49,7 +49,7 @@ class AddNewItemViewController: UIViewController {
 
     var selectDate: Date?
 
-    var type: TransactionType?
+    var type: TransactionType = TransactionType(iconName: "AllIcons.foodRice.rawValue", name: "food")
 
     let table = UITableView()
     

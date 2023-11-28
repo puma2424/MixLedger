@@ -383,11 +383,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
 
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
-                if let iconName = data.type?.iconName {
-                    billCell.sortImageView.image = UIImage(named: iconName)
-                }
+//                if let iconName = data.type.iconName {
+                    billCell.sortImageView.image = UIImage(named: data.type.iconName)
+//                }
 
-                billCell.titleLabel.text = data.type?.name
+                billCell.titleLabel.text = data.type.name
                 var titleNote = ""
 
                 if let payUser = data.payUser {
