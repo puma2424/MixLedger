@@ -35,7 +35,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        currentChartView = setupPie()
     }
     /*
     // MARK: - Navigation
@@ -47,11 +47,13 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
     */
     
+    let saveData = SaveData.shared
+    
     var currentChartView: UIView?
     
     let segmentedView = SegmentedControlModleView()
     
-    let pieChart = PieChart(data: .constant([30, 50, 20]),
+    var pieChart = PieChart(data: .constant([30, 50, 20]),
                             labels: .constant(["Label1", "Label2", "Label3"]),
                             colors: [.red, .green, .blue],
                             borderColor: .white)
@@ -78,7 +80,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     func setupLineMarkView() -> UIView {
         
         // 创建 SwiftUI 视图
-        
+        mySwiftUIView.vm.stockData = saveData.transactionsArray
 
         // 将 SwiftUI 视图包装在 UIHostingController 中
         let hostingController = UIHostingController(rootView: mySwiftUIView)
@@ -100,9 +102,28 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
     
     func setupPie() -> UIView {
+        let datas = saveData.transactionsArray
+        var dic: [String : Double] = [:]
+        for data in datas{
+            if dic[data.type.name] == nil{
+                dic[data.type.name] = data.amount
+            }else{
+                dic[data.type.name]? += data.amount
+            }
+        }
         
-        // Create a SwiftUI PieChart with some data
+        var amountArray: [Double] = []
+        var typeArray: [String] = []
         
+        for type in dic.keys{
+            typeArray.append(type)
+            amountArray.append(dic[type] ?? 0.0)
+        }
+        
+        pieChart = PieChart(data: .constant(amountArray),
+                                labels: .constant(typeArray),
+                                colors: [.red, .green, .blue],
+                                borderColor: .white)
         
         // Create a UIHostingController to wrap the SwiftUI view
         let hostingController = UIHostingController(rootView: pieChart)

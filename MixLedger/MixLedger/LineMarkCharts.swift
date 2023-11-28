@@ -10,7 +10,7 @@ import Charts
 
 struct LineMarkCharts: View {
     @State private var saveData = SaveData.shared
-    @State private var vm = StockEntityViewModel()
+    @State var vm = StockEntityViewModel()
     var body: some View {
         VStack {
             Chart{
@@ -28,16 +28,20 @@ struct LineMarkCharts: View {
                     
                 }
             }
+//            .chartXAxisLabel("Date (2023)", alignment: .leading)
+//                        .chartYAxisLabel("Price (NTD)", alignment: .trailing)
+//                        .frame(height: 300)
+//                        .padding()
+//                        .chartXAxis {
+//                            AxisMarks(values: .stride(by: .month)) { value in
+//                                AxisGridLine()
+//                                AxisValueLabel(format: .dateTime.month(.defaultDigits))
+//                            }
+//                        }
             .chartXAxisLabel("Date (2023)", alignment: .leading)
                         .chartYAxisLabel("Price (NTD)", alignment: .trailing)
                         .frame(height: 300)
                         .padding()
-                        .chartXAxis {
-                            AxisMarks(values: .stride(by: .month)) { value in
-                                AxisGridLine()
-                                AxisValueLabel(format: .dateTime.month(.defaultDigits))
-                            }
-                        }
         }
         
         
