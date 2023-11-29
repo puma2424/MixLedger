@@ -10,10 +10,10 @@ import Foundation
 class SaveData {
     static let shared = SaveData()
 
-    var accountData: TransactionsResponse? {
-        didSet {
-            if let accountData = accountData {
-                getAccountArray(transactionsResponse: accountData)
+    var accountData: TransactionsResponse?{
+        didSet{
+            if let accountData = accountData{
+                self.getAccountArrayForCharts(transactionsResponse: accountData)
             }
         }
     }
@@ -23,8 +23,9 @@ class SaveData {
     var myShareAccount: [String: String] = [:]
     var transactionsArray: [Test] = []
 //    var accountInfo:
-
-    func getAccountArray(transactionsResponse _: TransactionsResponse) -> [Test] {
+    
+    
+    func getAccountArrayForCharts(transactionsResponse: TransactionsResponse) -> [Test]{
         transactionsArray = []
         guard let transactions = accountData?.transactions else { return [] }
         for monKey in transactions.keys {
