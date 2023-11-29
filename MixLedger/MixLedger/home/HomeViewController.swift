@@ -290,9 +290,6 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
             mark.centerX.equalTo(showView)
             mark.centerY.equalTo(showView)
         }
-        // 顯式告訴視圖重新佈局
-//            self.view.layoutIfNeeded()
-
 
     }
 
@@ -309,8 +306,6 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
             mark.centerX.equalTo(showView)
             mark.centerY.equalTo(showView)
         }
-        // 顯式告訴視圖重新佈局
-//            self.view.layoutIfNeeded()
     }
 }
 

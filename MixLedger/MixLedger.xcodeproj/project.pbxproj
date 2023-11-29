@@ -25,7 +25,6 @@
 		9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */; };
 		9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */; };
 		9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */; };
-		9A3042FB2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */; };
 		9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */; };
 		9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3043002B15A8C700FFEEB0 /* PieChartView.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
@@ -130,7 +129,6 @@
 		9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInvoiceManager.swift; sourceTree = "<group>"; };
 		9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModleView.swift; sourceTree = "<group>"; };
 		9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
-		9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLLLLineMarkCharts.swift; sourceTree = "<group>"; };
 		9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineMarkCharts.swift; sourceTree = "<group>"; };
 		9A3043002B15A8C700FFEEB0 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
@@ -246,10 +244,36 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9A0A33F12B1766EE00944AE3 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		9A0A33F22B17671700944AE3 /* modleView */ = {
+			isa = PBXGroup;
+			children = (
+				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
+				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
+				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
+			);
+			path = modleView;
+			sourceTree = "<group>";
+		};
+		9A0A33F32B17673700944AE3 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
+				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		9A2379722B037BE5001D6BAF = {
 			isa = PBXGroup;
 			children = (
-				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
 				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
 				9A23797D2B037BE5001D6BAF /* MixLedger */,
 				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
@@ -273,6 +297,9 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9A0A33F32B17673700944AE3 /* Manager */,
+				9A0A33F22B17671700944AE3 /* modleView */,
+				9A0A33F12B1766EE00944AE3 /* Charts */,
 				9A50ADC12B0EECB50099351D /* ShareAccount */,
 				9A50ADC02B0EEC900099351D /* MessagePage */,
 				9A524CD52B0DCE5800B232D4 /* AllAccount */,
@@ -289,13 +316,7 @@
 				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
-				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
-				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
-				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
-				9A3042F62B1477E600FFEEB0 /* ChartsViewController.swift */,
-				9A3042FA2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift */,
-				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -696,7 +717,6 @@
 				9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */,
 				9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */,
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
-				9A3042FB2B147E8600FFEEB0 /* LLLLLineMarkCharts.swift in Sources */,
 				9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */,
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */,
