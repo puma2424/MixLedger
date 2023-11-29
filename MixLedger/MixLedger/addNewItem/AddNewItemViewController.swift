@@ -39,11 +39,41 @@ class AddNewItemViewController: UIViewController {
 
     let firebase = FirebaseManager.shared
 
-    var memberPayMoney: [String: Double] = [:]
+    var memberPayMoney: [String: Double] = [:]{
+        didSet{
+            let indexPathToReload = IndexPath(row: 4, section: 0)
+            table.reloadRows(at: [indexPathToReload], with: .automatic)
+        }
+    }
 
-    var memberShareMoney: [String: Double] = [:]
+    var memberShareMoney: [String: Double] = [:]{
+        didSet{
+            let indexPathToReload = IndexPath(row: 5, section: 0)
+            table.reloadRows(at: [indexPathToReload], with: .automatic)
+        }
+    }
 
-    var amount: Double?
+    var amount: Double?{
+        didSet{
+            
+            if amount == nil{
+                var keys: [String] = []
+                for key in memberPayMoney.keys {
+                    keys.append(key)
+                    memberShareMoney[key] = 0
+                }
+                memberPayMoney[keys[0]] = 0
+            }else{
+                var keys: [String] = []
+                for key in memberPayMoney.keys {
+                    keys.append(key)
+                    memberShareMoney[key] = (amount ?? 0) / Double(memberPayMoney.keys.count)
+                }
+                memberPayMoney[keys[0]] = amount
+            }
+            
+        }
+    }
 
     var member: String?
 
@@ -63,7 +93,11 @@ class AddNewItemViewController: UIViewController {
     
     var invoiceRandomNumber: String = ""
     
-    var invoiceTotalAmount: String = ""
+    var invoiceTotalAmount: String = ""{
+        didSet{
+            amount = Double(invoiceTotalAmount)
+        }
+    }
     
     var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
     
@@ -212,12 +246,16 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
             guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
-            if invoiceTotalAmount != ""{
-                moneyCell.inputText.text = invoiceTotalAmount
-                amount = Double(invoiceTotalAmount)
-            }else{
-                moneyCell.inputText.text = ""
-            }
+//            if invoiceTotalAmount != ""{
+//                moneyCell.inputText.text = invoiceTotalAmount
+////                amount = Double(invoiceTotalAmount)
+//            }else{
+//                moneyCell.inputText.text = ""
+//            }            
+            let amountString = String(format: "%.2f", amount ?? 0.0)
+                moneyCell.inputText.text = amountString
+//                amount = Double(invoiceTotalAmount)
+            
             moneyCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
             
             
@@ -297,7 +335,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     @objc func getAmount(_ textField: UITextField) {
-        amount = Double(textField.text ?? "")
+        amount = Double(textField.text ?? "0.0")
     }
 
     // DatePicker 的值變化時的動作
