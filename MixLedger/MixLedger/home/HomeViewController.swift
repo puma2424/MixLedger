@@ -133,7 +133,7 @@ class HomeViewController: UIViewController {
 
     var selectDate: Date = .init()
 
-    var showView: UIView?
+    var showView = UIView()
     let billTable = UITableView()
     let addButton: UIButton = {
         let button = UIButton()
@@ -193,9 +193,9 @@ class HomeViewController: UIViewController {
     }
 
     func setupShareBillView() {
-        showView = billStatusOpenView
+        openView()
 
-        billTable.layer.cornerRadius = 10
+       
         billStatusSmallView.layer.cornerRadius = 10
         billStatusOpenView.layer.cornerRadius = 10
         billStatusSmallView.smallDelegate = self
@@ -226,6 +226,7 @@ class HomeViewController: UIViewController {
     }
 
     func setupTable() {
+        billTable.layer.cornerRadius = 10
         billTable.delegate = self
         billTable.dataSource = self
         billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
@@ -233,7 +234,6 @@ class HomeViewController: UIViewController {
     }
 
     func setupLayout() {
-        if let showView = showView {
             view.addSubview(showView)
             view.addSubview(billTable)
             view.addSubview(addButton)
@@ -257,7 +257,7 @@ class HomeViewController: UIViewController {
                 make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
                 make.width.height.equalTo(80)
             }
-        }
+        
     }
 
     // struct billItem{
@@ -274,24 +274,42 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     }
 
     func openView() {
-//        showView = nil
-//        showView?.snp.updateConstraints{(mark) in
-//            mark.height.equalTo(300)
-//        }
-//        showView = billStatusOpenView
-//        // 顯式告訴視圖重新佈局
+        
+        billStatusSmallView.removeFromSuperview()
+        showView.snp.updateConstraints{(mark) in
+            mark.height.equalTo(150)
+        }
+//        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+//        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+//        self.billStatusOpenView.table.reloadData()
+        
+        showView.addSubview(billStatusOpenView)
+        billStatusOpenView.snp.makeConstraints{(mark) in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
+        // 顯式告訴視圖重新佈局
 //            self.view.layoutIfNeeded()
-//
-//
+
+
     }
 
     func closeView() {
-//        showView?.snp.updateConstraints{(mark) in
-//            mark.height.equalTo(100)
-//        }
-//        showView = billStatusSmallView
-//
-//        // 顯式告訴視圖重新佈局
+        billStatusOpenView.removeFromSuperview()
+        
+        showView.snp.updateConstraints{(mark) in
+            mark.height.equalTo(50)
+        }
+        showView.addSubview(billStatusSmallView)
+        billStatusSmallView.snp.makeConstraints{(mark) in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
+        // 顯式告訴視圖重新佈局
 //            self.view.layoutIfNeeded()
     }
 }
