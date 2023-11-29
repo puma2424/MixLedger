@@ -33,6 +33,13 @@ class SharedBillStatusSmallView: UIView {
      */
 
     var smallDelegate: SharedBillStatusSmallViewDelegate?
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "帳款狀態"
+        return label
+    }()
+    
     let openOrCloseButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "triangle.fill"), for: .normal)
@@ -54,19 +61,22 @@ class SharedBillStatusSmallView: UIView {
     func setpuLayout() {
         print("-\(frame.size)-")
 
-        addToView(superV: self, subs: openOrCloseButton)
+        addToView(superV: self, subs: openOrCloseButton, titleLabel)
 //
         openOrCloseButton.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.bottom.equalTo(self).offset(-8)
             make.trailing.equalTo(self).offset(-8)
         }
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(self)
+        }
     }
 
     func addToView(superV: UIView, subs: UIView...) {
         subs.forEach {
             superV.addSubview($0)
-//            $0.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 }

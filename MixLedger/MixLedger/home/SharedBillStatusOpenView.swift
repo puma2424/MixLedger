@@ -20,6 +20,7 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
 //        adjustDate(by: 0)
         backgroundColor = .white
         setButtonTarge()
+        setupButton()
         setupTable()
     }
 
@@ -66,6 +67,14 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
         table.register(SBSVUsersTableViewCell.self, forCellReuseIdentifier: "userCell")
     }
 
+    func setupButton(){
+        if let image = UIImage(systemName: "triangle.fill") {
+            let rotatedImage = image.rotate(radians: 0)
+            openOrCloseButton.setImage(rotatedImage, for: .normal)
+        }
+    }
+    
+    
     override func setpuLayout() {
         super.setpuLayout()
         addSubview(table)
