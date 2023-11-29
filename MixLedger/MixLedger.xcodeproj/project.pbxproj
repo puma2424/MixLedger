@@ -69,7 +69,6 @@
 		9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */; };
 		9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */; };
 		9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */; };
-		9AEB5F722B06041400DF5DFF /* BillTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AEB5F702B06041400DF5DFF /* BillTableViewCell.xib */; };
 		9AEB5F742B0608D100DF5DFF /* ShowMoneyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */; };
 		9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */; };
 		9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */; };
@@ -146,7 +145,6 @@
 		9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusSmallView.swift; sourceTree = "<group>"; };
 		9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex-image.swift"; sourceTree = "<group>"; };
 		9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
-		9AEB5F702B06041400DF5DFF /* BillTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BillTableViewCell.xib; sourceTree = "<group>"; };
 		9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoneyFormat.swift; sourceTree = "<group>"; };
 		9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusOpenView.swift; sourceTree = "<group>"; };
 		9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSVUsersTableViewCell.swift; sourceTree = "<group>"; };
@@ -392,7 +390,6 @@
 				9A2379822B037BE5001D6BAF /* HomeViewController.swift */,
 				9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */,
 				9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */,
-				9AEB5F702B06041400DF5DFF /* BillTableViewCell.xib */,
 				9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */,
 				9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */,
 				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
@@ -557,7 +554,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AEB5F722B06041400DF5DFF /* BillTableViewCell.xib in Resources */,
 				9A23798E2B037BE6001D6BAF /* LaunchScreen.storyboard in Resources */,
 				9ACA6EF12B08513900201A44 /* GoogleService-Info.plist in Resources */,
 				9A23798B2B037BE6001D6BAF /* Assets.xcassets in Resources */,

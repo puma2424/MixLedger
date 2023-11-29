@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
                     case let .success(data):
                         // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                         print("getData Success: \(data)")
-                        print("\(self.saveData.accountData?.transactions)")
+                        print("\(String(describing: self.saveData.accountData?.transactions))")
                         self.billStatusOpenView.usersInfo = self.saveData.userInfoData
                         self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
                         self.billStatusOpenView.table.reloadData()
@@ -72,7 +72,7 @@ class HomeViewController: UIViewController {
                 case let .success(data):
                     // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                     print("getData Success: \(data)")
-                    print("\(self.saveData.accountData?.transactions)")
+                    print("\(String(describing: self.saveData.accountData?.transactions))")
                     //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
                     self.billTable.reloadData()
                     self.billStatusOpenView.table.reloadData()
