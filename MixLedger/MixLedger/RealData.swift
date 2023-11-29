@@ -13,7 +13,7 @@ class SaveData{
     var accountData: TransactionsResponse?{
         didSet{
             if let accountData = accountData{
-                self.getAccountArray(transactionsResponse: accountData)
+                self.getAccountArrayForCharts(transactionsResponse: accountData)
             }
         }
     }
@@ -23,7 +23,8 @@ class SaveData{
     var transactionsArray: [Test] = []
 //    var accountInfo:
     
-    func getAccountArray(transactionsResponse: TransactionsResponse) -> [Test]{
+    
+    func getAccountArrayForCharts(transactionsResponse: TransactionsResponse) -> [Test]{
         transactionsArray = []
         guard let transactions = accountData?.transactions else { return []}
         for monKey in transactions.keys{
