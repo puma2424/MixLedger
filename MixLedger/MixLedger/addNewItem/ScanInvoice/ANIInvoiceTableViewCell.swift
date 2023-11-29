@@ -36,23 +36,23 @@ class ANIInvoiceTableViewCell: UITableViewCell {
     }()
 
     let titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "掃描發票"
         return label
     }()
-    
+
     let invoiceLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.numberOfLines = 0
-         return label
+        return label
     }()
 
     func setupLayout() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(invoiceLabel)
-        
+
         iconImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(50)
             mark.top.equalTo(contentView).offset(12)
@@ -64,13 +64,12 @@ class ANIInvoiceTableViewCell: UITableViewCell {
             mark.top.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
         }
-        
+
         invoiceLabel.snp.makeConstraints { mark in
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.top.equalTo(titleLabel.snp.bottom).offset(12)
             mark.bottom.equalTo(contentView)
-            
         }
     }
 }

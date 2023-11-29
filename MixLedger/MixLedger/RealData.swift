@@ -7,40 +7,41 @@
 
 import Foundation
 
-class SaveData{
+class SaveData {
     static let shared = SaveData()
 
-    var accountData: TransactionsResponse?{
-        didSet{
-            if let accountData = accountData{
-                self.getAccountArray(transactionsResponse: accountData)
+    var accountData: TransactionsResponse? {
+        didSet {
+            if let accountData = accountData {
+                getAccountArray(transactionsResponse: accountData)
             }
         }
     }
+
     var userInfoData: [String: UsersInfoResponse] = [:]
     var myInfo: UsersInfoResponse?
     var myShareAccount: [String: String] = [:]
     var transactionsArray: [Test] = []
 //    var accountInfo:
-    
-    func getAccountArray(transactionsResponse: TransactionsResponse) -> [Test]{
+
+    func getAccountArray(transactionsResponse _: TransactionsResponse) -> [Test] {
         transactionsArray = []
-        guard let transactions = accountData?.transactions else { return []}
-        for monKey in transactions.keys{
-            guard let monTransactions = transactions[monKey] else { return []}
-            for dayKey in monTransactions.keys{
-                guard let dayTransactions = monTransactions[dayKey] else { return []}
-                for timeKey in dayTransactions.keys{
-                    guard let timeTransactions = dayTransactions[timeKey] else { return []}
-                    
+        guard let transactions = accountData?.transactions else { return [] }
+        for monKey in transactions.keys {
+            guard let monTransactions = transactions[monKey] else { return [] }
+            for dayKey in monTransactions.keys {
+                guard let dayTransactions = monTransactions[dayKey] else { return [] }
+                for timeKey in dayTransactions.keys {
+                    guard let timeTransactions = dayTransactions[timeKey] else { return [] }
+
                     let dateFont = DateFormatter()
                     dateFont.dateFormat = "yyyy"
                     let dateString = dateFont.string(from: timeTransactions.date)
                     let calendar = Calendar.current
                     let monthNumber = calendar.component(.month, from: timeTransactions.date)
-                    transactionsArray.append(Test(year: dateString, 
+                    transactionsArray.append(Test(year: dateString,
                                                   mon: monthNumber,
-                                                  amount: timeTransactions.amount, 
+                                                  amount: timeTransactions.amount,
                                                   currency: timeTransactions.currency,
                                                   date: timeTransactions.date,
                                                   type: timeTransactions.type))
@@ -50,9 +51,8 @@ class SaveData{
         print(transactionsArray)
         return transactionsArray
     }
-    
-    
 }
+
 struct Test: Identifiable {
     var id = UUID().uuidString
     var year: String

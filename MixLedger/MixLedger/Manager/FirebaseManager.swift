@@ -247,13 +247,13 @@ class FirebaseManager {
                 completion(.success("Sent successfully"))
             }
         }
-        
-        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount{
-            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: date, note: note, type: type){result in
-                switch result{
-                case .success(_):
+
+        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
+            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: date, note: note, type: type) { result in
+                switch result {
+                case .success:
                     print("同步到付費者的個人帳本：成功")
-                case .failure(let err):
+                case let .failure(err):
                     print("同步到付費者的個人帳本：失敗")
                     print(err)
                     print("-----------------------")
@@ -261,10 +261,10 @@ class FirebaseManager {
             }
         }
     }
-    
-    private func updatePayerAccount(isMyAccount: Bool, memberPayMoney: [String: Double], date: Date, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>) -> Void){
-        if isMyAccount == false{
-            for payerID in memberPayMoney.keys{
+
+    private func updatePayerAccount(isMyAccount: Bool, memberPayMoney: [String: Double], date: Date, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>) -> Void) {
+        if isMyAccount == false {
+            for payerID in memberPayMoney.keys {
                 guard let amount = memberPayMoney[payerID] else { return }
                 let transaction = [
                     "amount": amount,
@@ -274,14 +274,14 @@ class FirebaseManager {
                     "currency": "新台幣",
                     "from": "\(saveData.accountData?.accountName)",
                 ] as [String: Any]
-                
+
                 dateFont.dateFormat = "yyyy-MM"
                 let dateM = dateFont.string(from: date)
                 dateFont.dateFormat = "yyyy-MM-dd"
                 let dateD = dateFont.string(from: date)
-                
-                guard let payerAccountID = saveData.userInfoData[payerID]?.ownAccount else{return}
-                
+
+                guard let payerAccountID = saveData.userInfoData[payerID]?.ownAccount else { return }
+
                 db.collection("accounts").document(payerAccountID).updateData([
                     "transactions.\(dateM).\(dateD).\(Date())": transaction,
                     "accountInfo.expense": FieldValue.increment(amount),
@@ -295,7 +295,6 @@ class FirebaseManager {
                         completion(.success("Sent successfully"))
                     }
                 }
-                
             }
         }
     }
@@ -451,9 +450,9 @@ struct AccountInfo: Codable {
 //    var userID: String
 // }
 
-struct Transaction: Codable{
+struct Transaction: Codable {
 //    var id = UUID().uuidString
-    
+
     var year: String?
 //    var id = UUID().uuidString
     var amount: Double
@@ -464,9 +463,8 @@ struct Transaction: Codable{
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
     var type: TransactionType
-    
-    
-    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType, year: String) {
+
+    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType, year _: String) {
         let dateFont = DateFormatter()
         dateFont.dateFormat = "yyyy"
         let dateString = dateFont.string(from: date)
@@ -479,7 +477,7 @@ struct Transaction: Codable{
         self.payUser = payUser
         self.shareUser = shareUser
         self.type = type
-        self.year = dateString
+        year = dateString
     }
 }
 

@@ -52,18 +52,17 @@ class AllAccountBookViewController: UIViewController {
         present(AddNewAccountViewController(), animated: true)
     }
 
-    func findAllMyAccount(){
-        if let myInfo = savaData.myInfo{
+    func findAllMyAccount() {
+        if let myInfo = savaData.myInfo {
             let shareAccount = myInfo.shareAccount
             let myAccount = [myInfo.ownAccount]
             var allAccount: [String] = myAccount + shareAccount
-            self.firebaseManager.findAccount(account: allAccount) { _ in
+            firebaseManager.findAccount(account: allAccount) { _ in
                 self.table.reloadData()
             }
         }
-        
     }
-    
+
     func setLayout() {
         view.addSubview(table)
         table.snp.makeConstraints { mark in
@@ -109,17 +108,17 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
         cell.backgroundColor = UIColor(named: "G3")
         guard let accountCell = cell as? AccountTableViewCell else { return cell }
-        
+
         if indexPath.row == 0 {
             if let id = savaData.myInfo?.ownAccount {
                 accountCell.accountNameLable.text = savaData.myShareAccount[id]
             }
-        }else{
+        } else {
             if let id = savaData.myInfo?.shareAccount[indexPath.row - 1] {
                 accountCell.accountNameLable.text = savaData.myShareAccount[id]
             }
         }
-        
+
         // 判斷是否為當前選中的 cell
         if indexPath == selectedIndexPath {
             cell.accessoryType = .checkmark
@@ -155,7 +154,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
                 accountInfo?(id)
                 print(savaData.myShareAccount[id])
             }
-        }else{
+        } else {
             if let id = savaData.myInfo?.shareAccount[indexPath.row - 1] {
                 accountInfo?(id)
                 print(savaData.myShareAccount[id])

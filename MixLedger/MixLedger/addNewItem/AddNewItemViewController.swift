@@ -30,7 +30,7 @@ class AddNewItemViewController: UIViewController {
          // Pass the selected object to the new view controller.
      }
      */
-    
+
     let scanInvoiceManager = ScanInvoiceManager.shared
 
     var currentAccountID: String = ""
@@ -39,31 +39,30 @@ class AddNewItemViewController: UIViewController {
 
     let firebase = FirebaseManager.shared
 
-    var memberPayMoney: [String: Double] = [:]{
-        didSet{
+    var memberPayMoney: [String: Double] = [:] {
+        didSet {
             let indexPathToReload = IndexPath(row: 4, section: 0)
             table.reloadRows(at: [indexPathToReload], with: .automatic)
         }
     }
 
-    var memberShareMoney: [String: Double] = [:]{
-        didSet{
+    var memberShareMoney: [String: Double] = [:] {
+        didSet {
             let indexPathToReload = IndexPath(row: 5, section: 0)
             table.reloadRows(at: [indexPathToReload], with: .automatic)
         }
     }
 
-    var amount: Double?{
-        didSet{
-            
-            if amount == nil{
+    var amount: Double? {
+        didSet {
+            if amount == nil {
                 var keys: [String] = []
                 for key in memberPayMoney.keys {
                     keys.append(key)
                     memberShareMoney[key] = 0
                 }
                 memberPayMoney[keys[0]] = 0
-            }else{
+            } else {
                 var keys: [String] = []
                 for key in memberPayMoney.keys {
                     keys.append(key)
@@ -71,7 +70,6 @@ class AddNewItemViewController: UIViewController {
                 }
                 memberPayMoney[keys[0]] = amount
             }
-            
         }
     }
 
@@ -79,30 +77,30 @@ class AddNewItemViewController: UIViewController {
 
     var selectDate: Date?
 
-    var type: TransactionType = TransactionType(iconName: "AllIcons.foodRice.rawValue", name: "food")
+    var type: TransactionType = .init(iconName: "AllIcons.foodRice.rawValue", name: "food")
 
     let table = UITableView()
-    
+
     let imagePicker = UIImagePickerController()
-    
+
     var invoiceString: [String] = []
-    
+
     var invoiceNumber: String = ""
-    
+
     var invoiceDate: String = ""
-    
+
     var invoiceRandomNumber: String = ""
-    
-    var invoiceTotalAmount: String = ""{
-        didSet{
+
+    var invoiceTotalAmount: String = "" {
+        didSet {
             amount = Double(invoiceTotalAmount)
         }
     }
-    
+
     var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
-    
+
     var productDetails: [ProductInfo] = []
-    
+
     var note: String = ""
 
     let closeButton: UIButton = {
@@ -197,8 +195,9 @@ class AddNewItemViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - 拍攝發票
+
     func selectPhotoButtonTapped() {
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
@@ -216,7 +215,7 @@ class AddNewItemViewController: UIViewController {
 
         present(alertController, animated: true)
     }
-        
+
     func showImagePicker(sourceType: UIImagePickerController.SourceType) {
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
@@ -232,7 +231,6 @@ class AddNewItemViewController: UIViewController {
             print("相機不可用或其他情况")
         }
     }
-    
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
@@ -248,17 +246,15 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
 //            if invoiceTotalAmount != ""{
 //                moneyCell.inputText.text = invoiceTotalAmount
-////                amount = Double(invoiceTotalAmount)
+            ////                amount = Double(invoiceTotalAmount)
 //            }else{
 //                moneyCell.inputText.text = ""
-//            }            
+//            }
             let amountString = String(format: "%.2f", amount ?? 0.0)
-                moneyCell.inputText.text = amountString
+            moneyCell.inputText.text = amountString
 //                amount = Double(invoiceTotalAmount)
-            
+
             moneyCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
-            
-            
 
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
@@ -270,7 +266,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 //                type?.name = text
 //            }
 
-        }else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
             // 掃描發票
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
@@ -281,29 +277,29 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 //                invoiceCell.invoiceLabel.text? += "\(index)：\n\(invoiceString[index])\n"
 //            }
             var text = ""
-            if invoiceNumber != ""{
+            if invoiceNumber != "" {
                 text = "發票號碼： \(invoiceNumber)"
             }
-            
-            if invoiceDate != ""{
+
+            if invoiceDate != "" {
                 text += "\n購買日期：\(invoiceDate)"
             }
-            
-            if invoiceRandomNumber != ""{
+
+            if invoiceRandomNumber != "" {
                 text += "\n隨機碼：\(invoiceRandomNumber)"
             }
-            
+
             if invoiceTotalAmount != "" {
                 text += "\n金額：\(invoiceTotalAmount)"
             }
             print(productDetails)
-            for product in productDetails{
+            for product in productDetails {
                 text += "\n 商品： \(product.name) \(product.price) * \(product.quantity)"
             }
             invoiceCell.invoiceLabel.text = text
             note = text
 
-        }else if indexPath.row == 3 {
+        } else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
             dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
@@ -345,9 +341,9 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 2{
+        if indexPath.row == 2 {
             selectPhotoButtonTapped()
-        }else if indexPath.row == 4 {
+        } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
             selectMemberView.usersMoney = memberPayMoney
             selectMemberView.delegate = self
@@ -377,35 +373,32 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
     }
 }
 
-extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage){results in
-                switch results{
-                    
-                case .success(let result):
-                    switch result{
-                    case .formQRCode(_):
+            scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
+                switch results {
+                case let .success(result):
+                    switch result {
+                    case .formQRCode:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                         self.invoiceDate = self.scanInvoiceManager.invoiceDateString
                         self.selectDate = self.scanInvoiceManager.invoiceDate
                         self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
                         self.productDetails = self.scanInvoiceManager.productDetails
-                    case .formText(_):
+                    case .formText:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                     }
                     self.table.reloadData()
-                case .failure(_):
+                case .failure:
                     return
                 }
             }
-            
+
 //            self.table.reloadData()
         }
-        
+
         dismiss(animated: true, completion: nil)
-        
-        
     }
 }

@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
 
     var currentAccountID: String = "" {
         didSet {
-            if currentAccountID != ""{
+            if currentAccountID != "" {
                 firebaseManager.getData(accountID: currentAccountID) { result in
                     switch result {
                     case let .success(data):
@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
 //                    mark.height.equalTo(150)
 //                }
 //                showView?.isHidden = false
-//                
+//
 //            }
         }
     }
@@ -63,18 +63,17 @@ class HomeViewController: UIViewController {
         setNavigation()
         setupButton()
 //        showMonBill()
-        
     }
 
     override func viewWillAppear(_: Bool) {
-       if currentAccountID != "" {
-           firebaseManager.getData(accountID: currentAccountID) { result in
+        if currentAccountID != "" {
+            firebaseManager.getData(accountID: currentAccountID) { result in
                 switch result {
                 case let .success(data):
                     // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                     print("getData Success: \(data)")
                     print("\(self.saveData.accountData?.transactions)")
-    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+                    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
                     self.billTable.reloadData()
                     self.billStatusOpenView.table.reloadData()
 
@@ -85,7 +84,6 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        
 
         saveData.userInfoData = [:]
         billStatusOpenView.usersInfo = [:]
@@ -140,8 +138,8 @@ class HomeViewController: UIViewController {
         button.setImage(UIImage(named: "add"), for: .normal)
         return button
     }()
-    
-    func getMyInfo(){
+
+    func getMyInfo() {
         // find my info
         firebaseManager.findUser(userID: [myID]) { result in
             self.saveData.myInfo = nil
@@ -149,7 +147,7 @@ class HomeViewController: UIViewController {
             switch result {
             case let .success(data):
                 self.saveData.myInfo = data[myID]
-                if self.currentAccountID == ""{
+                if self.currentAccountID == "" {
                     self.currentAccountID = data[myID]?.ownAccount ?? ""
                 }
             case let .failure(error):
@@ -195,7 +193,6 @@ class HomeViewController: UIViewController {
     func setupShareBillView() {
         openView()
 
-       
         billStatusSmallView.layer.cornerRadius = 10
         billStatusOpenView.layer.cornerRadius = 10
         billStatusSmallView.smallDelegate = self
@@ -234,30 +231,29 @@ class HomeViewController: UIViewController {
     }
 
     func setupLayout() {
-            view.addSubview(showView)
-            view.addSubview(billTable)
-            view.addSubview(addButton)
-            showView.snp.makeConstraints { make in
-                make.width.equalTo(view.bounds.size.width * 0.9)
-                make.height.equalTo(150)
-                make.centerX.equalTo(view)
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
-            }
+        view.addSubview(showView)
+        view.addSubview(billTable)
+        view.addSubview(addButton)
+        showView.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.height.equalTo(150)
+            make.centerX.equalTo(view)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
+        }
 
-            billTable.snp.makeConstraints { make in
-                make.width.equalTo(view.bounds.size.width * 0.9)
-                make.centerX.equalTo(view)
-                make.top.equalTo(showView.snp.bottom).offset(10)
-                make.bottom.equalTo(view.safeAreaLayoutGuide)
+        billTable.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.centerX.equalTo(view)
+            make.top.equalTo(showView.snp.bottom).offset(10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
 //                make.width.equalTo(view.safeAreaLayoutGuide)
-            }
+        }
 
-            addButton.snp.makeConstraints { make in
+        addButton.snp.makeConstraints { make in
 
-                make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
-                make.width.height.equalTo(80)
-            }
-        
+            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
+            make.width.height.equalTo(80)
+        }
     }
 
     // struct billItem{
@@ -265,42 +261,40 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate {
-    func inputData(view: SharedBillStatusOpenView) {
+    func inputData(view _: SharedBillStatusOpenView) {
 //        view.billStatus = savaData.accountData?.shareUsersID
 //        view.usersInfo = saveData.userInfoData
 //
-////        view.usersInfo = userID
+        ////        view.usersInfo = userID
 //        print(view.usersInfo)
     }
 
     func openView() {
-        
         billStatusSmallView.removeFromSuperview()
-        showView.snp.updateConstraints{(mark) in
+        showView.snp.updateConstraints { mark in
             mark.height.equalTo(150)
         }
 //        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
 //        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
 //        self.billStatusOpenView.table.reloadData()
-        
+
         showView.addSubview(billStatusOpenView)
-        billStatusOpenView.snp.makeConstraints{(mark) in
+        billStatusOpenView.snp.makeConstraints { mark in
             mark.width.equalTo(showView)
             mark.height.equalTo(showView)
             mark.centerX.equalTo(showView)
             mark.centerY.equalTo(showView)
         }
-
     }
 
     func closeView() {
         billStatusOpenView.removeFromSuperview()
-        
-        showView.snp.updateConstraints{(mark) in
+
+        showView.snp.updateConstraints { mark in
             mark.height.equalTo(50)
         }
         showView.addSubview(billStatusSmallView)
-        billStatusSmallView.snp.makeConstraints{(mark) in
+        billStatusSmallView.snp.makeConstraints { mark in
             mark.width.equalTo(showView)
             mark.height.equalTo(showView)
             mark.centerX.equalTo(showView)
@@ -397,7 +391,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
 //                if let iconName = data.type.iconName {
-                    billCell.sortImageView.image = UIImage(named: data.type.iconName)
+                billCell.sortImageView.image = UIImage(named: data.type.iconName)
 //                }
 
                 billCell.titleLabel.text = data.type.name
@@ -426,6 +420,5 @@ extension HomeViewController: BillStatusTableViewCellDelegate {
     func changeMonth(cell _: BillStatusTableViewCell, date: Date) {
         selectDate = date
         billTable.reloadData()
-
     }
 }
