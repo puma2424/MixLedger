@@ -39,7 +39,7 @@ struct LineMarkCharts: View {
 //                            }
 //                        }
             .chartXAxisLabel("Date (2023)", alignment: .leading)
-                        .chartYAxisLabel("Price (NTD)", alignment: .trailing)
+                        .chartYAxisLabel("Price (NTD)", alignment: .leading)
                         .frame(height: 300)
                         .padding()
         }

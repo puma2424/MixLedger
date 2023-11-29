@@ -48,7 +48,7 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.returnKeyType = .done
 
         // 輸入文字的顏色
-        textField.textColor = UIColor.white
+        textField.textColor = UIColor(named: "G1")
         return textField
     }()
 
