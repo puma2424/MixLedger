@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
         }
     }
 
-    var transactionsMonKeyArr: [String] = []
+    var transactionsDayKeyArr: [String] = []
     var transactionsDayDatasKeys: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
                     // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
                     print("getData Success: \(data)")
                     print("\(self.saveData.accountData?.transactions)")
-    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsDayKeyArr[indexPath.section - 1]] else {return ""}
                     self.billTable.reloadData()
                     self.billStatusOpenView.table.reloadData()
 
@@ -262,6 +262,26 @@ class HomeViewController: UIViewController {
 
     // struct billItem{
     // }
+    func reorderTransactionsByDate(transactions: [String]){
+        var convertToDate: [Date] = []
+        
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy-MM-dd"
+        
+        for date in transactions {
+            guard let dateDate = dateFont.date(from: date) else {return}
+            convertToDate.append(dateDate)
+        }
+        convertToDate.sort{ $0 > $1 }
+        print(convertToDate)
+        
+        transactionsDayKeyArr = []
+        
+        for date in convertToDate {
+            let dateString = dateFont.string(from: date)
+            transactionsDayKeyArr.append(dateString)
+        }
+    }
 }
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate {
@@ -302,7 +322,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         } else {
 //            let bill = billArray[section - 1]
-            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsMonKeyArr[section - 1]] {
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[section - 1]] {
 //
 //
 //                for dataKey in datas.keys{
@@ -336,18 +356,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let data = saveData.accountData?.transactions?[showMonBill(date: selectDate)] else { return "" }
-        transactionsMonKeyArr = []
+        transactionsDayKeyArr = []
         for key in data.keys {
-            transactionsMonKeyArr.append(key)
+            transactionsDayKeyArr.append(key)
         }
         if section != 0 {
 //            guard let date = billArray[section - 1]["日期"]?[0] as? Date else{ return ""}
 //            let dateString = dateFont.string(from: date)
             ////            print(dateString)
 //            return dateString
-//            guard transactionsMonKeyArr.count >= section  else { return "" }
-
-            return transactionsMonKeyArr[section - 1]
+//            guard transactionsDayKeyArr.count >= section  else { return "" }
+            reorderTransactionsByDate(transactions: transactionsDayKeyArr)
+            return transactionsDayKeyArr[section - 1]
         } else {
             return ""
         }
@@ -372,9 +392,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
             guard let billCell = cell as? BillTableViewCell else { return cell }
 
-            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsMonKeyArr[indexPath.section - 1]] {
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
 //                print("-------------data.keys--------")
-//                print(transactionsMonKeyArr[indexPath.section - 1])
+//                print(transactionsDayKeyArr[indexPath.section - 1])
                 print(showMonBill(date: selectDate))
 //                var transactionsDayDatasKeys: [String] = []
                 transactionsDayDatasKeys = []
