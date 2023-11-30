@@ -9,13 +9,12 @@ import SnapKit
 import UIKit
 protocol SharedBillStatusOpenViewDelegate {
     func closeView()
-    func inputData(view: SharedBillStatusOpenView)
+    func addRePayView(subview: RepayView)
 }
 
 class SharedBillStatusOpenView: SharedBillStatusSmallView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        openDelegate?.inputData(view: self)
         setpuLayout()
 //        adjustDate(by: 0)
         backgroundColor = .white
@@ -37,10 +36,12 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
      */
 //    var users: [UsersInfo]? = nil
     let saveData = SaveData.shared
+    let firebaseManager = FirebaseManager.shared
     var openDelegate: SharedBillStatusOpenViewDelegate?
     let table = UITableView()
     var userID: [String] = []
-
+    var myMoney: Double = 0
+    
     var usersInfo: [String: UsersInfoResponse]? {
         didSet {
             userID = []
@@ -57,6 +58,10 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
 
     var billStatus: [[String: Double]]? {
         didSet {
+            let myID = saveData.myInfo?.userID ?? ""
+            if let index = billStatus?.firstIndex(where: { $0.keys.contains(myID) }), let money = billStatus?[index][myID] {
+                myMoney = money
+            }
             return
         }
     }
@@ -89,6 +94,7 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
     @objc override func openOrCloseActive() {
         openDelegate?.closeView()
     }
+    
 }
 
 extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
@@ -96,9 +102,37 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
         if let indexPath = table.indexPath(for: cell){
             let id = userID[indexPath.row]
             print(id)
-            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }) {
-                print("\(billStatus?[index][id])")
+            
+            if cell.amount.checkButtonTitle == "催款"{
+                if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
+                    print("\(billStatus?[index][id])")
+                    guard let myName = saveData.myInfo?.name else {return}
+                    guard let accountName = saveData.accountData?.accountName else {return}
+                    guard let otherUserName = usersInfo?[id]?.name else {return}
+                    let toOutherText = "\(myName)從\"\(accountName)\"傳送訊息給您：\n 請還款\(abs(money))"
+                    let myText = "從\"\(accountName)\"傳送訊息給\(otherUserName):\n請還款\(abs(money))"
+                    firebaseManager.postMessage(toUserID: id, text: [toOutherText,myText]){_ in
+                        return
+                    }
+                }
+            }else if cell.amount.checkButtonTitle == "還款"{
+                if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
+                    print(cell.amount.checkButtonTitle)
+                    let repayView = RepayView()
+                    repayView.otherMoney = money
+                    guard let otherUserName = usersInfo?[id]?.name else {return}
+                    repayView.otherUserName = otherUserName
+                    repayView.otherUserID = id
+                    
+                    repayView.titleLabel.text = "\(otherUserName)待收款金額為：\(abs(money))"
+                    repayView.toUser.text = "向\(otherUserName)還款"
+                    openDelegate?.addRePayView(subview: repayView)
+                }
+                
+                
             }
+            
+
         }
 //        table.reloadData()
     }
@@ -115,11 +149,37 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
         userCell.delegate = self
         if let userInfo = usersInfo {
             let id = userID[indexPath.row]
+            
+           
+            
+            
             userCell.nameLable.text = userInfo[id]?.name
 //            userCell.moneyLable.text = "\(billStatus?[userID[indexPath.row]])"
-
-            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }) {
-                userCell.moneyLable.text = "\(billStatus?[index][id])"
+            
+            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let userMoney = billStatus?[index][id] {
+                let amount = MoneyType.money(userMoney)
+                userCell.amount = amount
+                if id == saveData.myInfo?.userID {
+                    userCell.checkButton.isHidden = true
+                    myMoney = userMoney
+                }else {
+                    if myMoney < 0 && userMoney < 0 {
+                        userCell.checkButton.isHidden = true
+                    }else if myMoney < 0 && userMoney > 0{
+                        userCell.checkButton.isHidden = false
+                        userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
+                    }else if myMoney > 0 && userMoney < 0{
+                        userCell.checkButton.isHidden = false
+                        userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
+                    }else if myMoney > 0 && userMoney > 0{
+                        userCell.checkButton.isHidden = true
+                    }
+                    
+                }
+                
+                
+                userCell.moneyLable.text = "\(amount.billTitle) \(abs(userMoney))"
+                userCell.moneyLable.textColor = amount.color
             }
         }
 

@@ -95,23 +95,47 @@ class MessageViewController: UIViewController {
 }
 
 extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        data?.inviteCard?.count ?? 0
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0{
+            let inviteCardCount = data?.inviteCard?.count ?? 0
+            return inviteCardCount
+        }else{
+            let messageCount = data?.message?.count ?? 0
+            return messageCount
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "inviteCell", for: indexPath)
         guard let inviteCell = cell as? InviteMessageTableViewCell else { return cell }
-        if let data = data?.inviteCard?[indexPath.row] {
-            inviteCell.inviteMessageLabel.text = "\(data.inviterName)邀請你加入帳簿：\(data.accountName)"
-        }
+        if indexPath.section == 0{
+            if let data = data?.inviteCard?[indexPath.row] {
+                inviteCell.inviteMessageLabel.text = "\(data.inviterName)邀請你加入帳簿：\(data.accountName)"
+            }
 
-        inviteCell.agreeClosure = { [weak self] in
-            self?.agare(index: indexPath)
-        }
+            inviteCell.agreeClosure = { [weak self] in
+                self?.agare(index: indexPath)
+            }
 
-        inviteCell.rejectClosure = { [weak self] in
-            self?.reject(index: indexPath)
+            inviteCell.rejectClosure = { [weak self] in
+                self?.reject(index: indexPath)
+            }
+        }else{
+            if let data = data?.message {
+                inviteCell.inviteMessageLabel.text = data[indexPath.row].text
+            }
+
+            inviteCell.agreeClosure = { [weak self] in
+                self?.agare(index: indexPath)
+            }
+
+            inviteCell.rejectClosure = { [weak self] in
+                self?.reject(index: indexPath)
+            }
         }
 
         return inviteCell

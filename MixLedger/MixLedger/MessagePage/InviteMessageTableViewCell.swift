@@ -87,14 +87,14 @@ class InviteMessageTableViewCell: UITableViewCell {
             mark.trailing.equalTo(agreebutton.snp.leading).offset(-12)
         }
 
-        agreebutton.snp.makeConstraints { mark in
+        rejectButton.snp.makeConstraints { mark in
             mark.width.equalTo(80)
             mark.height.equalTo(25)
             mark.top.equalTo(contentView).offset(12)
             mark.trailing.equalTo(rejectButton.snp.leading).offset(-12)
         }
 
-        rejectButton.snp.makeConstraints { mark in
+        agreebutton.snp.makeConstraints { mark in
             mark.width.equalTo(80)
             mark.height.equalTo(25)
             mark.top.equalTo(contentView).offset(12)

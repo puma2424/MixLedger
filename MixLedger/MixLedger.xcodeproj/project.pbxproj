@@ -33,6 +33,7 @@
 		9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */; };
 		9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */; };
 		9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */; };
+		9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F912B1872AC00D4BCAA /* RepayView.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
 		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
@@ -136,6 +137,7 @@
 		9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMessageTableViewCell.swift; sourceTree = "<group>"; };
+		9A590F912B1872AC00D4BCAA /* RepayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepayView.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */,
 				9AEB5F792B062FE400DF5DFF /* SharedBillStatusOpenView.swift */,
 				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
+				9A590F912B1872AC00D4BCAA /* RepayView.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
+				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

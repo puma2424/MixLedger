@@ -8,7 +8,9 @@
 import SnapKit
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController{
+    
+    
 //    var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh", "bGzuwR00sPRNmBamK91D"]
 
     let saveData = SaveData.shared
@@ -280,24 +282,31 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate {
-    func inputData(view _: SharedBillStatusOpenView) {
-//        view.billStatus = savaData.accountData?.shareUsersID
-//        view.usersInfo = saveData.userInfoData
-//
-        ////        view.usersInfo = userID
-//        print(view.usersInfo)
+extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate, RepayViewDelegate {
+    func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
+        firebaseManager.postDunningLetterMessage(toUserID: otherUserID, amount: amount, text: [""]){ _ in
+            return
+        }
+        payView.removeFromSuperview()
     }
-
+    
+    func addRePayView(subview: RepayView) {
+        view.addSubview(subview)
+        subview.layer.cornerRadius = 10
+        subview.snp.makeConstraints{(mark) in
+            mark.width.equalTo(view.bounds.size.width * 0.8)
+            mark.height.equalTo(view.bounds.size.height * 0.4)
+            mark.centerX.equalTo(view)
+            mark.centerY.equalTo(view)
+        }
+        subview.delegate = self
+    }
+   
     func openView() {
         billStatusSmallView.removeFromSuperview()
         showView.snp.updateConstraints { mark in
             mark.height.equalTo(150)
         }
-//        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
-//        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
-//        self.billStatusOpenView.table.reloadData()
-
         showView.addSubview(billStatusOpenView)
         billStatusOpenView.snp.makeConstraints { mark in
             mark.width.equalTo(showView)

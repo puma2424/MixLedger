@@ -28,6 +28,28 @@ enum MoneyType {
             }
         }
     }
+    
+    var billTitle: String{
+        switch self {
+        case let .money(int):
+            if int > 0 {
+                return "待還款"
+            } else {
+                return "待收款"
+            }
+        }
+    }
+    
+    var checkButtonTitle: String{
+        switch self {
+        case let .money(int):
+            if int < 0 {
+                return "還款"
+            } else {
+                return "催款"
+            }
+        }
+    }
 }
 
 struct UsersInfo {

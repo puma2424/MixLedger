@@ -19,19 +19,73 @@ class FirebaseManager {
     @Published var errorMessage: String?
 
     let dateFont = DateFormatter()
-
-//
-//    let accountInfo = ["accountID": "HbS5e81PWHRY41A8nBwl",
-//                    "accountName": "去嘉義玩",
-//                       "shareUsersID": ["users":[["userID":"QJeplpxVXBca5xhXWgbT","unbalance" : 0.0],
-//                            ["userID":"bGzuwR00sPRNmBamK91D","unbalance" : 0.0]
-//                           ]],
-//                       "accountInfo": ["total": 100.0, "expense": 300.0, "income": 600.0, "budget": 1000.0]
-//                    "transaction.\(Date())":[]
-//    ] as [String : Any]
-
+    
+    // MARK: - 發送訊息 -
+    func postMessage(toUserID: String, text: [String], completion: @escaping (Result<String,Error>) -> Void){
+        db.collection("users").document(toUserID).updateData([
+            "message": FieldValue.arrayUnion([["text":text[0],
+                                               "fromUserID":saveData.myInfo?.userID,
+                                               "toUserID": toUserID,
+                                               "isDunningLetter": false]])
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                if let myInfo = self.saveData.myInfo{
+                    self.db.collection("users").document(myInfo.userID).updateData([
+                        "message": FieldValue.arrayUnion([["text":text[1],
+                                                           "fromUserID":self.saveData.myInfo?.userID,
+                                                           "toUserID": toUserID,
+                                                          "isDunningLetter": false]])
+                    ]) { err in
+                        if let err = err {
+                            print("Error updating document: \(err)")
+                            completion(.failure(err))
+                        } else {
+                            completion(.success(""))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - 還款 -
+    func postDunningLetterMessage(toUserID: String, amount: Double, text: [String], completion: @escaping (Result<String,Error>) -> Void){
+        let mtName = saveData.myInfo?.name ?? ""
+        let toTest = "\(mtName) 向您還款：\(amount) 請確認收款"
+        let myTest = "您向\(mtName) 還款：\(amount) "
+        
+        db.collection("users").document(toUserID).updateData([
+            "message": FieldValue.arrayUnion([["text":toTest,
+                                               "fromUserID":saveData.myInfo?.userID,
+                                               "toUserID": toUserID,
+                                               "isDunningLetter": true]])
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                if let myInfo = self.saveData.myInfo{
+                    self.db.collection("users").document(myInfo.userID).updateData([
+                        "message": FieldValue.arrayUnion([["text": myTest,
+                                                           "fromUserID":self.saveData.myInfo?.userID,
+                                                           "toUserID": toUserID,
+                                                          "isDunningLetter": false]])
+                    ]) { err in
+                        if let err = err {
+                            print("Error updating document: \(err)")
+                            completion(.failure(err))
+                        } else {
+                            completion(.success(""))
+                        }
+                    }
+                }
+            }
+        }
+    }
     // MARK: - 回覆共享帳簿的邀請 -
-
     // 回覆共享帳簿的邀請
     func postRespondToInvitation(respond: Bool, accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void) {
         if respond {
@@ -129,6 +183,7 @@ class FirebaseManager {
         }
     }
 
+    // MARK: - 發送共享帳簿的邀請 -
     // 發送共享帳簿的邀請
     func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion _: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
         db.collection("accounts").document(shareAccountID).updateData([
@@ -166,6 +221,7 @@ class FirebaseManager {
         }
     }
 
+    // MARK: - 新增新帳本 -
     func addNewAccount(name: String, budget _: Double? = 0, iconName: String) {
         let newAccount = db.collection("account").document()
         guard let myInfo = saveData.myInfo else { return }
@@ -189,6 +245,7 @@ class FirebaseManager {
         }
     }
 
+    // MARK: - 記帳 -
     // swiftlint:disable line_length
     func postData(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void) {
         print(saveData.accountData?.shareUsersID)
@@ -299,8 +356,8 @@ class FirebaseManager {
         }
     }
 
+    // MARK: - 取得帳本資料 -
     // swiftlint:enable line_length
-
     func getData(accountID: String, completion: @escaping (Result<Any, Error>) -> Void) {
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document(accountID)
@@ -436,25 +493,8 @@ struct AccountInfo: Codable {
     var total: Double
 }
 
-// struct ShareUsers: Codable {
-//    var unbalance: Double
-//    var userID: String
-// }
-
-// struct ShareUsers: Codable {
-//    var users: [ShareUser]
-// }
-//
-// struct ShareUser: Codable {
-//    var unbalance: Double
-//    var userID: String
-// }
-
 struct Transaction: Codable {
-//    var id = UUID().uuidString
-
     var year: String?
-//    var id = UUID().uuidString
     var amount: Double
     var currency: String
     var date: Date
@@ -492,6 +532,14 @@ struct UsersInfoResponse: Codable {
     var shareAccount: [String]
     var userID: String
     var inviteCard: [InviteCard]?
+    var message: [Message]?
+}
+
+struct Message: Codable{
+    var text: String
+    var fromUserID: String
+    var isDunningLetter: Bool
+    var toUserID: String
 }
 
 struct InviteCard: Codable {

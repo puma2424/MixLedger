@@ -41,6 +41,7 @@ class SBSVUsersTableViewCell: UITableViewCell {
     
     var delegate: SBSVUsersTableViewCellDelegate?
 
+    var amount: MoneyType = MoneyType.money(0)
     let userImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "human")
@@ -55,11 +56,20 @@ class SBSVUsersTableViewCell: UITableViewCell {
 
     let moneyLable: UILabel = {
         let lable = UILabel()
-        lable.text = "300"
+        lable.text = ""
         return lable
     }()
 
     let checkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("催款", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        return button
+    }()
+    
+    let messageButton: UIButton = {
         let button = UIButton()
         button.setTitle("催款", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -80,28 +90,37 @@ class SBSVUsersTableViewCell: UITableViewCell {
         contentView.addSubview(userImage)
         contentView.addSubview(nameLable)
         contentView.addSubview(moneyLable)
+//        contentView.addSubview(messageButton)
         contentView.addSubview(checkButton)
+        
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.top.leading.equalTo(contentView).offset(12)
-            mark.bottom.equalTo(contentView).offset(-12)
+            
         }
 
         nameLable.snp.makeConstraints { mark in
-            mark.centerY.equalTo(contentView)
+            mark.centerY.equalTo(userImage)
             mark.leading.equalTo(userImage.snp.trailing).offset(12)
         }
 
         moneyLable.snp.makeConstraints { mark in
             mark.centerX.equalTo(contentView)
-            mark.centerY.equalTo(contentView)
+            mark.centerY.equalTo(userImage)
         }
-
+        
+//        messageButton.snp.makeConstraints{(mark) in
+//            mark.top.equalTo(moneyLable.snp.bottom).offset(12)
+//            mark.leading.equalTo(contentView).offset(12)
+//            mark.width.equalTo(contentView.frame.size.width / 2 - 18)
+//        }
+    
         checkButton.snp.makeConstraints { mark in
-            mark.centerY.centerY.equalTo(contentView)
+//            mark.centerY.equalTo(contentView)
+            mark.top.equalTo(moneyLable.snp.bottom).offset(12)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
-            mark.width.equalTo(60)
-//            mark.height.equalTo(12)
+            mark.width.equalTo((contentView.bounds.size.width - 36) / 2)
+            mark.bottom.equalTo(contentView).offset(-12)
         }
     }
 }

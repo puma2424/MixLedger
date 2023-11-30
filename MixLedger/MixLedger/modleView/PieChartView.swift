@@ -52,7 +52,7 @@ struct PieChart: View {
 
                     PieChartView(
                         title: "\(labels[index])",
-                        description: String(format: "$%.2f million", data[index])
+                        description: String(format: "$%.2f ", data[index])
                     )
                     .offset(textOffset(for: index, in: geo.size))
                     .zIndex(1)
