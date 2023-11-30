@@ -91,6 +91,19 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
     }
 }
 
+extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
+    func checkButtonTarget(cell: SBSVUsersTableViewCell) {
+        if let indexPath = table.indexPath(for: cell){
+            let id = userID[indexPath.row]
+            print(id)
+            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }) {
+                print("\(billStatus?[index][id])")
+            }
+        }
+//        table.reloadData()
+    }
+}
+
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return userID.count ?? 0
@@ -99,6 +112,7 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
+        userCell.delegate = self
         if let userInfo = usersInfo {
             let id = userID[indexPath.row]
             userCell.nameLable.text = userInfo[id]?.name

@@ -7,19 +7,39 @@
 
 import SnapKit
 import UIKit
+
+protocol SBSVUsersTableViewCellDelegate{
+    func checkButtonTarget(cell: SBSVUsersTableViewCell)
+}
+
 class SBSVUsersTableViewCell: UITableViewCell {
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupLayout()
+        setupButton()
+    }
+
+    // 如果是使用 Interface Builder，這個初始化方法會被呼叫
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        setupLayout()
+       
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        setupLayout()
+        
     }
+    
+    var delegate: SBSVUsersTableViewCellDelegate?
 
     let userImage: UIImageView = {
         let imageView = UIImageView()
@@ -48,11 +68,19 @@ class SBSVUsersTableViewCell: UITableViewCell {
         return button
     }()
 
+    @objc func checkButtonTarget(){
+        delegate?.checkButtonTarget(cell: self)
+    }
+    
+    func setupButton(){
+        checkButton.addTarget(self, action: #selector(checkButtonTarget), for: .touchUpInside)
+    }
+    
     func setupLayout() {
-        addSubview(userImage)
-        addSubview(nameLable)
-        addSubview(moneyLable)
-        addSubview(checkButton)
+        contentView.addSubview(userImage)
+        contentView.addSubview(nameLable)
+        contentView.addSubview(moneyLable)
+        contentView.addSubview(checkButton)
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.top.leading.equalTo(contentView).offset(12)
@@ -65,8 +93,8 @@ class SBSVUsersTableViewCell: UITableViewCell {
         }
 
         moneyLable.snp.makeConstraints { mark in
-            mark.centerX.equalTo(self)
-            mark.centerY.equalTo(self)
+            mark.centerX.equalTo(contentView)
+            mark.centerY.equalTo(contentView)
         }
 
         checkButton.snp.makeConstraints { mark in
