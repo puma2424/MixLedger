@@ -61,7 +61,7 @@ class FirebaseManager {
             "message": FieldValue.arrayUnion([["text":toTest,
                                                "fromUserID":saveData.myInfo?.userID,
                                                "toUserID": toUserID,
-                                               "isDunningLetter": true]])
+                                               "isDunningLetter": amount]])
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -83,6 +83,15 @@ class FirebaseManager {
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: - 確認還款 -
+    func confirmPayment(toUserID: String, amount: Double, text: [String], completion: @escaping (Result<String,Error>) -> Void){
+        guard let accountID = saveData.myInfo?.ownAccount else {return}
+       
+        postIncome(toAccountID: accountID, amount: amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "收款"), memberPayMoney: [:], memberShareMoney: [:]){_ in
+        return
         }
     }
     // MARK: - 回覆共享帳簿的邀請 -
@@ -244,9 +253,44 @@ class FirebaseManager {
             print("Error writing city to Firestore: \(error)")
         }
     }
+    // swiftlint:disable line_length
+    func postIncome(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void){
+        
+        let transaction = [
+            "amount": amount,
+            "date": date,
+            "payUser": memberPayMoney,
+            "shareUser": memberShareMoney,
+            "note": note,
+            "type": ["iconName": type.iconName, "name": type.name],
+            "currency": "新台幣",
+            "from": "",
+        ] as [String: Any]
+//        let expense = ((saveData.accountData?.accountInfo.expense) ?? 0) - amount
+//        let total = ((saveData.accountData?.accountInfo.total) ?? 0) - amount
+//        print(expense)
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: date)
+
+        db.collection("accounts").document(toAccountID).updateData([
+            "transactions.\(dateM).\(dateD).\(Date())": transaction,
+            "shareUsersID": saveData.accountData?.shareUsersID,
+            "accountInfo.income": FieldValue.increment(amount),
+            "accountInfo.total": FieldValue.increment(amount),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                completion(.success("Sent successfully"))
+            }
+        }
+    }
 
     // MARK: - 記帳 -
-    // swiftlint:disable line_length
+    
     func postData(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void) {
         print(saveData.accountData?.shareUsersID)
         for id in memberPayMoney.keys {
@@ -538,7 +582,7 @@ struct UsersInfoResponse: Codable {
 struct Message: Codable{
     var text: String
     var fromUserID: String
-    var isDunningLetter: Bool
+    var isDunningLetter: Double
     var toUserID: String
 }
 

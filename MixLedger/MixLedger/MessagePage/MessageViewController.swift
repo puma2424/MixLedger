@@ -71,24 +71,33 @@ class MessageViewController: UIViewController {
     }
 
     func agare(index: IndexPath) {
-        print("agare in table \(index)")
-        print(data?.inviteCard?[index.row])
-        if let data = data?.inviteCard?[index.row] {
-            firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
-                print("--")
-                self.data = self.saveData.myInfo
-                self.tableView.reloadData()
+        if index.section == 0{
+            print("agare in table \(index)")
+            print(data?.inviteCard?[index.row])
+            if let data = data?.inviteCard?[index.row] {
+                firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
+                    print("--")
+                    self.data = self.saveData.myInfo
+                    self.tableView.reloadData()
+                }
+            }
+        }else{
+            if let data = data?.message?[index.row] {
+                firebaseManager.confirmPayment(toUserID: "", amount: data.isDunningLetter, text: [""]){_ in return}
             }
         }
+        
     }
 
     func reject(index: IndexPath) {
-        print("agare in table \(index)")
-        if let data = data?.inviteCard?[index.row] {
-            firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
-                print("--")
-                self.data = self.saveData.myInfo
-                self.tableView.reloadData()
+        if index.section == 0{
+            print("agare in table \(index)")
+            if let data = data?.inviteCard?[index.row] {
+                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
+                    print("--")
+                    self.data = self.saveData.myInfo
+                    self.tableView.reloadData()
+                }
             }
         }
     }
