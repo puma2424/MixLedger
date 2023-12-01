@@ -284,9 +284,21 @@ class HomeViewController: UIViewController{
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate, RepayViewDelegate {
     func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
-        firebaseManager.postDunningLetterMessage(toUserID: otherUserID, amount: amount, text: [""]){ _ in
+        let mtName = saveData.myInfo?.name ?? ""
+        let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"
+        let toMyselfTest = "您向\(otherUserName) 還款：\(amount)"
+        guard let accountData = saveData.accountData else {return}
+        
+        firebaseManager.postMessage(toUserID: otherUserID, 
+                                    textToOtherUser: toOtherUserTest,
+                                    textToMyself: toMyselfTest,
+                                    isDunningLetter: true,
+                                    amount: amount,
+                                    fromAccoundID: accountData.accountID,
+                                    fromAccoundName: accountData.accountName){ _ in
             return
         }
+        
         payView.removeFromSuperview()
     }
     

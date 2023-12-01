@@ -107,13 +107,23 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
                     print("\(billStatus?[index][id])")
                     guard let myName = saveData.myInfo?.name else {return}
-                    guard let accountName = saveData.accountData?.accountName else {return}
                     guard let otherUserName = usersInfo?[id]?.name else {return}
-                    let toOutherText = "\(myName)從\"\(accountName)\"傳送訊息給您：\n 請還款\(abs(money))"
-                    let myText = "從\"\(accountName)\"傳送訊息給\(otherUserName):\n請還款\(abs(money))"
-                    firebaseManager.postMessage(toUserID: id, text: [toOutherText,myText]){_ in
+                    guard let accountData = saveData.accountData else {return}
+                    
+                    let toOutherText = "\(myName)從\"\(accountData.accountName)\"傳送訊息給您：\n 請還款\(abs(money))"
+                    let myText = "從\"\(accountData.accountName)\"傳送訊息給\(otherUserName):\n請還款\(abs(money))"
+                    
+                    firebaseManager.postMessage(toUserID: id, 
+                                                textToOtherUser: toOutherText,
+                                                textToMyself: myText,
+                                                isDunningLetter: false,
+                                                amount: 0.0,
+                                                fromAccoundID: accountData.accountID,
+                                                fromAccoundName: accountData.accountName){_ in
                         return
-                    }
+                        }
+                    
+                    
                 }
             }else if cell.amount.checkButtonTitle == "還款"{
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {

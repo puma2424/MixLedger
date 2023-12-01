@@ -83,7 +83,15 @@ class MessageViewController: UIViewController {
             }
         }else{
             if let data = data?.message?[index.row] {
-                firebaseManager.confirmPayment(toUserID: "", amount: data.isDunningLetter, text: [""]){_ in return}
+                if data.isDunningLetter{
+                    firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: ""){_ in
+                        return
+                    }
+                    
+//                    (toUserID: "", amount: data.amount, text: [""]){_ in
+//                        return
+//                    }
+                }
             }
         }
         
@@ -92,13 +100,13 @@ class MessageViewController: UIViewController {
     func reject(index: IndexPath) {
         if index.section == 0{
             print("agare in table \(index)")
-            if let data = data?.inviteCard?[index.row] {
-                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
-                    print("--")
-                    self.data = self.saveData.myInfo
-                    self.tableView.reloadData()
-                }
-            }
+//            if let data = data?.inviteCard?[index.row] {
+//                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
+//                    print("--")
+//                    self.data = self.saveData.myInfo
+//                    self.tableView.reloadData()
+//                }
+//            }
         }
     }
 }
@@ -134,8 +142,14 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.reject(index: indexPath)
             }
         }else{
-            if let data = data?.message {
-                inviteCell.inviteMessageLabel.text = data[indexPath.row].text
+            
+            if let data = data?.message?[indexPath.row] {
+                if data.fromUserID == saveData.myInfo?.userID{
+                    inviteCell.inviteMessageLabel.text = data.toSenderMessage
+                }else{
+                    inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                }
+                
             }
 
             inviteCell.agreeClosure = { [weak self] in
