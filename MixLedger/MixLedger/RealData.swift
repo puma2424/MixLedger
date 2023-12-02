@@ -18,7 +18,9 @@ class SaveData {
         }
     }
 
-    var userInfoData: [String: UsersInfoResponse] = [:]
+    // var myID = "bGzuwR00sPRNmBamK91D" //puma
+    var myID = "qmgOOutGItrZyzKqQOrh" // porter
+    var userInfoData: [UsersInfoResponse] = []
     var myInfo: UsersInfoResponse?
     var myShareAccount: [String: String] = [:]
     var transactionsArray: [Test] = []
@@ -45,7 +47,8 @@ class SaveData {
                                                   amount: timeTransactions.amount,
                                                   currency: timeTransactions.currency,
                                                   date: timeTransactions.date,
-                                                  type: timeTransactions.type))
+                                                  subType: timeTransactions.subType,
+                                                  transactionType: timeTransactions.transactionType))
                 }
             }
         }
@@ -65,5 +68,6 @@ struct Test: Identifiable {
     var note: String?
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
-    var type: TransactionType
+    var subType: TransactionType
+    var transactionType: TransactionType
 }

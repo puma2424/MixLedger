@@ -14,7 +14,7 @@ struct BillTag {
 }
 
 // var myID = "bGzuwR00sPRNmBamK91D" //puma
-var myID = "qmgOOutGItrZyzKqQOrh" // porter
+//var myID = "qmgOOutGItrZyzKqQOrh" // porter
 var billArray: [[String: [Any]]] = [["日期": [Date()],
                                      "item": [["金額": -3_000_000,
                                                "付費者": ["puma", "niw"],
