@@ -15,8 +15,18 @@ class MessageViewController: UIViewController {
         setupLayout()
         setupTable()
         navigationItem.title = "通知"
+        // 在訂閱者處註冊通知
+        NotificationCenter.default.addObserver(self, selector: #selector(handleMessageNotification), name: .myMessageNotification, object: nil)
+        
+        
+        
     }
-
+    // 處理通知的方法
+    @objc func handleMessageNotification() {
+        data = saveData.myInfo
+        tableView.reloadData()
+        print("Notification received!")
+    }
     /*
      // MARK: - Navigation
 
@@ -30,18 +40,6 @@ class MessageViewController: UIViewController {
         super.viewWillAppear(animated)
         data = saveData.myInfo
         tableView.reloadData()
-//        firebaseManager.findUser(userID: [myID]) { result in
-//            switch result {
-//            case let .success(data):
-//                if let myData = data[myID] {
-//                    self.data = myData
-//                }
-//                print("成功取得用戶資訊")
-//                self.tableView.reloadData()
-//            case let .failure(error):
-//                print(error)
-//            }
-//        }
     }
 
     let firebaseManager = FirebaseManager.shared
@@ -87,10 +85,6 @@ class MessageViewController: UIViewController {
                     firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: ""){_ in
                         return
                     }
-                    
-//                    (toUserID: "", amount: data.amount, text: [""]){_ in
-//                        return
-//                    }
                 }
             }
         }

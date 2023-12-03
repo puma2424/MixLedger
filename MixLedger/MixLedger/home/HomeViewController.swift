@@ -201,10 +201,10 @@ class HomeViewController: UIViewController{
     
     func addUserMessageListener(){
         guard let myID = savaData.myInfo?.userID else {return}
-        firebaseManager.addUserInfoListener(userID: [myID]){result in
+        firebaseManager.addUserMessageListener(userID: myID){result in
             switch result{
             case .success(let data):
-                self.savaData.myInfo?.message = data[0].message
+                self.savaData.myInfo?.message = data.message
                 LKProgressHUD.showSuccess(text: "成功載入個人訊息")
             case .failure(let err):
                 print(err)

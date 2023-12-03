@@ -84,6 +84,7 @@
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
 		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
+		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		AC660F929AB6EEC8130B3645 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E51A323F08C4E303A24076 /* Pods_MixLedgerTests.framework */; };
 		D74B6B893F5AA3F608236B38 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */; };
 /* End PBXBuildFile section */
@@ -167,6 +168,7 @@
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
+		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		A50C2A554C708C9D6C78C87E /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -292,6 +294,7 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9AF8A81D2B1CC929004DA5F6 /* Extensions */,
 				9A590F932B1AFE2800D4BCAA /* Third Party Wrappers */,
 				9A0A33F32B17673700944AE3 /* Manager */,
 				9A0A33F22B17671700944AE3 /* modleView */,
@@ -417,6 +420,14 @@
 				9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */,
 			);
 			path = addNewItem;
+			sourceTree = "<group>";
+		};
+		9AF8A81D2B1CC929004DA5F6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A17D149B4FBAAEA83597A93D /* Frameworks */ = {
@@ -730,6 +741,7 @@
 				9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */,
 				9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */,
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
+				9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */,
 				9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */,
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */,

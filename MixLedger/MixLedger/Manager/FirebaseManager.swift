@@ -22,7 +22,7 @@ class FirebaseManager {
     
     var accountListener: ListenerRegistration?
     
-    var userListener: ListenerRegistration?
+    var userMessageListener: ListenerRegistration?
     
     // MARK: - 發送訊息 -
     func postMessage(toUserID: String, 
@@ -570,6 +570,7 @@ class FirebaseManager {
     func getUsreInfo(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
         if !userID.isEmpty {
             var responData: [UsersInfoResponse] = []
+
             db.collection("users").whereField("userID", in: userID).getDocuments() { (querySnapshot, err) in
                 do {
                     if let err = err {
@@ -593,21 +594,20 @@ class FirebaseManager {
         print("\(saveData.userInfoData)")
     }
     
-    func removeUserListener(){
-        userListener?.remove()
+    func removeUserMessageListener(){
+        userMessageListener?.remove()
     }
     
-    func addUserInfoListener(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
+    func addUserMessageListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
         
-        removeUserListener()
+        removeUserMessageListener()
         
-        var userInfoData: [UsersInfoResponse] = []
+//        var userInfoData: UsersInfoResponse = []
         
         if !userID.isEmpty {
-            for id in userID {
-                let docRef = db.collection("users").document(id)
+                let docRef = db.collection("users").document(userID)
 
-                userListener = docRef.addSnapshotListener { document, error in
+                userMessageListener = docRef.addSnapshotListener { document, error in
                     if let error = error as NSError? {
                         self.errorMessage = "Error getting document: \(error.localizedDescription)"
                         completion(.failure(error))
@@ -618,20 +618,16 @@ class FirebaseManager {
                             do {
                                 let responseData = try document.data(as: UsersInfoResponse.self)
                                 print(responseData)
-                                userInfoData.append(responseData)
-                               
+                                completion(.success(responseData))
                             } catch {
                                 print(error)
 //                                completion(.failure(error))
                             }
                         }
+                        
                     }
                 }
-            }
             
-            if userInfoData.count != 0{
-                completion(.success(userInfoData))
-            }
         }
         print("\(saveData.userInfoData)")
 //        completion(.success(saveData.userInfoData))

@@ -17,11 +17,16 @@ class SaveData {
             }
         }
     }
-
+    
     // var myID = "bGzuwR00sPRNmBamK91D" //puma
     var myID = "qmgOOutGItrZyzKqQOrh" // porter
     var userInfoData: [UsersInfoResponse] = []
-    var myInfo: UsersInfoResponse?
+    var myInfo: UsersInfoResponse?{
+        didSet{
+            // 在發布者處發送通知
+            NotificationCenter.default.post(name: .myMessageNotification, object: nil)
+        }
+    }
     var myShareAccount: [String: String] = [:]
     var transactionsArray: [Test] = []
 //    var accountInfo:
