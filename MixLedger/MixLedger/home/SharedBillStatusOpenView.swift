@@ -152,45 +152,39 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return userID.count ?? 0
+        return usersInfo?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         userCell.delegate = self
-        if let userInfo = usersInfo {
-            let id = userID[indexPath.row]
+        if let userInfo = usersInfo?[indexPath.row] {
             
-           
+            let id = userInfo.userID
+            userCell.nameLable.text = userInfo.name
             
-            if let otherUserName = usersInfo?.first(where: { $0.userID == id })?.name {
-                userCell.nameLable.text = otherUserName
-            }
-            
-//            userCell.moneyLable.text = "\(billStatus?[userID[indexPath.row]])"
-            
-            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let userMoney = billStatus?[index][id] {
+            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), 
+                let userMoney = billStatus?[index][id] {
                 let amount = MoneyType.money(userMoney)
                 userCell.amount = amount
                 if id == saveData.myInfo?.userID {
                     userCell.checkButton.isHidden = true
                     myMoney = userMoney
-                }else {
+                } else {
                     if myMoney < 0 && userMoney < 0 {
                         userCell.checkButton.isHidden = true
-                    }else if myMoney < 0 && userMoney > 0{
+                    } else if myMoney < 0 && userMoney > 0 {
                         userCell.checkButton.isHidden = false
                         userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
-                    }else if myMoney > 0 && userMoney < 0{
+                    } else if myMoney > 0 && userMoney < 0 {
                         userCell.checkButton.isHidden = false
                         userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
-                    }else if myMoney > 0 && userMoney > 0{
+                    } else if myMoney > 0 && userMoney > 0 {
                         userCell.checkButton.isHidden = true
                     }
                     
                 }
-                
                 
                 userCell.moneyLable.text = "\(amount.billTitle) \(abs(userMoney))"
                 userCell.moneyLable.textColor = amount.color

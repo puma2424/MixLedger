@@ -42,18 +42,20 @@ class HomeViewController: UIViewController{
                             case .success(let userData):
                                 self.billStatusOpenView.usersInfo = userData
                                 self.saveData.userInfoData = userData
+                                DispatchQueue.main.async {
+                                    self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+                                    self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+                                    self.billStatusOpenView.table.reloadData()
+                                    
+                                    self.navigationItem.title = self.saveData.accountData?.accountName
+                                    self.billTable.reloadData()
+                                }
                             case .failure(let err):
                                 print(err)
                             }
                         }
                         
                         
-//                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
-                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
-                        self.billStatusOpenView.table.reloadData()
-                        
-                        self.navigationItem.title = self.saveData.accountData?.accountName
-                        self.billTable.reloadData()
                     case .failure(let err):
                         print(err)
                         LKProgressHUD.showFailure(text: "讀取帳本資料失敗")
@@ -189,9 +191,23 @@ class HomeViewController: UIViewController{
             switch result{case .success(let data):
                 self.currentAccountID = data[0].ownAccount
                 self.saveData.myInfo = data[0]
+                self.addUserMessageListener()
                 LKProgressHUD.showSuccess(text: "成功載入個人資料")
             case .failure(_):
                 LKProgressHUD.showFailure(text: "讀取資料失敗")
+            }
+        }
+    }
+    
+    func addUserMessageListener(){
+        guard let myID = savaData.myInfo?.userID else {return}
+        firebaseManager.addUserInfoListener(userID: [myID]){result in
+            switch result{
+            case .success(let data):
+                self.savaData.myInfo?.message = data[0].message
+                LKProgressHUD.showSuccess(text: "成功載入個人訊息")
+            case .failure(let err):
+                print(err)
             }
         }
     }

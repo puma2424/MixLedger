@@ -83,6 +83,7 @@
 		9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */; };
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
+		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
 		AC660F929AB6EEC8130B3645 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E51A323F08C4E303A24076 /* Pods_MixLedgerTests.framework */; };
 		D74B6B893F5AA3F608236B38 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */; };
 /* End PBXBuildFile section */
@@ -165,6 +166,7 @@
 		9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANITypeTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
+		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
 		A50C2A554C708C9D6C78C87E /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -259,6 +261,7 @@
 			children = (
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
+				9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -745,6 +748,7 @@
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
+				9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */,
 				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,

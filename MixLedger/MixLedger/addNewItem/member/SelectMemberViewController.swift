@@ -135,7 +135,11 @@ extension SelectMemberViewController: UITableViewDelegate, UITableViewDataSource
         for key in usersMoney.keys {
             userID.append(key)
         }
-        memberCell.nameLabel.text = saveData.userInfoData[userID[indexPath.row]]?.name
+        
+        if let userName = saveData.userInfoData.first{$0.userID == userID[indexPath.row]}?.name{
+            memberCell.nameLabel.text = userName
+        }
+//        memberCell.nameLabel.text = saveData.userInfoData[userID[indexPath.row]]?.name
         if let money = usersMoney[userID[indexPath.row]] {
             memberCell.moneyTextField.text = "\(money)"
         }

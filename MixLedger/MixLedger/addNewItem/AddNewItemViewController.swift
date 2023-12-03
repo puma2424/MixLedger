@@ -187,11 +187,11 @@ class AddNewItemViewController: UIViewController {
 
     func memberInfo() {
         if saveData.userInfoData != nil {
-            var usersKey: [String] = []
+//            var usersKey: [String] = []
 
-            for key in saveData.userInfoData.keys {
-                memberPayMoney[key] = 0
-                memberShareMoney[key] = 0
+            for user in saveData.userInfoData {
+                memberPayMoney[user.userID] = 0
+                memberShareMoney[user.userID] = 0
             }
         }
     }

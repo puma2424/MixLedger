@@ -105,10 +105,10 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         let datas = saveData.transactionsArray
         var dic: [String: Double] = [:]
         for data in datas {
-            if dic[data.type.name] == nil {
-                dic[data.type.name] = data.amount
+            if dic[data.subType.name] == nil {
+                dic[data.subType.name] = data.amount
             } else {
-                dic[data.type.name]? += data.amount
+                dic[data.subType.name]? += data.amount
             }
         }
 

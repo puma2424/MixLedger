@@ -70,69 +70,69 @@ class FirebaseManager {
     // swiftlint:disable line_length
     // MARK: - 確認還款 -
     func confirmPayment(messageInfo: Message, textToOtherUser: String, textToMyself: String, completion: @escaping (Result<String,Error>) -> Void) {
-        guard let accountID = saveData.myInfo?.ownAccount else {return}
-        var othetUserAccountID: String = ""
-        findUser(userID: [messageInfo.toUserID]){result in
-            switch result{
-            case .success(let data):
-                othetUserAccountID = data[messageInfo.toUserID]?.ownAccount ?? ""
-            case .failure(_):
-                return
-            }
-        }
-        guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
-        print(othetUserAccountID)
-        // 自己的帳本增加收入款項
-        self.postIncome(toAccountID: myInfo.ownAccount, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "收款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
-            switch result{
-            case .success(_):
-                // 對方的帳本扣款
-                self.postData(toAccountID: othetUserAccountID, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "付款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
-                    switch result{
-                    case .success(_):
-                      
-                        self.db.collection("users").document(messageInfo.toUserID).updateData([
-                            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
-                                                                "toReceiverMessage": messageInfo.toReceiverMessage,
-                                                                "fromUserID" : messageInfo.fromUserID,
-                                                                "toUserID": messageInfo.toUserID,
-                                                                "isDunningLetter": messageInfo.isDunningLetter,
-                                                                "amount": messageInfo.amount,
-                                                                "formAccoundID": messageInfo.formAccoundID,
-                                                                "fromAccoundName": messageInfo.fromAccoundName]]),
-                        ]) { err in
-                            if let err = err {
-                                print("Error updating document: \(err)")
-                                completion(.failure(err))
-                            } else {
-                                print("Document successfully updated postAgareShareAccount")
-                                completion(.success("成功變動使用者擁有帳本資訊"))
-                            }
-                        }
-                      
-                        
-                        self.postIncome(toAccountID: messageInfo.formAccoundID,
-                                        amount: messageInfo.amount, date: Date(),
-                                        note: "收支平衡：\(messageInfo.fromUserID)向\(messageInfo.toUserID)付款",
-                                        type: TransactionType(iconName: "", name: "收支平衡"),
-                                        memberPayMoney: [messageInfo.toUserID : messageInfo.amount],
-                                        memberShareMoney: [messageInfo.fromUserID : messageInfo.amount]){ _ in
-                        return}
-                        
-                    case .failure(_):
-                        return
-                    }
-                }
-                return
-            case .failure(_):
-                return
-            }
-            
-        }
-        
-        
-        
-        
+//        guard let accountID = saveData.myInfo?.ownAccount else {return}
+//        var othetUserAccountID: String = ""
+//        findUser(userID: [messageInfo.toUserID]){result in
+//            switch result{
+//            case .success(let data):
+//                othetUserAccountID = data[messageInfo.toUserID]?.ownAccount ?? ""
+//            case .failure(_):
+//                return
+//            }
+//        }
+//        guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
+//        print(othetUserAccountID)
+//        // 自己的帳本增加收入款項
+//        self.postIncome(toAccountID: myInfo.ownAccount, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "收款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
+//            switch result{
+//            case .success(_):
+//                // 對方的帳本扣款
+//                self.postData(toAccountID: othetUserAccountID, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "付款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
+//                    switch result{
+//                    case .success(_):
+//                      
+//                        self.db.collection("users").document(messageInfo.toUserID).updateData([
+//                            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
+//                                                                "toReceiverMessage": messageInfo.toReceiverMessage,
+//                                                                "fromUserID" : messageInfo.fromUserID,
+//                                                                "toUserID": messageInfo.toUserID,
+//                                                                "isDunningLetter": messageInfo.isDunningLetter,
+//                                                                "amount": messageInfo.amount,
+//                                                                "formAccoundID": messageInfo.formAccoundID,
+//                                                                "fromAccoundName": messageInfo.fromAccoundName]]),
+//                        ]) { err in
+//                            if let err = err {
+//                                print("Error updating document: \(err)")
+//                                completion(.failure(err))
+//                            } else {
+//                                print("Document successfully updated postAgareShareAccount")
+//                                completion(.success("成功變動使用者擁有帳本資訊"))
+//                            }
+//                        }
+//                      
+//                        
+//                        self.postIncome(toAccountID: messageInfo.formAccoundID,
+//                                        amount: messageInfo.amount, date: Date(),
+//                                        note: "收支平衡：\(messageInfo.fromUserID)向\(messageInfo.toUserID)付款",
+//                                        type: TransactionType(iconName: "", name: "收支平衡"),
+//                                        memberPayMoney: [messageInfo.toUserID : messageInfo.amount],
+//                                        memberShareMoney: [messageInfo.fromUserID : messageInfo.amount]){ _ in
+//                        return}
+//                        
+//                    case .failure(_):
+//                        return
+//                    }
+//                }
+//                return
+//            case .failure(_):
+//                return
+//            }
+//            
+//        }
+//        
+//        
+//        
+//        
         
         // 發送訊息
     }
@@ -199,6 +199,7 @@ class FirebaseManager {
 
     // 拒絕邀請
     private func postAdjectShareAccount(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let myID = saveData.myInfo?.userID else {return}
         db.collection("accounts").document(accountID).updateData([
             "invitees": FieldValue.arrayRemove([myID]),
         ]) { err in
@@ -303,7 +304,7 @@ class FirebaseManager {
                     amount: Double,
                     date: Date,
                     note: String?,
-                    transactionType: TransactionType,
+//                    transactionType: TransactionType,
                     subType: TransactionType,
                     memberPayMoney: [String: Double],
                     memberShareMoney: [String: Double],
@@ -486,7 +487,9 @@ class FirebaseManager {
                 dateFont.dateFormat = "yyyy-MM-dd"
                 let dateD = dateFont.string(from: date)
 
-                guard let payerAccountID = saveData.userInfoData[payerID]?.ownAccount else { return }
+                let payer = saveData.userInfoData.filter{ $0.userID == payerID }
+            
+                let payerAccountID = payer[0].ownAccount
 
                 db.collection("accounts").document(payerAccountID).updateData([
                     "transactions.\(dateM).\(dateD).\(Date())": transaction,
@@ -567,51 +570,38 @@ class FirebaseManager {
     func getUsreInfo(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
         if !userID.isEmpty {
             var responData: [UsersInfoResponse] = []
-            var err: Error
-            for id in userID {
-                let docRef = db.collection("users").document(id)
-
-                docRef.getDocument { document, error in
-                    if let error = error as NSError? {
-                        self.errorMessage = "Error getting document: \(error.localizedDescription)"
-                        err = error
-                        completion(.failure(error))
+            db.collection("users").whereField("userID", in: userID).getDocuments() { (querySnapshot, err) in
+                do {
+                    if let err = err {
+                      print("Error getting documents: \(err)")
+                        throw err
                     } else {
-                        if let document = document {
-                            print("-----find User------")
-                            print(document.data())
-                            do {
-                                let responseData = try document.data(as: UsersInfoResponse.self)
-                                print(responseData)
-                                responData.append(responseData)
-//                                completion(.success([id: responseData]))
-                            } catch {
-                                print(error)
-                                err = error
-                            }
-                        }
+                      for document in querySnapshot!.documents {
+                          let responseData = try document.data(as: UsersInfoResponse.self)
+                          responData.append(responseData)
+                      }
+                        completion(.success(responData))
                     }
+                } catch {
+                    print(error)
+                    
                 }
-            }
-            
-            if responData.count == 0 {
-                completion(.failure(err))
-            }else{
-                completion(.success(responData))
-            }
-            
+
+              }
+
         }
         print("\(saveData.userInfoData)")
-//        completion(.success(saveData.userInfoData))
     }
     
     func removeUserListener(){
         userListener?.remove()
     }
     
-    func addUserInfoListener(userID: [String], completion: @escaping (Result<[String: UsersInfoResponse], Error>) -> Void) {
+    func addUserInfoListener(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
         
         removeUserListener()
+        
+        var userInfoData: [UsersInfoResponse] = []
         
         if !userID.isEmpty {
             for id in userID {
@@ -628,14 +618,19 @@ class FirebaseManager {
                             do {
                                 let responseData = try document.data(as: UsersInfoResponse.self)
                                 print(responseData)
-                                completion(.success([id: responseData]))
+                                userInfoData.append(responseData)
+                               
                             } catch {
                                 print(error)
-                                completion(.failure(error))
+//                                completion(.failure(error))
                             }
                         }
                     }
                 }
+            }
+            
+            if userInfoData.count != 0{
+                completion(.success(userInfoData))
             }
         }
         print("\(saveData.userInfoData)")
@@ -706,79 +701,4 @@ class FirebaseManager {
     }
 }
 
-struct TransactionsResponse: Codable {
-    var transactions: [String: [String: [String: Transaction]]]?
-    var accountID: String
-    var accountInfo: AccountInfo
-    var accountName: String
-    var shareUsersID: [[String: Double]]?
-    var iconName: String?
-}
 
-struct AccountInfo: Codable {
-    var budget: Double
-    var expense: Double
-    var income: Double
-    var total: Double
-}
-
-struct Transaction: Codable {
-//    var year: String?
-    var transactionType: TransactionType
-    var amount: Double
-    var currency: String
-    var date: Date
-    var from: String?
-    var note: String?
-    var payUser: [String: Double]?
-    var shareUser: [String: Double]?
-    var subType: TransactionType
-
-//    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType, year _: String) {
-//        let dateFont = DateFormatter()
-//        dateFont.dateFormat = "yyyy"
-//        let dateString = dateFont.string(from: date)
-////        self.id = id
-//        self.amount = amount
-//        self.currency = currency
-//        self.date = date
-//        self.from = from
-//        self.note = note
-//        self.payUser = payUser
-//        self.shareUser = shareUser
-//        self.type = type
-//        year = dateString
-//    }
-}
-
-struct TransactionType: Codable {
-    var iconName: String
-    var name: String
-}
-
-struct UsersInfoResponse: Codable {
-    var name: String
-    var ownAccount: String
-    var shareAccount: [String]
-    var userID: String
-    var inviteCard: [InviteCard]?
-    var message: [Message]?
-}
-
-struct Message: Codable{
-    var toSenderMessage: String
-    var toReceiverMessage: String
-    var fromUserID: String
-    var isDunningLetter: Bool
-    var amount: Double
-    var toUserID: String
-    var formAccoundID: String
-    var fromAccoundName: String
-}
-
-struct InviteCard: Codable {
-    var inviterID: String
-    var accountID: String
-    var accountName: String
-    var inviterName: String
-}

@@ -30,18 +30,18 @@ class MessageViewController: UIViewController {
         super.viewWillAppear(animated)
         data = saveData.myInfo
         tableView.reloadData()
-        firebaseManager.findUser(userID: [myID]) { result in
-            switch result {
-            case let .success(data):
-                if let myData = data[myID] {
-                    self.data = myData
-                }
-                print("成功取得用戶資訊")
-                self.tableView.reloadData()
-            case let .failure(error):
-                print(error)
-            }
-        }
+//        firebaseManager.findUser(userID: [myID]) { result in
+//            switch result {
+//            case let .success(data):
+//                if let myData = data[myID] {
+//                    self.data = myData
+//                }
+//                print("成功取得用戶資訊")
+//                self.tableView.reloadData()
+//            case let .failure(error):
+//                print(error)
+//            }
+//        }
     }
 
     let firebaseManager = FirebaseManager.shared

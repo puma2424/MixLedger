@@ -95,7 +95,13 @@ extension ANIMemberTableViewCell: UITableViewDelegate, UITableViewDataSource {
         for key in usersMoney.keys {
             userID.append(key)
         }
-        searchCell.nameLabel.text = saveData.userInfoData[userID[indexPath.row]]?.name
+        
+        if let userName = saveData.userInfoData.first{$0.userID == userID[indexPath.row]}?.name{
+            searchCell.nameLabel.text = userName
+        }
+
+        
+        
         if let money = usersMoney[userID[indexPath.row]] {
             searchCell.moneyLabel.text = "\(money)"
         }
