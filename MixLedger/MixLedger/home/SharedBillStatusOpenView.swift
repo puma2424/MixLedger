@@ -39,10 +39,10 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
     let firebaseManager = FirebaseManager.shared
     var openDelegate: SharedBillStatusOpenViewDelegate?
     let table = UITableView()
-    var userID: [String] = []
+//    var userID: [String] = []
     var myMoney: Double = 0
     
-    var usersInfo: [UsersInfoResponse]? {
+    var usersInfo: [UsersInfoResponse] = [] {
         didSet {
 //            userID = []
 //            if let userInfo = usersInfo {
@@ -100,14 +100,14 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
 extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
     func checkButtonTarget(cell: SBSVUsersTableViewCell) {
         if let indexPath = table.indexPath(for: cell){
-            let id = userID[indexPath.row]
+            let id = usersInfo[indexPath.row].userID
             print(id)
             
             if cell.amount.checkButtonTitle == "催款"{
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
                     print("\(billStatus?[index][id])")
                     guard let myName = saveData.myInfo?.name else {return}
-                    guard let otherUserName = usersInfo?.first(where: { $0.userID == id })?.name else {return}
+                    guard let otherUserName = usersInfo.first(where: { $0.userID == id })?.name else {return}
 //                    guard let otherUserName = usersInfo?[id].name else {return}
                     guard let accountData = saveData.accountData else {return}
                     
@@ -131,7 +131,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
                     print(cell.amount.checkButtonTitle)
                     let repayView = RepayView()
                     repayView.otherMoney = money
-                    guard let otherUserName = usersInfo?.first(where: { $0.userID == id })?.name else {return}
+                    guard let otherUserName = usersInfo.first(where: { $0.userID == id })?.name else {return}
 //                    guard let otherUserName = usersInfo?[id]?.name else {return}
                     repayView.otherUserName = otherUserName
                     repayView.otherUserID = id
@@ -152,14 +152,14 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return usersInfo?.count ?? 0
+        return usersInfo.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         userCell.delegate = self
-        if let userInfo = usersInfo?[indexPath.row] {
+        let userInfo = usersInfo[indexPath.row]
             
             let id = userInfo.userID
             userCell.nameLable.text = userInfo.name
@@ -189,7 +189,7 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
                 userCell.moneyLable.text = "\(amount.billTitle) \(abs(userMoney))"
                 userCell.moneyLable.textColor = amount.color
             }
-        }
+        
 
         return userCell
     }
