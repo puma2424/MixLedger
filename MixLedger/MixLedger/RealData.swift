@@ -18,8 +18,8 @@ class SaveData {
         }
     }
     
-    // var myID = "bGzuwR00sPRNmBamK91D" //puma
-    var myID = "qmgOOutGItrZyzKqQOrh" // porter
+     var myID = "bGzuwR00sPRNmBamK91D" //puma
+//    var myID = "qmgOOutGItrZyzKqQOrh"  //porter
     var userInfoData: [UsersInfoResponse] = []
     var myInfo: UsersInfoResponse?{
         didSet{

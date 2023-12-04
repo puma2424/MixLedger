@@ -70,69 +70,87 @@ class FirebaseManager {
     // swiftlint:disable line_length
     // MARK: - 確認還款 -
     func confirmPayment(messageInfo: Message, textToOtherUser: String, textToMyself: String, completion: @escaping (Result<String,Error>) -> Void) {
-//        guard let accountID = saveData.myInfo?.ownAccount else {return}
-//        var othetUserAccountID: String = ""
-//        findUser(userID: [messageInfo.toUserID]){result in
-//            switch result{
-//            case .success(let data):
-//                othetUserAccountID = data[messageInfo.toUserID]?.ownAccount ?? ""
-//            case .failure(_):
-//                return
-//            }
-//        }
-//        guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
-//        print(othetUserAccountID)
-//        // 自己的帳本增加收入款項
-//        self.postIncome(toAccountID: myInfo.ownAccount, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "收款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
-//            switch result{
-//            case .success(_):
-//                // 對方的帳本扣款
-//                self.postData(toAccountID: othetUserAccountID, amount: messageInfo.amount, date: Date(), note: "", type: TransactionType(iconName: "", name: "付款"), memberPayMoney: [:], memberShareMoney: [:]){ result in
-//                    switch result{
-//                    case .success(_):
-//                      
-//                        self.db.collection("users").document(messageInfo.toUserID).updateData([
-//                            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
-//                                                                "toReceiverMessage": messageInfo.toReceiverMessage,
-//                                                                "fromUserID" : messageInfo.fromUserID,
-//                                                                "toUserID": messageInfo.toUserID,
-//                                                                "isDunningLetter": messageInfo.isDunningLetter,
-//                                                                "amount": messageInfo.amount,
-//                                                                "formAccoundID": messageInfo.formAccoundID,
-//                                                                "fromAccoundName": messageInfo.fromAccoundName]]),
-//                        ]) { err in
-//                            if let err = err {
-//                                print("Error updating document: \(err)")
-//                                completion(.failure(err))
-//                            } else {
-//                                print("Document successfully updated postAgareShareAccount")
-//                                completion(.success("成功變動使用者擁有帳本資訊"))
-//                            }
-//                        }
-//                      
-//                        
-//                        self.postIncome(toAccountID: messageInfo.formAccoundID,
-//                                        amount: messageInfo.amount, date: Date(),
-//                                        note: "收支平衡：\(messageInfo.fromUserID)向\(messageInfo.toUserID)付款",
-//                                        type: TransactionType(iconName: "", name: "收支平衡"),
-//                                        memberPayMoney: [messageInfo.toUserID : messageInfo.amount],
-//                                        memberShareMoney: [messageInfo.fromUserID : messageInfo.amount]){ _ in
-//                        return}
-//                        
-//                    case .failure(_):
-//                        return
-//                    }
-//                }
-//                return
-//            case .failure(_):
-//                return
-//            }
-//            
-//        }
-//        
-//        
-//        
-//        
+        guard let accountID = saveData.myInfo?.ownAccount else {return}
+        var othetUserAccountID: String = ""
+        getUsreInfo(userID: [messageInfo.toUserID]){result in
+            switch result{
+            case .success(let data):
+                othetUserAccountID = data[0].ownAccount
+            case .failure(_):
+                return
+            }
+        }
+        guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
+        print(othetUserAccountID)
+        
+        let postTransactionToExpenses = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
+                                                    amount: messageInfo.amount, 
+                                                    currency: "新台幣", date: Date(),
+                                                    from: messageInfo.fromAccoundName,
+                                                    note: "",
+                                                    subType: TransactionType(iconName: "", name: "付款"))
+        
+        let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
+                                                 amount: messageInfo.amount,
+                                                 currency: "新台幣",
+                                                 date: Date(),
+                                                 from: messageInfo.fromAccoundName,
+                                                 note: "",
+                                                 subType: TransactionType(iconName: "", name: "收支平衡"))
+        
+        let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
+                                                 amount: messageInfo.amount,
+                                                 currency: "新台幣",
+                                                 date: Date(),
+                                                 from: messageInfo.fromAccoundName,
+                                                 note: "",
+                                                 subType: TransactionType(iconName: "", name: "收款"))
+        // 自己的帳本增加收入款項
+        self.postIncome(toAccountID: myInfo.ownAccount, transaction: postTransactionToIncome, memberPayMoney: [:], memberShareMoney: [:]){ result in
+            switch result{
+            case .success(_):
+                // 對方的帳本扣款
+                self.postData(toAccountID: othetUserAccountID, transaction: postTransactionToExpenses, memberPayMoney: [:], memberShareMoney: [:]){ result in
+                    switch result{
+                    case .success(_):
+                      
+                        self.db.collection("users").document(messageInfo.toUserID).updateData([
+                            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
+                                                                "toReceiverMessage": messageInfo.toReceiverMessage,
+                                                                "fromUserID" : messageInfo.fromUserID,
+                                                                "toUserID": messageInfo.toUserID,
+                                                                "isDunningLetter": messageInfo.isDunningLetter,
+                                                                "amount": messageInfo.amount,
+                                                                "formAccoundID": messageInfo.formAccoundID,
+                                                                "fromAccoundName": messageInfo.fromAccoundName]]),
+                        ]) { err in
+                            if let err = err {
+                                print("Error updating document: \(err)")
+                                completion(.failure(err))
+                            } else {
+                                print("Document successfully updated postAgareShareAccount")
+                                completion(.success("成功變動使用者擁有帳本資訊"))
+                            }
+                        }
+                      
+                        
+                        self.postIncome(toAccountID: messageInfo.formAccoundID, transaction: postTransactionToShare, memberPayMoney: [messageInfo.fromUserID : messageInfo.amount], memberShareMoney: [messageInfo.toUserID : messageInfo.amount]){ _ in
+                        return}
+                        
+                    case .failure(_):
+                        return
+                    }
+                }
+                return
+            case .failure(_):
+                return
+            }
+            
+        }
+        
+        
+        
+        
         
         // 發送訊息
     }
@@ -299,24 +317,18 @@ class FirebaseManager {
             print("Error writing city to Firestore: \(error)")
         }
     }
-    // swiftlint:disable line_length
-    func postIncome(toAccountID: String, 
-                    transaction: Transaction,
-                    memberPayMoney: [String: Double],
-                    memberShareMoney: [String: Double],
-                    completion: @escaping (Result<Any, Error>) -> Void){
-//        getData(accountID: toAccountID){ [self]result in
-//            switch result{
-//            case .success(_):
-//                return
-//            case .failure(_):
-//                return
-//            }
-//            
-//        }
+    
+    func aaaa(toAccountID: String,
+              transaction: Transaction,
+              memberPayMoney: [String: Double],
+              memberShareMoney: [String: Double],
+              accountInfo: TransactionsResponse,
+              completion: @escaping (Result<Any, Error>) -> Void){
+        var account = accountInfo
+        
         for id in memberPayMoney.keys {
-            if let index = self.saveData.accountData?.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
-               var userDictionary = self.saveData.accountData?.shareUsersID?[index]
+            if let index = accountInfo.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
+               var userDictionary = accountInfo.shareUsersID?[index]
             {
                 // 找到需要增量的鍵
 //                if let keyIndex = userDictionary.keys.firstIndex(of: id) {
@@ -328,33 +340,22 @@ class FirebaseManager {
                 userDictionary[id] = (userDictionary[id] ?? 0.0) - shareMoney + payMoney
 
                 // 更新字典
-                self.saveData.accountData?.shareUsersID?[index] = userDictionary
+                account.shareUsersID?[index] = userDictionary
                 print("找到的索引為 \(index)")
                 print(id)
                 print(userDictionary)
 //                }
             }
-//            print(saveData.accountData?.shareUsersID)
+            print(account.shareUsersID)
         }
-//        print(self.saveData.accountData?.shareUsersID)
-//        
-//        var transactionType: TransactionType
-//        var amount: Double
-//        var currency: String
-//        var date: Date
-//        var from: String?
-//        var note: String?
-//        var payUser: [String: Double]?
-//        var shareUser: [String: Double]?
-//        var subType: TransactionType
         let postTransaction: [String: Any] = [
             "amount": transaction.amount,
             "date": transaction.date,
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": transaction.note,
-            "transactionType": transaction.transactionType,
-            "subType": transaction.subType,
+            "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
+            "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
             "from": ""
         ]
@@ -367,8 +368,8 @@ class FirebaseManager {
         let dateD = dateFont.string(from: transaction.date)
 
         db.collection("accounts").document(toAccountID).updateData([
-            "transactions.\(dateM).\(dateD).\(Date())": transaction,
-            "shareUsersID": saveData.accountData?.shareUsersID,
+            "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
+            "shareUsersID": account.shareUsersID,
             "accountInfo.income": FieldValue.increment(transaction.amount),
             "accountInfo.total": FieldValue.increment(transaction.amount),
         ]) { err in
@@ -379,7 +380,112 @@ class FirebaseManager {
                 completion(.success("Sent successfully"))
             }
         }
-//        
+//
+    }
+    
+    // swiftlint:disable line_length
+    func postIncome(toAccountID: String, 
+                    transaction: Transaction,
+                    memberPayMoney: [String: Double],
+                    memberShareMoney: [String: Double],
+                    completion: @escaping (Result<Any, Error>) -> Void){
+//
+        
+        if toAccountID != saveData.accountData?.accountID{
+            getAccountData(accountID: toAccountID){ result in
+                switch result{
+                case .success(let accountData):
+                    //                    accountInfo = accountData
+                    self.aaaa(toAccountID: toAccountID,
+                              transaction: transaction,
+                              memberPayMoney: memberPayMoney,
+                              memberShareMoney: memberShareMoney,
+                              accountInfo: accountData){ result in
+                        switch result{
+                        case .success(_):
+                            completion(.success(""))
+                        case .failure(_):
+                            return
+                        }
+                        
+                    }
+                case .failure(_):
+                    return
+                }
+                
+            }
+        }else{
+            guard let accountInfo: TransactionsResponse = saveData.accountData else{return}
+            self.aaaa(toAccountID: toAccountID,
+                      transaction: transaction,
+                      memberPayMoney: memberPayMoney,
+                      memberShareMoney: memberShareMoney,
+                      accountInfo: accountInfo){ result in
+                switch result{
+                case .success(_):
+                    completion(.success(""))
+                case .failure(_):
+                    return
+                }
+                
+            }
+        }
+        
+//        for id in memberPayMoney.keys {
+//            if let index = accountInfo?.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
+//               var userDictionary = accountInfo?.shareUsersID?[index]
+//            {
+//                // 找到需要增量的鍵
+////                if let keyIndex = userDictionary.keys.firstIndex(of: id) {
+//
+//                guard let payMoney = memberPayMoney[id] else { return }
+//                guard let shareMoney = memberShareMoney[id] else { return }
+//                // 使用 FieldValue.increment 增量值
+//                print(userDictionary)
+//                userDictionary[id] = (userDictionary[id] ?? 0.0) - shareMoney + payMoney
+//
+//                // 更新字典
+//                accountInfo?.shareUsersID?[index] = userDictionary
+//                print("找到的索引為 \(index)")
+//                print(id)
+//                print(userDictionary)
+////                }
+//            }
+////            print(saveData.accountData?.shareUsersID)
+//        }
+//        let postTransaction: [String: Any] = [
+//            "amount": transaction.amount,
+//            "date": transaction.date,
+//            "payUser": memberPayMoney,
+//            "shareUser": memberShareMoney,
+//            "note": transaction.note,
+//            "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
+//            "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+//            "currency": "新台幣",
+//            "from": ""
+//        ]
+////        let expense = ((saveData.accountData?.accountInfo.expense) ?? 0) - amount
+////        let total = ((saveData.accountData?.accountInfo.total) ?? 0) - amount
+////        print(expense)
+//        self.dateFont.dateFormat = "yyyy-MM"
+//        let dateM = dateFont.string(from: transaction.date)
+//        self.dateFont.dateFormat = "yyyy-MM-dd"
+//        let dateD = dateFont.string(from: transaction.date)
+//
+//        db.collection("accounts").document(toAccountID).updateData([
+//            "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
+//            "shareUsersID": accountInfo?.shareUsersID,
+//            "accountInfo.income": FieldValue.increment(transaction.amount),
+//            "accountInfo.total": FieldValue.increment(transaction.amount),
+//        ]) { err in
+//            if let err = err {
+//                print("Error updating document: \(err)")
+//            } else {
+//                print("Document successfully updated")
+//                completion(.success("Sent successfully"))
+//            }
+//        }
+////        
     }
 
     // MARK: - 記帳 -
@@ -494,7 +600,7 @@ class FirebaseManager {
 
     // MARK: - 取得帳本資料 -
     
-    func getAccountData(accountID: String, completion: @escaping (Result<Any, Error>) -> Void) {
+    func getAccountData(accountID: String, completion: @escaping (Result<TransactionsResponse, Error>) -> Void) {
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document(accountID)
 

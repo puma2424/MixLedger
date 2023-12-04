@@ -51,6 +51,24 @@ struct Transaction: Codable {
 //    }
 }
 
+enum TransactionMainType{
+    case expenses
+    case income
+    case transfer
+    
+    var text: String{
+        switch self{
+        case .expenses:
+            "expenses"
+        case .income:
+            "income"
+        case .transfer:
+            "transfer"
+        }
+    }
+    
+}
+
 struct TransactionType: Codable {
     var iconName: String
     var name: String
