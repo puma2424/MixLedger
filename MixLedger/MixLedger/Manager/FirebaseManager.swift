@@ -301,11 +301,7 @@ class FirebaseManager {
     }
     // swiftlint:disable line_length
     func postIncome(toAccountID: String, 
-                    amount: Double,
-                    date: Date,
-                    note: String?,
-//                    transactionType: TransactionType,
-                    subType: TransactionType,
+                    transaction: Transaction,
                     memberPayMoney: [String: Double],
                     memberShareMoney: [String: Double],
                     completion: @escaping (Result<Any, Error>) -> Void){
@@ -351,14 +347,14 @@ class FirebaseManager {
 //        var payUser: [String: Double]?
 //        var shareUser: [String: Double]?
 //        var subType: TransactionType
-        let transaction: [String: Any] = [
-            "amount": amount,
-            "date": date,
+        let postTransaction: [String: Any] = [
+            "amount": transaction.amount,
+            "date": transaction.date,
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
-            "note": note,
-            "transactionType": ["iconName": subType.iconName, "name": subType.name],
-            "subType": ["iconName": subType.iconName, "name": subType.name],
+            "note": transaction.note,
+            "transactionType": transaction.transactionType,
+            "subType": transaction.subType,
             "currency": "新台幣",
             "from": ""
         ]
@@ -366,15 +362,15 @@ class FirebaseManager {
 //        let total = ((saveData.accountData?.accountInfo.total) ?? 0) - amount
 //        print(expense)
         self.dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: date)
+        let dateM = dateFont.string(from: transaction.date)
         self.dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: date)
+        let dateD = dateFont.string(from: transaction.date)
 
         db.collection("accounts").document(toAccountID).updateData([
             "transactions.\(dateM).\(dateD).\(Date())": transaction,
             "shareUsersID": saveData.accountData?.shareUsersID,
-            "accountInfo.income": FieldValue.increment(amount),
-            "accountInfo.total": FieldValue.increment(amount),
+            "accountInfo.income": FieldValue.increment(transaction.amount),
+            "accountInfo.total": FieldValue.increment(transaction.amount),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -388,18 +384,19 @@ class FirebaseManager {
 
     // MARK: - 記帳 -
     
-    func postData(toAccountID: String, amount: Double, date: Date, note: String?, type: TransactionType, memberPayMoney: [String: Double], memberShareMoney: [String: Double], completion: @escaping (Result<Any, Error>) -> Void) {
+    func postData(toAccountID: String, 
+                  transaction: Transaction,
+                  memberPayMoney: [String: Double],
+                  memberShareMoney: [String: Double],
+                  completion: @escaping (Result<Any, Error>) -> Void) {
         print(saveData.accountData?.shareUsersID)
         for id in memberPayMoney.keys {
             if let index = saveData.accountData?.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
                var userDictionary = saveData.accountData?.shareUsersID?[index]
             {
-                // 找到需要增量的鍵
-//                if let keyIndex = userDictionary.keys.firstIndex(of: id) {
-
                 guard let payMoney = memberPayMoney[id] else { return }
                 guard let shareMoney = memberShareMoney[id] else { return }
-                // 使用 FieldValue.increment 增量值
+                
                 print(userDictionary)
                 userDictionary[id] = (userDictionary[id] ?? 0.0) - shareMoney + payMoney
 
@@ -408,44 +405,31 @@ class FirebaseManager {
                 print("找到的索引為 \(index)")
                 print(id)
                 print(userDictionary)
-//                }
             }
-//            print(saveData.accountData?.shareUsersID)
         }
         print(saveData.accountData?.shareUsersID)
 
-//        "amount": amount,
-//        "date": date,
-//        "payUser": memberPayMoney,
-//        "shareUser": memberShareMoney,
-//        "note": note,
-//        "transactionType": ["iconName": subType.iconName, "name": subType.name],
-//        "subType": ["iconName": subType.iconName, "name": subType.name],
-//        "currency": "新台幣",
-//        "from": ""
-        let transaction = [
-            "amount": amount,
-            "date": date,
+        let postTransaction: [String: Any] = [
+            "amount": transaction.amount,
+            "date": transaction.date,
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
-            "note": note,
-            "type": ["iconName": type.iconName, "name": type.name],
+            "note": transaction.note,
+            "transactionType":  ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
+            "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
             "from": "",
-        ] as [String: Any]
-//        let expense = ((saveData.accountData?.accountInfo.expense) ?? 0) - amount
-//        let total = ((saveData.accountData?.accountInfo.total) ?? 0) - amount
-//        print(expense)
+        ]
         dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: date)
+        let dateM = dateFont.string(from: transaction.date)
         dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: date)
+        let dateD = dateFont.string(from: transaction.date)
 
         db.collection("accounts").document(toAccountID).updateData([
-            "transactions.\(dateM).\(dateD).\(Date())": transaction,
+            "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
             "shareUsersID": saveData.accountData?.shareUsersID,
-            "accountInfo.expense": FieldValue.increment(amount),
-            "accountInfo.total": FieldValue.increment(amount),
+            "accountInfo.expense": FieldValue.increment(transaction.amount),
+            "accountInfo.total": FieldValue.increment(transaction.amount),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -456,7 +440,7 @@ class FirebaseManager {
         }
 
         if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
-            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: date, note: note, type: type) { result in
+            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
                 switch result {
                 case .success:
                     print("同步到付費者的個人帳本：成功")
@@ -602,8 +586,6 @@ class FirebaseManager {
         
         removeUserMessageListener()
         
-//        var userInfoData: UsersInfoResponse = []
-        
         if !userID.isEmpty {
                 let docRef = db.collection("users").document(userID)
 
@@ -621,7 +603,7 @@ class FirebaseManager {
                                 completion(.success(responseData))
                             } catch {
                                 print(error)
-//                                completion(.failure(error))
+                                completion(.failure(error))
                             }
                         }
                         
@@ -630,7 +612,6 @@ class FirebaseManager {
             
         }
         print("\(saveData.userInfoData)")
-//        completion(.success(saveData.userInfoData))
     }
 
     func findAccount(account: [String], completion: @escaping (Result<Any, Error>) -> Void) {

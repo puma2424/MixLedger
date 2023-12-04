@@ -127,9 +127,10 @@ class AddNewItemViewController: UIViewController {
         if amount == nil {
         } else {
             // 找到對應的字典
-
+            let transactionType = TransactionType(iconName: "", name: "expenses")
             // swiftlint:disable line_length
-            firebase.postData(toAccountID: currentAccountID, amount: -(amount ?? 0), date: selectDate ?? Date(), note: note, type: type, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
+            let transaction = Transaction(transactionType: transactionType, amount: -(amount ?? 0), currency: "新台幣", date: Date(), note: note, subType: type)
+            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
                 self.dismiss(animated: true)
             }
             // swiftlint:enable line_length

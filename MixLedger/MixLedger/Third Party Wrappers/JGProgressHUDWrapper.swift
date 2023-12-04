@@ -21,7 +21,7 @@ class LKProgressHUD {
     let hud = JGProgressHUD(style: .dark)
 
     var view: UIView {
-        if let window = AppDelegate.shared.window,
+        if let window = SceneDelegate.shared.window,
                let rootViewController = window.rootViewController {
                 return rootViewController.view
             }

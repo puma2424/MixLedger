@@ -29,7 +29,7 @@ struct Transaction: Codable {
     var currency: String
     var date: Date
     var from: String?
-    var note: String?
+    var note: String
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
     var subType: TransactionType
