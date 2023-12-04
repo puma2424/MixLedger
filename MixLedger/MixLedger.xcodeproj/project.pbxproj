@@ -83,6 +83,7 @@
 		9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */; };
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
+		9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SingInViewController.swift */; };
 		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
@@ -168,6 +169,8 @@
 		9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANITypeTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
+		9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MixLedger.entitlements; sourceTree = "<group>"; };
+		9AECC9B82B1DBD740013A30A /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
 		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -296,6 +299,7 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */,
 				9AF8A81D2B1CC929004DA5F6 /* Extensions */,
 				9A590F932B1AFE2800D4BCAA /* Third Party Wrappers */,
 				9A0A33F32B17673700944AE3 /* Manager */,
@@ -319,6 +323,7 @@
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
+				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -777,6 +782,7 @@
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
+				9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
@@ -960,11 +966,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MixLedger/MixLedger.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -989,11 +998,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MixLedger/MixLedger.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

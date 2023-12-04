@@ -31,12 +31,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firstVC = UINavigationController(rootViewController: HomeViewController())
         let secondVC = UINavigationController(rootViewController: MessageViewController())
         let chartsVC = UINavigationController(rootViewController: ChartsViewController())
-
+        let profileVC = UINavigationController(rootViewController: ProfileViewController())
+        
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
         secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
         chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)
-
-        tabbar.viewControllers = [firstVC, secondVC, chartsVC]
+        profileVC.tabBarItem.image = AllIcons.settingsMale.icon?.withRenderingMode(.alwaysOriginal)
+        
+        tabbar.viewControllers = [firstVC, secondVC, chartsVC, profileVC]
 
         window?.rootViewController = tabbar
         // 將 UIWindow 設置為可見的
