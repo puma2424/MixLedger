@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firstVC = UINavigationController(rootViewController: HomeViewController())
         let secondVC = UINavigationController(rootViewController: MessageViewController())
         let chartsVC = UINavigationController(rootViewController: ChartsViewController())
-        let profileVC = UINavigationController(rootViewController: ProfileViewController())
+        let profileVC = UINavigationController(rootViewController: SingInViewController())
         
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
         secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)

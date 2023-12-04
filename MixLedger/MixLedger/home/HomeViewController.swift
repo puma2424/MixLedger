@@ -189,10 +189,12 @@ class HomeViewController: UIViewController{
         // find my info
         firebaseManager.getUsreInfo(userID: [savaData.myID]){result in
             switch result{case .success(let data):
-                self.currentAccountID = data[0].ownAccount
-                self.saveData.myInfo = data[0]
-                self.addUserMessageListener()
-                LKProgressHUD.showSuccess(text: "成功載入個人資料")
+                if data.count != 0{
+                    self.currentAccountID = data[0].ownAccount
+                    self.saveData.myInfo = data[0]
+                    self.addUserMessageListener()
+                    LKProgressHUD.showSuccess(text: "成功載入個人資料")
+                }
             case .failure(_):
                 LKProgressHUD.showFailure(text: "讀取資料失敗")
             }

@@ -657,7 +657,7 @@ class FirebaseManager {
         }
     }
 
-    func getUsreInfo(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
+    static func getUsreInfo(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
         if !userID.isEmpty {
             var responData: [UsersInfoResponse] = []
 
@@ -749,39 +749,33 @@ class FirebaseManager {
         }
     }
 
-    // MARK: - 如果用子集合的寫法
+    // MARK: - 確認有無singup
+//    func checkIsUser(uid: String, completion: @escaping (Result<Any, Error>) -> Void){
+//        let docRef = db.collection("accounts")
+//        
+//            docRef.whereField("userID", in: [uid]).getDocuments { querySnapshot, err in
+//                if let err = err {
+//                    print("Error getting documents: \(err)")
+//                } else {
+//                    if let querySnapshot = querySnapshot {
+//                        for document in querySnapshot.documents {
+//                            //                print("\(document.documentID) => \(document.data())")
+//                            print(document.data()["accountName"])
+//                            if let id = document.data()["accountID"] as? String /* , let name = [document.data()["accountName"]] as? String */ {
+//                                self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+//                            } else {
+//                                print(document.data()["accountID"])
+//                                print(document.data()["accountName"])
+//                            }
+//                        }
+//                    }
+//                    completion(.success("success"))
+//                }
+//                print(self.saveData.myShareAccount)
+//            }
+//        
+//    }
 
-    func getDate2() {
-        // 從 Firebase 獲取數據
-        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").collection("")
-
-        docRef.getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting subcollection documents: \(error.localizedDescription)")
-            } else {
-                for document in querySnapshot!.documents {
-                    do {
-                        // 解析子集合的每個文件的數據
-                        let transactionData = try document.data(as: TransactionsResponse.self)
-                        print("Transaction Data: \(transactionData)")
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
-        }
-    }
-
-    func postData2() {
-//        dateFont.dateFormat = "yyyy-MM"
-//        let dateM = dateFont.string(from: date)
-//        dateFont.dateFormat = "yyyy-MM-dd"
-//        let dateD = dateFont.string(from: date)
-
-        let docRef = db.collection("accounts").document("SUyJNUlNOAI26DREgF0T").collection("transactions")
-
-//        docRef.document(dateM).updateData([dateM:transaction])
-    }
 }
 
 
