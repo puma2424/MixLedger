@@ -84,6 +84,9 @@
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
 		9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SingInViewController.swift */; };
+		9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */; };
+		9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BC2B1DECC70013A30A /* Color+extension.swift */; };
+		9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */; };
 		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
@@ -171,6 +174,9 @@
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MixLedger.entitlements; sourceTree = "<group>"; };
 		9AECC9B82B1DBD740013A30A /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
+		9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingupViewController.swift; sourceTree = "<group>"; };
+		9AECC9BC2B1DECC70013A30A /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
+		9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
 		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +275,7 @@
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */,
+				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
 				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
+				9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -434,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */,
+				9AECC9BC2B1DECC70013A30A /* Color+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -751,6 +760,7 @@
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,
 				9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */,
+				9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
 				9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
@@ -790,7 +800,9 @@
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
+				9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
+				9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

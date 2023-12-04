@@ -180,6 +180,7 @@ extension SingInViewController {
                 return
             }
             LKProgressHUD.showSuccess(text: "登入成功！")
+            self.getFirebaseUserInfo()
 //            CustomFunc.customAlert(title: "登入成功！", message: "", vc: self, actionHandler: self.getFirebaseUserInfo)
         }
     }
@@ -194,11 +195,18 @@ extension SingInViewController {
         }
         let uid = user.uid
         let email = user.email
-        FirebaseManager.getUsreInfo(userID: [uid]){result in
+        firebaseManager.getUsreInfo(userID: [uid]){result in
             switch result{
             case .success(let data):
                 if data.count == 0{
-                    
+                    LKProgressHUD.showFailure(text: "帳號未註冊")
+                    print(user.displayName)
+                    print(uid)
+                    print(email)
+                    let singupVC = SingupViewController()
+                    singupVC.uid = uid
+                    singupVC.userEmail = email
+                    self.present(singupVC, animated: true)
                 }else{
                     
                 }
