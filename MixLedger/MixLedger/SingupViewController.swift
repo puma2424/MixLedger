@@ -84,39 +84,41 @@ class SingupViewController: UIViewController {
     @objc func nameTextFieldTarget(_ textField: UITextField){
         nameText = textField.text ?? ""
         if nameText != "" && accountNameText != ""{
-            submitButton.isEnabled = false
-            submitButton.backgroundColor = .g2()
-        }else{
-            submitButton.isEnabled = true
             submitButton.backgroundColor = .g1()
+        }else{
+            submitButton.backgroundColor = .g2()
         }
     }
     
     @objc func accountNameTextFieldTarget(_ textField: UITextField){
         accountNameText = textField.text ?? ""
         if nameText != "" && accountNameText != ""{
-            submitButton.isEnabled = false
-            submitButton.backgroundColor = .g2()
-        }else{
-            submitButton.isEnabled = true
             submitButton.backgroundColor = .g1()
+        }else{
+            submitButton.backgroundColor = .g2()
         }
     }
     
     @objc func submitButton(_ senderButton: UIButton){
-        singup()
+        if nameText != "" && accountNameText != ""{
+            singup()
+        }
     }
     
     func singup(){
-        let newUser = UsersInfoResponse(name: nameText, ownAccount: "", shareAccount: [], userID: "")
+        
         guard let uid = uid else { return LKProgressHUD.showFailure(text: "註冊失敗") }
         guard let userEmail = userEmail else { return LKProgressHUD.showFailure(text: "註冊失敗") }
+        
+        let newUser = UsersInfoResponse(name: nameText, ownAccount: "", shareAccount: [], userID: uid)
         FirebaseManager.postNewUser(uid: uid, email: userEmail, newUser: newUser, accountNAme: accountNameText){result in
             switch result {
             case .success(_):
                 LKProgressHUD.showSuccess(text: "成功創建新帳戶")
+                self.dismiss(animated: true)
             case .failure(let err):
                 LKProgressHUD.showFailure(text: "註冊失敗")
+                self.dismiss(animated: true)
             }
             
         }
@@ -129,8 +131,7 @@ class SingupViewController: UIViewController {
     }
     
     func setupButton(){
-        submitButton.isEnabled = false
-        submitButton.addTarget(self, action: #selector(submitButton(_:)), for: .editingChanged)
+        submitButton.addTarget(self, action: #selector(submitButton(_:)), for: .touchUpInside)
     }
     
     func setupLayout(){
