@@ -20,8 +20,8 @@ class SaveData {
     
     var myUId: String = ""
     
-//    var myID = "bGzuwR00sPRNmBamK91F"// nil
-     var myID = "bGzuwR00sPRNmBamK91D" //puma
+    var myID = ""
+//     var myID = "bGzuwR00sPRNmBamK91D" //puma
 //    var myID = "qmgOOutGItrZyzKqQOrh"  //porter
     var userInfoData: [UsersInfoResponse] = []
     var myInfo: UsersInfoResponse?{

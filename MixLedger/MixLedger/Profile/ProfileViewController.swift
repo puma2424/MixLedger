@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileViewController: UIViewController {
 
@@ -25,5 +26,34 @@ class ProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    let singOutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Sing Out", for: .normal)
+        button.setTitleColor(.g3(), for: .normal)
+        button.backgroundColor = .g1()
+        return button
+    }()
+    
+    @objc func appleSingOutButtonTapped(){
+        FirebaseAuthenticationManager.signOut()
+    }
+    
+    func setupButton(){
+        singOutButton.layer.cornerRadius = 10
+        singOutButton.addTarget(self, action: #selector(appleSingOutButtonTapped), for: .touchUpInside)
+        
+    }
+    
+    func setupLayout(){
+        view.addSubview(singOutButton)
+        
+        singOutButton.snp.makeConstraints{(mark) in
+            mark.height.equalTo(50)
+            mark.width.equalTo(view.bounds.size.width * 0.5)
+            mark.centerX.equalTo(view)
+            mark.top.equalTo().offset(40)
+        }
+        
+    }
+    
 }

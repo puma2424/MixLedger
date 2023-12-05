@@ -12,15 +12,6 @@ class ShowScreenManager{
     
     static let shared = ShowScreenManager()
     
-    
-//    func setWindow(window: UIWindow, scene: UIScene) -> UIWindow{
-//        guard let windowScene = (scene as? UIWindowScene) else { return }
-//        window.windowScene = windowScene
-//        window.backgroundColor = UIColor(named: "G3")
-//        window.makeKeyAndVisible()
-//        return window
-//    }
-    
     static func showMainScreen(window: UIWindow) {
         window.rootViewController?.removeFromParent()
         let tabbar = UITabBarController()
@@ -28,7 +19,7 @@ class ShowScreenManager{
         let firstVC = UINavigationController(rootViewController: HomeViewController())
         let secondVC = UINavigationController(rootViewController: MessageViewController())
         let chartsVC = UINavigationController(rootViewController: ChartsViewController())
-        let profileVC = UINavigationController(rootViewController: SingInViewController())
+        let profileVC = UINavigationController(rootViewController: ProfileViewController())
         
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
         secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)

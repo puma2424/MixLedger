@@ -277,8 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
-				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */,
+				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
 				9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */,
 				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
@@ -324,6 +324,7 @@
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
+				9A5C83C02B1F273100BB778A /* SingPage */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
@@ -331,13 +332,10 @@
 				9A23798C2B037BE6001D6BAF /* LaunchScreen.storyboard */,
 				9A23798F2B037BE6001D6BAF /* Info.plist */,
 				9A2379872B037BE5001D6BAF /* MixLedger.xcdatamodeld */,
-				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
 				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
-				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
-				9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -405,6 +403,15 @@
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
 		};
+		9A5C83C02B1F273100BB778A /* SingPage */ = {
+			isa = PBXGroup;
+			children = (
+				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
+				9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */,
+			);
+			path = SingPage;
+			sourceTree = "<group>";
+		};
 		9A83B1982B0F887100C4C263 /* member */ = {
 			isa = PBXGroup;
 			children = (
@@ -449,6 +456,7 @@
 			children = (
 				9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */,
 				9AECC9BC2B1DECC70013A30A /* Color+extension.swift */,
+				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
