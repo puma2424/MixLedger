@@ -36,18 +36,11 @@ class SingInViewController: UIViewController{
 
     let firebaseManager = FirebaseManager.shared
     let singButton = ASAuthorizationAppleIDButton(authorizationButtonType: .default, authorizationButtonStyle: .black)
-    let singOutButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Sing Out", for: .normal)
-        button.setTitleColor(.g3(), for: .normal)
-        button.backgroundColor = .g1()
-        return button
-    }()
     
     // MARK: - Sign in with Apple 登入
     fileprivate var currentNonce: String?
     
-    @objc func appleSinginButtonTapped(){
+    @objc func appleSinginButtonTapped() {
         let nonce = randomNonceString()
             currentNonce = nonce
             let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -61,38 +54,24 @@ class SingInViewController: UIViewController{
             authorizationController.performRequests()
     }
     
-    @objc func appleSingOutButtonTapped(){
+    @objc func appleSingOutButtonTapped() {
         FirebaseAuthenticationManager.signOut()
     }
     
-    func setupButton(){
-        
+    func setupButton() {
         singButton.cornerRadius = 10
         singButton.addTarget(self, action: #selector(appleSinginButtonTapped), for: .touchUpInside)
-        
-        singOutButton.layer.cornerRadius = 10
-        singOutButton.addTarget(self, action: #selector(appleSingOutButtonTapped), for: .touchUpInside)
-        
     }
     
-    func setupLayout(){
+    func setupLayout() {
         view.addSubview(singButton)
-        view.addSubview(singOutButton)
         
         singButton.snp.makeConstraints{(mark) in
             mark.height.equalTo(50)
             mark.width.equalTo(view.bounds.size.width * 0.5)
             mark.centerX.equalTo(view)
             mark.centerY.equalTo(view)
-        }
-        
-        singOutButton.snp.makeConstraints{(mark) in
-            mark.height.equalTo(50)
-            mark.width.equalTo(view.bounds.size.width * 0.5)
-            mark.centerX.equalTo(view)
-            mark.top.equalTo(singButton.snp.bottom).offset(40)
-        }
-        
+        } 
     }
     
     private func randomNonceString(length: Int = 32) -> String {

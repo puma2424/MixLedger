@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupButton()
+        setupLayout()
     }
     
 
@@ -34,24 +36,23 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    @objc func appleSingOutButtonTapped(){
+    @objc func appleSingOutButtonTapped() {
         FirebaseAuthenticationManager.signOut()
     }
     
-    func setupButton(){
+    func setupButton() {
         singOutButton.layer.cornerRadius = 10
         singOutButton.addTarget(self, action: #selector(appleSingOutButtonTapped), for: .touchUpInside)
-        
     }
     
-    func setupLayout(){
+    func setupLayout() {
         view.addSubview(singOutButton)
         
         singOutButton.snp.makeConstraints{(mark) in
             mark.height.equalTo(50)
             mark.width.equalTo(view.bounds.size.width * 0.5)
-            mark.centerX.equalTo(view)
-            mark.top.equalTo().offset(40)
+            mark.centerX.equalTo(view.safeAreaLayoutGuide)
+            mark.centerY.equalTo(view.safeAreaLayoutGuide)
         }
         
     }

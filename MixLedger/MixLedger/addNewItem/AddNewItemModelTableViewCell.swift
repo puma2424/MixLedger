@@ -42,13 +42,13 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.clearButtonMode = .whileEditing
 
         // 輸入框適用的鍵盤 這邊選擇 適用輸入 Email 的鍵盤(會有 @ 跟 . 可供輸入)
-        textField.keyboardType = .numberPad
+        textField.keyboardType = .decimalPad
 
         // 鍵盤上的 return 鍵樣式 這邊選擇 Done
         textField.returnKeyType = .done
 
         // 輸入文字的顏色
-        textField.textColor = UIColor.white
+        textField.textColor = .g1()
         return textField
     }()
 
