@@ -87,6 +87,8 @@
 		9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */; };
 		9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BC2B1DECC70013A30A /* Color+extension.swift */; };
 		9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */; };
+		9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */; };
+		9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */; };
 		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
@@ -177,6 +179,8 @@
 		9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingupViewController.swift; sourceTree = "<group>"; };
 		9AECC9BC2B1DECC70013A30A /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
+		9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthenticationMenager.swift; sourceTree = "<group>"; };
+		9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowScreenManager.swift; sourceTree = "<group>"; };
 		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */,
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
+				9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */,
+				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -761,6 +767,7 @@
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,
 				9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */,
 				9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */,
+				9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
 				9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
@@ -771,6 +778,7 @@
 				9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */,
 				9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */,
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
+				9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */,
 				9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
 				9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */,

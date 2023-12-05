@@ -21,28 +21,49 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window?.windowScene = windowScene
+//        window?.backgroundColor = UIColor(named: "G3")
+//        window?.makeKeyAndVisible()
+//
+//        let tabbar = UITabBarController()
+//        tabbar.tabBar.backgroundColor = UIColor.clear
+//        let firstVC = UINavigationController(rootViewController: HomeViewController())
+//        let secondVC = UINavigationController(rootViewController: MessageViewController())
+//        let chartsVC = UINavigationController(rootViewController: ChartsViewController())
+//        let profileVC = UINavigationController(rootViewController: SingInViewController())
+//        
+//        firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
+//        secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
+//        chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)
+//        profileVC.tabBarItem.image = AllIcons.settingsMale.icon?.withRenderingMode(.alwaysOriginal)
+//        
+//        tabbar.viewControllers = [firstVC, secondVC, chartsVC, profileVC]
+//
+//        window?.rootViewController = tabbar
+//        // 將 UIWindow 設置為可見的
+//        window!.makeKeyAndVisible()
+        guard let window = window else { return }
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window?.windowScene = windowScene
-        window?.backgroundColor = UIColor(named: "G3")
-        window?.makeKeyAndVisible()
-
-        let tabbar = UITabBarController()
-        tabbar.tabBar.backgroundColor = UIColor.clear
-        let firstVC = UINavigationController(rootViewController: HomeViewController())
-        let secondVC = UINavigationController(rootViewController: MessageViewController())
-        let chartsVC = UINavigationController(rootViewController: ChartsViewController())
-        let profileVC = UINavigationController(rootViewController: SingInViewController())
+        window.windowScene = windowScene
+        window.backgroundColor = UIColor(named: "G3")
+        window.makeKeyAndVisible()
+        FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
+            switch result{
+            case true:
+                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+                    ShowScreenManager.showSinginScreen(window: window)
+                    return
+                }
+                SaveData.shared.myID = userID
+                ShowScreenManager.showMainScreen(window: window)
+                
+            case false:
+                ShowScreenManager.showSinginScreen(window: window)
+            }
+        }
         
-        firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
-        secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
-        chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)
-        profileVC.tabBarItem.image = AllIcons.settingsMale.icon?.withRenderingMode(.alwaysOriginal)
         
-        tabbar.viewControllers = [firstVC, secondVC, chartsVC, profileVC]
-
-        window?.rootViewController = tabbar
-        // 將 UIWindow 設置為可見的
-        window!.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_: UIScene) {

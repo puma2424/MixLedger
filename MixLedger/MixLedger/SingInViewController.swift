@@ -11,6 +11,7 @@ import SnapKit
 import CryptoKit // 用來產生隨機字串 (Nonce) 的
 import FirebaseAuth
 
+
 class SingInViewController: UIViewController{
     
 
@@ -35,6 +36,13 @@ class SingInViewController: UIViewController{
 
     let firebaseManager = FirebaseManager.shared
     let singButton = ASAuthorizationAppleIDButton(authorizationButtonType: .default, authorizationButtonStyle: .black)
+    let singOutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Sing Out", for: .normal)
+        button.setTitleColor(.g3(), for: .normal)
+        button.backgroundColor = .g1()
+        return button
+    }()
     
     // MARK: - Sign in with Apple 登入
     fileprivate var currentNonce: String?
@@ -53,13 +61,23 @@ class SingInViewController: UIViewController{
             authorizationController.performRequests()
     }
     
+    @objc func appleSingOutButtonTapped(){
+        FirebaseAuthenticationManager.signOut()
+    }
+    
     func setupButton(){
+        
         singButton.cornerRadius = 10
         singButton.addTarget(self, action: #selector(appleSinginButtonTapped), for: .touchUpInside)
+        
+        singOutButton.layer.cornerRadius = 10
+        singOutButton.addTarget(self, action: #selector(appleSingOutButtonTapped), for: .touchUpInside)
+        
     }
     
     func setupLayout(){
         view.addSubview(singButton)
+        view.addSubview(singOutButton)
         
         singButton.snp.makeConstraints{(mark) in
             mark.height.equalTo(50)
@@ -67,6 +85,14 @@ class SingInViewController: UIViewController{
             mark.centerX.equalTo(view)
             mark.centerY.equalTo(view)
         }
+        
+        singOutButton.snp.makeConstraints{(mark) in
+            mark.height.equalTo(50)
+            mark.width.equalTo(view.bounds.size.width * 0.5)
+            mark.centerX.equalTo(view)
+            mark.top.equalTo(singButton.snp.bottom).offset(40)
+        }
+        
     }
     
     private func randomNonceString(length: Int = 32) -> String {
@@ -195,6 +221,7 @@ extension SingInViewController {
         }
         let uid = user.uid
         let email = user.email
+        let token = user.refreshToken
         firebaseManager.getUsreInfo(userID: [uid]){result in
             switch result{
             case .success(let data):
@@ -208,7 +235,10 @@ extension SingInViewController {
                     singupVC.userEmail = email
                     self.present(singupVC, animated: true)
                 }else{
-                    
+                    if let window = SceneDelegate.shared.window {
+                        ShowScreenManager.showSinginScreen(window: window)
+                        }
+                    LKProgressHUD.showSuccess(text: "登入成功！")
                 }
             case .failure(_):
                 LKProgressHUD.showFailure(text: "無法取得使用者資料！")
@@ -216,4 +246,5 @@ extension SingInViewController {
         }
 //        CustomFunc.customAlert(title: "使用者資訊", message: "UID：\(uid)\nEmail：\(email!)", vc: self, actionHandler: nil)
     }
+
 }
