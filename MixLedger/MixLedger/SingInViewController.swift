@@ -205,7 +205,7 @@ extension SingInViewController {
 //                CustomFunc.customAlert(title: "", message: "\(String(describing: error!.localizedDescription))", vc: self, actionHandler: nil)
                 return
             }
-            LKProgressHUD.showSuccess(text: "登入成功！")
+//            LKProgressHUD.showSuccess(text: "登入成功！")
             self.getFirebaseUserInfo()
 //            CustomFunc.customAlert(title: "登入成功！", message: "", vc: self, actionHandler: self.getFirebaseUserInfo)
         }
@@ -222,6 +222,7 @@ extension SingInViewController {
         let uid = user.uid
         let email = user.email
         let token = user.refreshToken
+        SaveData.shared.myID = uid
         firebaseManager.getUsreInfo(userID: [uid]){result in
             switch result{
             case .success(let data):
@@ -235,9 +236,9 @@ extension SingInViewController {
                     singupVC.userEmail = email
                     self.present(singupVC, animated: true)
                 }else{
-                    if let window = SceneDelegate.shared.window {
-                        ShowScreenManager.showSinginScreen(window: window)
-                        }
+                    if let window = SceneDelegate.shared.sceneWindow{
+                        ShowScreenManager.showMainScreen(window: window)
+                    }
                     LKProgressHUD.showSuccess(text: "登入成功！")
                 }
             case .failure(_):

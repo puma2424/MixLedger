@@ -116,6 +116,9 @@ class SingupViewController: UIViewController {
             case .success(_):
                 LKProgressHUD.showSuccess(text: "成功創建新帳戶")
                 self.dismiss(animated: true)
+                if let window = SceneDelegate.shared.sceneWindow{
+                    ShowScreenManager.showMainScreen(window: window)
+                }
             case .failure(let err):
                 LKProgressHUD.showFailure(text: "註冊失敗")
                 self.dismiss(animated: true)

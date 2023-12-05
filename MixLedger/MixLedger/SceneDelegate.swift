@@ -16,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             return sceneDelegate
         }
+    
+    var sceneWindow: UIWindow?
 //    static let shared = UIApplication.shared.delegate as! AppDelegate
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -48,6 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.windowScene = windowScene
         window.backgroundColor = UIColor(named: "G3")
         window.makeKeyAndVisible()
+        sceneWindow = window
         FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
             switch result{
             case true:

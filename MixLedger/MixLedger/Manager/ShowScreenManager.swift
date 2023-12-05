@@ -22,6 +22,7 @@ class ShowScreenManager{
 //    }
     
     static func showMainScreen(window: UIWindow) {
+        window.rootViewController?.removeFromParent()
         let tabbar = UITabBarController()
         tabbar.tabBar.backgroundColor = UIColor.clear
         let firstVC = UINavigationController(rootViewController: HomeViewController())

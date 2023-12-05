@@ -30,6 +30,9 @@ class FirebaseAuthenticationManager{
     static func signOut() {
         do {
             try Auth.auth().signOut()
+            if let window = SceneDelegate.shared.sceneWindow{
+                ShowScreenManager.showSinginScreen(window: window)
+            }
         } catch {
             print("Error signing out: \(error.localizedDescription)")
         }
