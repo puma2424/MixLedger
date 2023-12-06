@@ -56,8 +56,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     var pieChart = PieChart(data: .constant([30, 50, 20]),
                             labels: .constant(["Label1", "Label2", "Label3"]),
-                            colors: [.red, .green, .blue],
-                            borderColor: .white)
+                            colors: [.blue1, .blue2, .brightGreen1],
+                            borderColor: .gray1)
 
     let mySwiftUIView = LineMarkCharts()
 
@@ -119,11 +119,13 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             typeArray.append(type)
             amountArray.append(dic[type] ?? 0.0)
         }
+        
+        let colorArray: [Color] = ColorManager.getAllColors() as [Color]
 
         pieChart = PieChart(data: .constant(amountArray),
                             labels: .constant(typeArray),
-                            colors: [.red, .green, .blue],
-                            borderColor: .white)
+                            colors: colorArray,
+                            borderColor: .brightGreen1)
 
         // Create a UIHostingController to wrap the SwiftUI view
         let hostingController = UIHostingController(rootView: pieChart)

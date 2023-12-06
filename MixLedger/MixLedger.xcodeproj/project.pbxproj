@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		938F6629FBE84235958723B2 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1079A6D879B3B4562FCDDB67 /* Pods_MixLedger_MixLedgerUITests.framework */; };
+		9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00216B2B20452A0052A7A1 /* ColorManager.swift */; };
 		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
@@ -122,6 +123,7 @@
 		6516F556B662D24A8DE0A876 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
 		6B07D4824EF896D9246B3C57 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.release.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A00216B2B20452A0052A7A1 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
 				9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */,
 				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
+				9A00216B2B20452A0052A7A1 /* ColorManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
+				9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
