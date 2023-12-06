@@ -192,7 +192,7 @@ class HomeViewController: UIViewController{
                 if data.count != 0{
                     self.currentAccountID = data[0].ownAccount
                     self.saveData.myInfo = data[0]
-                    self.addUserMessageListener()
+                    self.addUserMessageAndAccountListener()
                     LKProgressHUD.showSuccess(text: "成功載入個人資料")
                 }
             case .failure(_):
@@ -201,13 +201,13 @@ class HomeViewController: UIViewController{
         }
     }
     
-    func addUserMessageListener(){
+    func addUserMessageAndAccountListener(){
         guard let myID = savaData.myInfo?.userID else {return}
-        firebaseManager.addUserMessageListener(userID: myID){result in
+        firebaseManager.addUserListener(userID: myID){result in
             switch result{
             case .success(let data):
                 self.savaData.myInfo?.message = data.message
-                LKProgressHUD.showSuccess(text: "成功載入個人訊息")
+                self.saveData.myInfo?.shareAccount = data.shareAccount
             case .failure(let err):
                 print(err)
             }

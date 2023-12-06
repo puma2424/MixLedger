@@ -687,7 +687,7 @@ class FirebaseManager {
         userMessageListener?.remove()
     }
     
-    func addUserMessageListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
+    func addUserListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
         
         removeUserMessageListener()
         
