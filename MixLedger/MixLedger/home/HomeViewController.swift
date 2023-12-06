@@ -8,32 +8,76 @@
 import SnapKit
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController{
+    
+    
 //    var userID = ["QJeplpxVXBca5xhXWgbT", "qmgOOutGItrZyzKqQOrh", "bGzuwR00sPRNmBamK91D"]
 
     let saveData = SaveData.shared
     let firebaseManager = FirebaseManager.shared
-
+    
+    
     var currentAccountID: String = "" {
         didSet {
-            if currentAccountID != ""{
-                firebaseManager.getData(accountID: currentAccountID) { result in
-                    switch result {
-                    case let .success(data):
-                        // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-                        print("getData Success: \(data)")
-                        print("\(self.saveData.accountData?.transactions)")
-                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
-                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
-                        self.billStatusOpenView.table.reloadData()
-
-                        self.navigationItem.title = self.saveData.accountData?.accountName
-                        self.billTable.reloadData()
-                    case let .failure(error):
-                        // 失敗時的處理
-                        print("Failure: \(error)")
+            if currentAccountID != "" {
+                firebaseManager.addAccountListener(accountID: currentAccountID){ result in
+                    switch result{
+                    case .success(let accountData):
+//                        print("getData Success: \(data)")
+                        print("\(String(describing: self.saveData.accountData?.transactions))")
+                        
+                        var userID: [String] = []
+                        if let shareUsersID = accountData.shareUsersID{
+                            for user in shareUsersID{
+                                for id in user.keys{
+                                    userID.append(id)
+                                }
+                            }
+                        }
+                        
+                        self.billStatusOpenView.usersInfo = []
+                        self.saveData.userInfoData = []
+                        self.firebaseManager.getUsreInfo(userID: userID) { result in
+                            switch result{
+                            case .success(let userData):
+                                self.billStatusOpenView.usersInfo = userData
+                                self.saveData.userInfoData = userData
+                                DispatchQueue.main.async {
+                                    self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+                                    self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+                                    self.billStatusOpenView.table.reloadData()
+                                    
+                                    self.navigationItem.title = self.saveData.accountData?.accountName
+                                    self.billTable.reloadData()
+                                }
+                            case .failure(let err):
+                                print(err)
+                            }
+                        }
+                        
+                        
+                    case .failure(let err):
+                        print(err)
+                        LKProgressHUD.showFailure(text: "讀取帳本資料失敗")
                     }
                 }
+//                firebaseManager.getData(accountID: currentAccountID) { result in
+//                    switch result {
+//                    case let .success(data):
+//                        // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+//                        print("getData Success: \(data)")
+//                        print("\(String(describing: self.saveData.accountData?.transactions))")
+//                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+//                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+//                        self.billStatusOpenView.table.reloadData()
+//
+//                        self.navigationItem.title = self.saveData.accountData?.accountName
+//                        self.billTable.reloadData()
+//                    case let .failure(error):
+//                        // 失敗時的處理
+//                        print("Failure: \(error)")
+//                    }
+//                }
             }
 //            if currentAccountID == savaData.myInfo?.ownAccount{
 //                showView?.isHidden = true
@@ -45,7 +89,7 @@ class HomeViewController: UIViewController {
 //                    mark.height.equalTo(150)
 //                }
 //                showView?.isHidden = false
-//                
+//
 //            }
         }
     }
@@ -56,7 +100,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationItem.title = ""
-        getMyInfo()
+        getMyOwnAccount()
         setupShareBillView()
         setupLayout()
         setupTable()
@@ -67,63 +111,63 @@ class HomeViewController: UIViewController {
     }
 
     override func viewWillAppear(_: Bool) {
-       if currentAccountID != "" {
-           firebaseManager.getData(accountID: currentAccountID) { result in
-                switch result {
-                case let .success(data):
-                    // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-                    print("getData Success: \(data)")
-                    print("\(self.saveData.accountData?.transactions)")
-    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsDayKeyArr[indexPath.section - 1]] else {return ""}
-                    self.billTable.reloadData()
-                    self.billStatusOpenView.table.reloadData()
+//        if currentAccountID != "" {
+            
+//            firebaseManager.getData(accountID: currentAccountID) { result in
+//                switch result {
+//                case let .success(data):
+//                    // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+//                    print("getData Success: \(data)")
+//                    print("\(String(describing: self.saveData.accountData?.transactions))")
+//                    //                guard let data = saveData.accountData?.transactions["2023-11"]?[transactionsMonKeyArr[indexPath.section - 1]] else {return ""}
+//                    self.billTable.reloadData()
+//                    self.billStatusOpenView.table.reloadData()
+//
+//                    self.navigationItem.title = self.saveData.accountData?.accountName
+//                case let .failure(error):
+//                    // 失敗時的處理
+//                    print("Failure: \(error)")
+//                }
+//            }
+//        }
 
-                    self.navigationItem.title = self.saveData.accountData?.accountName
-                case let .failure(error):
-                    // 失敗時的處理
-                    print("Failure: \(error)")
-                }
-            }
-        }
-        
-
-        saveData.userInfoData = [:]
-        billStatusOpenView.usersInfo = [:]
-        if let accountData = savaData.accountData?.shareUsersID {
-            var userID: [String] = []
-            for user in accountData {
-                for key in user.keys {
-                    userID.append(key)
-                }
-            }
-            if !userID.isEmpty {
-                // find friend
-                firebaseManager.findUser(userID: userID) { result in
-
-                    switch result {
-                    case let .success(data):
-                        // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
-                        print("findUser Success: \(data)")
-                        var id: [String] = []
-                        for key in data.keys {
-                            id.append(key)
-                            self.saveData.userInfoData[key] = data[key]
-                        }
-                        //                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
-                        print("-----find User decode------")
-                        print("\(self.saveData.userInfoData)")
-
-                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
-                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
-
-                        self.billStatusOpenView.table.reloadData()
-                    case let .failure(error):
-                        // 失敗時的處理
-                        print("Failure: \(error)")
-                    }
-                }
-            }
-        }
+//        saveData.userInfoData = [:]
+//        billStatusOpenView.usersInfo = [:]
+//        if let accountData = savaData.accountData?.shareUsersID {
+//            var userID: [String] = []
+//            for user in accountData {
+//                for key in user.keys {
+//                    userID.append(key)
+//                }
+//            }
+//            if !userID.isEmpty {
+//                // find friend
+//                firebaseManager.findUser(userID: userID) { result in
+//
+//                    switch result {
+//                    case let .success(data):
+//                        // 成功時的處理，data 是一個 Any 類型，你可以根據實際情況轉換為你需要的類型
+//                        print("findUser Success: \(data)")
+//                        var id: [String] = []
+//                        for key in data.keys {
+//                            id.append(key)
+//                            self.saveData.userInfoData[key] = data[key]
+//                        }
+//                        //                self.saveData.userInfoData[(data.keys as? String) ?? ""] = data[(data.keys as? String) ?? ""]
+//                        print("-----find User decode------")
+//                        print("\(self.saveData.userInfoData)")
+//
+//                        self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+//                        self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+//
+//                        self.billStatusOpenView.table.reloadData()
+//                    case let .failure(error):
+//                        // 失敗時的處理
+//                        print("Failure: \(error)")
+//                    }
+//                }
+//            }
+//        }
     }
 
     let billStatusSmallView = SharedBillStatusSmallView()
@@ -133,27 +177,39 @@ class HomeViewController: UIViewController {
 
     var selectDate: Date = .init()
 
-    var showView: UIView?
+    var showView = UIView()
     let billTable = UITableView()
     let addButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "add"), for: .normal)
         return button
     }()
-    
-    func getMyInfo(){
-        // find my info
-        firebaseManager.findUser(userID: [myID]) { result in
-            self.saveData.myInfo = nil
 
-            switch result {
-            case let .success(data):
-                self.saveData.myInfo = data[myID]
-                if self.currentAccountID == ""{
-                    self.currentAccountID = data[myID]?.ownAccount ?? ""
+    func getMyOwnAccount() {
+        // find my info
+        firebaseManager.getUsreInfo(userID: [savaData.myID]){result in
+            switch result{case .success(let data):
+                if data.count != 0{
+                    self.currentAccountID = data[0].ownAccount
+                    self.saveData.myInfo = data[0]
+                    self.addUserMessageListener()
+                    LKProgressHUD.showSuccess(text: "成功載入個人資料")
                 }
-            case let .failure(error):
-                print("Failure: \(error)\n cannot get myInfo")
+            case .failure(_):
+                LKProgressHUD.showFailure(text: "讀取資料失敗")
+            }
+        }
+    }
+    
+    func addUserMessageListener(){
+        guard let myID = savaData.myInfo?.userID else {return}
+        firebaseManager.addUserMessageListener(userID: myID){result in
+            switch result{
+            case .success(let data):
+                self.savaData.myInfo?.message = data.message
+                LKProgressHUD.showSuccess(text: "成功載入個人訊息")
+            case .failure(let err):
+                print(err)
             }
         }
     }
@@ -168,6 +224,7 @@ class HomeViewController: UIViewController {
     func setupButton() {
         addButton.addTarget(self, action: #selector(addNewBill), for: .touchUpInside)
     }
+    
 
     @objc func addNewBill() {
         print("addNewBill")
@@ -193,9 +250,8 @@ class HomeViewController: UIViewController {
     }
 
     func setupShareBillView() {
-        showView = billStatusOpenView
+        openView()
 
-        billTable.layer.cornerRadius = 10
         billStatusSmallView.layer.cornerRadius = 10
         billStatusOpenView.layer.cornerRadius = 10
         billStatusSmallView.smallDelegate = self
@@ -226,6 +282,7 @@ class HomeViewController: UIViewController {
     }
 
     func setupTable() {
+        billTable.layer.cornerRadius = 10
         billTable.delegate = self
         billTable.dataSource = self
         billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
@@ -233,30 +290,28 @@ class HomeViewController: UIViewController {
     }
 
     func setupLayout() {
-        if let showView = showView {
-            view.addSubview(showView)
-            view.addSubview(billTable)
-            view.addSubview(addButton)
-            showView.snp.makeConstraints { make in
-                make.width.equalTo(view.bounds.size.width * 0.9)
-                make.height.equalTo(150)
-                make.centerX.equalTo(view)
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
-            }
+        view.addSubview(showView)
+        view.addSubview(billTable)
+        view.addSubview(addButton)
+        showView.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.height.equalTo(150)
+            make.centerX.equalTo(view)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
+        }
 
-            billTable.snp.makeConstraints { make in
-                make.width.equalTo(view.bounds.size.width * 0.9)
-                make.centerX.equalTo(view)
-                make.top.equalTo(showView.snp.bottom).offset(10)
-                make.bottom.equalTo(view.safeAreaLayoutGuide)
+        billTable.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.centerX.equalTo(view)
+            make.top.equalTo(showView.snp.bottom).offset(10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
 //                make.width.equalTo(view.safeAreaLayoutGuide)
-            }
+        }
 
-            addButton.snp.makeConstraints { make in
+        addButton.snp.makeConstraints { make in
 
-                make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
-                make.width.height.equalTo(80)
-            }
+            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
+            make.width.height.equalTo(80)
         }
     }
 
@@ -284,35 +339,65 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate {
-    func inputData(view: SharedBillStatusOpenView) {
-//        view.billStatus = savaData.accountData?.shareUsersID
-//        view.usersInfo = saveData.userInfoData
-//
-////        view.usersInfo = userID
-//        print(view.usersInfo)
+extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate, RepayViewDelegate {
+    func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
+        let mtName = saveData.myInfo?.name ?? ""
+        let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"
+        let toMyselfTest = "您向\(otherUserName) 還款：\(amount)"
+        guard let accountData = saveData.accountData else {return}
+        
+        firebaseManager.postMessage(toUserID: otherUserID, 
+                                    textToOtherUser: toOtherUserTest,
+                                    textToMyself: toMyselfTest,
+                                    isDunningLetter: true,
+                                    amount: amount,
+                                    fromAccoundID: accountData.accountID,
+                                    fromAccoundName: accountData.accountName){ _ in
+            return
+        }
+        
+        payView.removeFromSuperview()
     }
-
+    
+    func addRePayView(subview: RepayView) {
+        view.addSubview(subview)
+        subview.layer.cornerRadius = 10
+        subview.snp.makeConstraints{(mark) in
+            mark.width.equalTo(view.bounds.size.width * 0.8)
+            mark.height.equalTo(view.bounds.size.height * 0.4)
+            mark.centerX.equalTo(view)
+            mark.centerY.equalTo(view)
+        }
+        subview.delegate = self
+    }
+   
     func openView() {
-//        showView = nil
-//        showView?.snp.updateConstraints{(mark) in
-//            mark.height.equalTo(300)
-//        }
-//        showView = billStatusOpenView
-//        // 顯式告訴視圖重新佈局
-//            self.view.layoutIfNeeded()
-//
-//
+        billStatusSmallView.removeFromSuperview()
+        showView.snp.updateConstraints { mark in
+            mark.height.equalTo(150)
+        }
+        showView.addSubview(billStatusOpenView)
+        billStatusOpenView.snp.makeConstraints { mark in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
     }
 
     func closeView() {
-//        showView?.snp.updateConstraints{(mark) in
-//            mark.height.equalTo(100)
-//        }
-//        showView = billStatusSmallView
-//
-//        // 顯式告訴視圖重新佈局
-//            self.view.layoutIfNeeded()
+        billStatusOpenView.removeFromSuperview()
+
+        showView.snp.updateConstraints { mark in
+            mark.height.equalTo(50)
+        }
+        showView.addSubview(billStatusSmallView)
+        billStatusSmallView.snp.makeConstraints { mark in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
     }
 }
 
@@ -404,15 +489,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
 //                if let iconName = data.type.iconName {
-                    billCell.sortImageView.image = UIImage(named: data.type.iconName)
+                billCell.sortImageView.image = UIImage(named: data.subType.iconName)
 //                }
 
-                billCell.titleLabel.text = data.type.name
+                billCell.titleLabel.text = data.subType.name
                 var titleNote = ""
 
+                
+                
+                
                 if let payUser = data.payUser {
                     for key in payUser.keys {
-                        titleNote += "\(savaData.userInfoData[key]?.name)/" ?? ""
+                        if  let userName = savaData.userInfoData.first(where: { $0.userID == key })?.name{
+                            titleNote += "\(userName)/"
+                        }
                     }
                 }
                 if titleNote == "" {
@@ -433,6 +523,5 @@ extension HomeViewController: BillStatusTableViewCellDelegate {
     func changeMonth(cell _: BillStatusTableViewCell, date: Date) {
         selectDate = date
         billTable.reloadData()
-
     }
 }

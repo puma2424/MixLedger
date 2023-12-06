@@ -1,24 +1,28 @@
 PODS:
   - IQKeyboardManagerSwift (6.5.16)
+  - JGProgressHUD (2.2)
   - SnapKit (5.6.0)
   - SwiftLint (0.54.0)
 
 DEPENDENCIES:
   - IQKeyboardManagerSwift
+  - JGProgressHUD
   - SnapKit (~> 5.6.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
     - IQKeyboardManagerSwift
+    - JGProgressHUD
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 661a06d88307a530ec33cfc39e9791f713113f7f
+PODFILE CHECKSUM: 4a6e9e52cde0f3c01665b32349e883980f4af195
 
 COCOAPODS: 1.14.2

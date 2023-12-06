@@ -73,7 +73,7 @@ class BillTableViewCell: UITableViewCell {
 
         moneyLabel.numberOfLines = 1
         moneyNoteLabel.numberOfLines = 1
-        titleNoteLabel.numberOfLines = 1
+        titleNoteLabel.numberOfLines = 0
         titleLabel.numberOfLines = 1
         contentView.addSubview(sortImageView)
         contentView.addSubview(titleStackView)
@@ -89,6 +89,9 @@ class BillTableViewCell: UITableViewCell {
             mark.centerY.equalTo(contentView)
         }
 
+//        titleNoteLabel.snp.makeConstraints { mark in
+//            mark.bottom.equalTo(titleStackView).offset(-5)
+//        }
         titleStackView.snp.makeConstraints { mark in
             mark.top.equalTo(sortImageView).offset(5)
             mark.leading.equalTo(sortImageView.snp.trailing).offset(2)

@@ -10,30 +10,42 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
+    static var shared: SceneDelegate {
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                fatalError("Unable to access SceneDelegate instance.")
+            }
+            return sceneDelegate
+        }
+    
+    var sceneWindow: UIWindow?
+//    static let shared = UIApplication.shared.delegate as! AppDelegate
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
+        guard let window = window else { return }
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window?.windowScene = windowScene
-        window?.backgroundColor = UIColor(named: "G3")
-        window?.makeKeyAndVisible()
-
-        let tabbar = UITabBarController()
-        tabbar.tabBar.backgroundColor = UIColor.clear
-        let firstVC = UINavigationController(rootViewController: HomeViewController())
-        let secondVC = UINavigationController(rootViewController: MessageViewController())
-        let chartsVC = UINavigationController(rootViewController: ChartsViewController())
+        window.windowScene = windowScene
+        window.backgroundColor = UIColor(named: "G3")
+        window.makeKeyAndVisible()
+        sceneWindow = window
+        FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
+            switch result{
+            case true:
+                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+                    ShowScreenManager.showSinginScreen(window: window)
+                    return
+                }
+                SaveData.shared.myID = userID
+                ShowScreenManager.showMainScreen(window: window)
+                
+            case false:
+                ShowScreenManager.showSinginScreen(window: window)
+            }
+        }
+//        ShowScreenManager.showMainScreen(window: window)
         
-        firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
-        secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
-        chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)
-
-        tabbar.viewControllers = [firstVC, secondVC, chartsVC]
-
-        window?.rootViewController = tabbar
-        // 將 UIWindow 設置為可見的
-        window!.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_: UIScene) {
