@@ -12,14 +12,8 @@ import UIKit
 class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate {
     func change(to index: Int) {
         // Remove the current chart view
-        currentChartView?.removeFromSuperview()
-
-        // Add the new chart view based on the selected index
-        if index == 0 {
-            currentChartView = setupPie()
-        } else {
-            currentChartView = setupLineMarkView()
-        }
+        checkArrayhaveData(index: index)
+        currentIndex = index
     }
 
     override func viewDidLoad() {
@@ -35,7 +29,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currentChartView = setupPie()
+        
+        checkArrayhaveData(index: currentIndex)
     }
 
     /*
@@ -47,6 +42,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
          // Pass the selected object to the new view controller.
      }
      */
+    
+    var currentIndex = 0
 
     let saveData = SaveData.shared
 
@@ -60,7 +57,30 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
                             borderColor: .gray1)
 
     let mySwiftUIView = LineMarkCharts()
+    
+    let noDataNoteLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = "There are no financial records available. \n Add the first entry to your accounts!"
+        label.numberOfLines = 0
+        label.textColor = .g1()
+        return label
+    }()
 
+    func checkArrayhaveData(index: Int){
+        currentChartView?.removeFromSuperview()
+        currentChartView = nil
+        
+        if saveData.transactionsArray.isEmpty{
+            currentChartView = setupLabelView()
+        }else {
+            if index == 0 {
+                currentChartView = setupPie()
+            } else {
+                currentChartView = setupLineMarkView()
+            }
+        }
+    }
     func setupSegmentedControl() {
         segmentedView.delegate = self
         segmentedView.setButtonTitles(buttonTitles: ["圓餅圖", "折線圖"])
@@ -75,6 +95,16 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             mark.trailing.equalTo(view.safeAreaLayoutGuide)
             mark.height.equalTo(50)
         }
+    }
+    
+    func setupLabelView() -> UIView{
+        view.addSubview(noDataNoteLabel)
+
+        noDataNoteLabel.snp.makeConstraints { mark in
+            mark.centerX.equalTo(view)
+            mark.centerY.equalTo(view)
+        }
+        return noDataNoteLabel
     }
 
 //    private let stockEntityViewModel = StockEntityViewModel()

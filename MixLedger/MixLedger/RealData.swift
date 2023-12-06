@@ -64,24 +64,10 @@ class SaveData {
                 }
             }
         }
-        if transactionsArray.count == 0{
-            let dateFont = DateFormatter()
-            dateFont.dateFormat = "yyyy"
-            let dateString = dateFont.string(from: Date())
-            let calendar = Calendar.current
-            let monthNumber = calendar.component(.month, from: Date())
-            let transactionMainType: TransactionMainType = TransactionMainType.expenses
-            
-            transactionsArray.append(Test(year: dateString,
-                                          mon: monthNumber,
-                                          amount: 0,
-                                          currency: "新台幣",
-                                          date: Date(),
-                                          subType: TransactionType(iconName: "", name: ""),
-                                          transactionType: TransactionType(iconName: "", name: transactionMainType.text)))
-        }
-        print(transactionsArray)
-        return transactionsArray
+        
+            print(transactionsArray)
+            return transactionsArray
+        
     }
 }
 
