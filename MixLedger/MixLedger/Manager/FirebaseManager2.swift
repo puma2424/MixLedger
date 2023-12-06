@@ -65,5 +65,32 @@ extension FirebaseManager{
         
         
     }
+    func findAccount(account: [String], completion: @escaping (Result<Any, Error>) -> Void) {
+        print("-------account array---------")
+        print(account)
 
+        let docRef = db.collection("accounts")
+        if !account.isEmpty {
+            docRef.whereField("accountID", in: account).getDocuments { querySnapshot, err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    if let querySnapshot = querySnapshot {
+                        for document in querySnapshot.documents {
+                            //                print("\(document.documentID) => \(document.data())")
+                            print(document.data()["accountName"])
+                            if let id = document.data()["accountID"] as? String /* , let name = [document.data()["accountName"]] as? String */ {
+                                self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+                            } else {
+                                print(document.data()["accountID"])
+                                print(document.data()["accountName"])
+                            }
+                        }
+                    }
+                    completion(.success("success"))
+                }
+                print(self.saveData.myShareAccount)
+            }
+        }
+    }
 }
