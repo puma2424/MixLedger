@@ -115,6 +115,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         // 将 SwiftUI 视图包装在 UIHostingController 中
         let hostingController = UIHostingController(rootView: mySwiftUIView)
 
+        hostingController.view.backgroundColor = .clear
         // 将 hosting controller 的视图添加到你的视图层次结构中
         addChild(hostingController)
         view.addSubview(hostingController.view)
@@ -160,6 +161,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         // Create a UIHostingController to wrap the SwiftUI view
         let hostingController = UIHostingController(rootView: pieChart)
 
+        hostingController.view.backgroundColor = .clear
         // Add the SwiftUI view to the UIKit view hierarchy
         addChild(hostingController)
         view.addSubview(hostingController.view)
