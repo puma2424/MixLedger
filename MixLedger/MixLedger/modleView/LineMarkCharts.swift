@@ -24,7 +24,7 @@ struct LineMarkCharts: View {
             Text("Monthly Expenses")
                 .foregroundColor(.g1)
             
-            Text("Total: \(stockData.reduce(0, { $0 + $1.amount }))")
+            Text("Total: \(String(format: "%.1f", stockData.reduce(0, { $0 + $1.amount })))")
                 .fontWeight(.semibold)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
