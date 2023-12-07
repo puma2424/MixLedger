@@ -87,7 +87,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
     func setupSegmentedControl() {
         segmentedView.delegate = self
-        segmentedView.setButtonTitles(buttonTitles: ["圓餅圖", "折線圖"])
+        segmentedView.backgroundColor = .clear
+        segmentedView.setButtonTitles(buttonTitles: ["本月支出分析", "年度支出趨勢"])
     }
 
     func setupLayout() {

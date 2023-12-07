@@ -42,7 +42,10 @@ class SegmentedControlModleView: UIView {
     }
 
     func setIndex(index: Int) {
-        buttons.forEach { $0.setTitleColor(textColor, for: .normal) }
+        buttons.forEach { 
+            $0.setTitleColor(textColor, for: .normal)
+            $0.backgroundColor
+        }
         let button = buttons[index]
         selectedIndex = index
         button.setTitleColor(selectorTextColor, for: .normal)
