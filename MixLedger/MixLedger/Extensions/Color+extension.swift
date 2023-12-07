@@ -12,6 +12,11 @@ import SwiftUI
 //顏色深 -> 淺：1 -> ...
 
 extension Color {
+    
+    static let g1 = Color(red: 17/255, green: 54/255, blue: 29/255)
+    static let g2 = Color(red: 178/255, green: 206/255, blue: 197/255)
+    static let g3 = Color(red:202/255, green: 232/255, blue: 220/255)
+    
     static let mainG1 = Color(red: 17/255, green: 54/255, blue: 29/255)
     static let mainG2 = Color(red: 178/255, green: 206/255, blue: 197/255)
     static let mainG3 = Color(red: 202/255, green: 232/255, blue: 220/255)

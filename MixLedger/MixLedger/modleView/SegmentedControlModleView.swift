@@ -16,7 +16,7 @@ class SegmentedControlModleView: UIView {
     private var buttons: [UIButton]!
     private var selectorView: UIView!
 
-    var textColor: UIColor = .black
+    var textColor: UIColor = .g1()
     var selectorViewColor: UIColor = .red
     var selectorTextColor: UIColor = .red
 
@@ -27,6 +27,7 @@ class SegmentedControlModleView: UIView {
     convenience init(frame: CGRect, buttonTitle: [String]) {
         self.init(frame: frame)
         buttonTitles = buttonTitle
+        self.backgroundColor = .clear
     }
 
     override func draw(_ rect: CGRect) {
@@ -45,6 +46,7 @@ class SegmentedControlModleView: UIView {
         let button = buttons[index]
         selectedIndex = index
         button.setTitleColor(selectorTextColor, for: .normal)
+        button.backgroundColor = .clear
         let selectorPosition = frame.width / CGFloat(buttonTitles.count) * CGFloat(index)
         UIView.animate(withDuration: 0.2) {
             self.selectorView.frame.origin.x = selectorPosition

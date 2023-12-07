@@ -198,41 +198,48 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         
         var components = calendar.dateComponents([.year], from: currentDate)
         
-        for month in 1...12 {
-            // 获取当前年份和月份
-            components = calendar.dateComponents([.year], from: currentDate)
-            
-            // 设置为每个月的第一天
-            var firstDayComponents = components
-            firstDayComponents.month = month
-            firstDayComponents.day = 1
-            
-            // 创建日期对象
-            if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
-                
-                // 创建 TransactionForChart 对象，amount 设置为 0
-                let transaction = TransactionForChart(amount: 0, date: firstDayOfMonth)
-                
-                // 将对象添加到数组中
-                forLineMarkData.append(transaction)
-            }
-        }
         
         for originalData in originalDataArray{
             if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr && originalData.year == dateYearString{
                 
-                forLineMarkData[originalData.mon - 1].amount -= originalData.amount
+                // 获取当前年份和月份
+                components = calendar.dateComponents([.year, .month], from: originalData.date)
+                
+                // 设置为每个月的第一天
+                var firstDayComponents = components
+//                firstDayComponents.month = month
+                firstDayComponents.day = 15
+                
+                // 创建日期对象
+                if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
+                    
+                    if let index = forLineMarkData.firstIndex(where: { $0.date == firstDayOfMonth && $0.subType == originalData.subType.name }) {
+                        print("找到了，位置是 \(index)")
+                        forLineMarkData[index].amount -= originalData.amount
+                    }else{
+                        // 创建 TransactionForChart 对象，amount 设置为 0
+                        let transaction = TransactionForChart(amount: -originalData.amount,
+                                                              date: firstDayOfMonth,
+                                                              subType: originalData.subType.name,
+                                                              mainType: originalData.transactionType.name)
+                        
+                        // 将对象添加到数组中
+                        forLineMarkData.append(transaction)
+                    }
+                }
             }
         }
         return forLineMarkData
     }
 }
 
-//struct TransactionForChart: Identifiable{
-//    let id = UUID().uuidString
-//    var amount: Double
-//    var date: Date
-//    
-//}
+struct TransactionForChart: Identifiable{
+    let id = UUID()
+    var amount: Double
+    var date: Date
+    var subType: String
+    var mainType: String
+}
+
 
 

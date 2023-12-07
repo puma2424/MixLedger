@@ -86,9 +86,3 @@ struct Test: Identifiable {
     var subType: TransactionType
     var transactionType: TransactionType
 }
-struct TransactionForChart: Identifiable{
-    let id = UUID()
-    var amount: Double
-    var date: Date
-//    var subType: TransactionType
-}
