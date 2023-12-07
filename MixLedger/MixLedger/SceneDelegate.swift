@@ -30,21 +30,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.backgroundColor = UIColor(named: "G3")
         window.makeKeyAndVisible()
         sceneWindow = window
-        FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
-            switch result{
-            case true:
-                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
-                    ShowScreenManager.showSinginScreen(window: window)
-                    return
-                }
-                SaveData.shared.myID = userID
-                ShowScreenManager.showMainScreen(window: window)
-                
-            case false:
-                ShowScreenManager.showSinginScreen(window: window)
-            }
-        }
-//        ShowScreenManager.showMainScreen(window: window)
+//        FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
+//            switch result{
+//            case true:
+//                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+//                    ShowScreenManager.showSinginScreen(window: window)
+//                    return
+//                }
+//                SaveData.shared.myID = userID
+//                ShowScreenManager.showMainScreen(window: window)
+//                
+//            case false:
+//                ShowScreenManager.showSinginScreen(window: window)
+//            }
+//        }
+        ShowScreenManager.showMainScreen(window: window)
         
     }
 

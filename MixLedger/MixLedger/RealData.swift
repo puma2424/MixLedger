@@ -20,8 +20,8 @@ class SaveData {
     
     var myUId: String = ""
     
-    var myID = ""
-//     var myID = "bGzuwR00sPRNmBamK91D" //trst
+//    var myID = ""
+     var myID = "bGzuwR00sPRNmBamK91D" //trst
 //    var myID = "qmgOOutGItrZyzKqQOrh"  //porter
     var userInfoData: [UsersInfoResponse] = []
     var myInfo: UsersInfoResponse?{
@@ -44,7 +44,7 @@ class SaveData {
                 guard let dayTransactions = monTransactions[dayKey] else { return [] }
                 for timeKey in dayTransactions.keys {
                     guard let timeTransactions = dayTransactions[timeKey] else { return [] }
-                    if let transactionType = TransactionMainType(text: "\(timeTransactions.transactionType.name)") {
+                    if let transactionType = TransactionMainType(text: "\(timeTransactions.transactionType?.name)") {
                         
                         if transactionType == .expenses{
                             let dateFont = DateFormatter()
@@ -58,7 +58,7 @@ class SaveData {
                                                           currency: timeTransactions.currency,
                                                           date: timeTransactions.date,
                                                           subType: timeTransactions.subType,
-                                                          transactionType: timeTransactions.transactionType))
+                                                          transactionType: TransactionType(iconName: "", name: transactionType.text)))
                         }
                     }
                     

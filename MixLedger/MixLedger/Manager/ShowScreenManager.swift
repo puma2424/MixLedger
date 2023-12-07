@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ShowScreenManager{
+class ShowScreenManager {
     
     static let shared = ShowScreenManager()
     
@@ -21,10 +21,21 @@ class ShowScreenManager{
         let chartsVC = UINavigationController(rootViewController: ChartsViewController())
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
         
+        firstVC.tabBarItem.title = "Home"
+        secondVC.tabBarItem.title = "Messages"
+        chartsVC.tabBarItem.title = "Charts"
+        profileVC.tabBarItem.title = "Profile"
+        
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
         secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
         chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)
         profileVC.tabBarItem.image = AllIcons.settingsMale.icon?.withRenderingMode(.alwaysOriginal)
+        
+        let insets = UIEdgeInsets(top: 15, left: 12, bottom: 12, right: 12)
+        firstVC.tabBarItem.imageInsets = insets
+        secondVC.tabBarItem.imageInsets = insets
+        chartsVC.tabBarItem.imageInsets = insets
+        profileVC.tabBarItem.imageInsets = insets
         
         tabbar.viewControllers = [firstVC, secondVC, chartsVC, profileVC]
 

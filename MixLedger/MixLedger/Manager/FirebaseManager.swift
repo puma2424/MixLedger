@@ -384,7 +384,7 @@ class FirebaseManager {
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": transaction.note,
-            "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
+            "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
             "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
             "from": ""
@@ -483,35 +483,43 @@ class FirebaseManager {
             }
         }
         let transactionMainType = TransactionMainType.expenses
-        let postTransaction: [String: Any] = [
+        
+        var postTransaction: [String: Any]?
+        
+        if let transactionType = transaction.transactionType{
+        postTransaction = [
             "amount": transaction.amount,
             "date": transaction.date,
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": transaction.note,
-            "transactionType":  ["iconName": transaction.transactionType.iconName, "name":transaction.transactionType.name],
+            "transactionType":  ["iconName": transaction.transactionType?.iconName, "name":transaction.transactionType?.name],
             "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
             "from": ""
         ]
-        dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: transaction.date)
-        dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: transaction.date)
-
-        db.collection("accounts").document(toAccountID).updateData([
-            "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
-            "shareUsersID": account.shareUsersID,
-            "accountInfo.expense": FieldValue.increment(transaction.amount),
-            "accountInfo.total": FieldValue.increment(transaction.amount),
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-                completion(.success("Sent successfully"))
+            
+            dateFont.dateFormat = "yyyy-MM"
+            let dateM = dateFont.string(from: transaction.date)
+            dateFont.dateFormat = "yyyy-MM-dd"
+            let dateD = dateFont.string(from: transaction.date)
+            
+            db.collection("accounts").document(toAccountID).updateData([
+                "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
+                "shareUsersID": account.shareUsersID,
+                "accountInfo.expense": FieldValue.increment(transaction.amount),
+                "accountInfo.total": FieldValue.increment(transaction.amount),
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                    completion(.success("Sent successfully"))
+                }
             }
         }
+        
+
 
         if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
             updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
