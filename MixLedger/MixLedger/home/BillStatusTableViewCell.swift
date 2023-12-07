@@ -29,6 +29,7 @@ class BillStatusTableViewCell: UITableViewCell {
         // 在這裡放置需要在初始化時執行的程式碼
         setupLayout()
         setButtonTarge()
+        adjustDate(by: 0)
     }
 
     override func awakeFromNib() {
@@ -162,7 +163,7 @@ class BillStatusTableViewCell: UITableViewCell {
     }()
 
     let dateFont = DateFormatter()
-    var showDate: Date?
+    var showDate: Date = Date()
     var dateString: String = ""
     func setButtonTarge() {
         nextMonthButton.addTarget(self, action: #selector(nextMonthActive), for: .touchUpInside)
@@ -183,8 +184,7 @@ class BillStatusTableViewCell: UITableViewCell {
     func adjustDate(by months: Int) {
         dateFont.dateFormat = "yyyy-MM"
 
-        guard let showMon = showDate else { return }
-        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showMon) {
+        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showDate) {
             showDate = newDate
             dateString = dateFont.string(from: newDate)
             monthLabel.text = dateString
@@ -193,7 +193,7 @@ class BillStatusTableViewCell: UITableViewCell {
     }
 
     func setupLayout() {
-        adjustDate(by: 0)
+        
         addToView(superV: contentView, subs: lastMonthButton, monthLabel, nextMonthButton, moneyStackView)
 //        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
 //        addToView(superV: contentView, subs: openOrCloseButton)

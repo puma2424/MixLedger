@@ -175,7 +175,7 @@ class HomeViewController: UIViewController{
 
     let savaData = SaveData.shared
 
-    var selectDate: Date = .init()
+    var selectDate: Date = Date()
 
     var showView = UIView()
     let billTable = UITableView()
