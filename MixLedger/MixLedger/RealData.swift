@@ -36,7 +36,7 @@ class SaveData {
     
     
     func getAccountArrayForCharts(transactionsResponse: TransactionsResponse) -> [Test]{
-        transactionsArray = []
+        transactionsArray.removeAll()
         guard let transactions = accountData?.transactions else { return [] }
         for monKey in transactions.keys {
             guard let monTransactions = transactions[monKey] else { return [] }
@@ -45,6 +45,7 @@ class SaveData {
                 for timeKey in dayTransactions.keys {
                     guard let timeTransactions = dayTransactions[timeKey] else { return [] }
                     if let transactionType = TransactionMainType(text: "\(timeTransactions.transactionType.name)") {
+                        
                         if transactionType == .expenses{
                             let dateFont = DateFormatter()
                             dateFont.dateFormat = "yyyy"
@@ -84,4 +85,10 @@ struct Test: Identifiable {
     var shareUser: [String: Double]?
     var subType: TransactionType
     var transactionType: TransactionType
+}
+struct TransactionForChart: Identifiable{
+    let id = UUID()
+    var amount: Double
+    var date: Date
+//    var subType: TransactionType
 }

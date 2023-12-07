@@ -10,15 +10,21 @@ import SwiftUI
 
 struct LineMarkCharts: View {
     @State private var saveData = SaveData.shared
-    @State var vm = StockEntityViewModel()
+//    @State var vm = StockEntityViewModel()
+    var stockData: [TransactionForChart] = [
+//        .init(amount: 0, date: Date()),
+//        .init(amount: 2, date: Date())
+    ]
     var body: some View {
         VStack {
             Chart {
-                ForEach(vm.stockData) { data in
-                    LineMark(
-                        x: .value("Date", data.mon),
+//                ForEach(vm.stockData) { data in
+                ForEach(stockData) { data in
+                    BarMark(
+                        x: .value("Date", data.date, unit: .month),
                         y: .value("amount", data.amount)
-                    ).foregroundStyle(by: .value("Stock Name", data.year)) // 4：左下角的圖例樣式 or 圖表的外觀樣式
+                    )
+//                    .foregroundStyle(by: .value("Stock Name", data.date)) // 4：左下角的圖例樣式 or 圖表的外觀樣式
 //                    AreaMark(
 //                        x: .value("Time", index),
 //                        yStart: .value("Min", data.yAxisData.axisStart),
@@ -53,70 +59,70 @@ struct LineMarkCharts_Previews: PreviewProvider {
 // #Preview {
 //    LineMarkCharts()
 // }
-class StockEntityViewModel: ObservableObject {
-    let saveData = SaveData.shared
-    var stockData: [Test] = [
-        // MARK: TSMC Stock Price
-
-        .init(year: "2023",
-              mon: 2,
-              amount: 400,
-              currency: "新台幣",
-              date: Date(), 
-              from: "",
-              note: "",
-              payUser: [:],
-              shareUser: [:],
-              subType: TransactionType(iconName: "food-icon", name: "food"),
-              transactionType: TransactionType(iconName: "", name: "expenses")),
-        .init(year: "2023",
-              mon: 2,
-              amount: 400,
-              currency: "新台幣",
-              date: Date(),
-              from: "",
-              note: "",
-              payUser: [:],
-              shareUser: [:],
-              subType: TransactionType(iconName: "food-icon", name: "food"),
-              transactionType: TransactionType(iconName: "", name: "expenses")),
-        .init(year: "2023",
-              mon: 2,
-              amount: 400,
-              currency: "新台幣",
-              date: Date(),
-              from: "",
-              note: "",
-              payUser: [:],
-              shareUser: [:],
-              subType: TransactionType(iconName: "food-icon", name: "food"),
-              transactionType: TransactionType(iconName: "", name: "expenses")),
-    ]
-
-    init() {
-        stockData = SaveData.shared.transactionsArray
-    }
-
+//class StockEntityViewModel: ObservableObject {
 //    let saveData = SaveData.shared
+//    var stockData: [TransactionForChart] = [
+//        // MARK: TSMC Stock Price
 //
-//       // 使用 Double 類型的數據來初始化 PieChart 的 data
-//       @Published var pieChartData: [Double] = []
+////        .init(year: "2023",
+////              mon: 2,
+////              amount: 400,
+////              currency: "新台幣",
+////              date: Date(), 
+////              from: "",
+////              note: "",
+////              payUser: [:],
+////              shareUser: [:],
+////              subType: TransactionType(iconName: "food-icon", name: "food"),
+////              transactionType: TransactionType(iconName: "", name: "expenses")),
+////        .init(year: "2023",
+////              mon: 2,
+////              amount: 400,
+////              currency: "新台幣",
+////              date: Date(),
+////              from: "",
+////              note: "",
+////              payUser: [:],
+////              shareUser: [:],
+////              subType: TransactionType(iconName: "food-icon", name: "food"),
+////              transactionType: TransactionType(iconName: "", name: "expenses")),
+////        .init(year: "2023",
+////              mon: 2,
+////              amount: 400,
+////              currency: "新台幣",
+////              date: Date(),
+////              from: "",
+////              note: "",
+////              payUser: [:],
+////              shareUser: [:],
+////              subType: TransactionType(iconName: "food-icon", name: "food"),
+////              transactionType: TransactionType(iconName: "", name: "expenses")),
+//    ]
 //
-//       // 使用 String 類型的數據來初始化 PieChart 的 labels
-//       @Published var pieChartLabels: [String] = []
+//    init() {
+//        stockData = SaveData.shared.transactionsArray
+//    }
 //
-//       var stockData: [Test] = [] {
-//           didSet {
-//               updatePieChartData()
-//           }
-//       }
-//
-//       init() {
-//           self.stockData = SaveData.shared.transactionsArray
-//       }
-//
-//       private func updatePieChartData() {
-//           pieChartData = stockData.map { $0.amount }
-//           pieChartLabels = stockData.map { $0.type.name}
-//       }
-}
+////    let saveData = SaveData.shared
+////
+////       // 使用 Double 類型的數據來初始化 PieChart 的 data
+////       @Published var pieChartData: [Double] = []
+////
+////       // 使用 String 類型的數據來初始化 PieChart 的 labels
+////       @Published var pieChartLabels: [String] = []
+////
+////       var stockData: [Test] = [] {
+////           didSet {
+////               updatePieChartData()
+////           }
+////       }
+////
+////       init() {
+////           self.stockData = SaveData.shared.transactionsArray
+////       }
+////
+////       private func updatePieChartData() {
+////           pieChartData = stockData.map { $0.amount }
+////           pieChartLabels = stockData.map { $0.type.name}
+////       }
+//}

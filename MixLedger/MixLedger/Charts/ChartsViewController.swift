@@ -43,6 +43,10 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
      }
      */
     
+    var currentDate: Date = Date()
+    
+    var currentMainTypr: TransactionMainType = .expenses
+    
     var currentIndex = 0
 
     let saveData = SaveData.shared
@@ -56,7 +60,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
                             colors: [.blue1, .blue2, .brightGreen1],
                             borderColor: .gray1)
 
-    let mySwiftUIView = LineMarkCharts()
+    var mySwiftUIView = LineMarkCharts()
     
     let noDataNoteLabel: UILabel = {
         let label = UILabel()
@@ -109,8 +113,11 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
 //    private let stockEntityViewModel = StockEntityViewModel()
     func setupLineMarkView() -> UIView {
+        mySwiftUIView.stockData.removeAll()
+        
         // 创建 SwiftUI 视图
-        mySwiftUIView.vm.stockData = saveData.transactionsArray
+//        mySwiftUIView.vm.stockData = saveData.transactionsArray
+        mySwiftUIView.stockData = dataToChartArray()
 
         // 将 SwiftUI 视图包装在 UIHostingController 中
         let hostingController = UIHostingController(rootView: mySwiftUIView)
@@ -177,4 +184,55 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         ])
         return hostingController.view
     }
+    
+    func dataToChartArray() -> [TransactionForChart]{
+        var originalDataArray = saveData.transactionsArray
+        var forLineMarkData: [TransactionForChart] = []
+        
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy"
+        let dateYearString = dateFont.string(from: currentDate)
+        
+        let calendar = Calendar.current
+        dateFont.dateFormat = "yyyy-MM-dd"
+        
+        var components = calendar.dateComponents([.year], from: currentDate)
+        
+        for month in 1...12 {
+            // 获取当前年份和月份
+            components = calendar.dateComponents([.year], from: currentDate)
+            
+            // 设置为每个月的第一天
+            var firstDayComponents = components
+            firstDayComponents.month = month
+            firstDayComponents.day = 1
+            
+            // 创建日期对象
+            if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
+                
+                // 创建 TransactionForChart 对象，amount 设置为 0
+                let transaction = TransactionForChart(amount: 0, date: firstDayOfMonth)
+                
+                // 将对象添加到数组中
+                forLineMarkData.append(transaction)
+            }
+        }
+        
+        for originalData in originalDataArray{
+            if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr && originalData.year == dateYearString{
+                
+                forLineMarkData[originalData.mon - 1].amount -= originalData.amount
+            }
+        }
+        return forLineMarkData
+    }
 }
+
+//struct TransactionForChart: Identifiable{
+//    let id = UUID().uuidString
+//    var amount: Double
+//    var date: Date
+//    
+//}
+
+
