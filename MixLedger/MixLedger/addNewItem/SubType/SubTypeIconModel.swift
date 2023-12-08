@@ -14,7 +14,7 @@ protocol SubTypeItemProtocol {
     var name: String { get }
 }
 
-enum SubTypeItem: SubTypeItemProtocol, CaseIterable  {
+enum SubTypeItem: SubTypeItemProtocol, CaseIterable {
     
     case foodHamburger
     case educate

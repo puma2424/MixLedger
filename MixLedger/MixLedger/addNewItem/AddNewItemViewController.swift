@@ -261,7 +261,6 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
-//            typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
 
             return typeCell
 
@@ -269,7 +268,6 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             // 掃描發票
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
-            invoiceCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
             invoiceCell.invoiceLabel.text = ""
             invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
 //            for index in 0..<invoiceString.count{
@@ -303,7 +301,6 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
-            dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
 //            selectDate = dateCell.datePicker.date
             dateCell.datePicker.date = selectDate ?? Date()
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)

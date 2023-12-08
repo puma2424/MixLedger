@@ -12,6 +12,7 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         setupLayout()
+        setupDatePicker()
     }
 
     @available(*, unavailable)
@@ -44,7 +45,7 @@ class AddNewItemModelTableViewCell: UITableViewCell {
 
     let inputTextField: UITextField = {
         let textField = UITextField()
-
+        textField.textAlignment = .left
         // 輸入框右邊顯示清除按鈕時機 這邊選擇當編輯時顯示
         textField.clearButtonMode = .whileEditing
 
@@ -58,32 +59,50 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.textColor = .g1()
         return textField
     }()
+    
+    let datePicker = UIDatePicker()
 
-    func setupHiden(titleLabelHiden: Bool, inputTextFieldHiden: Bool){
-        titleLabel.isHidden = titleLabelHiden
-        inputTextField.isHidden = inputTextFieldHiden
+    func setupHiden(titleLabelHidden: Bool = true , inputTextFieldHidden: Bool = true, datePickerHidden: Bool = true){
+        titleLabel.isHidden = titleLabelHidden
+        inputTextField.isHidden = inputTextFieldHidden
+        datePicker.isHidden = datePickerHidden
+    }
+    
+    func setupDatePicker() {
+        datePicker.datePickerMode = .dateAndTime
+        let currentDate = Date()
+        datePicker.setDate(currentDate, animated: true)
     }
     
     func setupLayout() {
         contentView.addSubview(iconImageView)
-        contentView.addSubview(inputTextField)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(inputTextField)
+        contentView.addSubview(datePicker)
         
-        iconImageView.snp.makeConstraints { mark in
-            mark.width.height.equalTo(50)
-            mark.top.equalTo(contentView).offset(12)
-            mark.bottom.equalTo(contentView).offset(-12)
-            mark.leading.equalTo(contentView).offset(12)
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.top.equalTo(contentView).offset(12)
+            make.bottom.equalTo(contentView).offset(-12)
+            make.leading.equalTo(contentView).offset(12)
         }
 
-        inputTextField.snp.makeConstraints { mark in
-            mark.width.equalTo(150)
-            mark.height.equalTo(45)
-            mark.centerY.equalTo(contentView)
-            mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
+        inputTextField.snp.makeConstraints { make in
+//            make.width.equalTo(150)
+            make.height.equalTo(45)
+            make.centerY.equalTo(contentView)
+            make.leading.equalTo(titleLabel)//.offset(24)
+            make.trailing.equalTo(contentView).offset(-12)
         }
         
         titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(24)
+        }
+        
+        datePicker.snp.makeConstraints { make in
+            make.height.equalTo(contentView)
+//            make.width.equalTo(contentView.bounds.size.width * 0.8)
             make.centerY.equalTo(contentView)
             make.leading.equalTo(iconImageView.snp.trailing).offset(24)
         }

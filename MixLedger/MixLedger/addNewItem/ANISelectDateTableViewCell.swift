@@ -11,10 +11,7 @@ import UIKit
 class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
-        setupLayout()
-        inputTextField.isHidden = true
-        setupDatePicker()
+        setupCell()
     }
 
     @available(*, unavailable)
@@ -32,28 +29,10 @@ class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
 
         // Configure the view for the selected state
     }
-
-    let datePicker = UIDatePicker()
-
-    override func setupLayout() {
-        super.setupLayout()
-        contentView.addSubview(datePicker)
-
-        datePicker.snp.makeConstraints { mark in
-            mark.height.equalTo(contentView)
-            mark.width.equalTo(contentView.bounds.size.width * 0.8)
-            mark.centerY.equalTo(contentView)
-            mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
-        }
-    }
-
-    func setupDatePicker() {
-        datePicker.datePickerMode = .date
-        let currentDate = Date()
-//        let twoYearsFromNow = Calendar.current.date(byAdding: .year, value: 2, to: currentDate)
-//
-//        datePicker.minimumDate = currentDate
-//        datePicker.maximumDate = twoYearsFromNow
-        datePicker.setDate(currentDate, animated: true)
+    
+    func setupCell(){
+        backgroundColor = .clear
+        setupHiden(datePickerHidden: false)
+        iconImageView.image = AllIcons.date.icon
     }
 }

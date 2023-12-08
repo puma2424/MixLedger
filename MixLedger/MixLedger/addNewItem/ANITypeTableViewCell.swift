@@ -11,7 +11,7 @@ class ANITypeTableViewCell: AddNewItemModelTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
-        self.setupHiden(titleLabelHiden: false, inputTextFieldHiden: true)
+        self.setupHiden(titleLabelHidden: false)
     }
 
     @available(*, unavailable)
