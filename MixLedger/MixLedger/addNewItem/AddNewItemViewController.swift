@@ -127,7 +127,7 @@ class AddNewItemViewController: UIViewController {
         if amount == nil {
         } else {
             // 找到對應的字典
-            let transactionType = TransactionType(iconName: "", name: "expenses")
+            let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
             let transaction = Transaction(transactionType: transactionType, amount: -(amount ?? 0), currency: "新台幣", date: selectDate ?? Date(), note: note, subType: type)
             firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
@@ -246,26 +246,24 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
 //            if invoiceTotalAmount != ""{
-//                moneyCell.inputText.text = invoiceTotalAmount
+//                moneyCell.inputTextField.text = invoiceTotalAmount
             ////                amount = Double(invoiceTotalAmount)
 //            }else{
-//                moneyCell.inputText.text = ""
+//                moneyCell.inputTextField.text = ""
 //            }
             let amountString = String(format: "%.2f", amount ?? 0.0)
-            moneyCell.inputText.text = amountString
+            moneyCell.inputTextField.text = amountString
 //                amount = Double(invoiceTotalAmount)
 
-            moneyCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            moneyCell.inputTextField.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            return moneyCell
 
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
-            typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
+//            typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
 
-            typeCell.inputText.addTarget(self, action: #selector(getType(_:)), for: .editingChanged)
-//            if let text =  typeCell.inputText.text{
-//                type?.name = text
-//            }
+            return typeCell
 
         } else if indexPath.row == 2 {
             // 掃描發票
@@ -299,6 +297,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             }
             invoiceCell.invoiceLabel.text = text
             note = text
+            
+            return invoiceCell
 
         } else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
@@ -307,6 +307,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 //            selectDate = dateCell.datePicker.date
             dateCell.datePicker.date = selectDate ?? Date()
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
+            
+            return dateCell
 
         } else if indexPath.row == 4 {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
@@ -314,6 +316,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
             memberPayCell.showTitleLabel.text = "付款"
             memberPayCell.usersMoney = memberPayMoney
+            
+            return memberPayCell
 
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
@@ -321,15 +325,11 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
             memberShareCell.showTitleLabel.text = "分款"
             memberShareCell.usersMoney = memberShareMoney
+            
+            return memberShareCell
         }
-        return cell
     }
 
-    @objc func getType(_ textField: UITextField) {
-        if let text = textField.text {
-            type = TransactionType(iconName: AllIcons.edit.rawValue, name: text)
-        }
-    }
 
     @objc func getAmount(_ textField: UITextField) {
         amount = Double(textField.text ?? "0.0")
@@ -342,7 +342,29 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 2 {
+        if indexPath.row == 1 {
+            let subTypeVC = SelectSubTypeViewController()
+            subTypeVC.modalPresentationStyle = .automatic
+            subTypeVC.modalTransitionStyle = .coverVertical
+            subTypeVC.sheetPresentationController?.detents = [.custom(resolver: { context in
+                context.maximumDetentValue * 0.5
+            }
+            )]
+            
+            subTypeVC.selectedSubType = { iconName, title in
+                self.type = TransactionType(iconName: iconName, name: title)
+                if let index = subTypeVC.selectedIndex {
+                    let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? ANITypeTableViewCell
+                    cell?.iconImageView.image = UIImage(named: iconName)
+                    cell?.titleLabel.text = title
+//                    self.table.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+                }
+                print(subTypeVC.selectedIndex)
+                print(self.type)
+            }
+            
+            present(subTypeVC, animated: true, completion: nil)
+        }else if indexPath.row == 2 {
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()

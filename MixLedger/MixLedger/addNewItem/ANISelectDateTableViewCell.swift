@@ -13,7 +13,7 @@ class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         setupLayout()
-        inputText.isHidden = true
+        inputTextField.isHidden = true
         setupDatePicker()
     }
 

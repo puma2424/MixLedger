@@ -26,6 +26,8 @@ class ShowScreenManager {
         chartsVC.tabBarItem.title = "Charts"
         profileVC.tabBarItem.title = "Profile"
         
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.brightGreen3()], for: .selected)
+        
         firstVC.tabBarItem.image = UIImage(named: "bookAndPencil")?.withRenderingMode(.alwaysOriginal)
         secondVC.tabBarItem.image = AllIcons.wallet.icon?.withRenderingMode(.alwaysOriginal)
         chartsVC.tabBarItem.image = AllIcons.icons8Chart.icon?.withRenderingMode(.alwaysOriginal)

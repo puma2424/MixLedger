@@ -40,7 +40,12 @@ enum AllIcons: String, CaseIterable {
     case drinks
     case traffic
     case medical2
-    
+    case drink
+    case daily
+    case beauty
+    case dress
+    case social
+    case eProduct
     var icon: UIImage? {
         return UIImage(named: rawValue)
     }

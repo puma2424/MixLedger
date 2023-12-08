@@ -71,16 +71,16 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         return label
     }()
 
-    func checkArrayhaveData(index: Int){
+    func checkArrayhaveData(index: Int) {
         currentChartView?.removeFromSuperview()
         currentChartView = nil
         
-        if saveData.transactionsArray.isEmpty{
+        if saveData.transactionsArray.isEmpty {
             currentChartView = setupLabelView()
         }else {
             if index == 0 {
                 currentChartView = setupPie()
-            } else {
+            }else {
                 currentChartView = setupLineMarkView()
             }
         }

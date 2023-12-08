@@ -35,6 +35,9 @@
 		9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */; };
 		9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F912B1872AC00D4BCAA /* RepayView.swift */; };
 		9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */; };
+		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
+		9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */; };
+		9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
 		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
@@ -154,6 +157,9 @@
 		9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMessageTableViewCell.swift; sourceTree = "<group>"; };
 		9A590F912B1872AC00D4BCAA /* RepayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepayView.swift; sourceTree = "<group>"; };
 		9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
+		9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconModel.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -415,6 +421,16 @@
 			path = SingPage;
 			sourceTree = "<group>";
 		};
+		9A80F5FD2B21CC2100D7F549 /* SubType */ = {
+			isa = PBXGroup;
+			children = (
+				9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */,
+				9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */,
+				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
+			);
+			path = SubType;
+			sourceTree = "<group>";
+		};
 		9A83B1982B0F887100C4C263 /* member */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */,
+				9A80F5FD2B21CC2100D7F549 /* SubType */,
 				9A3042EF2B11D02400FFEEB0 /* ScanInvoice */,
 				9A83B1982B0F887100C4C263 /* member */,
 				9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */,
@@ -799,11 +816,14 @@
 				9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */,
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,
 				9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */,
+				9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */,
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
+				9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
+				9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
 				9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */,

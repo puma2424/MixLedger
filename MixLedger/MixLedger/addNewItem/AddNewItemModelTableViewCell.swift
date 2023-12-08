@@ -30,12 +30,19 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .g1()
+        label.text = "qqq"
+        return label
+    }()
+    
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
 
-    let inputText: UITextField = {
+    let inputTextField: UITextField = {
         let textField = UITextField()
 
         // 輸入框右邊顯示清除按鈕時機 這邊選擇當編輯時顯示
@@ -52,10 +59,16 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         return textField
     }()
 
+    func setupHiden(titleLabelHiden: Bool, inputTextFieldHiden: Bool){
+        titleLabel.isHidden = titleLabelHiden
+        inputTextField.isHidden = inputTextFieldHiden
+    }
+    
     func setupLayout() {
         contentView.addSubview(iconImageView)
-        contentView.addSubview(inputText)
-
+        contentView.addSubview(inputTextField)
+        contentView.addSubview(titleLabel)
+        
         iconImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(50)
             mark.top.equalTo(contentView).offset(12)
@@ -63,11 +76,16 @@ class AddNewItemModelTableViewCell: UITableViewCell {
             mark.leading.equalTo(contentView).offset(12)
         }
 
-        inputText.snp.makeConstraints { mark in
+        inputTextField.snp.makeConstraints { mark in
             mark.width.equalTo(150)
             mark.height.equalTo(45)
             mark.centerY.equalTo(contentView)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(contentView)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(24)
         }
     }
 }

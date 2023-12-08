@@ -44,7 +44,8 @@ class SaveData {
                 guard let dayTransactions = monTransactions[dayKey] else { return [] }
                 for timeKey in dayTransactions.keys {
                     guard let timeTransactions = dayTransactions[timeKey] else { return [] }
-                    if let transactionType = TransactionMainType(text: "\(timeTransactions.transactionType?.name)") {
+                    if let typeName = timeTransactions.transactionType?.name,
+                       let transactionType = TransactionMainType(text: "\(typeName)") {
                         
                         if transactionType == .expenses{
                             let dateFont = DateFormatter()

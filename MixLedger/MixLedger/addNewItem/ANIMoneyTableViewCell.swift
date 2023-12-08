@@ -34,8 +34,10 @@ class ANIMoneyTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         return imageView
     }()
+    
+    
 
-    let inputText: UITextField = {
+    let inputTextField: UITextField = {
         let textField = UITextField()
         // 尚未輸入時的預設顯示提示文字
         textField.placeholder = "請輸入金額"
@@ -53,11 +55,13 @@ class ANIMoneyTableViewCell: UITableViewCell {
         textField.textColor = UIColor(named: "G1")
         return textField
     }()
+    
+    
 
     func setupLayout() {
         contentView.addSubview(iconImageView)
-        contentView.addSubview(inputText)
-
+        contentView.addSubview(inputTextField)
+        
         iconImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(50)
             mark.top.equalTo(contentView).offset(12)
@@ -65,11 +69,12 @@ class ANIMoneyTableViewCell: UITableViewCell {
             mark.leading.equalTo(contentView).offset(12)
         }
 
-        inputText.snp.makeConstraints { mark in
+        inputTextField.snp.makeConstraints { mark in
             mark.width.equalTo(150)
             mark.height.equalTo(45)
             mark.centerY.equalTo(contentView)
             mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
         }
+        
     }
 }

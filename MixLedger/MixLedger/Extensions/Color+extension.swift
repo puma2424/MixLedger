@@ -64,7 +64,7 @@ extension UIColor {
         }
     
     class func blue1() -> UIColor {
-        return UIColor(red: 91/255, green: 145/255, blue: 248/255, alpha: 1)
+        return UIColor(red: 91/255, green: 145/255, blue: 249/255, alpha: 1)
         }
     
     class func blue2() -> UIColor {
@@ -72,23 +72,23 @@ extension UIColor {
         }
     
     class func brightGreen1() -> UIColor {
-        return UIColor(red: 91/255, green: 217/255, blue: 165/255, alpha: 1)
+        return UIColor(red: 90/255, green: 217/255, blue: 165/255, alpha: 1)
         }
     
     class func brightGreen2() -> UIColor {
-        return UIColor(red: 95/255, green: 113/255, blue: 149/255, alpha: 1)
+        return UIColor(red: 190/255, green: 239/255, blue: 218/255, alpha: 1)
         }
     
     class func brightGreen3() -> UIColor {
-        return UIColor(red: 42/255, green: 154/255, blue: 153/255, alpha: 1)
+        return UIColor(red: 37/255, green: 154/255, blue: 153/255, alpha: 1)
         }
     
     class func brightGreen4() -> UIColor {
-        return UIColor(red: 171/255, green: 216/255, blue: 218/255, alpha: 1)
+        return UIColor(red: 22/255, green: 216/255, blue: 218/255, alpha: 1)
         }
     
     class func gray1() -> UIColor {
-        return UIColor(red: 94/255, green: 113/255, blue: 146/255, alpha: 1)
+        return UIColor(red: 93/255, green: 113/255, blue: 145/255, alpha: 1)
         }
     
     class func gray2() -> UIColor {
@@ -96,23 +96,23 @@ extension UIColor {
         }
     
     class func yellow1() -> UIColor {
-        return UIColor(red: 246/255, green: 189/255, blue: 21/255, alpha: 1)
+        return UIColor(red: 247/255, green: 189/255, blue: 26/255, alpha: 1)
         }
     
     class func yellow2() -> UIColor {
-        return UIColor(red: 249/255, green: 231/255, blue: 159/255, alpha: 1)
+        return UIColor(red: 251/255, green: 230/255, blue: 162/255, alpha: 1)
         }
     
     class func red1() -> UIColor {
-        return UIColor(red: 232/255, green: 105/255, blue: 75/255, alpha: 1)
+        return UIColor(red: 234/255, green: 104/255, blue: 71/255, alpha: 1)
         }
     
     class func red2() -> UIColor {
-        return UIColor(red: 245/255, green: 197/255, blue: 181/255, alpha: 1)
+        return UIColor(red: 243/255, green: 198/255, blue: 183/255, alpha: 1)
         }
     
     class func mint1() -> UIColor {
-        return UIColor(red: 110/255, green: 200/255, blue: 235/255, alpha: 1)
+        return UIColor(red: 110/255, green: 200/255, blue: 233/255, alpha: 1)
         }
     
     class func mint2() -> UIColor {

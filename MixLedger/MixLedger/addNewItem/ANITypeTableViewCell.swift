@@ -10,7 +10,8 @@ import UIKit
 class ANITypeTableViewCell: AddNewItemModelTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setForTypeCell()
+        setupCell()
+        self.setupHiden(titleLabelHiden: false, inputTextFieldHiden: true)
     }
 
     @available(*, unavailable)
@@ -29,8 +30,8 @@ class ANITypeTableViewCell: AddNewItemModelTableViewCell {
         // Configure the view for the selected state
     }
 
-    func setForTypeCell() {
-        inputText.placeholder = "請輸入類別"
-        inputText.keyboardType = .default
+    func setupCell(){
+        titleLabel.text = "請選擇類別"
+        iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
     }
 }
