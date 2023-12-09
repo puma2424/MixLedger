@@ -1,0 +1,429 @@
+//
+//  HomeViewController.swift
+//  MixLedger
+//
+//  Created by 莊羚羊 on 2023/11/14.
+//
+
+import SnapKit
+import UIKit
+
+class HomeViewController: UIViewController{
+    
+    let saveData = SaveData.shared
+    let firebaseManager = FirebaseManager.shared
+    
+    
+    var currentAccountID: String = "" {
+        didSet {
+            if currentAccountID != "" {
+                firebaseManager.addAccountListener(accountID: currentAccountID){ result in
+                    switch result{
+                    case .success(let accountData):
+//                        print("getData Success: \(data)")
+                        print("\(String(describing: self.saveData.accountData?.transactions))")
+                        
+                        var userID: [String] = []
+                        if let shareUsersID = accountData.shareUsersID{
+                            for user in shareUsersID{
+                                for id in user.keys{
+                                    userID.append(id)
+                                }
+                            }
+                        }
+                        
+                        self.billStatusOpenView.usersInfo = []
+                        self.saveData.userInfoData = []
+                        self.firebaseManager.getUsreInfo(userID: userID) { result in
+                            switch result{
+                            case .success(let userData):
+                                self.billStatusOpenView.usersInfo = userData
+                                self.saveData.userInfoData = userData
+                                DispatchQueue.main.async {
+                                    self.billStatusOpenView.usersInfo = self.saveData.userInfoData
+                                    self.billStatusOpenView.billStatus = self.savaData.accountData?.shareUsersID
+                                    self.billStatusOpenView.table.reloadData()
+                                    
+                                    self.navigationItem.title = self.saveData.accountData?.accountName
+                                    self.billTable.reloadData()
+                                }
+                            case .failure(let err):
+                                print(err)
+                            }
+                        }
+                        
+                        
+                    case .failure(let err):
+                        print(err)
+                        LKProgressHUD.showFailure(text: "讀取帳本資料失敗")
+                    }
+                }
+            }
+        }
+    }
+
+    var transactionsDayKeyArr: [String] = []
+    var transactionsDayDatasKeys: [String] = []
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        navigationItem.title = ""
+        setupTable()
+        getMyOwnAccount()
+        setupShareBillView()
+        setupLayout()
+        setNavigation()
+        setupButton()
+//        showMonBill()
+        
+    }
+
+    override func viewWillAppear(_ result: Bool) {
+        super.viewWillAppear(_: result)
+    }
+
+    let billStatusSmallView = SharedBillStatusSmallView()
+    let billStatusOpenView = SharedBillStatusOpenView()
+
+    let savaData = SaveData.shared
+
+    var selectDate: Date = Date()
+
+    var showView = UIView()
+    var billTable = UITableView()
+    let addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "add"), for: .normal)
+        return button
+    }()
+
+    func getMyOwnAccount() {
+        // find my info
+        firebaseManager.getUsreInfo(userID: [savaData.myID]){result in
+            switch result{case .success(let data):
+                if data.count != 0{
+                    self.currentAccountID = data[0].ownAccount
+                    self.saveData.myInfo = data[0]
+                    self.addUserMessageAndAccountListener()
+                    LKProgressHUD.showSuccess(text: "成功載入個人資料")
+                }
+            case .failure(_):
+                LKProgressHUD.showFailure(text: "讀取資料失敗")
+            }
+        }
+    }
+    
+    func addUserMessageAndAccountListener(){
+        guard let myID = savaData.myInfo?.userID else {return}
+        firebaseManager.addUserListener(userID: myID){result in
+            switch result{
+            case .success(let data):
+                self.savaData.myInfo?.message = data.message
+                self.saveData.myInfo?.shareAccount = data.shareAccount
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+
+    func showMonBill(date: Date) -> String {
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy-MM"
+        let selectDateString = dateFont.string(from: date)
+        return selectDateString
+    }
+
+    func setupButton() {
+        addButton.addTarget(self, action: #selector(addNewBill), for: .touchUpInside)
+    }
+    
+
+    @objc func addNewBill() {
+        print("addNewBill")
+        let addNewView = AddNewItemViewController()
+        addNewView.currentAccountID = currentAccountID
+        present(addNewView, animated: true)
+    }
+
+    @objc func editAccountBook() {
+        let accountBookView = AllAccountBookViewController()
+        accountBookView.accountInfo = { currentAccountID in
+            print("\(currentAccountID)")
+            self.currentAccountID = currentAccountID
+        }
+        navigationController?.pushViewController(accountBookView, animated: true)
+    }
+
+    @objc func shareAccountBook() {
+        print("shareAccountBook")
+        let searchView = SearchAllUserViewController()
+        searchView.accountIDWithShare = currentAccountID
+        navigationController?.pushViewController(searchView, animated: true)
+    }
+
+    func setupShareBillView() {
+        openView()
+
+        billStatusSmallView.layer.cornerRadius = 10
+        billStatusOpenView.layer.cornerRadius = 10
+        billStatusSmallView.smallDelegate = self
+        billStatusOpenView.openDelegate = self
+    }
+
+    func setNavigation() {
+        // 導覽列左邊按鈕
+        let editAccountBookButton = UIBarButtonItem(
+            image: UIImage(named: "storytelling")?.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(editAccountBook)
+        )
+        // 加到導覽列中
+        navigationItem.leftBarButtonItem = editAccountBookButton
+
+        // 導覽列右邊按鈕
+        let shareButton = UIBarButtonItem(
+            //          title:"設定",
+            image: UIImage(named: "share")?.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(shareAccountBook)
+        )
+        // 加到導覽列中
+        navigationItem.rightBarButtonItem = shareButton
+    }
+
+    func setupTable() {
+        billTable = UITableView(frame: view.bounds, style: .insetGrouped)
+        billTable.layer.cornerRadius = 10
+        billTable.backgroundColor = .brightGreen4()
+        billTable.delegate = self
+        billTable.dataSource = self
+        billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
+        billTable.register(BillStatusTableViewCell.self, forCellReuseIdentifier: "billCell")
+    }
+
+    func setupLayout() {
+        view.addSubview(showView)
+        view.addSubview(billTable)
+        view.addSubview(addButton)
+        showView.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.height.equalTo(150)
+            make.centerX.equalTo(view)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
+        }
+
+        billTable.snp.makeConstraints { make in
+            make.width.equalTo(view.bounds.size.width * 0.9)
+            make.centerX.equalTo(view)
+            make.top.equalTo(showView.snp.bottom).offset(10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        addButton.snp.makeConstraints { make in
+
+            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
+            make.width.height.equalTo(80)
+        }
+    }
+
+    func reorderTransactionsByDate(transactions: [String]){
+        var convertToDate: [Date] = []
+        
+        let dateFont = DateFormatter()
+        dateFont.dateFormat = "yyyy-MM-dd"
+        
+        for date in transactions {
+            guard let dateDate = dateFont.date(from: date) else {return}
+            convertToDate.append(dateDate)
+        }
+        convertToDate.sort{ $0 > $1 }
+        print(convertToDate)
+        
+        transactionsDayKeyArr = []
+        
+        for date in convertToDate {
+            let dateString = dateFont.string(from: date)
+            transactionsDayKeyArr.append(dateString)
+        }
+    }
+}
+
+extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate, RepayViewDelegate {
+    func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
+        let mtName = saveData.myInfo?.name ?? ""
+        let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"
+        let toMyselfTest = "您向\(otherUserName) 還款：\(amount)"
+        guard let accountData = saveData.accountData else {return}
+        
+        firebaseManager.postMessage(toUserID: otherUserID, 
+                                    textToOtherUser: toOtherUserTest,
+                                    textToMyself: toMyselfTest,
+                                    isDunningLetter: true,
+                                    amount: amount,
+                                    fromAccoundID: accountData.accountID,
+                                    fromAccoundName: accountData.accountName){ _ in
+            return
+        }
+        
+        payView.removeFromSuperview()
+    }
+    
+    func addRePayView(subview: RepayView) {
+        view.addSubview(subview)
+        subview.layer.cornerRadius = 10
+        subview.snp.makeConstraints{(mark) in
+            mark.width.equalTo(view.bounds.size.width * 0.8)
+            mark.height.equalTo(view.bounds.size.height * 0.4)
+            mark.centerX.equalTo(view)
+            mark.centerY.equalTo(view)
+        }
+        subview.delegate = self
+    }
+   
+    func openView() {
+        billStatusSmallView.removeFromSuperview()
+        showView.snp.updateConstraints { mark in
+            mark.height.equalTo(150)
+        }
+        showView.addSubview(billStatusOpenView)
+        billStatusOpenView.snp.makeConstraints { mark in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
+    }
+
+    func closeView() {
+        billStatusOpenView.removeFromSuperview()
+
+        showView.snp.updateConstraints { mark in
+            mark.height.equalTo(50)
+        }
+        showView.addSubview(billStatusSmallView)
+        billStatusSmallView.snp.makeConstraints { mark in
+            mark.width.equalTo(showView)
+            mark.height.equalTo(showView)
+            mark.centerX.equalTo(showView)
+            mark.centerY.equalTo(showView)
+        }
+    }
+}
+
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[section - 1]] {
+//
+                print("-------datas of numberOfRowsInSelection ------")
+                print("\(section)" + "\(datas.keys)")
+                return datas.keys.count
+            }
+            return 0
+        }
+    }
+
+    func numberOfSections(in _: UITableView) -> Int {
+        guard var number = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?.keys.count else { return 1 }
+        number += 1
+        return number
+    }
+
+    func tableView(tableView _: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat
+    {
+        if section == 0 {
+            return 00
+        } else {
+            return 80
+        }
+    }
+
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let data = saveData.accountData?.transactions?[showMonBill(date: selectDate)] else { return "" }
+        transactionsDayKeyArr = []
+        for key in data.keys {
+            transactionsDayKeyArr.append(key)
+        }
+        if section != 0 {
+            reorderTransactionsByDate(transactions: transactionsDayKeyArr)
+            return transactionsDayKeyArr[section - 1]
+        } else {
+            return ""
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
+            cell.selectedBackgroundView?.backgroundColor = .g3()
+            guard let billCell = cell as? BillStatusTableViewCell else { return cell }
+            billCell.delegate = self
+            billCell.showDate = selectDate
+            billCell.revenueMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).text
+            billCell.revenueMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).color
+
+            billCell.totalMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).text
+            billCell.totalMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).color
+
+            billCell.payMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).text
+            billCell.payMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).color
+            return billCell
+        } else {
+            let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
+            cell.selectedBackgroundView?.backgroundColor = .g3()
+            guard let billCell = cell as? BillTableViewCell else { return cell }
+
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
+                print(showMonBill(date: selectDate))
+//                var transactionsDayDatasKeys: [String] = []
+                transactionsDayDatasKeys = []
+                for dataKey in datas.keys {
+                    transactionsDayDatasKeys.append(dataKey)
+                }
+
+                guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
+//                if let iconName = data.type.iconName {
+                billCell.sortImageView.image = UIImage(named: data.subType.iconName)
+//                }
+
+                billCell.titleLabel.text = data.subType.name
+                var titleNote = ""
+
+                if let payUser = data.payUser {
+                    for key in payUser.keys {
+                        if  let userName = savaData.userInfoData.first(where: { $0.userID == key })?.name{
+                            titleNote += "\(userName)/"
+                        }
+                    }
+                }
+                if titleNote == "" {
+                    titleNote = data.note ?? ""
+                } else {
+                    titleNote += "/\(data.note)"
+                }
+                billCell.titleNoteLabel.text = titleNote
+                billCell.moneyLabel.text = "\(data.amount)"
+//
+            }
+            return billCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.selectedBackgroundView?.backgroundColor = .g3()
+    }
+}
+
+extension HomeViewController: BillStatusTableViewCellDelegate {
+    func changeMonth(cell _: BillStatusTableViewCell, date: Date) {
+        selectDate = date
+        billTable.reloadData()
+    }
+}

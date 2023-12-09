@@ -1,0 +1,36 @@
+# 添加主規格庫配置
+source 'https://cdn.cocoapods.org/'
+
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '16.0'
+
+target 'MixLedger' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for MixLedger
+  pod 'SwiftLint'
+  
+  #加快寫layout的速度
+  pod 'SnapKit', '~> 5.6.0'
+  
+  #鍵盤相關套件
+  pod 'IQKeyboardManagerSwift'
+  
+  #提示訊息顯示器
+  pod 'JGProgressHUD'
+  
+  #pod 'FirebaseCore'
+  
+
+target 'MixLedgerTests' do
+    inherit! :search_paths
+#pod 'Firebase'
+    # Pods for testing
+  end
+
+  target 'MixLedgerUITests' do
+    # Pods for testing
+  end
+
+end
