@@ -33,7 +33,7 @@ struct PieChart: View {
     private let borderColor: Color
     private let sliceOffset: Double = -.pi / 2
     @State private var total: Double = 0.0
-    
+
     init(data: Binding<[Double]>, labels: Binding<[String]>, colors: [Color], borderColor: Color) {
         _data = data
         _labels = labels
@@ -42,10 +42,8 @@ struct PieChart: View {
     }
 
     var body: some View {
-        
         GeometryReader { geo in
             ZStack(alignment: .center) {
-                
                 ForEach(0 ..< data.count) { index in
                     PieSlice(startAngle: startAngle(for: index), endAngle: endAngle(for: index))
                         .fill(colors[index % colors.count])
@@ -59,17 +57,17 @@ struct PieChart: View {
                     )
                     .offset(textOffset(for: index, in: geo.size))
                     .zIndex(1)
-                    .onAppear { 
+                    .onAppear {
                         sum() // 在視圖出現時計算 total
                     }
                 }
             }
         }
     }
-    
+
     private func sum() {
-            total = data.reduce(0.0, +)
-        }
+        total = data.reduce(0.0, +)
+    }
 
     private func startAngle(for index: Int) -> Double {
         switch index {

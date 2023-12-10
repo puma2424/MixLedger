@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 
-
 class ColorManager {
     let shared = ColorManager()
-    
+
     static func getAllColors() -> [Color] {
         return [
             Color.blue1,
@@ -33,7 +32,7 @@ class ColorManager {
             Color.orange1,
             Color.orange2,
             Color.pink1,
-            Color.pink2
+            Color.pink2,
         ]
     }
 }

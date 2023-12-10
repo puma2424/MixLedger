@@ -14,7 +14,7 @@ struct BillTag {
 }
 
 // var myID = "bGzuwR00sPRNmBamK91D" //puma
-//var myID = "qmgOOutGItrZyzKqQOrh" // porter
+// var myID = "qmgOOutGItrZyzKqQOrh" // porter
 var billArray: [[String: [Any]]] = [["日期": [Date()],
                                      "item": [["金額": -3_000_000,
                                                "付費者": ["puma", "niw"],
@@ -55,7 +55,7 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
                                    ["name": "嘉義好好玩",
                                     "iconName": AllIcons.human.rawValue]]
 
-//func confirmPayment(messageInfo: Message, textToOtherUser: String, textToMyself: String, completion: @escaping (Result<String,Error>) -> Void) {
+// func confirmPayment(messageInfo: Message, textToOtherUser: String, textToMyself: String, completion: @escaping (Result<String,Error>) -> Void) {
 //    guard let accountID = saveData.myInfo?.ownAccount else {return}
 //    var othetUserAccountID: String = ""
 //    getUsreInfo(userID: [messageInfo.fromUserID]){result in
@@ -64,14 +64,14 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //            othetUserAccountID = data[0].ownAccount
 //            guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
 //            print(othetUserAccountID)
-//            
+//
 //            let postTransactionToExpenses = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
 //                                                        amount: -messageInfo.amount,
 //                                                        currency: "新台幣", date: Date(),
 //                                                        from: messageInfo.fromAccoundName,
 //                                                        note: "",
 //                                                        subType: TransactionType(iconName: "", name: "付款"))
-//            
+//
 //            let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
 //                                                     amount: messageInfo.amount,
 //                                                     currency: "新台幣",
@@ -79,7 +79,7 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //                                                     from: messageInfo.fromAccoundName,
 //                                                     note: "",
 //                                                     subType: TransactionType(iconName: "", name: "收支平衡"))
-//            
+//
 //            let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
 //                                                     amount: messageInfo.amount,
 //                                                     currency: "新台幣",
@@ -97,7 +97,7 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //                    self.postData(toAccountID: othetUserAccountID, transaction: postTransactionToExpenses, memberPayMoney: [:], memberShareMoney: [:]){ result in
 //                        switch result{
 //                        case .success(_):
-//                            
+//
 //                            self.db.collection("users").document(messageInfo.toUserID).updateData([
 //                                "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
 //                                                                    "toReceiverMessage": messageInfo.toReceiverMessage,
@@ -116,8 +116,8 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //                                    completion(.success("成功變動使用者擁有帳本資訊"))
 //                                }
 //                            }
-//                            
-//                            
+//
+//
 //                            self.postIncome(toAccountID: messageInfo.formAccoundID,
 //                                            transaction: postTransactionToShare,
 //                                            memberPayMoney: [messageInfo.fromUserID : messageInfo.amount, messageInfo.toUserID : 0.0],
@@ -130,7 +130,7 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //                                    print("xxxxxxx===")
 //                                }
 //                                return}
-//                            
+//
 //                        case .failure(_):
 //                            return
 //                        }
@@ -139,12 +139,10 @@ var allAccount: [[String: Any]] = [["name": "我的帳本",
 //                case .failure(_):
 //                    return
 //                }
-//                
+//
 //            }
 //        case .failure(_):
 //            return
 //        }
 //    }
-//}
-
-
+// }

@@ -15,7 +15,6 @@ protocol SubTypeItemProtocol {
 }
 
 enum SubTypeItem: SubTypeItemProtocol, CaseIterable {
-    
     case foodHamburger
     case educate
     case foodCake
@@ -107,7 +106,7 @@ enum SubTypeItem: SubTypeItemProtocol, CaseIterable {
             return "eProduct"
         }
     }
-    
+
     var name: String {
         switch self {
         case .educate:

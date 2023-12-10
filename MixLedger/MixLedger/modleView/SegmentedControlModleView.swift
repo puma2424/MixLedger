@@ -27,7 +27,7 @@ class SegmentedControlModleView: UIView {
     convenience init(frame: CGRect, buttonTitle: [String]) {
         self.init(frame: frame)
         buttonTitles = buttonTitle
-        self.backgroundColor = .clear
+        backgroundColor = .clear
     }
 
     override func draw(_ rect: CGRect) {
@@ -42,7 +42,7 @@ class SegmentedControlModleView: UIView {
     }
 
     func setIndex(index: Int) {
-        buttons.forEach { 
+        buttons.forEach {
             $0.setTitleColor(textColor, for: .normal)
             $0.backgroundColor
         }

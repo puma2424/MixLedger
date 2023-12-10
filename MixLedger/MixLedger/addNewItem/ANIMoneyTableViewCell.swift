@@ -7,7 +7,7 @@
 
 import SnapKit
 import UIKit
-class ANIMoneyTableViewCell: /*UITableViewCell*/ AddNewItemModelTableViewCell {
+class ANIMoneyTableViewCell: /* UITableViewCell */ AddNewItemModelTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -35,8 +35,8 @@ class ANIMoneyTableViewCell: /*UITableViewCell*/ AddNewItemModelTableViewCell {
 //        let imageView = UIImageView()
 //        return imageView
 //    }()
-//    
-//    
+//
+//
 //
 //    let inputTextField: UITextField = {
 //        let textField = UITextField()
@@ -56,13 +56,13 @@ class ANIMoneyTableViewCell: /*UITableViewCell*/ AddNewItemModelTableViewCell {
 //        textField.textColor = UIColor(named: "G1")
 //        return textField
 //    }()
-//    
-//    
+//
+//
 //
 //    func setupLayout() {
 //        contentView.addSubview(iconImageView)
 //        contentView.addSubview(inputTextField)
-//        
+//
 //        iconImageView.snp.makeConstraints { mark in
 //            mark.width.height.equalTo(50)
 //            mark.top.equalTo(contentView).offset(12)
@@ -76,6 +76,6 @@ class ANIMoneyTableViewCell: /*UITableViewCell*/ AddNewItemModelTableViewCell {
 //            mark.centerY.equalTo(contentView)
 //            mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
 //        }
-//        
+//
 //    }
 }

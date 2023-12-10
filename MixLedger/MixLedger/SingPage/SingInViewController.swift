@@ -5,16 +5,13 @@
 //  Created by 莊羚羊 on 2023/12/4.
 //
 
-import UIKit
 import AuthenticationServices
-import SnapKit
 import CryptoKit // 用來產生隨機字串 (Nonce) 的
 import FirebaseAuth
+import SnapKit
+import UIKit
 
-
-class SingInViewController: UIViewController{
-    
-
+class SingInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,80 +19,80 @@ class SingInViewController: UIViewController{
         setupButton()
         setupLayout()
     }
-    
 
     /*
-    // MARK: - Navigation
+     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // Get the new view controller using segue.destination.
+         // Pass the selected object to the new view controller.
+     }
+     */
 
     let firebaseManager = FirebaseManager.shared
     let singButton = ASAuthorizationAppleIDButton(authorizationButtonType: .default, authorizationButtonStyle: .black)
-    
+
     // MARK: - Sign in with Apple 登入
+
     fileprivate var currentNonce: String?
-    
+
     @objc func appleSinginButtonTapped() {
         let nonce = randomNonceString()
-            currentNonce = nonce
-            let appleIDProvider = ASAuthorizationAppleIDProvider()
-            let request = appleIDProvider.createRequest()
-            request.requestedScopes = [.fullName, .email]
-            request.nonce = sha256(nonce)
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
 
-            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-            authorizationController.delegate = self
-            authorizationController.presentationContextProvider = self
-            authorizationController.performRequests()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
-    
+
     @objc func appleSingOutButtonTapped() {
         FirebaseAuthenticationManager.signOut()
     }
-    
+
     func setupButton() {
         singButton.cornerRadius = 10
         singButton.addTarget(self, action: #selector(appleSinginButtonTapped), for: .touchUpInside)
     }
-    
+
     func setupLayout() {
         view.addSubview(singButton)
-        
-        singButton.snp.makeConstraints{(mark) in
+
+        singButton.snp.makeConstraints { mark in
             mark.height.equalTo(50)
             mark.width.equalTo(view.bounds.size.width * 0.5)
             mark.centerX.equalTo(view)
             mark.centerY.equalTo(view)
-        } 
+        }
     }
-    
+
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
-        let charset: Array<Character> = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
 
-        while(remainingLength > 0) {
+        while remainingLength > 0 {
             let randoms: [UInt8] = (0 ..< 16).map { _ in
                 var random: UInt8 = 0
                 let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if (errorCode != errSecSuccess) {
+                if errorCode != errSecSuccess {
                     fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
                 }
                 return random
             }
 
             randoms.forEach { random in
-                if (remainingLength == 0) {
+                if remainingLength == 0 {
                     return
                 }
 
-                if (random < charset.count) {
+                if random < charset.count {
                     result.append(charset[Int(random)])
                     remainingLength -= 1
                 }
@@ -108,14 +105,14 @@ class SingInViewController: UIViewController{
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
-            return String(format: "%02x", $0)
+            String(format: "%02x", $0)
         }.joined()
         return hashString
     }
 }
 
 extension SingInViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         // 登入成功
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
@@ -137,30 +134,25 @@ extension SingInViewController: ASAuthorizationControllerDelegate {
             firebaseSignInWithApple(credential: credential)
         }
     }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError error: Error) {
         // 登入失敗，處理 Error
         switch error {
         case ASAuthorizationError.canceled:
             LKProgressHUD.showFailure(text: "使用者取消登入")
 //            CustomFunc.customAlert(title: "使用者取消登入", message: "", vc: self, actionHandler: nil)
-            break
         case ASAuthorizationError.failed:
             LKProgressHUD.showFailure(text: "授權請求失敗")
 //            CustomFunc.customAlert(title: "授權請求失敗", message: "", vc: self, actionHandler: nil)
-            break
         case ASAuthorizationError.invalidResponse:
             LKProgressHUD.showFailure(text: "授權請求無回應")
 //            CustomFunc.customAlert(title: "授權請求無回應", message: "", vc: self, actionHandler: nil)
-            break
         case ASAuthorizationError.notHandled:
             LKProgressHUD.showFailure(text: "授權請求未處理")
 //            CustomFunc.customAlert(title: "授權請求未處理", message: "", vc: self, actionHandler: nil)
-            break
         case ASAuthorizationError.unknown:
             LKProgressHUD.showFailure(text: "授權失敗，原因不知")
 //            CustomFunc.customAlert(title: "授權失敗，原因不知", message: "", vc: self, actionHandler: nil)
-            break
         default:
             break
         }
@@ -168,17 +160,19 @@ extension SingInViewController: ASAuthorizationControllerDelegate {
 }
 
 // MARK: - ASAuthorizationControllerPresentationContextProviding
+
 // 在畫面上顯示授權畫面
 extension SingInViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
 }
 
 extension SingInViewController {
     // MARK: - 透過 Credential 與 Firebase Auth 串接
+
     func firebaseSignInWithApple(credential: AuthCredential) {
-        Auth.auth().signIn(with: credential) { authResult, error in
+        Auth.auth().signIn(with: credential) { _, error in
             guard error == nil else {
                 LKProgressHUD.showFailure(text: "\(String(describing: error!.localizedDescription))")
 //                CustomFunc.customAlert(title: "", message: "\(String(describing: error!.localizedDescription))", vc: self, actionHandler: nil)
@@ -189,8 +183,9 @@ extension SingInViewController {
 //            CustomFunc.customAlert(title: "登入成功！", message: "", vc: self, actionHandler: self.getFirebaseUserInfo)
         }
     }
-    
+
     // MARK: - Firebase 取得登入使用者的資訊
+
     func getFirebaseUserInfo() {
         let currentUser = Auth.auth().currentUser
         guard let user = currentUser else {
@@ -202,10 +197,10 @@ extension SingInViewController {
         let email = user.email
         let token = user.refreshToken
         SaveData.shared.myID = uid
-        firebaseManager.getUsreInfo(userID: [uid]){result in
-            switch result{
-            case .success(let data):
-                if data.count == 0{
+        firebaseManager.getUsreInfo(userID: [uid]) { result in
+            switch result {
+            case let .success(data):
+                if data.count == 0 {
                     LKProgressHUD.showFailure(text: "帳號未註冊")
                     print(user.displayName)
                     print(uid)
@@ -214,17 +209,16 @@ extension SingInViewController {
                     singupVC.uid = uid
                     singupVC.userEmail = email
                     self.present(singupVC, animated: true)
-                }else{
-                    if let window = SceneDelegate.shared.sceneWindow{
+                } else {
+                    if let window = SceneDelegate.shared.sceneWindow {
                         ShowScreenManager.showMainScreen(window: window)
                     }
                     LKProgressHUD.showSuccess(text: "登入成功！")
                 }
-            case .failure(_):
+            case .failure:
                 LKProgressHUD.showFailure(text: "無法取得使用者資料！")
             }
         }
 //        CustomFunc.customAlert(title: "使用者資訊", message: "UID：\(uid)\nEmail：\(email!)", vc: self, actionHandler: nil)
     }
-
 }

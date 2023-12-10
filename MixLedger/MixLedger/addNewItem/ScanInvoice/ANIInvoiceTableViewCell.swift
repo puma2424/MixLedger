@@ -17,7 +17,6 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
     }
 
     override func awakeFromNib() {
@@ -41,8 +40,8 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
 //        label.text = "掃描發票"
 //        return label
 //    }()
-    
-    func setupCell(){
+
+    func setupCell() {
         titleLabel.text = "掃描發票"
         iconImageView.image = AllIcons.receipt.icon
         setupHiden(titleLabelHidden: false)
@@ -64,7 +63,7 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
 //        iconImageView.snp.makeConstraints { mark in
 //            mark.width.height.equalTo(50)
 //            mark.top.equalTo(contentView).offset(12)
-////            mark.bottom.equalTo(contentView).offset(-12)
+        ////            mark.bottom.equalTo(contentView).offset(-12)
 //            mark.leading.equalTo(contentView).offset(12)
 //        }
 

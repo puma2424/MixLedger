@@ -129,7 +129,7 @@ class AddNewItemViewController: UIViewController {
             // 找到對應的字典
             let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
-            let transaction = Transaction(transactionType: transactionType, 
+            let transaction = Transaction(transactionType: transactionType,
                                           amount: -(amount ?? 0),
                                           currency: "新台幣",
                                           date: selectDate ?? Date(),
@@ -137,32 +137,31 @@ class AddNewItemViewController: UIViewController {
                                           payUser: memberPayMoney,
                                           shareUser: memberShareMoney,
                                           subType: type)
-            
+
             firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
                 self.dismiss(animated: true)
             }
-            
+
             var payUsersID: [String] = []
-            for userID in memberPayMoney.keys{
+            for userID in memberPayMoney.keys {
                 payUsersID.append(userID)
-                
             }
             saveData.userInfoData
             if let accountName = saveData.accountData?.accountName {
                 let usersInfo = saveData.userInfoData
                 firebase.postUpdatePayerAccount(isMyAccount: false,
-                                                formAccountName: accountName ,
+                                                formAccountName: accountName,
                                                 usersInfo: usersInfo,
-                                                transaction: transaction) { result  in
+                                                transaction: transaction)
+                { result in
                     switch result {
-                    case .success(let success):
+                    case let .success(success):
                         return
-                    case .failure(let failure):
+                    case let .failure(failure):
                         return
                     }
                 }
             }
-            
         }
     }
 
@@ -324,7 +323,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             }
             invoiceCell.invoiceLabel.text = text
             note = text
-            
+
             return invoiceCell
 
         } else if indexPath.row == 3 {
@@ -333,7 +332,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 //            selectDate = dateCell.datePicker.date
             dateCell.datePicker.date = selectDate ?? Date()
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
-            
+
             return dateCell
 
         } else if indexPath.row == 4 {
@@ -342,7 +341,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
             memberPayCell.showTitleLabel.text = "付款"
             memberPayCell.usersMoney = memberPayMoney
-            
+
             return memberPayCell
 
         } else {
@@ -351,11 +350,10 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
             memberShareCell.showTitleLabel.text = "分款"
             memberShareCell.usersMoney = memberShareMoney
-            
+
             return memberShareCell
         }
     }
-
 
     @objc func getAmount(_ textField: UITextField) {
         amount = Double(textField.text ?? "0.0")
@@ -376,7 +374,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
                 context.maximumDetentValue * 0.5
             }
             )]
-            
+
             subTypeVC.selectedSubType = { iconName, title in
                 self.type = TransactionType(iconName: iconName, name: title)
                 if let index = subTypeVC.selectedIndex {
@@ -388,9 +386,9 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
                 print(subTypeVC.selectedIndex)
                 print(self.type)
             }
-            
+
             present(subTypeVC, animated: true, completion: nil)
-        }else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()

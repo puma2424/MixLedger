@@ -37,7 +37,7 @@ struct Transaction: Codable {
 //        let dateFont = DateFormatter()
 //        dateFont.dateFormat = "yyyy"
 //        let dateString = dateFont.string(from: date)
-////        self.id = id
+    ////        self.id = id
 //        self.amount = amount
 //        self.currency = currency
 //        self.date = date
@@ -50,13 +50,13 @@ struct Transaction: Codable {
 //    }
 }
 
-enum TransactionMainType{
+enum TransactionMainType {
     case expenses
     case income
     case transfer
-    
-    var text: String{
-        switch self{
+
+    var text: String {
+        switch self {
         case .expenses:
             "expenses"
         case .income:
@@ -65,20 +65,19 @@ enum TransactionMainType{
             "transfer"
         }
     }
-    
+
     init?(text: String) {
-            switch text.lowercased() {
-            case "expenses":
-                self = .expenses
-            case "income":
-                self = .income
-            case "transfer":
-                self = .transfer
-            default:
-                return nil
-            }
+        switch text.lowercased() {
+        case "expenses":
+            self = .expenses
+        case "income":
+            self = .income
+        case "transfer":
+            self = .transfer
+        default:
+            return nil
         }
-    
+    }
 }
 
 struct TransactionType: Codable {
@@ -95,7 +94,7 @@ struct UsersInfoResponse: Codable {
     var message: [Message]?
 }
 
-struct Message: Codable{
+struct Message: Codable {
     var toSenderMessage: String
     var toReceiverMessage: String
     var fromUserID: String

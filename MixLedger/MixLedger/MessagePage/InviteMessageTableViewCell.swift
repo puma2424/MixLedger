@@ -13,9 +13,9 @@ class InviteMessageTableViewCell: UITableViewCell {
         backgroundColor = .clear
         setupLayout()
         setupButton()
-        self.backgroundColor = .brightGreen4()
+        backgroundColor = .brightGreen4()
     }
-    
+
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,7 +30,7 @@ class InviteMessageTableViewCell: UITableViewCell {
         superview?.layer.shadowOpacity = 1.0
         superview?.layer.masksToBounds = false
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -86,7 +86,7 @@ class InviteMessageTableViewCell: UITableViewCell {
         agreebutton.addTarget(self, action: #selector(agreeAction), for: .touchUpInside)
         rejectButton.addTarget(self, action: #selector(rejectAvtion), for: .touchUpInside)
     }
-    
+
     func setupLayoutJustAgreeButton() {
 //        agreebutton.setTitle("確  認", for: .normal)
         rejectButton.removeFromSuperview()
@@ -97,7 +97,7 @@ class InviteMessageTableViewCell: UITableViewCell {
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
         }
-        
+
         agreebutton.snp.makeConstraints { mark in
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
@@ -117,7 +117,7 @@ class InviteMessageTableViewCell: UITableViewCell {
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
         }
-        
+
         rejectButton.snp.makeConstraints { mark in
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView.snp.centerX).offset(-6)
@@ -126,14 +126,14 @@ class InviteMessageTableViewCell: UITableViewCell {
             mark.bottom.equalTo(contentView).offset(-12)
         }
 
-        agreebutton.snp.makeConstraints { mark in 
+        agreebutton.snp.makeConstraints { mark in
             mark.height.equalTo(45)
             mark.top.equalTo(inviteMessageLabel.snp.bottom).offset(12)
             mark.leading.equalTo(contentView.snp.centerX).offset(6)
             mark.trailing.equalTo(contentView).offset(-12)
         }
     }
-    
+
     func setupLayoutNoButton() {
         rejectButton.removeFromSuperview()
         agreebutton.removeFromSuperview()
@@ -147,9 +147,8 @@ class InviteMessageTableViewCell: UITableViewCell {
             mark.trailing.equalTo(contentView).offset(-12)
             mark.bottom.equalTo(contentView).offset(-12)
         }
-
     }
-    
+
     func setupLayout() {
         contentView.addSubview(rejectButton)
         contentView.addSubview(agreebutton)

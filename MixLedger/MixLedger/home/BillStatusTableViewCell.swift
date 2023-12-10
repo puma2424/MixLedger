@@ -32,7 +32,7 @@ class BillStatusTableViewCell: UITableViewCell {
         adjustDate(by: 0)
         backgroundColor = .g3()
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
     }
@@ -169,7 +169,7 @@ class BillStatusTableViewCell: UITableViewCell {
     }()
 
     let dateFont = DateFormatter()
-    var showDate: Date = Date()
+    var showDate: Date = .init()
     var dateString: String = ""
     func setButtonTarge() {
         nextMonthButton.addTarget(self, action: #selector(nextMonthActive), for: .touchUpInside)
@@ -199,7 +199,6 @@ class BillStatusTableViewCell: UITableViewCell {
     }
 
     func setupLayout() {
-        
         addToView(superV: contentView, subs: lastMonthButton, monthLabel, nextMonthButton, moneyStackView)
 //        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
 //        addToView(superV: contentView, subs: openOrCloseButton)

@@ -28,7 +28,7 @@ class AccountTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         // 在 tableView 的父视图中设置阴影

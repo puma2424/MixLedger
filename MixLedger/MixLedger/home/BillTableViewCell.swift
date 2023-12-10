@@ -24,9 +24,8 @@ class BillTableViewCell: UITableViewCell {
         // 在這裡放置需要在初始化時執行的程式碼
         setupView()
         backgroundColor = .g3()
-        
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         // 在 tableView 的父视图中设置阴影
@@ -72,6 +71,7 @@ class BillTableViewCell: UITableViewCell {
         stackView.spacing = 5 // 設置子視圖之間的間距
         return stackView
     }()
+
     func setupView() {
         titleLabel.font = UIFont.systemFont(ofSize: 15)
         titleNoteLabel.font = UIFont.systemFont(ofSize: 13)

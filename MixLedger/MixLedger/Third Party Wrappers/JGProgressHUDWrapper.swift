@@ -13,7 +13,6 @@ enum HUDType {
 }
 
 class LKProgressHUD {
-
     static let shared = LKProgressHUD()
 
     private init() {}
@@ -22,17 +21,18 @@ class LKProgressHUD {
 
     var view: UIView {
         if let window = SceneDelegate.shared.window,
-               let rootViewController = window.rootViewController {
-                return rootViewController.view
-            }
-            return UIView()
+           let rootViewController = window.rootViewController
+        {
+            return rootViewController.view
+        }
+        return UIView()
     }
 
     static func show(type: HUDType) {
         switch type {
-        case .success(let text):
+        case let .success(text):
             showSuccess(text: text)
-        case .failure(let text):
+        case let .failure(text):
             showFailure(text: text)
         }
     }
@@ -85,4 +85,3 @@ class LKProgressHUD {
         shared.hud.dismiss()
     }
 }
-

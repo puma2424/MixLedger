@@ -19,7 +19,6 @@ class AllAccountBookViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         findAllMyAccount()
-        
     }
 
     /*
@@ -36,7 +35,7 @@ class AllAccountBookViewController: UIViewController {
     var accountInfo: ((String) -> Void)?
     var table = UITableView()
     var selectedIndexPath: IndexPath?
-    
+
     func setTable() {
         table = UITableView(frame: view.bounds, style: .insetGrouped)
         table.delegate = self
@@ -44,8 +43,8 @@ class AllAccountBookViewController: UIViewController {
         table.backgroundColor = UIColor(named: "G3")
         table.register(AccountTableViewCell.self, forCellReuseIdentifier: "accountCell")
     }
-    
-    @objc func handleAccountNotification(){
+
+    @objc func handleAccountNotification() {
         findAllMyAccount()
     }
 
@@ -105,24 +104,23 @@ class AllAccountBookViewController: UIViewController {
 }
 
 extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         2
     }
-    
+
     func tableView(_: UITableView, numberOfRowsInSection numberOfRowsInSection: Int) -> Int {
         guard let data = savaData.myInfo else { return 0 }
-        if numberOfRowsInSection == 0{
+        if numberOfRowsInSection == 0 {
             return 1
-        }else {
+        } else {
             return data.shareAccount.count
         }
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0{
+
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
             return "My Account"
-        }else{
+        } else {
             return "Share Account"
         }
     }

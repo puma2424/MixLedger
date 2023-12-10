@@ -29,7 +29,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         checkArrayhaveData(index: currentIndex)
     }
 
@@ -42,11 +42,11 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
          // Pass the selected object to the new view controller.
      }
      */
-    
-    var currentDate: Date = Date()
-    
+
+    var currentDate: Date = .init()
+
     var currentMainTypr: TransactionMainType = .expenses
-    
+
     var currentIndex = 0
 
     let saveData = SaveData.shared
@@ -61,7 +61,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
                             borderColor: .gray1)
 
     var mySwiftUIView = LineMarkCharts()
-    
+
     let noDataNoteLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -74,17 +74,18 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     func checkArrayhaveData(index: Int) {
         currentChartView?.removeFromSuperview()
         currentChartView = nil
-        
+
         if saveData.transactionsArray.isEmpty {
             currentChartView = setupLabelView()
-        }else {
+        } else {
             if index == 0 {
                 currentChartView = setupPie()
-            }else {
+            } else {
                 currentChartView = setupLineMarkView()
             }
         }
     }
+
     func setupSegmentedControl() {
         segmentedView.delegate = self
         segmentedView.backgroundColor = .clear
@@ -101,8 +102,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             mark.height.equalTo(50)
         }
     }
-    
-    func setupLabelView() -> UIView{
+
+    func setupLabelView() -> UIView {
         view.addSubview(noDataNoteLabel)
 
         noDataNoteLabel.snp.makeConstraints { mark in
@@ -115,7 +116,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 //    private let stockEntityViewModel = StockEntityViewModel()
     func setupLineMarkView() -> UIView {
         mySwiftUIView.stockData.removeAll()
-        
+
         // 创建 SwiftUI 视图
 //        mySwiftUIView.vm.stockData = saveData.transactionsArray
         mySwiftUIView.stockData = dataToChartArray()
@@ -158,7 +159,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             typeArray.append(type)
             amountArray.append(dic[type] ?? 0.0)
         }
-        
+
         let colorArray: [Color] = ColorManager.getAllColors() as [Color]
 
         pieChart = PieChart(data: .constant(amountArray),
@@ -185,45 +186,42 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         ])
         return hostingController.view
     }
-    
-    func dataToChartArray() -> [TransactionForChart]{
+
+    func dataToChartArray() -> [TransactionForChart] {
         var originalDataArray = saveData.transactionsArray
         var forLineMarkData: [TransactionForChart] = []
-        
+
         let dateFont = DateFormatter()
         dateFont.dateFormat = "yyyy"
         let dateYearString = dateFont.string(from: currentDate)
-        
+
         let calendar = Calendar.current
         dateFont.dateFormat = "yyyy-MM-dd"
-        
+
         var components = calendar.dateComponents([.year], from: currentDate)
-        
-        
-        for originalData in originalDataArray{
-            if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr && originalData.year == dateYearString{
-                
+
+        for originalData in originalDataArray {
+            if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr && originalData.year == dateYearString {
                 // 获取当前年份和月份
                 components = calendar.dateComponents([.year, .month], from: originalData.date)
-                
+
                 // 设置为每个月的第一天
                 var firstDayComponents = components
 //                firstDayComponents.month = month
                 firstDayComponents.day = 15
-                
+
                 // 创建日期对象
                 if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
-                    
                     if let index = forLineMarkData.firstIndex(where: { $0.date == firstDayOfMonth && $0.subType == originalData.subType.name }) {
                         print("找到了，位置是 \(index)")
                         forLineMarkData[index].amount -= originalData.amount
-                    }else{
+                    } else {
                         // 创建 TransactionForChart 对象，amount 设置为 0
                         let transaction = TransactionForChart(amount: -originalData.amount,
                                                               date: firstDayOfMonth,
                                                               subType: originalData.subType.name,
                                                               mainType: originalData.transactionType.name)
-                        
+
                         // 将对象添加到数组中
                         forLineMarkData.append(transaction)
                     }
@@ -234,13 +232,10 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 }
 
-struct TransactionForChart: Identifiable{
+struct TransactionForChart: Identifiable {
     let id = UUID()
     var amount: Double
     var date: Date
     var subType: String
     var mainType: String
 }
-
-
-

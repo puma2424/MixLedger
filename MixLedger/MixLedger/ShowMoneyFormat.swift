@@ -23,35 +23,35 @@ enum MoneyType {
         case let .money(int):
             if int > 0 {
                 return .blue1()
-            }else if int == 0 {
+            } else if int == 0 {
                 return .g1()
-            }else {
+            } else {
                 return .red1()
             }
         }
     }
-    
+
     var billTitle: String {
         switch self {
         case let .money(int):
             if int > 0 {
                 return "Tack Back"
-            }else if int == 0 {
+            } else if int == 0 {
                 return "Balance"
-            }else {
+            } else {
                 return "To Pay"
             }
         }
     }
-    
+
     var checkButtonTitle: String {
         switch self {
         case let .money(int):
             if int > 0 {
                 return "還  款"
-            }else if int == 0 {
+            } else if int == 0 {
                 return ""
-            }else {
+            } else {
                 return "催  款"
             }
         }

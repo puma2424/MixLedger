@@ -12,26 +12,25 @@ class SubTypeIconCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupLayout()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    
     }
-    
-    let selectedViewColor: UIColor = UIColor(red: 190/255, green: 239/255, blue: 218/255, alpha: 0.5)
-    
+
+    let selectedViewColor: UIColor = .init(red: 190 / 255, green: 239 / 255, blue: 218 / 255, alpha: 0.5)
+
     let selectedView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         view.layer.cornerRadius = 30
         return view
     }()
-    
+
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -39,7 +38,7 @@ class SubTypeIconCollectionViewCell: UICollectionViewCell {
         label.textColor = UIColor.g1()
         return label
     }()
-    
+
     // 使用 UIStackView 垂直排列 label 和 imageView
     var stackView: UIStackView = {
         let view = UIStackView()
@@ -49,26 +48,26 @@ class SubTypeIconCollectionViewCell: UICollectionViewCell {
         view.distribution = .fill
         return view
     }()
-    
-    func didSeiected(selected: Bool){
+
+    func didSeiected(selected: Bool) {
         if selected {
             selectedView.backgroundColor = selectedViewColor
-        }else {
+        } else {
             selectedView.backgroundColor = .clear
         }
     }
-    
+
     func layoutCell(image: UIImage?, text: String) {
         iconImageView.image = image
         titleLabel.text = text
     }
-    
+
     func setupLayout() {
         contentView.addSubview(selectedView)
         contentView.addSubview(stackView)
         stackView.addSubview(iconImageView)
         stackView.addSubview(titleLabel)
-        
+
         selectedView.snp.makeConstraints { mark in
             mark.centerX.equalTo(contentView)
             mark.centerY.equalTo(contentView)
@@ -81,13 +80,13 @@ class SubTypeIconCollectionViewCell: UICollectionViewCell {
             mark.top.equalTo(stackView).offset(8)
             mark.width.height.equalTo(45)
         }
-        
+
         titleLabel.snp.makeConstraints { mark in
             mark.centerX.equalTo(stackView)
             mark.trailing.equalTo(stackView)
             mark.top.equalTo(iconImageView.snp.bottom).offset(4)
         }
-        
+
         stackView.snp.makeConstraints { make in
             make.centerX.equalTo(contentView)
         }

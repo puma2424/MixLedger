@@ -29,8 +29,8 @@ class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func setupCell(){
+
+    func setupCell() {
         backgroundColor = .clear
         setupHiden(datePickerHidden: false)
         iconImageView.image = AllIcons.date.icon

@@ -37,7 +37,7 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         label.text = "qqq"
         return label
     }()
-    
+
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -59,27 +59,27 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         textField.textColor = .g1()
         return textField
     }()
-    
+
     let datePicker = UIDatePicker()
 
-    func setupHiden(titleLabelHidden: Bool = true , inputTextFieldHidden: Bool = true, datePickerHidden: Bool = true){
+    func setupHiden(titleLabelHidden: Bool = true, inputTextFieldHidden: Bool = true, datePickerHidden: Bool = true) {
         titleLabel.isHidden = titleLabelHidden
         inputTextField.isHidden = inputTextFieldHidden
         datePicker.isHidden = datePickerHidden
     }
-    
+
     func setupDatePicker() {
         datePicker.datePickerMode = .dateAndTime
         let currentDate = Date()
         datePicker.setDate(currentDate, animated: true)
     }
-    
+
     func setupLayout() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(inputTextField)
         contentView.addSubview(datePicker)
-        
+
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.top.equalTo(contentView).offset(12)
@@ -91,15 +91,15 @@ class AddNewItemModelTableViewCell: UITableViewCell {
 //            make.width.equalTo(150)
             make.height.equalTo(45)
             make.centerY.equalTo(contentView)
-            make.leading.equalTo(titleLabel)//.offset(24)
+            make.leading.equalTo(titleLabel) // .offset(24)
             make.trailing.equalTo(contentView).offset(-12)
         }
-        
+
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
             make.leading.equalTo(iconImageView.snp.trailing).offset(24)
         }
-        
+
         datePicker.snp.makeConstraints { make in
             make.height.equalTo(contentView)
 //            make.width.equalTo(contentView.bounds.size.width * 0.8)

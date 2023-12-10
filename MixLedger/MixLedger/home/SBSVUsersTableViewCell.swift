@@ -8,12 +8,11 @@
 import SnapKit
 import UIKit
 
-protocol SBSVUsersTableViewCellDelegate{
+protocol SBSVUsersTableViewCellDelegate {
     func checkButtonTarget(cell: SBSVUsersTableViewCell)
 }
 
 class SBSVUsersTableViewCell: UITableViewCell {
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
@@ -24,25 +23,22 @@ class SBSVUsersTableViewCell: UITableViewCell {
     // 如果是使用 Interface Builder，這個初始化方法會被呼叫
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-       
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        
     }
-    
+
     var delegate: SBSVUsersTableViewCellDelegate?
 
-    var amount: MoneyType = MoneyType.money(0)
+    var amount: MoneyType = .money(0)
     let userImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "human")
@@ -60,7 +56,7 @@ class SBSVUsersTableViewCell: UITableViewCell {
         lable.text = ""
         return lable
     }()
-    
+
     let statusLable: UILabel = {
         let lable = UILabel()
         lable.text = "pay"
@@ -76,27 +72,26 @@ class SBSVUsersTableViewCell: UITableViewCell {
         button.backgroundColor = .brightGreen3()
         return button
     }()
-    
-    @objc func checkButtonTarget(){
+
+    @objc func checkButtonTarget() {
         delegate?.checkButtonTarget(cell: self)
     }
-    
-    func setupButton(){
+
+    func setupButton() {
         checkButton.addTarget(self, action: #selector(checkButtonTarget), for: .touchUpInside)
     }
-    
-    func setupNoButtonLayout(){
-        
+
+    func setupNoButtonLayout() {
         moneyLable.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
         }
-        
+
         statusLable.snp.makeConstraints { make in
             make.top.equalTo(moneyLable.snp.bottom).offset(5)
             make.trailing.equalTo(moneyLable)
         }
-        
+
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
@@ -115,19 +110,18 @@ class SBSVUsersTableViewCell: UITableViewCell {
             mark.bottom.equalTo(contentView).offset(0)
         }
     }
-    
-    func setupHaveButtonView(){
-        
+
+    func setupHaveButtonView() {
         moneyLable.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
         }
-        
+
         statusLable.snp.makeConstraints { make in
             make.top.equalTo(moneyLable.snp.bottom).offset(5)
             make.trailing.equalTo(moneyLable)
         }
-        
+
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
@@ -139,7 +133,6 @@ class SBSVUsersTableViewCell: UITableViewCell {
             mark.leading.equalTo(userImage.snp.trailing).offset(12)
         }
 
-    
         checkButton.snp.makeConstraints { mark in
             mark.top.equalTo(statusLable.snp.bottom).offset(12)
             mark.leading.equalTo(contentView).offset(12)
@@ -148,25 +141,24 @@ class SBSVUsersTableViewCell: UITableViewCell {
             mark.bottom.equalTo(contentView).offset(-12)
         }
     }
-    
-    
+
     func setupLayout() {
         contentView.addSubview(moneyLable)
         contentView.addSubview(statusLable)
         contentView.addSubview(userImage)
         contentView.addSubview(nameLable)
         contentView.addSubview(checkButton)
-        
+
         moneyLable.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
         }
-        
+
         statusLable.snp.makeConstraints { make in
             make.top.equalTo(moneyLable.snp.bottom).offset(5)
             make.trailing.equalTo(moneyLable)
         }
-        
+
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
