@@ -97,7 +97,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
             let id = usersInfo[indexPath.row].userID
             print(id)
             
-            if cell.amount.checkButtonTitle == "催款"{
+            if cell.amount.checkButtonTitle == "催  款"{
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
                     print("\(billStatus?[index][id])")
                     guard let myName = saveData.myInfo?.name else {return}
@@ -120,7 +120,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
                     
                     
                 }
-            }else if cell.amount.checkButtonTitle == "還款"{
+            }else if cell.amount.checkButtonTitle == "還  款"{
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
                     print(cell.amount.checkButtonTitle)
                     let repayView = RepayView()
