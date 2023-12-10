@@ -52,7 +52,7 @@ class HomeViewController: UIViewController{
                                 print(err)
                             }
                         }
-                        
+                        self.sum()
                         
                     case .failure(let err):
                         print(err)
@@ -63,6 +63,9 @@ class HomeViewController: UIViewController{
         }
     }
 
+    var totla: Double = 0.0
+    var expenses: Double = 0.0
+    var income: Double = 0.0
     var transactionsDayKeyArr: [String] = []
     var transactionsDayDatasKeys: [String] = []
     override func viewDidLoad() {
@@ -244,7 +247,7 @@ class HomeViewController: UIViewController{
         }
     }
 
-    func reorderTransactionsByDate(transactions: [String]){
+    func reorderTransactionsByDate(transactions: [String]) {
         var convertToDate: [Date] = []
         
         let dateFont = DateFormatter()
@@ -262,6 +265,34 @@ class HomeViewController: UIViewController{
         for date in convertToDate {
             let dateString = dateFont.string(from: date)
             transactionsDayKeyArr.append(dateString)
+        }
+    }
+    
+    func sum() {
+        totla = 0.0
+        income = 0.0
+        expenses = 0.0
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM"
+        let dateString = dateFormatter.string(from: selectDate)
+        
+        guard let datas = savaData.accountData?.transactions?[dateString] else { return }
+        
+        for datasKeys in datas.keys{
+            guard let data = datas[datasKeys] else { return }
+            for dataKey in data.keys {
+                guard let transaction = data[dataKey],
+                        let mainTypeName =  transaction.transactionType?.name else { return }
+                let mainType =  TransactionMainType(text: mainTypeName)
+                
+                if mainType == .expenses{
+                    expenses -= abs(transaction.amount)
+                    totla -= abs(transaction.amount)
+                }else if mainType == .income {
+                    income += abs(transaction.amount)
+                    totla += abs(transaction.amount)
+                }
+            }
         }
     }
 }
@@ -379,23 +410,30 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return ""
         }
     }
+    
+    
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        sum()
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
             cell.selectedBackgroundView?.backgroundColor = .g3()
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
             billCell.delegate = self
             billCell.showDate = selectDate
-            billCell.revenueMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).text
-            billCell.revenueMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.income ?? 0).color
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM"
+            let dateString = dateFormatter.string(from: selectDate)
+            
+            billCell.revenueMoneyLabel.text = MoneyType.money(income).text
+            billCell.revenueMoneyLabel.textColor = MoneyType.money(income).color
 
-            billCell.totalMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).text
-            billCell.totalMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.total ?? 0).color
+            billCell.totalMoneyLabel.text = MoneyType.money(totla).text
+            billCell.totalMoneyLabel.textColor = MoneyType.money(totla).color
 
-            billCell.payMoneyLabel.text = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).text
-            billCell.payMoneyLabel.textColor = MoneyType.money(saveData.accountData?.accountInfo.expense ?? 0).color
+            billCell.payMoneyLabel.text = MoneyType.money(expenses).text
+            billCell.payMoneyLabel.textColor = MoneyType.money(expenses).color
             return billCell
         } else {
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
