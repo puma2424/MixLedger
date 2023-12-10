@@ -129,10 +129,42 @@ class AddNewItemViewController: UIViewController {
             // 找到對應的字典
             let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
-            let transaction = Transaction(transactionType: transactionType, amount: -(amount ?? 0), currency: "新台幣", date: selectDate ?? Date(), note: note, subType: type)
+            let transaction = Transaction(transactionType: transactionType, 
+                                          amount: -(amount ?? 0),
+                                          currency: "新台幣",
+                                          date: selectDate ?? Date(),
+                                          note: note,
+                                          payUser: memberPayMoney,
+                                          shareUser: memberShareMoney,
+                                          subType: type)
+            
             firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
                 self.dismiss(animated: true)
             }
+            
+            var payUsersID: [String] = []
+            for userID in memberPayMoney.keys{
+                payUsersID.append(userID)
+                
+            }
+            saveData.userInfoData
+            if let accountName = saveData.accountData?.accountName {
+                let usersInfo = saveData.userInfoData
+                firebase.postUpdatePayerAccount(isMyAccount: false,
+                                                formAccountName: accountName ,
+                                                usersInfo: usersInfo,
+                                                transaction: transaction) { result  in
+                    switch result {
+                    case .success(let success):
+                        return
+                    case .failure(let failure):
+                        return
+                    }
+                }
+            }
+            
+        
+            
             // swiftlint:enable line_length
         }
     }

@@ -140,49 +140,61 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
             
 
         }
-//        table.reloadData()
     }
 }
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        usersInfo.count
+//    }
+    
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return usersInfo.count
+        return usersInfo.count /*1*/
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         userCell.delegate = self
+//        let userInfo = usersInfo[indexPath.section]
         let userInfo = usersInfo[indexPath.row]
-            
-            let id = userInfo.userID
-            userCell.nameLable.text = userInfo.name
-            
-            if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), 
-                let userMoney = billStatus?[index][id] {
-                let amount = MoneyType.money(userMoney)
-                userCell.amount = amount
-                if id == saveData.myInfo?.userID {
+        
+        let id = userInfo.userID
+        userCell.nameLable.text = userInfo.name
+        
+        if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }),
+            let userMoney = billStatus?[index][id] {
+            let amount = MoneyType.money(userMoney)
+            userCell.amount = amount
+            if id == saveData.myInfo?.userID {
+                userCell.checkButton.isHidden = true
+                userCell.setupNoButtonLayout()
+                myMoney = userMoney
+            } else {
+                if myMoney < 0 && userMoney < 0 {
                     userCell.checkButton.isHidden = true
-                    myMoney = userMoney
-                } else {
-                    if myMoney < 0 && userMoney < 0 {
-                        userCell.checkButton.isHidden = true
-                    } else if myMoney < 0 && userMoney > 0 {
-                        userCell.checkButton.isHidden = false
-                        userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
-                    } else if myMoney > 0 && userMoney < 0 {
-                        userCell.checkButton.isHidden = false
-                        userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
-                    } else if myMoney > 0 && userMoney > 0 {
-                        userCell.checkButton.isHidden = true
-                    }
-                    
+                    userCell.setupNoButtonLayout()
+                } else if myMoney < 0 && userMoney > 0 {
+                    userCell.checkButton.isHidden = false
+                    userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
+                } else if myMoney > 0 && userMoney < 0 {
+                    userCell.checkButton.isHidden = false
+                    userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
+                } else if myMoney > 0 && userMoney > 0 {
+                    userCell.checkButton.isHidden = true
+                    userCell.setupNoButtonLayout()
                 }
                 
-                userCell.moneyLable.text = "\(amount.billTitle) \(abs(userMoney))"
-                userCell.moneyLable.textColor = amount.color
             }
+            
+            let money = abs(userMoney)
+            let moneyString = String(format: "%.1f", money)
+            
+            userCell.moneyLable.text = "\(moneyString)"
+            userCell.moneyLable.textColor = amount.color
+            userCell.statusLable.text = amount.billTitle
+            userCell.statusLable.textColor = amount.color
+        }
         
 
         return userCell

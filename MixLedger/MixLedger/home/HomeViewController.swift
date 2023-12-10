@@ -17,6 +17,7 @@ class HomeViewController: UIViewController{
     var currentAccountID: String = "" {
         didSet {
             if currentAccountID != "" {
+                checkNowAccount()
                 firebaseManager.addAccountListener(accountID: currentAccountID){ result in
                     switch result{
                     case .success(let accountData):
@@ -80,6 +81,7 @@ class HomeViewController: UIViewController{
 
     override func viewWillAppear(_ result: Bool) {
         super.viewWillAppear(_: result)
+        
     }
 
     let billStatusSmallView = SharedBillStatusSmallView()
@@ -162,8 +164,6 @@ class HomeViewController: UIViewController{
     }
 
     func setupShareBillView() {
-        openView()
-
         billStatusSmallView.layer.cornerRadius = 10
         billStatusOpenView.layer.cornerRadius = 10
         billStatusSmallView.smallDelegate = self
@@ -203,17 +203,33 @@ class HomeViewController: UIViewController{
         billTable.register(BillStatusTableViewCell.self, forCellReuseIdentifier: "billCell")
     }
 
+    func checkNowAccount(){
+        if currentAccountID == savaData.myInfo?.ownAccount || savaData.myInfo?.ownAccount == nil {
+            showView.isHidden = true
+            showView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+        }else {
+            showView.isHidden = false
+            showView.snp.updateConstraints { make in
+                make.height.equalTo(50)
+            }
+            closeView()
+        }
+    }
+    
     func setupLayout() {
         view.addSubview(showView)
         view.addSubview(billTable)
         view.addSubview(addButton)
+        
         showView.snp.makeConstraints { make in
             make.width.equalTo(view.bounds.size.width * 0.9)
-            make.height.equalTo(150)
+            make.height.equalTo(0)
             make.centerX.equalTo(view)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(3)
+            make.top.equalTo(view.safeAreaLayoutGuide)
         }
-
+        
         billTable.snp.makeConstraints { make in
             make.width.equalTo(view.bounds.size.width * 0.9)
             make.centerX.equalTo(view)
@@ -222,7 +238,6 @@ class HomeViewController: UIViewController{
         }
 
         addButton.snp.makeConstraints { make in
-
             make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-10)
             make.width.height.equalTo(80)
         }
@@ -263,7 +278,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
                                     isDunningLetter: true,
                                     amount: amount,
                                     fromAccoundID: accountData.accountID,
-                                    fromAccoundName: accountData.accountName){ _ in
+                                    fromAccoundName: accountData.accountName) { _ in
             return
         }
         
@@ -273,7 +288,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     func addRePayView(subview: RepayView) {
         view.addSubview(subview)
         subview.layer.cornerRadius = 10
-        subview.snp.makeConstraints{(mark) in
+        subview.snp.makeConstraints {(mark) in
             mark.width.equalTo(view.bounds.size.width * 0.8)
             mark.height.equalTo(view.bounds.size.height * 0.4)
             mark.centerX.equalTo(view)
@@ -283,31 +298,38 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     }
    
     func openView() {
-        billStatusSmallView.removeFromSuperview()
-        showView.snp.updateConstraints { mark in
-            mark.height.equalTo(150)
-        }
-        showView.addSubview(billStatusOpenView)
-        billStatusOpenView.snp.makeConstraints { mark in
-            mark.width.equalTo(showView)
-            mark.height.equalTo(showView)
-            mark.centerX.equalTo(showView)
-            mark.centerY.equalTo(showView)
+        UIView.animate(withDuration: 0.3) {
+                
+            self.showView.snp.updateConstraints { make in
+                make.height.equalTo(self.view.bounds.height * 0.57)
+            }
+            self.billStatusSmallView.removeFromSuperview()
+            self.showView.addSubview(self.billStatusOpenView)
+            self.billStatusOpenView.snp.makeConstraints { make in
+                make.width.equalTo(self.showView)
+                make.height.equalTo(self.showView)
+                make.centerX.equalTo(self.showView)
+                make.centerY.equalTo(self.showView)
+            }
+            self.view.layoutIfNeeded()  // 确保立即应用布局变化
         }
     }
 
     func closeView() {
-        billStatusOpenView.removeFromSuperview()
-
-        showView.snp.updateConstraints { mark in
-            mark.height.equalTo(50)
-        }
-        showView.addSubview(billStatusSmallView)
-        billStatusSmallView.snp.makeConstraints { mark in
-            mark.width.equalTo(showView)
-            mark.height.equalTo(showView)
-            mark.centerX.equalTo(showView)
-            mark.centerY.equalTo(showView)
+        UIView.animate(withDuration: 0.3) {
+            
+            self.showView.snp.updateConstraints { make in
+                make.height.equalTo(50)
+            }
+            self.billStatusOpenView.removeFromSuperview()
+            self.showView.addSubview(self.billStatusSmallView)
+            self.billStatusSmallView.snp.makeConstraints { make in
+                make.width.equalTo(self.showView)
+                make.height.equalTo(self.showView)
+                make.centerX.equalTo(self.showView)
+                make.centerY.equalTo(self.showView)
+            }
+            self.view.layoutIfNeeded()  // 确保立即应用布局变化
         }
     }
 }

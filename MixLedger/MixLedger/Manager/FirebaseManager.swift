@@ -518,21 +518,21 @@ class FirebaseManager {
                 }
             }
         }
-        
-
-
-        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
-            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
-                switch result {
-                case .success:
-                    print("同步到付費者的個人帳本：成功")
-                case let .failure(err):
-                    print("同步到付費者的個人帳本：失敗")
-                    print(err)
-                    print("-----------------------")
-                }
-            }
-        }
+//        
+//
+//
+//        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
+//            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
+//                switch result {
+//                case .success:
+//                    print("同步到付費者的個人帳本：成功")
+//                case let .failure(err):
+//                    print("同步到付費者的個人帳本：失敗")
+//                    print(err)
+//                    print("-----------------------")
+//                }
+//            }
+//        }
     }
     func postData(toAccountID: String,
                   transaction: Transaction,
@@ -566,43 +566,84 @@ class FirebaseManager {
             }
     }
 
-    private func updatePayerAccount(isMyAccount: Bool, memberPayMoney: [String: Double], date: Date, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>) -> Void) {
-        if isMyAccount == false {
-            for payerID in memberPayMoney.keys {
-                guard let amount = memberPayMoney[payerID] else { return }
-                let transaction = [
-                    "amount": amount,
-                    "date": date,
-                    "note": note,
-                    "type": ["iconName": type?.iconName, "name": type?.name],
-                    "currency": "新台幣",
-                    "from": "\(saveData.accountData?.accountName)",
-                ] as [String: Any]
-
-                dateFont.dateFormat = "yyyy-MM"
-                let dateM = dateFont.string(from: date)
-                dateFont.dateFormat = "yyyy-MM-dd"
-                let dateD = dateFont.string(from: date)
-
-                let payer = saveData.userInfoData.filter{ $0.userID == payerID }
+    func postUpdatePayerAccount(isMyAccount: Bool,
+                                    formAccountName: String,
+                                    usersInfo: [UsersInfoResponse],
+                                    transaction: Transaction,
+                                    completion: @escaping (Result<Any, Error>) -> Void) {
+        
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: transaction.date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: transaction.date)
+        // Get new write batch
+        let batch = db.batch()
+        
+        for userInfo in usersInfo{
+            let inputTransaction: [String: Any] = [
+                "amount": transaction.payUser?[userInfo.userID],
+                "date": transaction.date,
+                "note": transaction.note,
+                "transactionType":  ["iconName": transaction.transactionType?.iconName, "name":transaction.transactionType?.name],
+                "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+                "currency": "新台幣",
+                "from": formAccountName,
+            ]
             
-                let payerAccountID = payer[0].ownAccount
-
-                db.collection("accounts").document(payerAccountID).updateData([
-                    "transactions.\(dateM).\(dateD).\(Date())": transaction,
-                    "accountInfo.expense": FieldValue.increment(amount),
-                    "accountInfo.total": FieldValue.increment(amount),
-                ]) { err in
-                    if let err = err {
-                        print("Error updating document: \(err)")
-                        completion(.failure(err))
-                    } else {
-                        print("Document successfully updated")
-                        completion(.success("Sent successfully"))
-                    }
-                }
+            // Update the population of 'userInfo.ownAccount'
+            let sfRef = db.collection("accounts").document(userInfo.ownAccount)
+            batch.updateData([
+                "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
+                "accountInfo.expense": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
+                "accountInfo.total": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0))],
+                             forDocument: sfRef)
+        }
+        
+        // Commit the batch
+        batch.commit() { err in
+            if let err = err {
+                print("Error committing batch: \(err)")
+            } else {
+                print("Batch committed successfully.")
             }
         }
+//        if isMyAccount == false {
+//            for payerID in memberPayMoney.keys {
+//                guard let amount = memberPayMoney[payerID] else { return }
+//                let inputTransaction = [
+//                    "amount": amount,
+//                    "date": transaction.date,
+//                    "note": transaction.note,
+//                    "transactionType":  ["iconName": transaction.transactionType?.iconName, "name":transaction.transactionType?.name],
+//                    "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+//                    "currency": "新台幣",
+//                    "from": "\(saveData.accountData?.accountName)",
+//                ] as [String: Any]
+//
+//                dateFont.dateFormat = "yyyy-MM"
+//                let dateM = dateFont.string(from: transaction.date)
+//                dateFont.dateFormat = "yyyy-MM-dd"
+//                let dateD = dateFont.string(from: transaction.date)
+//
+//                let payer = saveData.userInfoData.filter{ $0.userID == payerID }
+//            
+//                let payerAccountID = payer[0].ownAccount
+//
+//                db.collection("accounts").whereField("accountID", in: [toAccountID]).updateData([
+//                    "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
+//                    "accountInfo.expense": FieldValue.increment(amount),
+//                    "accountInfo.total": FieldValue.increment(amount),
+//                ]) { err in
+//                    if let err = err {
+//                        print("Error updating document: \(err)")
+//                        completion(.failure(err))
+//                    } else {
+//                        print("Document successfully updated")
+//                        completion(.success("Sent successfully"))
+//                    }
+//                }
+//            }
+//        }
     }
 
     // MARK: - 取得帳本資料 -

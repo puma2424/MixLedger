@@ -13,8 +13,8 @@ enum MoneyType {
 
     var text: String {
         switch self {
-        case let .money(int):
-            return String(int)
+        case let .money(value):
+            return String(format: "%.1f", value)
         }
     }
 
@@ -22,31 +22,37 @@ enum MoneyType {
         switch self {
         case let .money(int):
             if int > 0 {
-                return UIColor.blue
-            } else {
-                return UIColor.red
+                return .blue1()
+            }else if int == 0 {
+                return .g1()
+            }else {
+                return .red1()
             }
         }
     }
     
-    var billTitle: String{
+    var billTitle: String {
         switch self {
         case let .money(int):
             if int > 0 {
-                return "待收金額"
-            } else {
-                return "待還金額"
+                return "Tack Back"
+            }else if int == 0 {
+                return "Balance"
+            }else {
+                return "To Pay"
             }
         }
     }
     
-    var checkButtonTitle: String{
+    var checkButtonTitle: String {
         switch self {
         case let .money(int):
             if int > 0 {
-                return "還款"
-            } else {
-                return "催款"
+                return "還  款"
+            }else if int == 0 {
+                return ""
+            }else {
+                return "催  款"
             }
         }
     }

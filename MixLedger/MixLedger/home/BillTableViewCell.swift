@@ -72,18 +72,7 @@ class BillTableViewCell: UITableViewCell {
         stackView.spacing = 5 // 設置子視圖之間的間距
         return stackView
     }()
-    
-//    private func isLastCellInSection() -> Bool {
-//        guard let tableView = superview as? UITableView else {
-//            return false
-//        }
-//
-//        let lastIndexPathInSection = IndexPath(row: tableView.numberOfRows(inSection: indexPath.section) - 1, section: indexPath.section)
-//        return indexPath == lastIndexPathInSection
-//    }
-
     func setupView() {
-//        sortImageView.image = UIImage(named: "more")
         titleLabel.font = UIFont.systemFont(ofSize: 15)
         titleNoteLabel.font = UIFont.systemFont(ofSize: 13)
         moneyLabel.font = UIFont.systemFont(ofSize: 15)
@@ -110,9 +99,6 @@ class BillTableViewCell: UITableViewCell {
             mark.centerY.equalTo(contentView)
         }
 
-//        titleNoteLabel.snp.makeConstraints { mark in
-//            mark.bottom.equalTo(titleStackView).offset(-5)
-//        }
         titleStackView.snp.makeConstraints { mark in
             mark.top.equalTo(sortImageView).offset(5)
             mark.leading.equalTo(sortImageView.snp.trailing).offset(2)
