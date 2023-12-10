@@ -153,6 +153,7 @@ class HomeViewController: UIViewController{
             print("\(currentAccountID)")
             self.currentAccountID = currentAccountID
         }
+        accountBookView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(accountBookView, animated: true)
     }
 

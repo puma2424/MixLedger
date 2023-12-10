@@ -163,9 +163,6 @@ class AddNewItemViewController: UIViewController {
                 }
             }
             
-        
-            
-            // swiftlint:enable line_length
         }
     }
 

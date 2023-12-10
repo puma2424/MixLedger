@@ -35,12 +35,6 @@ class BillStatusTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        // 在 tableView 的父视图中设置阴影
-//        layer.shadowColor = UIColor.clear.cgColor
-//        layer.shadowOffset = CGSize(width: 0, height: 2)
-//        layer.shadowRadius = 4
-//        layer.shadowOpacity = 0.8
-//        layer.masksToBounds = false
     }
 
     override func awakeFromNib() {
@@ -83,6 +77,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let totalTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "總額"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -97,6 +92,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let payTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "支出"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -111,6 +107,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let revenueTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "收入"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -118,8 +115,6 @@ class BillStatusTableViewCell: UITableViewCell {
     let revenueMoneyLabel: UILabel = {
         let label = UILabel()
         label.text = "NT$ 3000"
-        // 設置 UILabel 的大小
-
         label.sizeToFit()
         return label
     }()

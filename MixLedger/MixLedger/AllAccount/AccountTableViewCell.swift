@@ -28,6 +28,16 @@ class AccountTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // 在 tableView 的父视图中设置阴影
+        superview?.layer.shadowColor = UIColor.g2().cgColor
+        superview?.layer.shadowOffset = CGSize(width: 0, height: 5)
+        superview?.layer.shadowRadius = 4
+        superview?.layer.shadowOpacity = 1.0
+        superview?.layer.masksToBounds = false
+    }
 
     let checkmarkImageView: UIImageView = {
         let imageView = UIImageView()
@@ -43,6 +53,7 @@ class AccountTableViewCell: UITableViewCell {
     let accountNameLable: UILabel = {
         let lable = UILabel()
         lable.font = UIFont.systemFont(ofSize: 20)
+        lable.textColor = .g1()
         return lable
     }()
 
