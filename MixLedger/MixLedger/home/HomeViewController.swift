@@ -124,6 +124,7 @@ class HomeViewController: UIViewController{
             switch result{
             case .success(let data):
                 self.savaData.myInfo?.message = data.message
+                self.saveData.myInfo?.inviteCard = data.inviteCard
                 self.saveData.myInfo?.shareAccount = data.shareAccount
             case .failure(let err):
                 print(err)

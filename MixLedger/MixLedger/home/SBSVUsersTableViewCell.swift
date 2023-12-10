@@ -73,7 +73,6 @@ class SBSVUsersTableViewCell: UITableViewCell {
         button.setTitle("催款", for: .normal)
         button.setTitleColor(.g3(), for: .normal)
         button.layer.cornerRadius = 10
-        button.layer.borderWidth = 1
         button.backgroundColor = .brightGreen3()
         return button
     }()

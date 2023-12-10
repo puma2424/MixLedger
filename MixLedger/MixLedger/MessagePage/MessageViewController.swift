@@ -12,18 +12,19 @@ class MessageViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setupLayout()
         setupTable()
+        setupLayout()
+        
         navigationItem.title = "通知"
         // 在訂閱者處註冊通知
         NotificationCenter.default.addObserver(self, selector: #selector(handleMessageNotification), name: .myMessageNotification, object: nil)
         
-        
+        view.backgroundColor = .g3()
         
     }
     // 處理通知的方法
     @objc func handleMessageNotification() {
-        data = saveData.myInfo
+        datas = saveData.myInfo
         tableView.reloadData()
         print("Notification received!")
     }
@@ -38,22 +39,23 @@ class MessageViewController: UIViewController {
      */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        data = saveData.myInfo
+        datas = saveData.myInfo
         tableView.reloadData()
     }
 
     let firebaseManager = FirebaseManager.shared
 
-    var data: UsersInfoResponse?
+    var datas: UsersInfoResponse?
 
     let saveData = SaveData.shared
 
-    let tableView = UITableView()
+    var tableView = UITableView()
 
     func setupTable() {
+        tableView = UITableView(frame: view.bounds, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
-
+        tableView.backgroundColor = .g3()
         tableView.register(InviteMessageTableViewCell.self, forCellReuseIdentifier: "inviteCell")
     }
 
@@ -68,41 +70,41 @@ class MessageViewController: UIViewController {
         }
     }
 
-    func agare(index: IndexPath) {
+    func agareInvitation(index: IndexPath) {
+        
+        print("agare in table \(index)")
+        print(datas?.inviteCard?[index.row])
+        if let data = datas?.inviteCard?[index.row] {
+            firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
+                print("--")
+                self.datas = self.saveData.myInfo
+                self.tableView.reloadData()
+            }
+        }    }
+
+    func rejectInvitation(index: IndexPath) {
         if index.section == 0{
             print("agare in table \(index)")
-            print(data?.inviteCard?[index.row])
-            if let data = data?.inviteCard?[index.row] {
-                firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
+            if let data = datas?.inviteCard?[index.row] {
+                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
                     print("--")
-                    self.data = self.saveData.myInfo
+                    self.datas = self.saveData.myInfo
                     self.tableView.reloadData()
                 }
             }
-        }else{
-            if let data = data?.message?[index.row] {
-                if data.isDunningLetter{
-                    firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: ""){_ in
-                        return
-                    }
+        }
+    }
+    
+    func agare(index: IndexPath){
+        if let data = datas?.message?[index.row] {
+            if data.isDunningLetter{
+                firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: ""){_ in
+                    return
                 }
             }
         }
-        
     }
-
-    func reject(index: IndexPath) {
-        if index.section == 0{
-            print("agare in table \(index)")
-//            if let data = data?.inviteCard?[index.row] {
-//                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { _ in
-//                    print("--")
-//                    self.data = self.saveData.myInfo
-//                    self.tableView.reloadData()
-//                }
-//            }
-        }
-    }
+    
 }
 
 extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
@@ -110,12 +112,24 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         2
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            "Account Invitation"
+        }else {
+            "Message"
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            let inviteCardCount = data?.inviteCard?.count ?? 0
-            return inviteCardCount
+            let inviteCardCount = datas?.inviteCard?.count ?? 1
+            if inviteCardCount == 0 {
+                return 1
+            }else {
+                return inviteCardCount
+            }
         }else{
-            let messageCount = data?.message?.count ?? 0
+            let messageCount = datas?.message?.count ?? 0
             return messageCount
         }
     }
@@ -124,35 +138,55 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         var cell = tableView.dequeueReusableCell(withIdentifier: "inviteCell", for: indexPath)
         guard let inviteCell = cell as? InviteMessageTableViewCell else { return cell }
         if indexPath.section == 0{
-            if let data = data?.inviteCard?[indexPath.row] {
-                inviteCell.inviteMessageLabel.text = "\(data.inviterName)邀請你加入帳簿：\(data.accountName)"
-            }
-
-            inviteCell.agreeClosure = { [weak self] in
-                self?.agare(index: indexPath)
-            }
-
-            inviteCell.rejectClosure = { [weak self] in
-                self?.reject(index: indexPath)
+            if let data = datas?.inviteCard {
+                if data.count > 0{
+                    inviteCell.setupLayoutIncludeBothButton()
+                    inviteCell.inviteMessageLabel.text = "\(data[indexPath.row].inviterName)邀請你加入帳簿：\(data[indexPath.row].accountName)"
+                    
+                    inviteCell.agreeClosure = { [weak self] in
+                        self?.agareInvitation(index: indexPath)
+                    }
+                    
+                    inviteCell.rejectClosure = { [weak self] in
+                        self?.rejectInvitation(index: indexPath)
+                    }
+                }else {
+                    inviteCell.setupLayoutNoButton()
+                    inviteCell.inviteMessageLabel.text = "No Account Invitation"
+                }
+            }else {
+                inviteCell.setupLayoutNoButton()
+                inviteCell.inviteMessageLabel.text = "No Account Invitation"
             }
         }else{
-            
-            if let data = data?.message?[indexPath.row] {
-                if data.fromUserID == saveData.myInfo?.userID{
-                    inviteCell.inviteMessageLabel.text = data.toSenderMessage
-                }else{
-                    inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+            if let data = datas?.message?[indexPath.row] {
+                if data.isDunningLetter {
+                    
+                    if data.fromUserID == saveData.myInfo?.userID{
+                        inviteCell.setupLayoutNoButton()
+                        inviteCell.inviteMessageLabel.text = data.toSenderMessage
+                    }else{
+                        inviteCell.setupLayoutJustAgreeButton()
+//                        inviteCell.setupLayoutIncludeBothButton()
+                        inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                    }
+                    
+                }else {
+                    inviteCell.setupLayoutNoButton()
+                    
+                    if data.fromUserID == saveData.myInfo?.userID{
+                        inviteCell.inviteMessageLabel.text = data.toSenderMessage
+                    }else{
+                        inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                    }
+                   
                 }
-                
             }
 
             inviteCell.agreeClosure = { [weak self] in
                 self?.agare(index: indexPath)
             }
 
-            inviteCell.rejectClosure = { [weak self] in
-                self?.reject(index: indexPath)
-            }
         }
 
         return inviteCell

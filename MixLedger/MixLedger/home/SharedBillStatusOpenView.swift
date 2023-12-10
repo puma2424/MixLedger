@@ -116,7 +116,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate{
                                                 fromAccoundID: accountData.accountID,
                                                 fromAccoundName: accountData.accountName){_ in
                         return
-                        }
+                    }
                     
                     
                 }
