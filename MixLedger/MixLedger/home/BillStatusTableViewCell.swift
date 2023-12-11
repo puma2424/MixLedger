@@ -33,10 +33,6 @@ class BillStatusTableViewCell: UITableViewCell {
         backgroundColor = .g3()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -49,6 +45,16 @@ class BillStatusTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // 在 tableView 的父视图中设置阴影
+        superview?.layer.shadowColor = UIColor.g2().cgColor
+        superview?.layer.shadowOffset = CGSize(width: 0, height: 5)
+        superview?.layer.shadowRadius = 4
+        superview?.layer.shadowOpacity = 1.0
+        superview?.layer.masksToBounds = false
+    }
+    
     var delegate: BillStatusTableViewCellDelegate?
 
     let lastMonthButton: UIButton = {

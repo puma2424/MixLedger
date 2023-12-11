@@ -33,8 +33,7 @@ class FirebaseManager {
                      amount: Double,
                      fromAccoundID: String,
                      fromAccoundName: String,
-                     completion: @escaping (Result<String, Error>) -> Void)
-    {
+                     completion: @escaping (Result<String, Error>) -> Void) {
         let message: [String: Any] = ["toSenderMessage": textToMyself,
                                       "toReceiverMessage": textToOtherUser,
                                       "fromUserID": saveData.myInfo?.userID,
@@ -59,7 +58,7 @@ class FirebaseManager {
                             print("Error updating document: \(err)")
                             completion(.failure(err))
                         } else {
-                            completion(.success(""))
+                            completion(.success("成功發送訊息"))
                         }
                     }
                 }

@@ -36,6 +36,8 @@
 		9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F912B1872AC00D4BCAA /* RepayView.swift */; };
 		9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */; };
 		9A792B312B26F3D9004D97A4 /* ShowCustomAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */; };
+		9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */; };
+		9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */; };
 		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
 		9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */; };
 		9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */; };
@@ -159,6 +161,8 @@
 		9A590F912B1872AC00D4BCAA /* RepayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepayView.swift; sourceTree = "<group>"; };
 		9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCustomAlertManager.swift; sourceTree = "<group>"; };
+		9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillTableViewCell.swift; sourceTree = "<group>"; };
+		9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillViewController.swift; sourceTree = "<group>"; };
 		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
 		9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconModel.swift; sourceTree = "<group>"; };
@@ -424,6 +428,15 @@
 			path = SignPage;
 			sourceTree = "<group>";
 		};
+		9A792B342B272A89004D97A4 /* DetailedBill */ = {
+			isa = PBXGroup;
+			children = (
+				9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */,
+				9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */,
+			);
+			path = DetailedBill;
+			sourceTree = "<group>";
+		};
 		9A80F5FD2B21CC2100D7F549 /* SubType */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +460,7 @@
 		9AEB5F7F2B0731D500DF5DFF /* home */ = {
 			isa = PBXGroup;
 			children = (
+				9A792B342B272A89004D97A4 /* DetailedBill */,
 				9A2379822B037BE5001D6BAF /* HomeViewController.swift */,
 				9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */,
 				9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */,
@@ -819,6 +833,7 @@
 				9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */,
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,
 				9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */,
+				9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */,
 				9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */,
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
@@ -836,6 +851,7 @@
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
+				9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
 				9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,

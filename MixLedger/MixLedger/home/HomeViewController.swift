@@ -321,10 +321,15 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
                                     isDunningLetter: true,
                                     amount: amount,
                                     fromAccoundID: accountData.accountID,
-                                    fromAccoundName: accountData.accountName)
-        { _ in
+                                    fromAccoundName: accountData.accountName) { result in
+            switch result {
+            case .success(let success):
+                LKProgressHUD.showSuccess(text: success)
+            case .failure(let failure):
+                print(failure)
+                LKProgressHUD.showFailure()
+            }
         }
-
         payView.removeFromSuperview()
     }
 
@@ -353,7 +358,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
                 make.centerX.equalTo(self.showView)
                 make.centerY.equalTo(self.showView)
             }
-            self.view.layoutIfNeeded() // 确保立即应用布局变化
+            self.view.layoutIfNeeded() 
         }
     }
 
@@ -483,9 +488,31 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.selectedBackgroundView?.backgroundColor = .g3()
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath != IndexPath(row: 0, section: 0) {
+            let subTypeVC = DetailedBillViewController()
+            subTypeVC.modalPresentationStyle = .automatic
+            subTypeVC.modalTransitionStyle = .coverVertical
+            subTypeVC.sheetPresentationController?.detents = [.custom(resolver: { context in
+                context.maximumDetentValue * 0.5
+            }
+            )]
+            if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
+                print(showMonBill(date: selectDate))
+//                var transactionsDayDatasKeys: [String] = []
+                transactionsDayDatasKeys = []
+                for dataKey in datas.keys {
+                    transactionsDayDatasKeys.append(dataKey)
+                }
+
+                guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return }
+                subTypeVC.data = data
+                subTypeVC.tableView.reloadData()
+            }
+            
+
+            present(subTypeVC, animated: true, completion: nil)
+        }
     }
 }
 
