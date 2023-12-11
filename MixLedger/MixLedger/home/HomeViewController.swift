@@ -181,6 +181,10 @@ class HomeViewController: UIViewController {
         // 加到導覽列中
         navigationItem.leftBarButtonItem = editAccountBookButton
 
+        addRightBarButton()
+    }
+    
+    func addRightBarButton() {
         // 導覽列右邊按鈕
         let shareButton = UIBarButtonItem(
             //          title:"設定",
@@ -191,6 +195,11 @@ class HomeViewController: UIViewController {
         )
         // 加到導覽列中
         navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    func removeRightBarButton() {
+        // 移除右邊的按鈕
+        navigationItem.rightBarButtonItem = nil
     }
 
     func setupTable() {
@@ -209,12 +218,14 @@ class HomeViewController: UIViewController {
             showView.snp.updateConstraints { make in
                 make.height.equalTo(0)
             }
+            removeRightBarButton()
         } else {
             showView.isHidden = false
             showView.snp.updateConstraints { make in
                 make.height.equalTo(50)
             }
             closeView()
+            addRightBarButton()
         }
     }
 
