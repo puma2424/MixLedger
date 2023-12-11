@@ -53,7 +53,8 @@ class SaveData {
                 for timeKey in dayTransactions.keys {
                     guard let timeTransactions = dayTransactions[timeKey] else { return [] }
                     if let typeName = timeTransactions.transactionType?.name,
-                       let transactionType = TransactionMainType(text: "\(typeName)")
+                       let transactionType = TransactionMainType(text: "\(typeName)"),
+                       timeTransactions.amount != 0
                     {
                         if transactionType == .expenses {
                             let dateFont = DateFormatter()
@@ -63,7 +64,7 @@ class SaveData {
                             let monthNumber = calendar.component(.month, from: timeTransactions.date)
                             transactionsArray.append(Test(year: dateString,
                                                           mon: monthNumber,
-                                                          amount: timeTransactions.amount,
+                                                          amount: abs(timeTransactions.amount),
                                                           currency: timeTransactions.currency,
                                                           date: timeTransactions.date,
                                                           subType: timeTransactions.subType,

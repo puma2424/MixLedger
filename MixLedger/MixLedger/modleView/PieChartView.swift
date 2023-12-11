@@ -53,7 +53,8 @@ struct PieChart: View {
 
                     PieChartView(
                         title: "\(labels[index])",
-                        description: String(format: "%.2f%%", data[index] / total * 100)
+//                        title: "",
+                        description: String(format: "%.2f%%", (data[index] / total * 100))
                     )
                     .offset(textOffset(for: index, in: geo.size))
                     .zIndex(1)
@@ -67,6 +68,8 @@ struct PieChart: View {
 
     private func sum() {
         total = data.reduce(0.0, +)
+        print(data)
+        print(total)
     }
 
     private func startAngle(for index: Int) -> Double {
@@ -90,7 +93,7 @@ struct PieChart: View {
     }
 
     private func textOffset(for index: Int, in size: CGSize) -> CGSize {
-        let radius = min(size.width, size.height) / 3
+        let radius = min(size.width, size.height) / 1.75
         let dataRatio = (2 * data[..<index].reduce(0, +) + data[index]) / (2 * data.reduce(0, +))
         let angle = CGFloat(sliceOffset + 2 * .pi * dataRatio)
         return CGSize(width: radius * cos(angle), height: radius * sin(angle))

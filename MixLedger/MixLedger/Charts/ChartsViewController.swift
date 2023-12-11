@@ -142,7 +142,13 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 
     func setupPie() -> UIView {
-        let datas = saveData.transactionsArray
+        let originaldatas = saveData.transactionsArray
+        let datas = originaldatas.filter { data in
+            let calendar = Calendar.current
+            let currentDateMon = calendar.dateComponents([.month], from: currentDate)
+            let dataDateMon = calendar.dateComponents([.month], from: data.date)
+            return data.amount != 0 && currentDateMon == dataDateMon
+        }
         var dic: [String: Double] = [:]
         for data in datas {
             if dic[data.subType.name] == nil {
@@ -180,9 +186,11 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 400),
+//            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+//            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 200),
+            hostingController.view.widthAnchor.constraint(equalToConstant: 200),
+            hostingController.view.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         return hostingController.view
     }
@@ -214,10 +222,10 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
                 if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
                     if let index = forLineMarkData.firstIndex(where: { $0.date == firstDayOfMonth && $0.subType == originalData.subType.name }) {
                         print("找到了，位置是 \(index)")
-                        forLineMarkData[index].amount -= originalData.amount
+                        forLineMarkData[index].amount += abs(originalData.amount)
                     } else {
                         // 创建 TransactionForChart 对象，amount 设置为 0
-                        let transaction = TransactionForChart(amount: -originalData.amount,
+                        let transaction = TransactionForChart(amount: abs(originalData.amount),
                                                               date: firstDayOfMonth,
                                                               subType: originalData.subType.name,
                                                               mainType: originalData.transactionType.name)
