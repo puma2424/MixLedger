@@ -27,7 +27,7 @@ class SegmentedControlModleView: UIView {
     convenience init(frame: CGRect, buttonTitle: [String]) {
         self.init(frame: frame)
         buttonTitles = buttonTitle
-        backgroundColor = .clear
+        backgroundColor = .g1()
     }
 
     override func draw(_ rect: CGRect) {

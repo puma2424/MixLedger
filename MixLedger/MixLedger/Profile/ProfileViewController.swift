@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController {
      */
     let singOutButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sing Out", for: .normal)
+        button.setTitle("Sign Out", for: .normal)
         button.setTitleColor(.g3(), for: .normal)
         button.backgroundColor = .g1()
         return button

@@ -47,7 +47,7 @@ class ShowScreenManager {
 
     static func showSinginScreen(window: UIWindow) {
         // 创建登录界面的视图控制器，这可以是你的登录页面
-        let singinViewController = SingInViewController()
+        let singinViewController = SignInViewController()
 
         // 创建一个导航控制器，如果需要的话
         let navigationController = UINavigationController(rootViewController: singinViewController)

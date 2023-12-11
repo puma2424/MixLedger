@@ -87,8 +87,8 @@
 		9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */; };
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
-		9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SingInViewController.swift */; };
-		9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */; };
+		9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SignInViewController.swift */; };
+		9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */; };
 		9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BC2B1DECC70013A30A /* Color+extension.swift */; };
 		9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */; };
 		9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */; };
@@ -183,8 +183,8 @@
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MixLedger.entitlements; sourceTree = "<group>"; };
-		9AECC9B82B1DBD740013A30A /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
-		9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingupViewController.swift; sourceTree = "<group>"; };
+		9AECC9B82B1DBD740013A30A /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		9AECC9BC2B1DECC70013A30A /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
 		9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthenticationMenager.swift; sourceTree = "<group>"; };
@@ -333,7 +333,7 @@
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
-				9A5C83C02B1F273100BB778A /* SingPage */,
+				9A5C83C02B1F273100BB778A /* SignPage */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
@@ -412,13 +412,13 @@
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
 		};
-		9A5C83C02B1F273100BB778A /* SingPage */ = {
+		9A5C83C02B1F273100BB778A /* SignPage */ = {
 			isa = PBXGroup;
 			children = (
-				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
-				9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */,
+				9AECC9B82B1DBD740013A30A /* SignInViewController.swift */,
+				9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */,
 			);
-			path = SingPage;
+			path = SignPage;
 			sourceTree = "<group>";
 		};
 		9A80F5FD2B21CC2100D7F549 /* SubType */ = {
@@ -831,7 +831,7 @@
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
-				9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */,
+				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
 				9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */,
@@ -840,7 +840,7 @@
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
-				9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */,
+				9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 				9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */,
 			);

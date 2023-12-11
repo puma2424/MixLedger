@@ -1,5 +1,5 @@
 //
-//  SingInViewController.swift
+//  SignInViewController.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/12/4.
@@ -11,7 +11,7 @@ import FirebaseAuth
 import SnapKit
 import UIKit
 
-class SingInViewController: UIViewController {
+class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -111,7 +111,7 @@ class SingInViewController: UIViewController {
     }
 }
 
-extension SingInViewController: ASAuthorizationControllerDelegate {
+extension SignInViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         // 登入成功
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
@@ -162,13 +162,13 @@ extension SingInViewController: ASAuthorizationControllerDelegate {
 // MARK: - ASAuthorizationControllerPresentationContextProviding
 
 // 在畫面上顯示授權畫面
-extension SingInViewController: ASAuthorizationControllerPresentationContextProviding {
+extension SignInViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
 }
 
-extension SingInViewController {
+extension SignInViewController {
     // MARK: - 透過 Credential 與 Firebase Auth 串接
 
     func firebaseSignInWithApple(credential: AuthCredential) {
@@ -205,7 +205,7 @@ extension SingInViewController {
                     print(user.displayName)
                     print(uid)
                     print(email)
-                    let singupVC = SingupViewController()
+                    let singupVC = SignupViewController()
                     singupVC.uid = uid
                     singupVC.userEmail = email
                     self.present(singupVC, animated: true)

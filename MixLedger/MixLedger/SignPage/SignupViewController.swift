@@ -1,5 +1,5 @@
 //
-//  SingupViewController.swift
+//  SignupViewController.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/12/4.
@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class SingupViewController: UIViewController {
+class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
