@@ -78,9 +78,15 @@ extension FirebaseManager {
                         for document in querySnapshot.documents {
                             //                print("\(document.documentID) => \(document.data())")
                             print(document.data()["accountName"])
-                            if let id = document.data()["accountID"] as? String /* , let name = [document.data()["accountName"]] as? String */ {
-                                self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+                            if let id = document.data()["accountID"] as? String,
+                                let name = document.data()["accountName"] as? String,
+                               let iconName = document.data()["iconName"] as? String {
+                                
+                                    self.saveData.myShareAccount[id] = MyShareAccountInfo(name: name, id: id, iconName: iconName)
+                                
                             } else {
+                                let id = document.data()["accountID"] as? String
+                                print(id)
                                 print(document.data()["accountID"])
                                 print(document.data()["accountName"])
                             }

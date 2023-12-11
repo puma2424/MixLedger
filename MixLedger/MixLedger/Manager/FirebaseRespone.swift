@@ -33,21 +33,6 @@ struct Transaction: Codable {
     var shareUser: [String: Double]?
     var subType: TransactionType
 
-//    init(amount: Double, currency: String, date: Date, from: String?, note: String?, payUser: [String: Double]?, shareUser: [String: Double]?, type: TransactionType, year _: String) {
-//        let dateFont = DateFormatter()
-//        dateFont.dateFormat = "yyyy"
-//        let dateString = dateFont.string(from: date)
-    ////        self.id = id
-//        self.amount = amount
-//        self.currency = currency
-//        self.date = date
-//        self.from = from
-//        self.note = note
-//        self.payUser = payUser
-//        self.shareUser = shareUser
-//        self.type = type
-//        year = dateString
-//    }
 }
 
 enum TransactionMainType {

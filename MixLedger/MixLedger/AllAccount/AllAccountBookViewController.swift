@@ -131,12 +131,16 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         guard let accountCell = cell as? AccountTableViewCell else { return cell }
 
         if indexPath.section == 0 {
-            if let id = savaData.myInfo?.ownAccount {
-                accountCell.accountNameLable.text = savaData.myShareAccount[id]
+            if let id = savaData.myInfo?.ownAccount,
+            let data = savaData.myShareAccount[id] {
+                accountCell.accountNameLable.text = data.name
+                accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         } else {
-            if let id = savaData.myInfo?.shareAccount[indexPath.row] {
-                accountCell.accountNameLable.text = savaData.myShareAccount[id]
+            if let id = savaData.myInfo?.shareAccount[indexPath.row],
+               let data = savaData.myShareAccount[id] {
+                accountCell.accountNameLable.text = data.name
+                accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         }
 

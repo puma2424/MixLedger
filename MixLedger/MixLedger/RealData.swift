@@ -7,6 +7,13 @@
 
 import Foundation
 
+
+struct MyShareAccountInfo {
+    var name: String
+    var id : String
+    var iconName: String
+}
+
 class SaveData {
     static let shared = SaveData()
 
@@ -32,7 +39,7 @@ class SaveData {
         }
     }
 
-    var myShareAccount: [String: String] = [:]
+    var myShareAccount: [String: MyShareAccountInfo] = [:]
     var transactionsArray: [Test] = []
 //    var accountInfo:
 
