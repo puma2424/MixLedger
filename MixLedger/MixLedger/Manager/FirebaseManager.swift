@@ -288,15 +288,17 @@ class FirebaseManager {
     // MARK: - 發送共享帳簿的邀請 -
 
     // 發送共享帳簿的邀請
-    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion _: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
+    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion : @escaping (Result<String, Error>) -> Void) {
         db.collection("accounts").document(shareAccountID).updateData([
             "invitees": FieldValue.arrayUnion([inviteeID]),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
+                completion(.failure(err))
             } else {
                 print("Document successfully updated")
                 self.postShareAccountToInivitee(inviteeID: inviteeID, shareAccountID: shareAccountID)
+                completion(.success(""))
             }
         }
     }
