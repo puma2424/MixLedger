@@ -98,4 +98,41 @@ extension FirebaseManager {
             }
         }
     }
+    
+    static func postDeleteInvitation(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void){
+        let myID = SaveData.shared.myID
+        
+        shared.db.collection("users").document(myID).updateData([
+            "inviteCard": FieldValue.arrayRemove([["accountID": accountID, "inviterID": inviterID, "inviterName": inviterName, "accountName": accountName]]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功刪除邀請卡"))
+            }
+        }
+    }
+    
+    static func postDeleteMessage(userID: String, messageInfo: Message, completion: @escaping (Result<String, Error>) -> Void){
+        shared.db.collection("users").document(userID).updateData([
+            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
+                                                "toReceiverMessage": messageInfo.toReceiverMessage,
+                                                "fromUserID": messageInfo.fromUserID,
+                                                "toUserID": messageInfo.toUserID,
+                                                "isDunningLetter": messageInfo.isDunningLetter,
+                                                "amount": messageInfo.amount,
+                                                "formAccoundID": messageInfo.formAccoundID,
+                                                "fromAccoundName": messageInfo.fromAccoundName]]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功刪除訊息"))
+            }
+        }
+    }
 }

@@ -192,24 +192,26 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                 inviteCell.inviteMessageLabel.textColor = .gray
             }
         } else {
-            if let data = datas?.message?[indexPath.row] {
-                if data.isDunningLetter {
-                    if data.fromUserID == saveData.myInfo?.userID {
+            if datas?.message?.count != 0 {
+                if let data = datas?.message?[indexPath.row] {
+                    if data.isDunningLetter {
+                        if data.fromUserID == saveData.myInfo?.userID {
+                            inviteCell.setupLayoutNoButton()
+                            inviteCell.inviteMessageLabel.text = data.toSenderMessage
+                        } else {
+                            inviteCell.setupLayoutJustAgreeButton()
+                            //                        inviteCell.setupLayoutIncludeBothButton()
+                            inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                        }
+                        
+                    } else {
                         inviteCell.setupLayoutNoButton()
-                        inviteCell.inviteMessageLabel.text = data.toSenderMessage
-                    } else {
-                        inviteCell.setupLayoutJustAgreeButton()
-//                        inviteCell.setupLayoutIncludeBothButton()
-                        inviteCell.inviteMessageLabel.text = data.toReceiverMessage
-                    }
-
-                } else {
-                    inviteCell.setupLayoutNoButton()
-
-                    if data.fromUserID == saveData.myInfo?.userID {
-                        inviteCell.inviteMessageLabel.text = data.toSenderMessage
-                    } else {
-                        inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                        
+                        if data.fromUserID == saveData.myInfo?.userID {
+                            inviteCell.inviteMessageLabel.text = data.toSenderMessage
+                        } else {
+                            inviteCell.inviteMessageLabel.text = data.toReceiverMessage
+                        }
                     }
                 }
             }else {
@@ -224,5 +226,60 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         return inviteCell
+    }
+    
+    func deleteMessage(indexPath: IndexPath){
+        if indexPath.section == 0 {
+            if let data = datas?.inviteCard?[indexPath.row] {
+                FirebaseManager.postDeleteInvitation(accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.accountName) { result in
+                    switch result {
+                    case .success(let success):
+                        self.datas?.inviteCard?.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    case .failure(let failure):
+                        return
+                    }
+                }
+            }
+        }else {
+            if let data = datas?.message?[indexPath.row] {
+                FirebaseManager.postDeleteMessage(userID: saveData.myID, messageInfo: data) { result in
+                    switch result {
+                    case .success(let success):
+//                        self.datas = self.saveData.myInfo
+                        self.datas?.message?.remove(at: indexPath.row)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        
+                    case .failure(let failure):
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteMessage(indexPath: indexPath)
+        }
+    }
+
+    // 啟用滑動刪除功能
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.section == 0 {
+            if self.datas?.inviteCard?.count == 0 {
+                return .none
+            }
+        }else {
+            if self.datas?.message?.count == 0 {
+                return .none
+            }
+        }
+        return .delete
+    }
+
+    // 提供刪除按鈕的標題，你可以自定義這個按鈕的外觀
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "刪除"
     }
 }
