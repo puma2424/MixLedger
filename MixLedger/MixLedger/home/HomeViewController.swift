@@ -305,6 +305,10 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatusOpenViewDelegate, RepayViewDelegate {
+    func closeRepayView(subview: RepayView) {
+        subview.removeFromSuperview()
+    }
+    
     func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
         let mtName = saveData.myInfo?.name ?? ""
         let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"

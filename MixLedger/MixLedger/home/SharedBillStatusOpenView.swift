@@ -126,8 +126,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
                     repayView.otherUserName = otherUserName
                     repayView.otherUserID = id
 
-                    repayView.titleLabel.text = "\(otherUserName)待收款金額為：\(abs(money))"
-                    repayView.toUser.text = "向\(otherUserName)還款"
+                    repayView.setLabel(otherUserName: otherUserName, otherMoney: "\(abs(money))")
                     openDelegate?.addRePayView(subview: repayView)
                 }
             }
