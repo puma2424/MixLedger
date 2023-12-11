@@ -26,6 +26,7 @@ class LKProgressHUD {
             return rootViewController.view
         }
         return UIView()
+        
     }
 
     static func show(type: HUDType) {

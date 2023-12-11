@@ -577,7 +577,7 @@ class FirebaseManager {
                                 formAccountName: String,
                                 usersInfo: [UsersInfoResponse],
                                 transaction: Transaction,
-                                completion _: @escaping (Result<Any, Error>) -> Void)
+                                completion : @escaping (Result<Any, Error>) -> Void)
     {
         dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: transaction.date)
@@ -611,47 +611,12 @@ class FirebaseManager {
         batch.commit { err in
             if let err = err {
                 print("Error committing batch: \(err)")
+                completion(.failure(err))
             } else {
                 print("Batch committed successfully.")
+                completion(.success(""))
             }
         }
-//        if isMyAccount == false {
-//            for payerID in memberPayMoney.keys {
-//                guard let amount = memberPayMoney[payerID] else { return }
-//                let inputTransaction = [
-//                    "amount": amount,
-//                    "date": transaction.date,
-//                    "note": transaction.note,
-//                    "transactionType":  ["iconName": transaction.transactionType?.iconName, "name":transaction.transactionType?.name],
-//                    "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
-//                    "currency": "新台幣",
-//                    "from": "\(saveData.accountData?.accountName)",
-//                ] as [String: Any]
-//
-//                dateFont.dateFormat = "yyyy-MM"
-//                let dateM = dateFont.string(from: transaction.date)
-//                dateFont.dateFormat = "yyyy-MM-dd"
-//                let dateD = dateFont.string(from: transaction.date)
-//
-//                let payer = saveData.userInfoData.filter{ $0.userID == payerID }
-//
-//                let payerAccountID = payer[0].ownAccount
-//
-//                db.collection("accounts").whereField("accountID", in: [toAccountID]).updateData([
-//                    "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
-//                    "accountInfo.expense": FieldValue.increment(amount),
-//                    "accountInfo.total": FieldValue.increment(amount),
-//                ]) { err in
-//                    if let err = err {
-//                        print("Error updating document: \(err)")
-//                        completion(.failure(err))
-//                    } else {
-//                        print("Document successfully updated")
-//                        completion(.success("Sent successfully"))
-//                    }
-//                }
-//            }
-//        }
     }
 
     // MARK: - 取得帳本資料 -

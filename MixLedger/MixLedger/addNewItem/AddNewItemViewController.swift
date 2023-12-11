@@ -77,7 +77,7 @@ class AddNewItemViewController: UIViewController {
 
     var selectDate: Date?
 
-    var type: TransactionType = .init(iconName: "AllIcons.foodRice.rawValue", name: "food")
+    var type: TransactionType?
 
     let table = UITableView()
 
@@ -137,17 +137,25 @@ class AddNewItemViewController: UIViewController {
                                           payUser: memberPayMoney,
                                           shareUser: memberShareMoney,
                                           subType: type)
-
-            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
-                self.dismiss(animated: true)
+            LKProgressHUD.show()
+            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { result in
+                switch result {
+                case .success(let success):
+                    LKProgressHUD.dismiss()
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    LKProgressHUD.dismiss()
+                    LKProgressHUD.showFailure()
+                }
             }
 
             var payUsersID: [String] = []
             for userID in memberPayMoney.keys {
                 payUsersID.append(userID)
             }
-            saveData.userInfoData
-            if let accountName = saveData.accountData?.accountName {
+            
+            if let accountName = saveData.accountData?.accountName,
+               saveData.accountData?.accountID != saveData.myInfo?.ownAccount{
                 let usersInfo = saveData.userInfoData
                 firebase.postUpdatePayerAccount(isMyAccount: false,
                                                 formAccountName: accountName,
@@ -156,12 +164,13 @@ class AddNewItemViewController: UIViewController {
                 { result in
                     switch result {
                     case let .success(success):
-                        return
+                        LKProgressHUD.showSuccess(text: "同步到支出者帳本")
                     case let .failure(failure):
-                        return
+                        LKProgressHUD.showSuccess(text: "無法同步到支出者帳本")
                     }
                 }
             }
+            self.dismiss(animated: true)
         }
     }
 
@@ -381,7 +390,6 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
                     let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? ANITypeTableViewCell
                     cell?.iconImageView.image = UIImage(named: iconName)
                     cell?.titleLabel.text = title
-//                    self.table.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
                 }
                 print(subTypeVC.selectedIndex)
                 print(self.type)
@@ -438,14 +446,11 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                     }
                     self.table.reloadData()
-//                    self.table.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                     
                 case .failure:
                     return
                 }
             }
-
-//            self.table.reloadData()
         }
 
         dismiss(animated: true, completion: nil)
