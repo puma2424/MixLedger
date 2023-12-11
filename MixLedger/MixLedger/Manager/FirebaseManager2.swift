@@ -135,4 +135,18 @@ extension FirebaseManager {
             }
         }
     }
+    
+    static func postLeaveAccout(userID: String, accountId: String, completion: @escaping (Result<String, Error>) -> Void){
+        shared.db.collection("users").document(userID).updateData([
+            "shareAccount": FieldValue.arrayRemove([accountId]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功離開帳本"))
+            }
+        }
+    }
 }
