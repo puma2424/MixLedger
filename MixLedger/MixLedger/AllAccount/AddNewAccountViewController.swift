@@ -232,9 +232,27 @@ class AddNewAccountViewController: UIViewController {
 //        guard let budget = accountBudget as? Double else {return}
         guard let icon = selectedIcon else { return }
         if accountBudget != nil, let budget = accountBudget as? Double {
-            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon)
+            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon){ result in
+                switch result {
+                case .success(let success):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showFailure()
+                }
+            }
         } else {
-            firebaseManager.addNewAccount(name: name, iconName: icon)
+            firebaseManager.addNewAccount(name: name, iconName: icon){ result in
+                switch result {
+                case .success(let success):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showFailure()
+                }
+            }
         }
     }
 }

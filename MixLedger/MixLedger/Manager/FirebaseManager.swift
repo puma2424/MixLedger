@@ -326,7 +326,7 @@ class FirebaseManager {
 
     // MARK: - 新增新帳本 -
 
-    func addNewAccount(name: String, budget _: Double? = 0, iconName: String) {
+    func addNewAccount(name: String, budget _: Double? = 0, iconName: String, completion:  @escaping (Result<String, Error>) -> Void) {
         let newAccount = db.collection("account").document()
         guard let myInfo = saveData.myInfo else { return }
         let sharesID = [[myInfo.userID: 0.0]]
@@ -337,15 +337,18 @@ class FirebaseManager {
             try db.collection("accounts").document(newAccount.documentID).setData(from: newAccountInfo) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
+                    completion(.failure(err))
                 } else {
                     self.db.collection("users").document(myInfo.userID).updateData([
                         "shareAccount": FieldValue.arrayUnion([newAccount.documentID]),
                     ])
                     print("Document successfully written!")
+                    completion(.success("success"))
                 }
             }
         } catch {
             print("Error writing city to Firestore: \(error)")
+            completion(.failure(error))
         }
     }
 

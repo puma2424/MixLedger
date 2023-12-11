@@ -37,7 +37,6 @@ enum AllIcons: String, CaseIterable {
     case foodHamburger
     case house
     case pet
-    case drinks
     case traffic
     case medical2
     case drink
