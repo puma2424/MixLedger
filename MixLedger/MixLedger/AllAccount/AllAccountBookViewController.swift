@@ -185,19 +185,20 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     // 實現此方法以定義向右滑時顯示的編輯動作
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if indexPath.section == 1 {
-            let editAction = UITableViewRowAction(style: .normal, title: "編輯") { _, _ in
-                // 在這裡處理編輯操作
-                self.editItemAt(indexPath: indexPath)
-            }
+//            let editAction = UITableViewRowAction(style: .normal, title: "編輯") { _, _ in
+//                // 在這裡處理編輯操作
+//                self.editItemAt(indexPath: indexPath)
+//            }
             
             let deleteAction = UITableViewRowAction(style: .normal, title: "刪除") { _, _ in
                 // 在這裡處理編輯操作
                 self.deleteMessage(indexPath: indexPath)
             }
-            
+            deleteAction.backgroundColor = .red
             // 可以新增更多的編輯動作
             
-            return [editAction, deleteAction]
+//            return [editAction, deleteAction]
+            return [deleteAction]
         }
         return nil
     }
