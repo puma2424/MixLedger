@@ -297,10 +297,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
             invoiceCell.invoiceLabel.text = ""
-            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
-//            for index in 0..<invoiceString.count{
-//                invoiceCell.invoiceLabel.text? += "\(index)：\n\(invoiceString[index])\n"
-//            }
+//            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
+            
             var text = ""
             if invoiceNumber != "" {
                 text = "發票號碼： \(invoiceNumber)"
@@ -319,11 +317,13 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             }
             print(productDetails)
             for product in productDetails {
-                text += "\n 商品： \(product.name) \(product.price) * \(product.quantity)"
+                text += "\n商品： \(product.name) \(product.price) * \(product.quantity)"
             }
             invoiceCell.invoiceLabel.text = text
             note = text
-
+            if text != "" {
+                invoiceCell.resetLayout()
+            }
             return invoiceCell
 
         } else if indexPath.row == 3 {
@@ -438,6 +438,8 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                     }
                     self.table.reloadData()
+//                    self.table.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                    
                 case .failure:
                     return
                 }

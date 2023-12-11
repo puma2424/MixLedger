@@ -49,34 +49,34 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
 
     let invoiceLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "aaaaaaaaaaaaaaaaa"
         label.numberOfLines = 0
         return label
     }()
-
-    override func setupLayout() {
-        super.setupLayout()
-//        contentView.addSubview(iconImageView)
-//        contentView.addSubview(titleLabel)
+    
+    func resetLayout(){
+        iconImageView.snp.removeConstraints()
+        titleLabel.snp.removeConstraints()
         contentView.addSubview(invoiceLabel)
+        
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.top.equalTo(contentView).offset(12)
+            make.leading.equalTo(contentView).offset(12)
+        }
 
-//        iconImageView.snp.makeConstraints { mark in
-//            mark.width.height.equalTo(50)
-//            mark.top.equalTo(contentView).offset(12)
-        ////            mark.bottom.equalTo(contentView).offset(-12)
-//            mark.leading.equalTo(contentView).offset(12)
-//        }
-
-//        titleLabel.snp.makeConstraints { mark in
-//            mark.top.equalTo(contentView).offset(12)
-//            mark.leading.equalTo(contentView.snp.leading).offset(12)
-//        }
-
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(iconImageView)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(24)
+        }
+        
         invoiceLabel.snp.makeConstraints { mark in
             mark.leading.equalTo(titleLabel)
             mark.trailing.equalTo(contentView).offset(-12)
-            mark.top.equalTo(iconImageView.snp.bottom).offset(12)
+            mark.top.equalTo(titleLabel.snp.bottom).offset(12)
             mark.bottom.equalTo(contentView.snp.bottom).offset(-12)
         }
+        
     }
+
 }
