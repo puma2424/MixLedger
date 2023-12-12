@@ -18,8 +18,6 @@ class DetailedBillViewController: UIViewController {
         view.backgroundColor = .brightGreen4()
         numberOfUser()
     }
-    
-
     /*
     // MARK: - Navigation
 
@@ -29,35 +27,15 @@ class DetailedBillViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
-    
     var data: Transaction?
     
-    var allUsers: [String : Double] = [:]
+    var allUsers: [String: Double] = [: ]
     
     let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .clear
         return table
     }()
-    
-    func setupTable(){
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .clear
-        tableView.register(DetailedBillTableViewCell.self, forCellReuseIdentifier: "Cell")
-    }
-    
-    func setupLayout(){
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalTo(view)
-        }
-    }
-    
-//    var numberOfPayUser: Int = 0
-//    var numberOfShareUser: Int = 0
     
     var idOfPayUser: [String] = []
     var idOfShareUser: [String] = []
@@ -66,28 +44,39 @@ class DetailedBillViewController: UIViewController {
         
         if let payUser = data.payUser,
         let shareUser = data.shareUser {
-//            numberOfPayUser = payUser.count
-//            numberOfShareUser = shareUser.count
             
-            for id in payUser.keys {
-                if payUser[id] ?? 0.0 > 0.0 {
-                    idOfPayUser.append(id)
-                }
+            for id in payUser.keys where payUser[id] ?? 0.0 > 0.0 {
+                idOfPayUser.append(id)
             }
             
-            for id in shareUser.keys {
-                if shareUser[id] ?? 0.0 > 0.0 {
-                    idOfShareUser.append(id)
-                }
+            for id in shareUser.keys where shareUser[id] ?? 0.0 > 0.0 {
+                idOfShareUser.append(id)
             }
         }
     }
-
+    
+    func setupTable() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
+        tableView.register(DetailedBillTableViewCell.self, forCellReuseIdentifier: "Cell")
+    }
+    
+    func setupLayout() {
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalTo(view)
+        }
+    }
 }
 
 extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4 + idOfPayUser.count + idOfShareUser.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        64
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,7 +101,7 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
             default:
                 detailCell.setupForUserLayout()
                 if indexPath.row <= idOfPayUser.count + 3 {
-                    detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
+                    detailCell.iconImageView.image = AllIcons.human.icon
                     if idOfPayUser.count > 0 {
                         let id = idOfPayUser[indexPath.row - 4]
                         
@@ -123,12 +112,16 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                         let amount = data.payUser?[id] {
                             detailCell.contentLabel.text = name[0].name
                             
-                            detailCell.moneyLabel.text = "\(amount)"
+                            let moneyType = MoneyType.money(amount)
+                            detailCell.moneyLabel.text = moneyType.text
                             detailCell.payOrShareLabel.text = "Pay"
+                            
+                            detailCell.moneyLabel.textColor = moneyType.color
+                            detailCell.payOrShareLabel.textColor = moneyType.color
                         }
                     }
-                }else if indexPath.row <= idOfPayUser.count + idOfShareUser.count + 3 {
-                    detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
+                } else if indexPath.row <= idOfPayUser.count + idOfShareUser.count + 3 {
+                    detailCell.iconImageView.image = AllIcons.human.icon
                     if idOfShareUser.count > 0 {
                         let id = idOfShareUser[indexPath.row - 4 - idOfPayUser.count]
                         
@@ -139,15 +132,22 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                         if name.count > 0,
                            let amount = data.shareUser?[id] {
                             detailCell.contentLabel.text = name[0].name 
-                            detailCell.moneyLabel.text = "\(amount)"
+                            let moneyType = MoneyType.money(-amount)
+                            detailCell.moneyLabel.text = moneyType.text
                             detailCell.payOrShareLabel.text = "Share"
+                            
+                            detailCell.moneyLabel.textColor = moneyType.color
+                            detailCell.payOrShareLabel.textColor = moneyType.color
                         }
                     }
                 }
             }
-            
-        return cell
+        if detailCell.contentLabel.text != "" {
+            detailCell.contentLabel.textColor = .g1()
+        } else {
+            detailCell.contentLabel.textColor = .gray
+            detailCell.contentLabel.text = "Nothing"
+        }
+        return detailCell
     }
-    
-    
 }

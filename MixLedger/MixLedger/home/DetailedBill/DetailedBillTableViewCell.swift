@@ -59,39 +59,28 @@ class DetailedBillTableViewCell: UITableViewCell {
         addSubview(moneyLabel)
         addSubview(payOrShareLabel)
         
-//        iconImageView.snp.makeConstraints { make in
-//            make.top.equalTo(self).offset(12)
-//            make.leading.equalTo(self).offset(12)
-//            make.width.height.equalTo(40)
-//            make.bottom.equalTo(self).offset(-12)
-//        }
-//        
-//        contentLabel.snp.makeConstraints { make in
-//            make.top.equalTo(iconImageView)
-//            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
-//        }
-        
-        moneyLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(5)
-            make.trailing.equalTo(contentView).offset(-5)
-        }
-
-        payOrShareLabel.snp.makeConstraints { make in
-            make.top.equalTo(moneyLabel.snp.bottom).offset(5)
-            make.trailing.equalTo(moneyLabel)
-            
-        }
-
         iconImageView.snp.makeConstraints { make in
+            make.leading.equalTo(self).offset(12)
             make.width.height.equalTo(40)
-            make.leading.equalTo(contentView).offset(12)
-            make.bottom.equalTo(contentView).offset(-12)
+            make.centerY.equalTo(self)
         }
-
+        
         contentLabel.snp.makeConstraints { make in
             make.centerY.equalTo(iconImageView)
             make.leading.equalTo(iconImageView.snp.trailing).offset(12)
         }
+        
+        moneyLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(self.snp.centerY)
+            make.trailing.equalTo(contentView).offset(-24)
+        }
+
+        payOrShareLabel.snp.makeConstraints { make in
+            make.top.equalTo(moneyLabel.snp.bottom)
+            make.trailing.equalTo(moneyLabel)
+            
+        }
+        
     }
     
     func setupLayout() {

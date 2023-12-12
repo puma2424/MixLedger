@@ -14,7 +14,7 @@ enum MoneyType {
     var text: String {
         switch self {
         case let .money(value):
-            return String(format: "%.1f", value)
+            return String(format: "%.1f", abs(value))
         }
     }
 
