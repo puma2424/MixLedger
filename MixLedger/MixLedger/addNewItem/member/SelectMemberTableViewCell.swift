@@ -66,7 +66,7 @@ class SelectMemberTableViewCell: UITableViewCell {
 
     func setupTextField() {
         moneyTextField.delegate = self
-        moneyTextField.addTarget(self, action: #selector(inputMoney(_:)), for: .editingDidEnd)
+        moneyTextField.addTarget(self, action: #selector(inputMoney(_:)), for: .editingChanged)
     }
 
     func setupLayout() {

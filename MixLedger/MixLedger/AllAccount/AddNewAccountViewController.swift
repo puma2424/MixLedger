@@ -223,7 +223,7 @@ class AddNewAccountViewController: UIViewController {
     }
 
     @objc func inputbudget(_ textField: UITextField) {
-        textField.text = accountBudget
+        accountBudget = textField.text
         print(textField.text)
     }
 
@@ -232,9 +232,27 @@ class AddNewAccountViewController: UIViewController {
 //        guard let budget = accountBudget as? Double else {return}
         guard let icon = selectedIcon else { return }
         if accountBudget != nil, let budget = accountBudget as? Double {
-            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon)
+            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon){ result in
+                switch result {
+                case .success(let success):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showFailure()
+                }
+            }
         } else {
-            firebaseManager.addNewAccount(name: name, iconName: icon)
+            firebaseManager.addNewAccount(name: name, iconName: icon){ result in
+                switch result {
+                case .success(let success):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    self.dismiss(animated: true)
+                    LKProgressHUD.showFailure()
+                }
+            }
         }
     }
 }
@@ -245,10 +263,11 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        guard let iconCell = cell as? ANAIconCollectionViewCell else { return cell }
-        iconCell.imageView.image = AllIcons.allCases[indexPath.row].icon
-        return iconCell
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        guard let iconItem = item as? ANAIconCollectionViewCell else { return item }
+        iconItem.imageView.image = AllIcons.allCases[indexPath.row].icon
+        return iconItem
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

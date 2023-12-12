@@ -19,74 +19,75 @@ class FirebaseManager {
     @Published var errorMessage: String?
 
     let dateFont = DateFormatter()
-    
+
     var accountListener: ListenerRegistration?
-    
+
     var userMessageListener: ListenerRegistration?
-    
+
     // MARK: - 發送訊息 -
-    func postMessage(toUserID: String, 
+
+    func postMessage(toUserID: String,
                      textToOtherUser: String,
                      textToMyself: String,
-                     isDunningLetter: Bool, 
+                     isDunningLetter: Bool,
                      amount: Double,
                      fromAccoundID: String,
-                     fromAccoundName: String, 
-                     completion: @escaping (Result<String,Error>) -> Void){
-        
-        
-        let message: [String : Any] = ["toSenderMessage": textToMyself,
-                                       "toReceiverMessage": textToOtherUser,
-                                       "fromUserID" : saveData.myInfo?.userID,
-                                       "toUserID": toUserID,
-                                       "isDunningLetter": isDunningLetter,
-                                       "amount": amount,
-                                       "formAccoundID": fromAccoundID,
-                                       "fromAccoundName": fromAccoundName]
-        
+                     fromAccoundName: String,
+                     completion: @escaping (Result<String, Error>) -> Void) {
+        let message: [String: Any] = ["toSenderMessage": textToMyself,
+                                      "toReceiverMessage": textToOtherUser,
+                                      "fromUserID": saveData.myInfo?.userID,
+                                      "toUserID": toUserID,
+                                      "isDunningLetter": isDunningLetter,
+                                      "amount": amount,
+                                      "formAccoundID": fromAccoundID,
+                                      "fromAccoundName": fromAccoundName]
+
         db.collection("users").document(toUserID).updateData([
-            "message": FieldValue.arrayUnion([message])
+            "message": FieldValue.arrayUnion([message]),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
                 completion(.failure(err))
             } else {
-                if let myInfo = self.saveData.myInfo{
+                if let myInfo = self.saveData.myInfo {
                     self.db.collection("users").document(myInfo.userID).updateData([
-                        "message": FieldValue.arrayUnion([message])
+                        "message": FieldValue.arrayUnion([message]),
                     ]) { err in
                         if let err = err {
                             print("Error updating document: \(err)")
                             completion(.failure(err))
                         } else {
-                            completion(.success(""))
+                            completion(.success("成功發送訊息"))
                         }
                     }
                 }
             }
         }
     }
-    
+
     // swiftlint:disable line_length
+
     // MARK: - 確認還款 -
+
     // swiftlint:disable function_body_length
-    func confirmPayment(messageInfo: Message, textToOtherUser: String, textToMyself: String, completion: @escaping (Result<String,Error>) -> Void) {
-        guard let accountID = saveData.myInfo?.ownAccount else {return}
-        var othetUserAccountID: String = ""
-        getUsreInfo(userID: [messageInfo.fromUserID]){result in
-            switch result{
-            case .success(let data):
+    func confirmPayment(messageInfo: Message, textToOtherUser _: String, textToMyself _: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let accountID = saveData.myInfo?.ownAccount else { return }
+        var othetUserAccountID = ""
+        getUsreInfo(userID: [messageInfo.fromUserID]) { result in
+            switch result {
+            case let .success(data):
                 othetUserAccountID = data[0].ownAccount
-                guard let myInfo = self.saveData.myInfo else{return/*completion(.failure(_))*/}
+                guard let myInfo = self.saveData.myInfo else { return /* completion(.failure(_)) */ }
                 print(othetUserAccountID)
-                
+
                 let postTransactionToExpenses = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
                                                             amount: -messageInfo.amount,
                                                             currency: "新台幣", date: Date(),
                                                             from: messageInfo.fromAccoundName,
                                                             note: "",
                                                             subType: TransactionType(iconName: "", name: "付款"))
-                
+
                 let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
                                                          amount: messageInfo.amount,
                                                          currency: "新台幣",
@@ -94,72 +95,69 @@ class FirebaseManager {
                                                          from: messageInfo.fromAccoundName,
                                                          note: "",
                                                          subType: TransactionType(iconName: "", name: "收支平衡"))
-                
-                let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
-                                                         amount: messageInfo.amount,
-                                                         currency: "新台幣",
-                                                         date: Date(),
-                                                         from: messageInfo.fromAccoundName,
-                                                         note: "",
-                                                         subType: TransactionType(iconName: "", name: "收款"))
 
-                //value：同時間最多有1個thread可以存取某資源
+                let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
+                                                          amount: messageInfo.amount,
+                                                          currency: "新台幣",
+                                                          date: Date(),
+                                                          from: messageInfo.fromAccoundName,
+                                                          note: "",
+                                                          subType: TransactionType(iconName: "", name: "收款"))
+
+                // value：同時間最多有1個thread可以存取某資源
                 var semaphore = DispatchSemaphore(value: 1)
                 let queue = DispatchQueue(label: "myqueue")
-                
-                
+
                 queue.async {
-                    semaphore.wait()//thread正在工作
-                    self.postIncome(toAccountID: myInfo.ownAccount, transaction: postTransactionToIncome, memberPayMoney: [:], memberShareMoney: [:]){ result in
-                        switch result{
-                        case .success(_):
-                            semaphore.signal()//thread結束工作，可以進行下一個
+                    semaphore.wait() // thread正在工作
+                    self.postIncome(toAccountID: myInfo.ownAccount, transaction: postTransactionToIncome, memberPayMoney: [:], memberShareMoney: [:]) { result in
+                        switch result {
+                        case .success:
+                            semaphore.signal() // thread結束工作，可以進行下一個
                             return
-                        case .failure(_):
+                        case .failure:
                             return
                         }
-                        
                     }
                 }
-                
+
                 queue.async {
                     semaphore.wait()
-                    //thread正在工作
-                    self.postData(toAccountID: othetUserAccountID, transaction: postTransactionToExpenses, memberPayMoney: [:], memberShareMoney: [:]){ result in
-                        switch result{
-                        case .success(_):
-                            semaphore.signal()//thread結束工作，可以進行下一個
-                        case .failure(_):
+                    // thread正在工作
+                    self.postData(toAccountID: othetUserAccountID, transaction: postTransactionToExpenses, memberPayMoney: [:], memberShareMoney: [:]) { result in
+                        switch result {
+                        case .success:
+                            semaphore.signal() // thread結束工作，可以進行下一個
+                        case .failure:
                             return
                         }
                     }
-                    
                 }
-                
+
                 queue.async {
-                    semaphore.wait()//thread正在工作
+                    semaphore.wait() // thread正在工作
                     self.postIncome(toAccountID: messageInfo.formAccoundID,
                                     transaction: postTransactionToShare,
-                                    memberPayMoney: [messageInfo.fromUserID : messageInfo.amount, messageInfo.toUserID : 0.0],
-                                    memberShareMoney: [messageInfo.toUserID : messageInfo.amount, messageInfo.fromUserID : 0.0]){ result  in
+                                    memberPayMoney: [messageInfo.fromUserID: messageInfo.amount, messageInfo.toUserID: 0.0],
+                                    memberShareMoney: [messageInfo.toUserID: messageInfo.amount, messageInfo.fromUserID: 0.0])
+                    { result in
                         switch result {
-                        case .success(_):
+                        case .success:
                             print("qqqqqq===")
-                            semaphore.signal()//thread結束工作，可以進行下一個
-                        case .failure(let err):
+                            semaphore.signal() // thread結束工作，可以進行下一個
+                        case let .failure(err):
                             print(err)
                             print("xxxxxxx===")
                         }
                     }
-                    
                 }
-                
+
                 queue.async {
-                    semaphore.wait()//thread正在工作
+                    semaphore.wait() // thread正在工作
                     self.db.collection("users").document(messageInfo.toUserID).updateData([
                         "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
                                                             "toReceiverMessage": messageInfo.toReceiverMessage,
-                                                            "fromUserID" : messageInfo.fromUserID,
+                                                            "fromUserID": messageInfo.fromUserID,
                                                             "toUserID": messageInfo.toUserID,
                                                             "isDunningLetter": messageInfo.isDunningLetter,
                                                             "amount": messageInfo.amount,
@@ -172,19 +170,19 @@ class FirebaseManager {
                         } else {
                             print("Document successfully updated postAgareShareAccount")
                             completion(.success("成功變動使用者擁有帳本資訊"))
-                            semaphore.signal()//thread結束工作，可以進行下一個
+                            semaphore.signal() // thread結束工作，可以進行下一個
                         }
                     }
-                    
                 }
-                
-            case .failure(_):
+
+            case .failure:
                 return
             }
         }
-        
     }
+
     // MARK: - 回覆共享帳簿的邀請 -
+
     // 回覆共享帳簿的邀請
     func postRespondToInvitation(respond: Bool, accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void) {
         if respond {
@@ -227,7 +225,7 @@ class FirebaseManager {
                 completion(.success("成功變更帳本的共享者資訊"))
                 print("Document successfully updated postAgareShareAccount")
                 self.db.collection("users").document(self.saveData.myID).updateData([
-                    "inviteCard": FieldValue.arrayRemove([["accountID": accountID, 
+                    "inviteCard": FieldValue.arrayRemove([["accountID": accountID,
                                                            "inviterID": inviterID,
                                                            "inviterName": inviterName,
                                                            "accountName": accountName]]),
@@ -247,7 +245,7 @@ class FirebaseManager {
 
     // 拒絕邀請
     private func postAdjectShareAccount(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let myID = saveData.myInfo?.userID else {return}
+        guard let myID = saveData.myInfo?.userID else { return }
         db.collection("accounts").document(accountID).updateData([
             "invitees": FieldValue.arrayRemove([myID]),
         ]) { err in
@@ -287,16 +285,19 @@ class FirebaseManager {
     }
 
     // MARK: - 發送共享帳簿的邀請 -
+
     // 發送共享帳簿的邀請
-    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion _: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
+    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion : @escaping (Result<String, Error>) -> Void) {
         db.collection("accounts").document(shareAccountID).updateData([
             "invitees": FieldValue.arrayUnion([inviteeID]),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
+                completion(.failure(err))
             } else {
                 print("Document successfully updated")
                 self.postShareAccountToInivitee(inviteeID: inviteeID, shareAccountID: shareAccountID)
+                completion(.success(""))
             }
         }
     }
@@ -325,7 +326,8 @@ class FirebaseManager {
     }
 
     // MARK: - 新增新帳本 -
-    func addNewAccount(name: String, budget: Double? = 0, iconName: String) {
+
+    func addNewAccount(name: String, budget _: Double? = 0, iconName: String, completion:  @escaping (Result<String, Error>) -> Void) {
         let newAccount = db.collection("account").document()
         guard let myInfo = saveData.myInfo else { return }
         let sharesID = [[myInfo.userID: 0.0]]
@@ -336,26 +338,30 @@ class FirebaseManager {
             try db.collection("accounts").document(newAccount.documentID).setData(from: newAccountInfo) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
+                    completion(.failure(err))
                 } else {
                     self.db.collection("users").document(myInfo.userID).updateData([
                         "shareAccount": FieldValue.arrayUnion([newAccount.documentID]),
                     ])
                     print("Document successfully written!")
+                    completion(.success("success"))
                 }
             }
         } catch {
             print("Error writing city to Firestore: \(error)")
+            completion(.failure(error))
         }
     }
-    
+
     func aaaa(toAccountID: String,
               transaction: Transaction,
               memberPayMoney: [String: Double],
               memberShareMoney: [String: Double],
               accountInfo: TransactionsResponse,
-              completion: @escaping (Result<Any, Error>) -> Void){
+              completion: @escaping (Result<Any, Error>) -> Void)
+    {
         var account = accountInfo
-        
+
         for id in memberPayMoney.keys {
             if let index = accountInfo.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
                var userDictionary = accountInfo.shareUsersID?[index]
@@ -384,14 +390,14 @@ class FirebaseManager {
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": transaction.note,
-            "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
+            "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
             "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
-            "from": ""
+            "from": "",
         ]
-        self.dateFont.dateFormat = "yyyy-MM"
+        dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: transaction.date)
-        self.dateFont.dateFormat = "yyyy-MM-dd"
+        dateFont.dateFormat = "yyyy-MM-dd"
         let dateD = dateFont.string(from: transaction.date)
 
         db.collection("accounts").document(toAccountID).updateData([
@@ -410,68 +416,68 @@ class FirebaseManager {
         }
 //
     }
-    
+
     // swiftlint:disable line_length
-    func postIncome(toAccountID: String, 
+    func postIncome(toAccountID: String,
                     transaction: Transaction,
                     memberPayMoney: [String: Double],
                     memberShareMoney: [String: Double],
-                    completion: @escaping (Result<Any, Error>) -> Void){
+                    completion: @escaping (Result<Any, Error>) -> Void)
+    {
 //
-        
-            getAccountData(accountID: toAccountID) { result in
-                switch result{
-                case .success(let accountData):
-                    print("----------accountData-----------")
-                    print(accountData)
-                    print("---------------------")
-                    self.aaaa(toAccountID: toAccountID,
-                              transaction: transaction,
-                              memberPayMoney: memberPayMoney,
-                              memberShareMoney: memberShareMoney,
-                              accountInfo: accountData){ result in
-                        switch result{
-                        case .success(let str):
-                            completion(.success(""))
-                            print("----------success-----------")
-                            print(str)
-                            print("-----------------")
-                        case .failure(let err):
-                            completion(.failure(err))
-                            print("-----------------")
-                            print("failure")
-                            return
-                        }
-                        
+
+        getAccountData(accountID: toAccountID) { result in
+            switch result {
+            case let .success(accountData):
+                print("----------accountData-----------")
+                print(accountData)
+                print("---------------------")
+                self.aaaa(toAccountID: toAccountID,
+                          transaction: transaction,
+                          memberPayMoney: memberPayMoney,
+                          memberShareMoney: memberShareMoney,
+                          accountInfo: accountData)
+                { result in
+                    switch result {
+                    case let .success(str):
+                        completion(.success(""))
+                        print("----------success-----------")
+                        print(str)
+                        print("-----------------")
+                    case let .failure(err):
+                        completion(.failure(err))
+                        print("-----------------")
+                        print("failure")
+                        return
                     }
-                case .failure(let err):
-                    completion(.failure(err))
-                    print("-----------------")
-                    print("failure")
-                    return
                 }
-                
+            case let .failure(err):
+                completion(.failure(err))
+                print("-----------------")
+                print("failure")
+                return
             }
-        
+        }
     }
 
     // MARK: - 記帳 -
+
     func post(toAccountID: String,
               transaction: Transaction,
               memberPayMoney: [String: Double],
               memberShareMoney: [String: Double],
               accountInfo: TransactionsResponse,
-              completion: @escaping (Result<Any, Error>) -> Void){
-        
+              completion: @escaping (Result<Any, Error>) -> Void)
+    {
         var account = accountInfo
-        
+
         for id in memberPayMoney.keys {
             if let index = accountInfo.shareUsersID?.firstIndex(where: { $0.keys.contains(id) }),
                var userDictionary = accountInfo.shareUsersID?[index]
             {
                 guard let payMoney = memberPayMoney[id] else { return }
                 guard let shareMoney = memberShareMoney[id] else { return }
-                
+
                 print(userDictionary)
                 userDictionary[id] = (userDictionary[id] ?? 0.0) - shareMoney + payMoney
 
@@ -483,127 +489,144 @@ class FirebaseManager {
             }
         }
         let transactionMainType = TransactionMainType.expenses
-        let postTransaction: [String: Any] = [
-            "amount": transaction.amount,
-            "date": transaction.date,
-            "payUser": memberPayMoney,
-            "shareUser": memberShareMoney,
-            "note": transaction.note,
-            "transactionType":  ["iconName": transaction.transactionType.iconName, "name":transaction.transactionType.name],
-            "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
-            "currency": "新台幣",
-            "from": ""
-        ]
-        dateFont.dateFormat = "yyyy-MM"
-        let dateM = dateFont.string(from: transaction.date)
-        dateFont.dateFormat = "yyyy-MM-dd"
-        let dateD = dateFont.string(from: transaction.date)
 
-        db.collection("accounts").document(toAccountID).updateData([
-            "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
-            "shareUsersID": account.shareUsersID,
-            "accountInfo.expense": FieldValue.increment(transaction.amount),
-            "accountInfo.total": FieldValue.increment(transaction.amount),
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-                completion(.success("Sent successfully"))
-            }
-        }
+        var postTransaction: [String: Any]?
 
-        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
-            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
-                switch result {
-                case .success:
-                    print("同步到付費者的個人帳本：成功")
-                case let .failure(err):
-                    print("同步到付費者的個人帳本：失敗")
-                    print(err)
-                    print("-----------------------")
+        if let transactionType = transaction.transactionType {
+            postTransaction = [
+                "amount": transaction.amount,
+                "date": transaction.date,
+                "payUser": memberPayMoney,
+                "shareUser": memberShareMoney,
+                "note": transaction.note,
+                "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+                "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+                "currency": "新台幣",
+                "from": "",
+            ]
+
+            dateFont.dateFormat = "yyyy-MM"
+            let dateM = dateFont.string(from: transaction.date)
+            dateFont.dateFormat = "yyyy-MM-dd"
+            let dateD = dateFont.string(from: transaction.date)
+
+            db.collection("accounts").document(toAccountID).updateData([
+                "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
+                "shareUsersID": account.shareUsersID,
+                "accountInfo.expense": FieldValue.increment(transaction.amount),
+                "accountInfo.total": FieldValue.increment(transaction.amount),
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                    completion(.success("Sent successfully"))
                 }
             }
         }
+//
+//
+//
+//        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
+//            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
+//                switch result {
+//                case .success:
+//                    print("同步到付費者的個人帳本：成功")
+//                case let .failure(err):
+//                    print("同步到付費者的個人帳本：失敗")
+//                    print(err)
+//                    print("-----------------------")
+//                }
+//            }
+//        }
     }
+
     func postData(toAccountID: String,
                   transaction: Transaction,
                   memberPayMoney: [String: Double],
                   memberShareMoney: [String: Double],
-                  completion: @escaping (Result<Any, Error>) -> Void) {
-        
-            getAccountData(accountID: toAccountID) { result in
-                switch result{
-                case .success(let accountData):
-                    //                    accountInfo = accountData
-                    self.post(toAccountID: toAccountID,
-                              transaction: transaction,
-                              memberPayMoney: memberPayMoney,
-                              memberShareMoney: memberShareMoney,
-                              accountInfo: accountData){ result in
-                        switch result{
-                        case .success(_):
-                            completion(.success(""))
-                            print("---------------------")
-                            print("success")
-                        case .failure(_):
-                            print("-----------------")
-                            print("failure")
-                            return
-                        }
+                  completion: @escaping (Result<Any, Error>) -> Void)
+    {
+        getAccountData(accountID: toAccountID) { result in
+            switch result {
+            case let .success(accountData):
+                //                    accountInfo = accountData
+                self.post(toAccountID: toAccountID,
+                          transaction: transaction,
+                          memberPayMoney: memberPayMoney,
+                          memberShareMoney: memberShareMoney,
+                          accountInfo: accountData)
+                { result in
+                    switch result {
+                    case .success:
+                        completion(.success(""))
+                        print("---------------------")
+                        print("success")
+                    case .failure:
+                        print("-----------------")
+                        print("failure")
+                        return
                     }
-                case .failure(_):
-                    return
                 }
+            case .failure:
+                return
             }
+        }
     }
 
-    private func updatePayerAccount(isMyAccount: Bool, memberPayMoney: [String: Double], date: Date, note: String?, type: TransactionType?, completion: @escaping (Result<Any, Error>) -> Void) {
-        if isMyAccount == false {
-            for payerID in memberPayMoney.keys {
-                guard let amount = memberPayMoney[payerID] else { return }
-                let transaction = [
-                    "amount": amount,
-                    "date": date,
-                    "note": note,
-                    "type": ["iconName": type?.iconName, "name": type?.name],
-                    "currency": "新台幣",
-                    "from": "\(saveData.accountData?.accountName)",
-                ] as [String: Any]
+    func postUpdatePayerAccount(isMyAccount _: Bool,
+                                formAccountName: String,
+                                usersInfo: [UsersInfoResponse],
+                                transaction: Transaction,
+                                completion : @escaping (Result<Any, Error>) -> Void)
+    {
+        dateFont.dateFormat = "yyyy-MM"
+        let dateM = dateFont.string(from: transaction.date)
+        dateFont.dateFormat = "yyyy-MM-dd"
+        let dateD = dateFont.string(from: transaction.date)
+        // Get new write batch
+        let batch = db.batch()
 
-                dateFont.dateFormat = "yyyy-MM"
-                let dateM = dateFont.string(from: date)
-                dateFont.dateFormat = "yyyy-MM-dd"
-                let dateD = dateFont.string(from: date)
+        for userInfo in usersInfo {
+            let inputTransaction: [String: Any] = [
+                "amount": transaction.payUser?[userInfo.userID],
+                "date": transaction.date,
+                "note": transaction.note,
+                "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+                "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+                "currency": "新台幣",
+                "from": formAccountName,
+            ]
 
-                let payer = saveData.userInfoData.filter{ $0.userID == payerID }
-            
-                let payerAccountID = payer[0].ownAccount
+            // Update the population of 'userInfo.ownAccount'
+            let sfRef = db.collection("accounts").document(userInfo.ownAccount)
+            batch.updateData([
+                "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
+                "accountInfo.expense": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
+                "accountInfo.total": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
+            ],
+            forDocument: sfRef)
+        }
 
-                db.collection("accounts").document(payerAccountID).updateData([
-                    "transactions.\(dateM).\(dateD).\(Date())": transaction,
-                    "accountInfo.expense": FieldValue.increment(amount),
-                    "accountInfo.total": FieldValue.increment(amount),
-                ]) { err in
-                    if let err = err {
-                        print("Error updating document: \(err)")
-                        completion(.failure(err))
-                    } else {
-                        print("Document successfully updated")
-                        completion(.success("Sent successfully"))
-                    }
-                }
+        // Commit the batch
+        batch.commit { err in
+            if let err = err {
+                print("Error committing batch: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Batch committed successfully.")
+                completion(.success(""))
             }
         }
     }
 
     // MARK: - 取得帳本資料 -
-    
+
     func getAccountData(accountID: String, completion: @escaping (Result<TransactionsResponse, Error>) -> Void) {
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document(accountID)
 
-        docRef.getDocument  { document, error in
+        docRef.getDocument { document, error in
             if let error = error as NSError? {
                 self.errorMessage = "Error getting document: \(error.localizedDescription)"
             } else {
@@ -622,19 +645,19 @@ class FirebaseManager {
             }
         }
     }
-    
-    func removeAccountListener(){
-        if accountListener != nil{
+
+    func removeAccountListener() {
+        if accountListener != nil {
             accountListener?.remove()
         }
     }
-    
-    func addAccountListener(accountID: String, completion: @escaping (Result<TransactionsResponse, Error>) -> Void){
+
+    func addAccountListener(accountID: String, completion: @escaping (Result<TransactionsResponse, Error>) -> Void) {
         // 從 Firebase 獲取數據
         let docRef = db.collection("accounts").document(accountID)
-        
+
         removeAccountListener()
-        
+
         accountListener = docRef.addSnapshotListener { document, error in
             if let error = error as NSError? {
                 self.errorMessage = "Error getting document: \(error.localizedDescription)"
@@ -660,68 +683,56 @@ class FirebaseManager {
         if !userID.isEmpty {
             var responData: [UsersInfoResponse] = []
 
-            db.collection("users").whereField("userID", in: userID).getDocuments() { (querySnapshot, err) in
+            db.collection("users").whereField("userID", in: userID).getDocuments { querySnapshot, err in
                 do {
                     if let err = err {
-                      print("Error getting documents: \(err)")
+                        print("Error getting documents: \(err)")
                         throw err
                     } else {
-                      for document in querySnapshot!.documents {
-                          let responseData = try document.data(as: UsersInfoResponse.self)
-                          responData.append(responseData)
-                      }
+                        for document in querySnapshot!.documents {
+                            let responseData = try document.data(as: UsersInfoResponse.self)
+                            responData.append(responseData)
+                        }
                         completion(.success(responData))
                     }
                 } catch {
                     print(error)
-                    
                 }
-
-              }
-
+            }
         }
         print("\(saveData.userInfoData)")
     }
-    
-    func removeUserMessageListener(){
+
+    func removeUserMessageListener() {
         userMessageListener?.remove()
     }
-    
-    func addUserMessageListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
-        
-        removeUserMessageListener()
-        
-        if !userID.isEmpty {
-                let docRef = db.collection("users").document(userID)
 
-                userMessageListener = docRef.addSnapshotListener { document, error in
-                    if let error = error as NSError? {
-                        self.errorMessage = "Error getting document: \(error.localizedDescription)"
-                        completion(.failure(error))
-                    } else {
-                        if let document = document {
-                            print("-----find User------")
-                            print(document.data())
-                            do {
-                                let responseData = try document.data(as: UsersInfoResponse.self)
-                                print(responseData)
-                                completion(.success(responseData))
-                            } catch {
-                                print(error)
-                                completion(.failure(error))
-                            }
+    func addUserListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
+        removeUserMessageListener()
+
+        if !userID.isEmpty {
+            let docRef = db.collection("users").document(userID)
+
+            userMessageListener = docRef.addSnapshotListener { document, error in
+                if let error = error as NSError? {
+                    self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                    completion(.failure(error))
+                } else {
+                    if let document = document {
+                        print("-----find User------")
+                        print(document.data())
+                        do {
+                            let responseData = try document.data(as: UsersInfoResponse.self)
+                            print(responseData)
+                            completion(.success(responseData))
+                        } catch {
+                            print(error)
+                            completion(.failure(error))
                         }
-                        
                     }
                 }
-            
+            }
         }
         print("\(saveData.userInfoData)")
     }
-
-
-
-    
 }
-
-

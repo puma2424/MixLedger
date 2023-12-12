@@ -66,7 +66,7 @@ class AddNewItemViewController: UIViewController {
                 var keys: [String] = []
                 for key in memberPayMoney.keys {
                     keys.append(key)
-                    memberShareMoney[key] = (amount ?? 0) / Double(memberPayMoney.keys.count)
+                    memberShareMoney[key] = Double(String(format: "%.1f", (amount ?? 0) / Double(memberPayMoney.keys.count))) ?? 0
                 }
                 memberPayMoney[keys[0]] = amount
             }
@@ -77,7 +77,7 @@ class AddNewItemViewController: UIViewController {
 
     var selectDate: Date?
 
-    var type: TransactionType = .init(iconName: "AllIcons.foodRice.rawValue", name: "food")
+    var type: TransactionType?
 
     let table = UITableView()
 
@@ -118,22 +118,114 @@ class AddNewItemViewController: UIViewController {
     let checkButton: UIButton = {
         let button = UIButton()
         button.setTitle("確      認", for: .normal)
-        button.backgroundColor = UIColor(named: "G1")
+        button.backgroundColor = .g2()
         button.layer.cornerRadius = 10
         return button
     }()
+    
+    func checkButtonColorChange() {
+        var paySum: Double = 0.0
+        var shareSum: Double = 0.0
+        
+        for payID in memberPayMoney.keys {
+            paySum += memberPayMoney[payID] ?? 0
+        }
+        for shareID in memberShareMoney.keys {
+            shareSum += memberPayMoney[shareID] ?? 0
+        }
+        
+        if let amount = amount,
+           let subType = type,
+        paySum == amount,
+        shareSum == amount {
+            checkButton.backgroundColor = .brightGreen3()
+        }else {
+            checkButton.backgroundColor = .g2()
+        }
+    }
+    
+    func whyCannotSend(){
+        var paySum: Double = 0.0
+        var shareSum: Double = 0.0
+        
+        for payID in memberPayMoney.keys {
+            paySum += memberPayMoney[payID] ?? 0
+        }
+        for shareID in memberShareMoney.keys {
+            shareSum += memberPayMoney[shareID] ?? 0
+        }
+        
+        if amount == nil {
+            ShowCustomAlertManager.customAlert(title: "No amount entered", message: "", vc: self, actionHandler: nil)
+        }else if type == nil {
+            ShowCustomAlertManager.customAlert(title: "No type selected", message: "", vc: self, actionHandler: nil)
+        }else if paySum != amount {
+            ShowCustomAlertManager.customAlert(title: "The total amount paid by the payers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
+        }else if shareSum != amount {
+            ShowCustomAlertManager.customAlert(title: "The total amount paid by the sharers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
+        }
+    }
 
     @objc func checkButtonActive() {
-        if amount == nil {
-        } else {
+        var paySum: Double = 0.0
+        var shareSum: Double = 0.0
+        
+        for payID in memberPayMoney.keys {
+            paySum += memberPayMoney[payID] ?? 0
+        }
+        for shareID in memberShareMoney.keys {
+            shareSum += memberPayMoney[shareID] ?? 0
+        }
+        
+        if let amount = amount,
+           let subType = type,
+           paySum == amount,
+           shareSum == amount {
             // 找到對應的字典
-            let transactionType = TransactionType(iconName: "", name: "expenses")
+            let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
-            let transaction = Transaction(transactionType: transactionType, amount: -(amount ?? 0), currency: "新台幣", date: Date(), note: note, subType: type)
-            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { _ in
-                self.dismiss(animated: true)
+            let transaction = Transaction(transactionType: transactionType,
+                                          amount: -(amount ?? 0),
+                                          currency: "新台幣",
+                                          date: selectDate ?? Date(),
+                                          note: note,
+                                          payUser: memberPayMoney,
+                                          shareUser: memberShareMoney,
+                                          subType: subType)
+            LKProgressHUD.show()
+            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { result in
+                switch result {
+                case .success(let success):
+                    LKProgressHUD.showSuccess()
+                case .failure(let failure):
+                    LKProgressHUD.showFailure()
+                }
             }
-            // swiftlint:enable line_length
+
+            var payUsersID: [String] = []
+            for userID in memberPayMoney.keys {
+                payUsersID.append(userID)
+            }
+            
+            if let accountName = saveData.accountData?.accountName,
+               saveData.accountData?.accountID != saveData.myInfo?.ownAccount{
+                let usersInfo = saveData.userInfoData
+                firebase.postUpdatePayerAccount(isMyAccount: false,
+                                                formAccountName: accountName,
+                                                usersInfo: usersInfo,
+                                                transaction: transaction)
+                { result in
+                    switch result {
+                    case let .success(success):
+                        LKProgressHUD.showSuccess(text: "同步到支出者帳本")
+                    case let .failure(failure):
+                        LKProgressHUD.showSuccess(text: "無法同步到支出者帳本")
+                    }
+                }
+            }
+            self.dismiss(animated: true)
+        } else {
+            whyCannotSend()
         }
     }
 
@@ -200,6 +292,7 @@ class AddNewItemViewController: UIViewController {
     // MARK: - 拍攝發票
 
     func selectPhotoButtonTapped() {
+        LKProgressHUD.show()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -221,14 +314,18 @@ class AddNewItemViewController: UIViewController {
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
+            LKProgressHUD.show()
         } else if sourceType == .camera {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = sourceType
                 present(imagePicker, animated: true, completion: nil)
+                
             } else {
+                LKProgressHUD.showFailure(text: "設備不支援相機")
                 print("設備不支援相機")
             }
         } else {
+            LKProgressHUD.showFailure(text: "相機不可用或其他情况")
             print("相機不可用或其他情况")
         }
     }
@@ -236,47 +333,40 @@ class AddNewItemViewController: UIViewController {
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        6
+       return 6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
+        
         if indexPath.row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
-//            if invoiceTotalAmount != ""{
-//                moneyCell.inputText.text = invoiceTotalAmount
-            ////                amount = Double(invoiceTotalAmount)
-//            }else{
-//                moneyCell.inputText.text = ""
-//            }
+//
             let amountString = String(format: "%.2f", amount ?? 0.0)
-            moneyCell.inputText.text = amountString
+            moneyCell.inputTextField.text = amountString
 //                amount = Double(invoiceTotalAmount)
 
-            moneyCell.inputText.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            moneyCell.inputTextField.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
+            return moneyCell
 
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
-            typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
 
-            typeCell.inputText.addTarget(self, action: #selector(getType(_:)), for: .editingChanged)
-//            if let text =  typeCell.inputText.text{
-//                type?.name = text
-//            }
+            return typeCell
 
         } else if indexPath.row == 2 {
             // 掃描發票
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
-            invoiceCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
             invoiceCell.invoiceLabel.text = ""
-            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
-//            for index in 0..<invoiceString.count{
-//                invoiceCell.invoiceLabel.text? += "\(index)：\n\(invoiceString[index])\n"
-//            }
+//            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
+            
             var text = ""
             if invoiceNumber != "" {
                 text = "發票號碼： \(invoiceNumber)"
@@ -295,54 +385,82 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             }
             print(productDetails)
             for product in productDetails {
-                text += "\n 商品： \(product.name) \(product.price) * \(product.quantity)"
+                text += "\n商品： \(product.name) \(product.price) * \(product.quantity)"
             }
             invoiceCell.invoiceLabel.text = text
             note = text
+            if text != "" {
+                invoiceCell.resetLayout()
+            }
+            return invoiceCell
 
         } else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
-            dateCell.iconImageView.image = UIImage(named: AllIcons.person.rawValue)
 //            selectDate = dateCell.datePicker.date
             dateCell.datePicker.date = selectDate ?? Date()
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
 
+            return dateCell
+
         } else if indexPath.row == 4 {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
-
+            cell.selectionStyle = .none
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
             memberPayCell.showTitleLabel.text = "付款"
             memberPayCell.usersMoney = memberPayMoney
 
+            return memberPayCell
+
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
-
+            cell.selectionStyle = .none
             guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
             memberShareCell.showTitleLabel.text = "分款"
             memberShareCell.usersMoney = memberShareMoney
-        }
-        return cell
-    }
 
-    @objc func getType(_ textField: UITextField) {
-        if let text = textField.text {
-            type = TransactionType(iconName: AllIcons.edit.rawValue, name: text)
+            return memberShareCell
         }
     }
 
     @objc func getAmount(_ textField: UITextField) {
         amount = Double(textField.text ?? "0.0")
+        checkButtonColorChange()
     }
 
     // DatePicker 的值變化時的動作
     @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
         // 更新數據結構中相應 cell 的數據
         selectDate = datePicker.date
+        
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 2 {
+        if indexPath.row == 1 {
+            let subTypeVC = SelectSubTypeViewController()
+            subTypeVC.modalPresentationStyle = .automatic
+            subTypeVC.modalTransitionStyle = .coverVertical
+            subTypeVC.sheetPresentationController?.detents = [.custom(resolver: { context in
+                context.maximumDetentValue * 0.5
+            }
+            )]
+
+            subTypeVC.selectedSubType = { iconName, title in
+                self.type = TransactionType(iconName: iconName, name: title)
+                if let index = subTypeVC.selectedIndex {
+                    let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? ANITypeTableViewCell
+                    cell?.iconImageView.image = UIImage(named: iconName)
+                    cell?.titleLabel.text = title
+                }
+                print(subTypeVC.selectedIndex)
+                print(self.type)
+                self.checkButtonColorChange()
+            }
+
+            present(subTypeVC, animated: true, completion: nil)
+        } else if indexPath.row == 2 {
+            LKProgressHUD.show()
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
@@ -365,18 +483,21 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
         memberPayMoney = cell.usersMoney ?? memberPayMoney
         print(memberPayMoney)
         table.reloadData()
+        checkButtonColorChange()
     }
 
     func inputShareMemberMoney(cell: SelectMemberViewController) {
         memberShareMoney = cell.usersMoney ?? memberPayMoney
         print(memberShareMoney)
         table.reloadData()
+        checkButtonColorChange()
     }
 }
 
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
+            
             scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
                 switch results {
                 case let .success(result):
@@ -388,16 +509,18 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
                         self.productDetails = self.scanInvoiceManager.productDetails
+                        LKProgressHUD.showSuccess()
                     case .formText:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
+                        LKProgressHUD.showSuccess()
                     }
                     self.table.reloadData()
+                    
                 case .failure:
+                    LKProgressHUD.showFailure()
                     return
                 }
             }
-
-//            self.table.reloadData()
         }
 
         dismiss(animated: true, completion: nil)

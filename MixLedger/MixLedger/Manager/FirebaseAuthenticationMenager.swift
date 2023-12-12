@@ -1,20 +1,20 @@
 //
-//  FirebaseAuthenticationManager.swift
+//  FirebaseAuthenticationMenager.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/12/5.
 //
 
-import Foundation
 import FirebaseAuth
+import Foundation
 
-class FirebaseAuthenticationManager{
+class FirebaseAuthenticationManager {
     static let shared = FirebaseAuthenticationManager()
-    
+
     var currentUser: User? {
         return Auth.auth().currentUser
     }
-    
+
     static func checkUserAuthenticationState(completion: @escaping (Bool) -> Void) {
         if let user = shared.currentUser {
             // 用户已登录
@@ -26,11 +26,11 @@ class FirebaseAuthenticationManager{
             completion(false)
         }
     }
-    
+
     static func signOut() {
         do {
             try Auth.auth().signOut()
-            if let window = SceneDelegate.shared.sceneWindow{
+            if let window = SceneDelegate.shared.sceneWindow {
                 ShowScreenManager.showSinginScreen(window: window)
             }
         } catch {

@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		938F6629FBE84235958723B2 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1079A6D879B3B4562FCDDB67 /* Pods_MixLedger_MixLedgerUITests.framework */; };
+		9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00216B2B20452A0052A7A1 /* ColorManager.swift */; };
 		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
+		9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
 		9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379822B037BE5001D6BAF /* HomeViewController.swift */; };
@@ -34,6 +36,12 @@
 		9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */; };
 		9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F912B1872AC00D4BCAA /* RepayView.swift */; };
 		9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */; };
+		9A792B312B26F3D9004D97A4 /* ShowCustomAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */; };
+		9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */; };
+		9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */; };
+		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
+		9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */; };
+		9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
 		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
@@ -83,8 +91,8 @@
 		9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */; };
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
-		9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SingInViewController.swift */; };
-		9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */; };
+		9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SignInViewController.swift */; };
+		9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */; };
 		9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BC2B1DECC70013A30A /* Color+extension.swift */; };
 		9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */; };
 		9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */; };
@@ -122,7 +130,9 @@
 		6516F556B662D24A8DE0A876 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
 		6B07D4824EF896D9246B3C57 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.release.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A00216B2B20452A0052A7A1 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
+		9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieAndListView.swift; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2379802B037BE5001D6BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +162,12 @@
 		9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMessageTableViewCell.swift; sourceTree = "<group>"; };
 		9A590F912B1872AC00D4BCAA /* RepayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepayView.swift; sourceTree = "<group>"; };
 		9A590F942B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCustomAlertManager.swift; sourceTree = "<group>"; };
+		9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillTableViewCell.swift; sourceTree = "<group>"; };
+		9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillViewController.swift; sourceTree = "<group>"; };
+		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
+		9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconModel.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -175,8 +191,8 @@
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MixLedger.entitlements; sourceTree = "<group>"; };
-		9AECC9B82B1DBD740013A30A /* SingInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingInViewController.swift; sourceTree = "<group>"; };
-		9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingupViewController.swift; sourceTree = "<group>"; };
+		9AECC9B82B1DBD740013A30A /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		9AECC9BC2B1DECC70013A30A /* Color+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extension.swift"; sourceTree = "<group>"; };
 		9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
 		9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthenticationMenager.swift; sourceTree = "<group>"; };
@@ -266,9 +282,11 @@
 		9A0A33F22B17671700944AE3 /* modleView */ = {
 			isa = PBXGroup;
 			children = (
+				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
 				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
 				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
 				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
+				9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */,
 			);
 			path = modleView;
 			sourceTree = "<group>";
@@ -282,6 +300,8 @@
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
 				9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */,
 				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
+				9A00216B2B20452A0052A7A1 /* ColorManager.swift */,
+				9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -324,7 +344,7 @@
 				9AEB5F7F2B0731D500DF5DFF /* home */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
-				9A5C83C02B1F273100BB778A /* SingPage */,
+				9A5C83C02B1F273100BB778A /* SignPage */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
@@ -403,13 +423,31 @@
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
 		};
-		9A5C83C02B1F273100BB778A /* SingPage */ = {
+		9A5C83C02B1F273100BB778A /* SignPage */ = {
 			isa = PBXGroup;
 			children = (
-				9AECC9B82B1DBD740013A30A /* SingInViewController.swift */,
-				9AECC9BA2B1DEB170013A30A /* SingupViewController.swift */,
+				9AECC9B82B1DBD740013A30A /* SignInViewController.swift */,
+				9AECC9BA2B1DEB170013A30A /* SignupViewController.swift */,
 			);
-			path = SingPage;
+			path = SignPage;
+			sourceTree = "<group>";
+		};
+		9A792B342B272A89004D97A4 /* DetailedBill */ = {
+			isa = PBXGroup;
+			children = (
+				9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */,
+				9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */,
+			);
+			path = DetailedBill;
+			sourceTree = "<group>";
+		};
+		9A80F5FD2B21CC2100D7F549 /* SubType */ = {
+			isa = PBXGroup;
+			children = (
+				9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */,
+				9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */,
+			);
+			path = SubType;
 			sourceTree = "<group>";
 		};
 		9A83B1982B0F887100C4C263 /* member */ = {
@@ -425,6 +463,7 @@
 		9AEB5F7F2B0731D500DF5DFF /* home */ = {
 			isa = PBXGroup;
 			children = (
+				9A792B342B272A89004D97A4 /* DetailedBill */,
 				9A2379822B037BE5001D6BAF /* HomeViewController.swift */,
 				9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */,
 				9AEB5F7D2B07133400DF5DFF /* BillStatusTableViewCell.swift */,
@@ -440,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */,
+				9A80F5FD2B21CC2100D7F549 /* SubType */,
 				9A3042EF2B11D02400FFEEB0 /* ScanInvoice */,
 				9A83B1982B0F887100C4C263 /* member */,
 				9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */,
@@ -770,6 +810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ACA6F002B08ADF800201A44 /* ANISelectDateTableViewCell.swift in Sources */,
+				9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */,
 				9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */,
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,
@@ -796,11 +837,15 @@
 				9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */,
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,
 				9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */,
+				9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */,
+				9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */,
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
+				9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
+				9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
 				9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */,
@@ -808,17 +853,20 @@
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
-				9AECC9B92B1DBD740013A30A /* SingInViewController.swift in Sources */,
+				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
+				9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
+				9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
-				9AECC9BB2B1DEB170013A30A /* SingupViewController.swift in Sources */,
+				9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 				9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */,
+				9A792B312B26F3D9004D97A4 /* ShowCustomAlertManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,13 +1048,14 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1014,9 +1063,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = puma.MixLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1032,13 +1084,14 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1046,9 +1099,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = puma.MixLedger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

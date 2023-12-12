@@ -18,6 +18,7 @@ class SharedBillStatusSmallView: UIView {
         backgroundColor = .white
         print("\(self.frame.size)－－－－－－－－")
         setButtonTarge()
+        backgroundColor = .brightGreen4()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,13 +34,13 @@ class SharedBillStatusSmallView: UIView {
      */
 
     var smallDelegate: SharedBillStatusSmallViewDelegate?
-    
+
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "帳款狀態"
         return label
     }()
-    
+
     let openOrCloseButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "triangle.fill"), for: .normal)

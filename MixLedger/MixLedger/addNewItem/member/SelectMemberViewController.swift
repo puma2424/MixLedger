@@ -127,7 +127,7 @@ extension SelectMemberViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
+        cell.selectionStyle = .none
         guard let memberCell = cell as? SelectMemberTableViewCell else { return cell }
 
         guard let usersMoney = usersMoney else { return cell }
@@ -135,8 +135,8 @@ extension SelectMemberViewController: UITableViewDelegate, UITableViewDataSource
         for key in usersMoney.keys {
             userID.append(key)
         }
-        
-        if let userName = saveData.userInfoData.first{$0.userID == userID[indexPath.row]}?.name{
+
+        if let userName = saveData.userInfoData.first { $0.userID == userID[indexPath.row] }?.name {
             memberCell.nameLabel.text = userName
         }
 //        memberCell.nameLabel.text = saveData.userInfoData[userID[indexPath.row]]?.name

@@ -9,20 +9,17 @@ import SwiftUI
 
 struct PieChartView: View {
     let title: String
-    let description: String
 
     var body: some View {
         VStack {
             Text(title)
                 .font(.headline)
-            Text(description)
-                .font(.body)
         }
     }
 }
 
 #Preview {
-    PieChartView(title: "hi", description: "")
+    PieChartView(title: "hi")
 }
 
 struct PieChart: View {
@@ -32,6 +29,7 @@ struct PieChart: View {
     private let colors: [Color]
     private let borderColor: Color
     private let sliceOffset: Double = -.pi / 2
+    @State private var total: Double = 0.0
 
     init(data: Binding<[Double]>, labels: Binding<[String]>, colors: [Color], borderColor: Color) {
         _data = data
@@ -51,14 +49,22 @@ struct PieChart: View {
                         .stroke(Color.white, lineWidth: 1)
 
                     PieChartView(
-                        title: "\(labels[index])",
-                        description: String(format: "$%.2f ", data[index])
+                        title: "\(labels[index])"
                     )
                     .offset(textOffset(for: index, in: geo.size))
                     .zIndex(1)
+                    .onAppear {
+                        sum() // 在視圖出現時計算 total
+                    }
                 }
             }
         }
+    }
+
+    private func sum() {
+        total = data.reduce(0.0, +)
+        print(data)
+        print(total)
     }
 
     private func startAngle(for index: Int) -> Double {
@@ -82,7 +88,7 @@ struct PieChart: View {
     }
 
     private func textOffset(for index: Int, in size: CGSize) -> CGSize {
-        let radius = min(size.width, size.height) / 3
+        let radius = min(size.width, size.height) / 1.5
         let dataRatio = (2 * data[..<index].reduce(0, +) + data[index]) / (2 * data.reduce(0, +))
         let angle = CGFloat(sliceOffset + 2 * .pi * dataRatio)
         return CGSize(width: radius * cos(angle), height: radius * sin(angle))

@@ -34,12 +34,14 @@ class ShowMemberTableViewCell: UITableViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "rrrrrr"
+        label.textColor = .g1()
         return label
     }()
 
     let moneyLabel: UILabel = {
         let label = UILabel()
         label.text = "222222"
+        label.textColor = .g1()
         return label
     }()
 
@@ -50,13 +52,13 @@ class ShowMemberTableViewCell: UITableViewCell {
         moneyLabel.snp.makeConstraints { mark in
             mark.top.equalTo(self).offset(12)
             mark.bottom.equalTo(self).offset(-12)
-            mark.trailing.equalTo(self.snp.trailing).offset(-12)
+            mark.trailing.equalTo(self.snp.trailing).offset(-20)
         }
 
         nameLabel.snp.makeConstraints { mark in
             mark.centerY.equalTo(self)
-            mark.leading.equalTo(self).offset(12)
-            mark.trailing.equalTo(moneyLabel.snp.leading).offset(-12)
+            mark.leading.equalTo(self).offset(20)
+//            mark.trailing.equalTo(moneyLabel.snp.leading).offset(-12)
         }
     }
 }

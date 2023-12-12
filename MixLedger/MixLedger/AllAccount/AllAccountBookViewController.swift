@@ -13,6 +13,7 @@ class AllAccountBookViewController: UIViewController {
         setNavigation()
         setTable()
         setLayout()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAccountNotification), name: .myMessageNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -32,13 +33,19 @@ class AllAccountBookViewController: UIViewController {
     let firebaseManager = FirebaseManager.shared
     let savaData = SaveData.shared
     var accountInfo: ((String) -> Void)?
-    let table = UITableView()
+    var table = UITableView()
     var selectedIndexPath: IndexPath?
+
     func setTable() {
+        table = UITableView(frame: view.bounds, style: .insetGrouped)
         table.delegate = self
         table.dataSource = self
         table.backgroundColor = UIColor(named: "G3")
         table.register(AccountTableViewCell.self, forCellReuseIdentifier: "accountCell")
+    }
+
+    @objc func handleAccountNotification() {
+        findAllMyAccount()
     }
 
     @objc func backHome() {
@@ -48,7 +55,6 @@ class AllAccountBookViewController: UIViewController {
 
     @objc func addNewAccount() {
         print("shareAccountBook")
-//        firebaseManager.addNewAccount()
         present(AddNewAccountViewController(), animated: true)
     }
 
@@ -98,68 +104,131 @@ class AllAccountBookViewController: UIViewController {
 }
 
 extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-//        allAccount.count
-        guard let data = savaData.myInfo else { return 0 }
-        return data.shareAccount.count + 1
+    func numberOfSections(in _: UITableView) -> Int {
+        2
     }
-
+    
+    func tableView(_: UITableView, numberOfRowsInSection numberOfRowsInSection: Int) -> Int {
+        guard let data = savaData.myInfo else { return 0 }
+        if numberOfRowsInSection == 0 {
+            return 1
+        } else {
+            return data.shareAccount.count
+        }
+    }
+    
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "My Account"
+        } else {
+            return "Share Account"
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
-        cell.backgroundColor = UIColor(named: "G3")
+        cell.backgroundColor = .brightGreen4()
+        cell.selectionStyle = .none
         guard let accountCell = cell as? AccountTableViewCell else { return cell }
-
-        if indexPath.row == 0 {
-            if let id = savaData.myInfo?.ownAccount {
-                accountCell.accountNameLable.text = savaData.myShareAccount[id]
+        
+        if indexPath.section == 0 {
+            if let id = savaData.myInfo?.ownAccount,
+               let data = savaData.myShareAccount[id] {
+                accountCell.accountNameLable.text = data.name
+                accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         } else {
-            if let id = savaData.myInfo?.shareAccount[indexPath.row - 1] {
-                accountCell.accountNameLable.text = savaData.myShareAccount[id]
+            if let id = savaData.myInfo?.shareAccount[indexPath.row],
+               let data = savaData.myShareAccount[id] {
+                accountCell.accountNameLable.text = data.name
+                accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         }
-
+        
         // 判斷是否為當前選中的 cell
         if indexPath == selectedIndexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
-
-//        if let name = data["name"] as? String{
-//             = name
-//        }
-//
-//        if let iconName = data["iconName"] as? String{
-//            accountCell.accountIconImageView.image = UIImage(named: iconName)
-//        }
+        
         accountCell.checkmarkImageView.isHidden = true
         return accountCell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 取消先前選中的 cell 的勾勾
         if let selectedIndexPath = selectedIndexPath {
             guard let previousSelectedCell = tableView.cellForRow(at: selectedIndexPath) as? AccountTableViewCell else { return }
             previousSelectedCell.checkmarkImageView.isHidden = true
         }
-
+        
         // 更新當前選中的 indexPath
         selectedIndexPath = indexPath
-
+        
         // 在選中的 cell 上顯示勾勾
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? AccountTableViewCell else { return }
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             if let id = savaData.myInfo?.ownAccount {
                 accountInfo?(id)
                 print(savaData.myShareAccount[id])
             }
         } else {
-            if let id = savaData.myInfo?.shareAccount[indexPath.row - 1] {
+            if let id = savaData.myInfo?.shareAccount[indexPath.row] {
                 accountInfo?(id)
                 print(savaData.myShareAccount[id])
             }
         }
         selectedCell.checkmarkImageView.isHidden = false
+    }
+    
+    
+    // 實現此方法以定義向右滑時顯示的編輯動作
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        if indexPath.section == 1 {
+//            let editAction = UITableViewRowAction(style: .normal, title: "編輯") { _, _ in
+//                // 在這裡處理編輯操作
+//                self.editItemAt(indexPath: indexPath)
+//            }
+            
+            let deleteAction = UITableViewRowAction(style: .normal, title: "刪除") { _, _ in
+                // 在這裡處理編輯操作
+                self.deleteMessage(indexPath: indexPath)
+            }
+            deleteAction.backgroundColor = .red
+            // 可以新增更多的編輯動作
+            
+//            return [editAction, deleteAction]
+            return [deleteAction]
+        }
+        return nil
+    }
+    
+    // 實作編輯操作的方法
+    func editItemAt(indexPath: IndexPath) {
+        // 在這裡處理編輯操作
+        // 例如，彈出一個編輯視窗或導航到編輯畫面
+        print("編輯 ")
+//        if let id = savaData.myInfo?.shareAccount[indexPath.row],
+//           let data = savaData.myShareAccount[id] {
+//            
+//        }
+    }
+    
+    
+    func deleteMessage(indexPath: IndexPath) {
+        print("刪除")
+        if let id = savaData.myInfo?.shareAccount[indexPath.row] {
+            FirebaseManager.postLeaveAccout(userID: savaData.myID, accountId: id) { result in
+                switch result {
+                case .success(let success):
+                    LKProgressHUD.showSuccess(text: success)
+                    self.table.reloadData()
+                case .failure(let failure):
+                    print(failure)
+                    LKProgressHUD.showFailure()
+                }
+            }
+        }
     }
 }

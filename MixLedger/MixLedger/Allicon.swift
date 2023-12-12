@@ -28,7 +28,26 @@ enum AllIcons: String, CaseIterable {
     case moneyAndCoin
     case icons8Chart
     case settingsMale
-    
+    case educate
+    case foodFish
+    case foodCake
+    case foodVegetables
+    case game
+    case medical
+    case foodHamburger
+    case house
+    case pet
+    case traffic
+    case medical2
+    case drink
+    case daily
+    case beauty
+    case dress
+    case social
+    case eProduct
+    case receipt
+    case date
+
     var icon: UIImage? {
         return UIImage(named: rawValue)
     }

@@ -9,10 +9,11 @@ import FirebaseCore
 import FirebaseFirestore
 import Foundation
 
-extension FirebaseManager{
+extension FirebaseManager {
     // MARK: - 新增帳號
-    func postNewOwnAccount(uid: String, accountNAme: String, completion: @escaping (Result<String, Error>) -> Void){
-        let newAccount = self.db.collection("account").document()
+
+    func postNewOwnAccount(uid: String, accountNAme: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let newAccount = db.collection("account").document()
 //        guard let myInfo = self.saveData.myInfo else { return }
         let sharesID = [[uid: 0.0]]
         let accountInfo = AccountInfo(budget: 0, expense: 0, income: 0, total: 0)
@@ -34,16 +35,16 @@ extension FirebaseManager{
             print("Error writing city to Firestore: \(error)")
             completion(.failure(error))
         }
-        
     }
-    static func postNewUser(uid: String, email: String, newUser: UsersInfoResponse, accountNAme: String, completion: @escaping (Result<String, Error>) -> Void){
-        self.shared.postNewOwnAccount(uid: uid, accountNAme: accountNAme){result in
+
+    static func postNewUser(uid: String, email _: String, newUser: UsersInfoResponse, accountNAme: String, completion: @escaping (Result<String, Error>) -> Void) {
+        shared.postNewOwnAccount(uid: uid, accountNAme: accountNAme) { result in
             switch result {
-            case .success(let newAccountID):
+            case let .success(newAccountID):
                 do {
                     var user = newUser
                     user.ownAccount = newAccountID
-                    try self.shared.db.collection("users").document(uid).setData(from: user){ err in
+                    try self.shared.db.collection("users").document(uid).setData(from: user) { err in
                         if let err = err {
                             print("Error writing document: \(err)")
                             print(err)
@@ -56,15 +57,13 @@ extension FirebaseManager{
                     print("Error writing city to Firestore: \(error)")
                     completion(.failure(error))
                 }
-            case .failure(let err):
+            case let .failure(err):
                 print(err)
                 completion(.failure(err))
             }
-            
         }
-        
-        
     }
+
     func findAccount(account: [String], completion: @escaping (Result<Any, Error>) -> Void) {
         print("-------account array---------")
         print(account)
@@ -79,9 +78,15 @@ extension FirebaseManager{
                         for document in querySnapshot.documents {
                             //                print("\(document.documentID) => \(document.data())")
                             print(document.data()["accountName"])
-                            if let id = document.data()["accountID"] as? String /* , let name = [document.data()["accountName"]] as? String */ {
-                                self.saveData.myShareAccount[id] = document.data()["accountName"] as? String
+                            if let id = document.data()["accountID"] as? String,
+                                let name = document.data()["accountName"] as? String,
+                               let iconName = document.data()["iconName"] as? String {
+                                
+                                    self.saveData.myShareAccount[id] = MyShareAccountInfo(name: name, id: id, iconName: iconName)
+                                
                             } else {
+                                let id = document.data()["accountID"] as? String
+                                print(id)
                                 print(document.data()["accountID"])
                                 print(document.data()["accountName"])
                             }
@@ -90,6 +95,57 @@ extension FirebaseManager{
                     completion(.success("success"))
                 }
                 print(self.saveData.myShareAccount)
+            }
+        }
+    }
+    
+    static func postDeleteInvitation(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void){
+        let myID = SaveData.shared.myID
+        
+        shared.db.collection("users").document(myID).updateData([
+            "inviteCard": FieldValue.arrayRemove([["accountID": accountID, "inviterID": inviterID, "inviterName": inviterName, "accountName": accountName]]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功刪除邀請卡"))
+            }
+        }
+    }
+    
+    static func postDeleteMessage(userID: String, messageInfo: Message, completion: @escaping (Result<String, Error>) -> Void){
+        shared.db.collection("users").document(userID).updateData([
+            "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
+                                                "toReceiverMessage": messageInfo.toReceiverMessage,
+                                                "fromUserID": messageInfo.fromUserID,
+                                                "toUserID": messageInfo.toUserID,
+                                                "isDunningLetter": messageInfo.isDunningLetter,
+                                                "amount": messageInfo.amount,
+                                                "formAccoundID": messageInfo.formAccoundID,
+                                                "fromAccoundName": messageInfo.fromAccoundName]]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功刪除訊息"))
+            }
+        }
+    }
+    
+    static func postLeaveAccout(userID: String, accountId: String, completion: @escaping (Result<String, Error>) -> Void){
+        shared.db.collection("users").document(userID).updateData([
+            "shareAccount": FieldValue.arrayRemove([accountId]),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+                completion(.failure(err))
+            } else {
+                print("Document successfully updated postAgareShareAccount")
+                completion(.success("成功離開帳本"))
             }
         }
     }

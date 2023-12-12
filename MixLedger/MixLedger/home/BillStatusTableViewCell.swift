@@ -29,6 +29,8 @@ class BillStatusTableViewCell: UITableViewCell {
         // 在這裡放置需要在初始化時執行的程式碼
         setupLayout()
         setButtonTarge()
+        adjustDate(by: 0)
+        backgroundColor = .g3()
     }
 
     override func awakeFromNib() {
@@ -43,6 +45,16 @@ class BillStatusTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // 在 tableView 的父视图中设置阴影
+        superview?.layer.shadowColor = UIColor.g2().cgColor
+        superview?.layer.shadowOffset = CGSize(width: 0, height: 5)
+        superview?.layer.shadowRadius = 4
+        superview?.layer.shadowOpacity = 1.0
+        superview?.layer.masksToBounds = false
+    }
+    
     var delegate: BillStatusTableViewCellDelegate?
 
     let lastMonthButton: UIButton = {
@@ -71,6 +83,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let totalTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "總額"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -85,6 +98,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let payTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "支出"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -99,6 +113,7 @@ class BillStatusTableViewCell: UITableViewCell {
     let revenueTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "收入"
+        label.textColor = .g1()
         label.sizeToFit()
         return label
     }()
@@ -106,8 +121,6 @@ class BillStatusTableViewCell: UITableViewCell {
     let revenueMoneyLabel: UILabel = {
         let label = UILabel()
         label.text = "NT$ 3000"
-        // 設置 UILabel 的大小
-
         label.sizeToFit()
         return label
     }()
@@ -162,7 +175,7 @@ class BillStatusTableViewCell: UITableViewCell {
     }()
 
     let dateFont = DateFormatter()
-    var showDate: Date?
+    var showDate: Date = .init()
     var dateString: String = ""
     func setButtonTarge() {
         nextMonthButton.addTarget(self, action: #selector(nextMonthActive), for: .touchUpInside)
@@ -183,8 +196,7 @@ class BillStatusTableViewCell: UITableViewCell {
     func adjustDate(by months: Int) {
         dateFont.dateFormat = "yyyy-MM"
 
-        guard let showMon = showDate else { return }
-        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showMon) {
+        if let newDate = Calendar.current.date(byAdding: .month, value: months, to: showDate) {
             showDate = newDate
             dateString = dateFont.string(from: newDate)
             monthLabel.text = dateString
@@ -193,10 +205,7 @@ class BillStatusTableViewCell: UITableViewCell {
     }
 
     func setupLayout() {
-        adjustDate(by: 0)
         addToView(superV: contentView, subs: lastMonthButton, monthLabel, nextMonthButton, moneyStackView)
-//        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
-//        addToView(superV: contentView, subs: openOrCloseButton)
         totalStackView.addArrangedSubview(totalMoneyLabel)
         totalStackView.addArrangedSubview(totalTitleLabel)
         payStackView.addArrangedSubview(payMoneyLabel)
@@ -206,11 +215,7 @@ class BillStatusTableViewCell: UITableViewCell {
         moneyStackView.addArrangedSubview(totalStackView)
         moneyStackView.addArrangedSubview(payStackView)
         moneyStackView.addArrangedSubview(revenueStackView)
-//        addToView(superV: totalStackView, subs: totalMoneyLabel, totalTitleLabel)
-//        addToView(superV: payStackView, subs:  payMoneyLabel, payTitleLabel)
-//        addToView(superV: revenueStackView, subs: revenueMoneyLabel, revenueTitleLabel)
-//        addToView(superV: moneyStackView, subs: totalStackView,payStackView,revenueStackView)
-//        addToView(superV: self, subs: moneyStackView)
+        
         lastMonthButton.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.leading.equalTo(contentView).offset(16)
@@ -234,37 +239,6 @@ class BillStatusTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView).offset(-16)
         }
 
-//        totalMoneyLabel.snp.makeConstraints{(make) -> Void in
-        ////            make.centerX.equalTo(self).offset(self.bounds.width/4)
-//            make.leading.equalTo(self).offset(16)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        totalTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(totalMoneyLabel)
-//            make.top.equalTo(totalMoneyLabel.snp.bottom).offset(8)
-//        }
-//
-//        payMoneyLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(self)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        payTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(payMoneyLabel)
-//            make.top.equalTo(payMoneyLabel.snp.bottom).offset(8)
-//        }
-//
-//        revenueMoneyLabel.snp.makeConstraints{(make) -> Void in
-        ////            make.centerX.equalTo(self.snp_centerXWithinMargins).offset(self.frame.width/4)
-//            make.trailing.equalTo(self.snp.trailing).offset(-16)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        revenueTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(revenueMoneyLabel)
-//            make.top.equalTo(revenueMoneyLabel.snp.bottom).offset(8)
-//        }
     }
 
     func addToView(superV: UIView, subs: UIView...) {

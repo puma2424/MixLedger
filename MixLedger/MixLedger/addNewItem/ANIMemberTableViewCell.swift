@@ -13,6 +13,7 @@ class ANIMemberTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupTable()
         setupLayout()
+        backgroundColor = .g3()
 //        memberInfo()
     }
 
@@ -45,6 +46,7 @@ class ANIMemberTableViewCell: UITableViewCell {
     let showTitleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
+        label.textColor = .g1()
         return label
     }()
 
@@ -53,7 +55,8 @@ class ANIMemberTableViewCell: UITableViewCell {
     func setupTable() {
         tableView.delegate = self
         tableView.dataSource = self
-
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .g3()
         tableView.register(ShowMemberTableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
@@ -61,23 +64,20 @@ class ANIMemberTableViewCell: UITableViewCell {
         addSubview(showTitleLabel)
         addSubview(tableView)
 
-//        showTitleLabel.snp.makeConstraints{(make) in
-//            make.top.equalTo(self).offset(12)
-//            make.centerX.equalTo(self)
-//        }
-//        tableView.tableHeaderView = showTitleLabel
-
         showTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(12)
-            make.centerX.equalTo(self)
+            make.leading.equalTo(self).offset(12)
+//            make.centerY.equalTo(self)
         }
 
+        let tableHeight = (saveData.accountData?.shareUsersID?.count ?? 0) * 45
+
         tableView.snp.makeConstraints { mark in
-            mark.top.equalTo(showTitleLabel.snp.bottom)
-            mark.leading.equalTo(self)
+            mark.top.equalTo(self)
+            mark.leading.equalTo(showTitleLabel.snp.trailing).offset(12)
             mark.bottom.equalTo(self)
             mark.trailing.equalTo(self)
-            mark.height.equalTo(100)
+            mark.height.equalTo(tableHeight)
         }
     }
 }
@@ -89,19 +89,18 @@ extension ANIMemberTableViewCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.selectionStyle = .none
         guard let searchCell = cell as? ShowMemberTableViewCell else { return cell }
         guard let usersMoney = usersMoney else { return cell }
         var userID: [String] = []
         for key in usersMoney.keys {
             userID.append(key)
         }
-        
-        if let userName = saveData.userInfoData.first{$0.userID == userID[indexPath.row]}?.name{
+
+        if let userName = saveData.userInfoData.first(where: { $0.userID == userID[indexPath.row] })?.name {
             searchCell.nameLabel.text = userName
         }
 
-        
-        
         if let money = usersMoney[userID[indexPath.row]] {
             searchCell.moneyLabel.text = "\(money)"
         }

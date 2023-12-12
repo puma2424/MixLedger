@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ANIInvoiceTableViewCell: UITableViewCell {
+class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
-        setupLayout()
+        setupCell()
     }
 
     @available(*, unavailable)
@@ -30,46 +30,53 @@ class ANIInvoiceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+//    let iconImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        return imageView
+//    }()
+//
+//    let titleLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "掃描發票"
+//        return label
+//    }()
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "掃描發票"
-        return label
-    }()
+    func setupCell() {
+        titleLabel.text = "掃描發票"
+        iconImageView.image = AllIcons.receipt.icon
+        setupHiden(titleLabelHidden: false)
+    }
 
     let invoiceLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "aaaaaaaaaaaaaaaaa"
         label.numberOfLines = 0
         return label
     }()
-
-    func setupLayout() {
-//        contentView.addSubview(iconImageView)
-        contentView.addSubview(titleLabel)
+    
+    func resetLayout(){
+        iconImageView.snp.removeConstraints()
+        titleLabel.snp.removeConstraints()
         contentView.addSubview(invoiceLabel)
-
-//        iconImageView.snp.makeConstraints { mark in
-//            mark.width.height.equalTo(50)
-//            mark.top.equalTo(contentView).offset(12)
-////            mark.bottom.equalTo(contentView).offset(-12)
-//            mark.leading.equalTo(contentView).offset(12)
-//        }
-
-        titleLabel.snp.makeConstraints { mark in
-            mark.top.equalTo(contentView).offset(12)
-            mark.leading.equalTo(contentView.snp.leading).offset(12)
+        
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.top.equalTo(contentView).offset(12)
+            make.leading.equalTo(contentView).offset(12)
         }
 
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(iconImageView)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(24)
+        }
+        
         invoiceLabel.snp.makeConstraints { mark in
-            mark.leading.equalTo(contentView).offset(12)
+            mark.leading.equalTo(titleLabel)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.top.equalTo(titleLabel.snp.bottom).offset(12)
             mark.bottom.equalTo(contentView.snp.bottom).offset(-12)
         }
+        
     }
+
 }

@@ -11,12 +11,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     static var shared: SceneDelegate {
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
-                fatalError("Unable to access SceneDelegate instance.")
-            }
-            return sceneDelegate
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+            fatalError("Unable to access SceneDelegate instance.")
         }
-    
+        return sceneDelegate
+    }
+
     var sceneWindow: UIWindow?
 //    static let shared = UIApplication.shared.delegate as! AppDelegate
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
@@ -30,8 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.backgroundColor = UIColor(named: "G3")
         window.makeKeyAndVisible()
         sceneWindow = window
-        FirebaseAuthenticationManager.checkUserAuthenticationState() { result in
-            switch result{
+        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
+            switch result {
             case true:
                 guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
                     ShowScreenManager.showSinginScreen(window: window)
@@ -39,13 +39,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 SaveData.shared.myID = userID
                 ShowScreenManager.showMainScreen(window: window)
-                
+
             case false:
                 ShowScreenManager.showSinginScreen(window: window)
             }
         }
 //        ShowScreenManager.showMainScreen(window: window)
-        
     }
 
     func sceneDidDisconnect(_: UIScene) {

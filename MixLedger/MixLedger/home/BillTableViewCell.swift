@@ -23,7 +23,18 @@ class BillTableViewCell: UITableViewCell {
     private func commonInit() {
         // 在這裡放置需要在初始化時執行的程式碼
         setupView()
+        backgroundColor = .g3()
     }
+
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        // 在 tableView 的父视图中设置阴影
+//        superview?.layer.shadowColor = UIColor.g2().cgColor
+//        superview?.layer.shadowOffset = CGSize(width: 0, height: 5)
+//        superview?.layer.shadowRadius = 4
+//        superview?.layer.shadowOpacity = 1.0
+//        superview?.layer.masksToBounds = false
+//    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,7 +73,6 @@ class BillTableViewCell: UITableViewCell {
     }()
 
     func setupView() {
-//        sortImageView.image = UIImage(named: "more")
         titleLabel.font = UIFont.systemFont(ofSize: 15)
         titleNoteLabel.font = UIFont.systemFont(ofSize: 13)
         moneyLabel.font = UIFont.systemFont(ofSize: 15)
@@ -89,9 +99,6 @@ class BillTableViewCell: UITableViewCell {
             mark.centerY.equalTo(contentView)
         }
 
-//        titleNoteLabel.snp.makeConstraints { mark in
-//            mark.bottom.equalTo(titleStackView).offset(-5)
-//        }
         titleStackView.snp.makeConstraints { mark in
             mark.top.equalTo(sortImageView).offset(5)
             mark.leading.equalTo(sortImageView.snp.trailing).offset(2)
