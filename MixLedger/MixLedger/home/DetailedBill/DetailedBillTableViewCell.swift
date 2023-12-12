@@ -41,7 +41,60 @@ class DetailedBillTableViewCell: UITableViewCell {
         return label
     }()
     
-    func setupLayout(){
+    let moneyLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    let payOrShareLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    func setupForUserLayout() {
+        iconImageView.snp.removeConstraints()
+        contentLabel.snp.removeConstraints()
+        addSubview(moneyLabel)
+        addSubview(payOrShareLabel)
+        
+//        iconImageView.snp.makeConstraints { make in
+//            make.top.equalTo(self).offset(12)
+//            make.leading.equalTo(self).offset(12)
+//            make.width.height.equalTo(40)
+//            make.bottom.equalTo(self).offset(-12)
+//        }
+//        
+//        contentLabel.snp.makeConstraints { make in
+//            make.top.equalTo(iconImageView)
+//            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
+//        }
+        
+        moneyLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView).offset(5)
+            make.trailing.equalTo(contentView).offset(-5)
+        }
+
+        payOrShareLabel.snp.makeConstraints { make in
+            make.top.equalTo(moneyLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(moneyLabel)
+            
+        }
+
+        iconImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(40)
+            make.leading.equalTo(contentView).offset(12)
+            make.bottom.equalTo(contentView).offset(-12)
+        }
+
+        contentLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(iconImageView)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
+        }
+    }
+    
+    func setupLayout() {
         addSubview(iconImageView)
         addSubview(contentLabel)
         
@@ -53,9 +106,9 @@ class DetailedBillTableViewCell: UITableViewCell {
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(iconImageView)
+            make.centerY.equalTo(iconImageView)
             make.leading.equalTo(iconImageView.snp.trailing).offset(12)
-            make.bottom.equalTo(self).offset(-12)
+//            make.bottom.equalTo(self).offset(-12)
         }
     }
 

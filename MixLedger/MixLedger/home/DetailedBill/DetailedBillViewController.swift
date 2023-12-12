@@ -16,6 +16,7 @@ class DetailedBillViewController: UIViewController {
         setupTable()
         setupLayout()
         view.backgroundColor = .brightGreen4()
+        numberOfUser()
     }
     
 
@@ -32,6 +33,8 @@ class DetailedBillViewController: UIViewController {
     
     
     var data: Transaction?
+    
+    var allUsers: [String : Double] = [:]
     
     let tableView: UITableView = {
         let table = UITableView()
@@ -52,12 +55,39 @@ class DetailedBillViewController: UIViewController {
             make.top.leading.trailing.bottom.equalTo(view)
         }
     }
+    
+//    var numberOfPayUser: Int = 0
+//    var numberOfShareUser: Int = 0
+    
+    var idOfPayUser: [String] = []
+    var idOfShareUser: [String] = []
+    func numberOfUser() {
+        guard let data = data else { return }
+        
+        if let payUser = data.payUser,
+        let shareUser = data.shareUser {
+//            numberOfPayUser = payUser.count
+//            numberOfShareUser = shareUser.count
+            
+            for id in payUser.keys {
+                if payUser[id] ?? 0.0 > 0.0 {
+                    idOfPayUser.append(id)
+                }
+            }
+            
+            for id in shareUser.keys {
+                if shareUser[id] ?? 0.0 > 0.0 {
+                    idOfShareUser.append(id)
+                }
+            }
+        }
+    }
 
 }
 
 extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
+        return 4 + idOfPayUser.count + idOfShareUser.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,18 +109,42 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
             case 3:
                 detailCell.iconImageView.image = AllIcons.date.icon
                 detailCell.contentLabel.text = "\(data.date)"
-            case 4:
-                detailCell.iconImageView.image = AllIcons.date.icon
-                detailCell.contentLabel.text = "\(data.date)"
-            case 5:
-                detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
-                detailCell.contentLabel.text = "\(data.amount)"
             default:
-                break
+                detailCell.setupForUserLayout()
+                if indexPath.row <= idOfPayUser.count + 3 {
+                    detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
+                    if idOfPayUser.count > 0 {
+                        let id = idOfPayUser[indexPath.row - 4]
+                        
+                        var name = SaveData.shared.userInfoData.filter { user in
+                            user.userID == id
+                        }
+                        if name.count > 0,
+                        let amount = data.payUser?[id] {
+                            detailCell.contentLabel.text = name[0].name
+                            
+                            detailCell.moneyLabel.text = "\(amount)"
+                            detailCell.payOrShareLabel.text = "Pay"
+                        }
+                    }
+                }else if indexPath.row <= idOfPayUser.count + idOfShareUser.count + 3 {
+                    detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
+                    if idOfShareUser.count > 0 {
+                        let id = idOfShareUser[indexPath.row - 4 - idOfPayUser.count]
+                        
+                        var name = SaveData.shared.userInfoData.filter { user in
+                            user.userID == id
+                        }
+                        
+                        if name.count > 0,
+                           let amount = data.shareUser?[id] {
+                            detailCell.contentLabel.text = name[0].name 
+                            detailCell.moneyLabel.text = "\(amount)"
+                            detailCell.payOrShareLabel.text = "Share"
+                        }
+                    }
+                }
             }
-//            detailCell.iconImageView.image = AllIcons.moneyAndCoin.icon
-//            detailCell.contentLabel.text = "\(data.amount)"
-        
             
         return cell
     }
