@@ -89,6 +89,7 @@ extension ANIMemberTableViewCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.selectionStyle = .none
         guard let searchCell = cell as? ShowMemberTableViewCell else { return cell }
         guard let usersMoney = usersMoney else { return cell }
         var userID: [String] = []

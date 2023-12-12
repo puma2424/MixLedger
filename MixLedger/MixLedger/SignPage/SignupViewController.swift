@@ -107,7 +107,7 @@ class SignupViewController: UIViewController {
         guard let uid = uid else { return LKProgressHUD.showFailure(text: "註冊失敗") }
         guard let userEmail = userEmail else { return LKProgressHUD.showFailure(text: "註冊失敗") }
 
-        let newUser = UsersInfoResponse(name: nameText, ownAccount: "", shareAccount: [], userID: uid)
+        let newUser = UsersInfoResponse(iconName: "human", name: nameText, ownAccount: "", shareAccount: [], userID: uid)
         FirebaseManager.postNewUser(uid: uid, email: userEmail, newUser: newUser, accountNAme: accountNameText) { result in
             switch result {
             case .success:

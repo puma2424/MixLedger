@@ -263,10 +263,11 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        guard let iconCell = cell as? ANAIconCollectionViewCell else { return cell }
-        iconCell.imageView.image = AllIcons.allCases[indexPath.row].icon
-        return iconCell
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        
+        guard let iconItem = item as? ANAIconCollectionViewCell else { return item }
+        iconItem.imageView.image = AllIcons.allCases[indexPath.row].icon
+        return iconItem
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -128,6 +128,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
         cell.backgroundColor = .brightGreen4()
+        cell.selectionStyle = .none
         guard let accountCell = cell as? AccountTableViewCell else { return cell }
         
         if indexPath.section == 0 {

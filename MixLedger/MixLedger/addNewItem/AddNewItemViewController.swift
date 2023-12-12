@@ -333,8 +333,10 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
+        
         if indexPath.row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
 //
@@ -347,6 +349,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
 
             return typeCell
@@ -354,6 +357,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.row == 2 {
             // 掃描發票
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
             invoiceCell.invoiceLabel.text = ""
 //            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
@@ -387,6 +391,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
         } else if indexPath.row == 3 {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+            cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
 //            selectDate = dateCell.datePicker.date
             dateCell.datePicker.date = selectDate ?? Date()
@@ -396,7 +401,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
         } else if indexPath.row == 4 {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
-
+            cell.selectionStyle = .none
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
             memberPayCell.showTitleLabel.text = "付款"
             memberPayCell.usersMoney = memberPayMoney
@@ -405,7 +410,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
-
+            cell.selectionStyle = .none
             guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
             memberShareCell.showTitleLabel.text = "分款"
             memberShareCell.usersMoney = memberShareMoney

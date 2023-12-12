@@ -167,6 +167,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "inviteCell", for: indexPath)
+        cell.selectionStyle = .none
         guard let inviteCell = cell as? InviteMessageTableViewCell else { return cell }
         if indexPath.section == 0 {
             if let data = datas?.inviteCard {

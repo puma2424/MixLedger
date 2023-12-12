@@ -429,7 +429,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         sum()
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "billCell", for: indexPath)
-            cell.selectedBackgroundView?.backgroundColor = .g3()
+            cell.selectionStyle = .none
             guard let billCell = cell as? BillStatusTableViewCell else { return cell }
             billCell.delegate = self
             billCell.showDate = selectDate
@@ -449,7 +449,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return billCell
         } else {
             let cell = billTable.dequeueReusableCell(withIdentifier: "billItemCell", for: indexPath)
-            cell.selectedBackgroundView?.backgroundColor = .g3()
+            cell.selectionStyle = .none
             guard let billCell = cell as? BillTableViewCell else { return cell }
 
             if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
@@ -461,9 +461,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
 
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
-//                if let iconName = data.type.iconName {
                 billCell.sortImageView.image = UIImage(named: data.subType.iconName)
-//                }
+
 
                 billCell.titleLabel.text = data.subType.name
                 var titleNote = ""
@@ -475,12 +474,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                 }
-                if titleNote == "" {
-                    titleNote = data.note ?? ""
-                } else {
-                    titleNote += "/\(data.note)"
-                }
-                billCell.titleNoteLabel.text = titleNote
                 billCell.moneyLabel.text = "\(data.amount)"
 //
             }
@@ -499,7 +492,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             )]
             if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
                 print(showMonBill(date: selectDate))
-//                var transactionsDayDatasKeys: [String] = []
                 transactionsDayDatasKeys = []
                 for dataKey in datas.keys {
                     transactionsDayDatasKeys.append(dataKey)

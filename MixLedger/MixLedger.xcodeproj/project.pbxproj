@@ -1048,6 +1048,7 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1080,6 +1081,7 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

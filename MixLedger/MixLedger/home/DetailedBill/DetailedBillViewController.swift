@@ -81,6 +81,7 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.selectionStyle = .none
         guard let detailCell = cell as? DetailedBillTableViewCell  else { return cell }
         // Configure cells based on indexPath.row
         guard let data = data else { return cell }

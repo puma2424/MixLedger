@@ -71,6 +71,7 @@ struct TransactionType: Codable {
 }
 
 struct UsersInfoResponse: Codable {
+    var iconName: String
     var name: String
     var ownAccount: String
     var shareAccount: [String]

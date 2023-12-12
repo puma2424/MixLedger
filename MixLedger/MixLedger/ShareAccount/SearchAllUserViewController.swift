@@ -143,14 +143,7 @@ extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         guard let searchCell = cell as? SearchUserTableViewCell else { return cell }
-
-//        searchCell.nameLabel.text = searchResults[indexPath.row].name
-//        if searchCell.postShareInfo == nil {
-//            searchCell.postShareInfo = {
-//                print("post \(self.searchResults[indexPath.row].name)")
-//                self.postInviteMessage(inviteeID: self.searchResults[indexPath.row].userID)
-//            }
-//        }
+        cell.selectionStyle = .none
         searchCell.nameLabel.text = filteredData[indexPath.row].name
         if searchCell.postShareInfo == nil {
             searchCell.postShareInfo = {

@@ -127,7 +127,7 @@ extension SelectMemberViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
+        cell.selectionStyle = .none
         guard let memberCell = cell as? SelectMemberTableViewCell else { return cell }
 
         guard let usersMoney = usersMoney else { return cell }

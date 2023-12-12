@@ -145,6 +145,7 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
+        cell.selectionStyle = .none
         guard let userCell = cell as? SBSVUsersTableViewCell else { return cell }
         userCell.delegate = self
 //        let userInfo = usersInfo[indexPath.section]
@@ -152,7 +153,7 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
 
         let id = userInfo.userID
         userCell.nameLable.text = userInfo.name
-
+        userCell.userImage.image = UIImage(named: userInfo.iconName)
         if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }),
            let userMoney = billStatus?[index][id]
         {

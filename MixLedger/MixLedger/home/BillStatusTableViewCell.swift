@@ -206,8 +206,6 @@ class BillStatusTableViewCell: UITableViewCell {
 
     func setupLayout() {
         addToView(superV: contentView, subs: lastMonthButton, monthLabel, nextMonthButton, moneyStackView)
-//        addToView(superV: self, subs: lastMonthButton, monthLabel, nextMonthButton, totalMoneyLabel,totalTitleLabel, payMoneyLabel, payTitleLabel, revenueMoneyLabel, revenueTitleLabel)
-//        addToView(superV: contentView, subs: openOrCloseButton)
         totalStackView.addArrangedSubview(totalMoneyLabel)
         totalStackView.addArrangedSubview(totalTitleLabel)
         payStackView.addArrangedSubview(payMoneyLabel)
@@ -217,11 +215,7 @@ class BillStatusTableViewCell: UITableViewCell {
         moneyStackView.addArrangedSubview(totalStackView)
         moneyStackView.addArrangedSubview(payStackView)
         moneyStackView.addArrangedSubview(revenueStackView)
-//        addToView(superV: totalStackView, subs: totalMoneyLabel, totalTitleLabel)
-//        addToView(superV: payStackView, subs:  payMoneyLabel, payTitleLabel)
-//        addToView(superV: revenueStackView, subs: revenueMoneyLabel, revenueTitleLabel)
-//        addToView(superV: moneyStackView, subs: totalStackView,payStackView,revenueStackView)
-//        addToView(superV: self, subs: moneyStackView)
+        
         lastMonthButton.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.leading.equalTo(contentView).offset(16)
@@ -245,37 +239,6 @@ class BillStatusTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView).offset(-16)
         }
 
-//        totalMoneyLabel.snp.makeConstraints{(make) -> Void in
-        ////            make.centerX.equalTo(self).offset(self.bounds.width/4)
-//            make.leading.equalTo(self).offset(16)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        totalTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(totalMoneyLabel)
-//            make.top.equalTo(totalMoneyLabel.snp.bottom).offset(8)
-//        }
-//
-//        payMoneyLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(self)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        payTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(payMoneyLabel)
-//            make.top.equalTo(payMoneyLabel.snp.bottom).offset(8)
-//        }
-//
-//        revenueMoneyLabel.snp.makeConstraints{(make) -> Void in
-        ////            make.centerX.equalTo(self.snp_centerXWithinMargins).offset(self.frame.width/4)
-//            make.trailing.equalTo(self.snp.trailing).offset(-16)
-//            make.top.equalTo(lastMonthButton.snp.bottom).offset(8)
-//        }
-//
-//        revenueTitleLabel.snp.makeConstraints{(make) -> Void in
-//            make.centerX.equalTo(revenueMoneyLabel)
-//            make.top.equalTo(revenueMoneyLabel.snp.bottom).offset(8)
-//        }
     }
 
     func addToView(superV: UIView, subs: UIView...) {
