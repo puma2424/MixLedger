@@ -50,7 +50,7 @@ class InviteMessageTableViewCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = "la"
-        label.textColor = .g1()
+        label.textColor = .clear
         return label
     }()
 

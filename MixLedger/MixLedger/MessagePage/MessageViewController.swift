@@ -172,6 +172,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if let data = datas?.inviteCard {
                 if data.count > 0 {
+                    inviteCell.inviteMessageLabel.textColor = .g1()
                     inviteCell.setupLayoutIncludeBothButton()
                     inviteCell.inviteMessageLabel.text = "\(data[indexPath.row].inviterName)邀請你加入帳簿：\(data[indexPath.row].accountName)"
 
@@ -195,6 +196,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             if datas?.message?.count != 0 {
                 if let data = datas?.message?[indexPath.row] {
+                    inviteCell.inviteMessageLabel.textColor = .g1()
                     if data.isDunningLetter {
                         if data.fromUserID == saveData.myInfo?.userID {
                             inviteCell.setupLayoutNoButton()

@@ -165,19 +165,21 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
                 myMoney = userMoney
             } else {
                 if myMoney < 0 && userMoney < 0 {
-                    userCell.checkButton.isHidden = true
+//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 } else if myMoney < 0 && userMoney > 0 {
-                    userCell.checkButton.isHidden = false
+//                    userCell.checkButton.isHidden = false
+                    userCell.setupHaveButtonView()
                     userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
                 } else if myMoney > 0 && userMoney < 0 {
-                    userCell.checkButton.isHidden = false
+//                    userCell.checkButton.isHidden = false
+                    userCell.setupHaveButtonView()
                     userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
                 } else if myMoney > 0 && userMoney > 0 {
-                    userCell.checkButton.isHidden = true
+//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 } else if myMoney == 0 || userMoney == 0 {
-                    userCell.checkButton.isHidden = true
+//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 }
             }
