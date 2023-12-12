@@ -10,6 +10,7 @@
 		938F6629FBE84235958723B2 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1079A6D879B3B4562FCDDB67 /* Pods_MixLedger_MixLedgerUITests.framework */; };
 		9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00216B2B20452A0052A7A1 /* ColorManager.swift */; };
 		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
+		9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
 		9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379822B037BE5001D6BAF /* HomeViewController.swift */; };
@@ -131,6 +132,7 @@
 		94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A00216B2B20452A0052A7A1 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
+		9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieAndListView.swift; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2379802B037BE5001D6BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -280,9 +282,11 @@
 		9A0A33F22B17671700944AE3 /* modleView */ = {
 			isa = PBXGroup;
 			children = (
+				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
 				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
 				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
 				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
+				9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */,
 			);
 			path = modleView;
 			sourceTree = "<group>";
@@ -442,7 +446,6 @@
 			children = (
 				9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */,
 				9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */,
-				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
 			);
 			path = SubType;
 			sourceTree = "<group>";
@@ -807,6 +810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ACA6F002B08ADF800201A44 /* ANISelectDateTableViewCell.swift in Sources */,
+				9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */,
 				9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */,
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,

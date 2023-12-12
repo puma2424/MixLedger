@@ -9,20 +9,17 @@ import SwiftUI
 
 struct PieChartView: View {
     let title: String
-    let description: String
 
     var body: some View {
         VStack {
             Text(title)
                 .font(.headline)
-            Text(description)
-                .font(.body)
         }
     }
 }
 
 #Preview {
-    PieChartView(title: "hi", description: "")
+    PieChartView(title: "hi")
 }
 
 struct PieChart: View {
@@ -52,9 +49,7 @@ struct PieChart: View {
                         .stroke(Color.white, lineWidth: 1)
 
                     PieChartView(
-                        title: "\(labels[index])",
-//                        title: "",
-                        description: String(format: "%.2f%%", (data[index] / total * 100))
+                        title: "\(labels[index])"
                     )
                     .offset(textOffset(for: index, in: geo.size))
                     .zIndex(1)
@@ -93,7 +88,7 @@ struct PieChart: View {
     }
 
     private func textOffset(for index: Int, in size: CGSize) -> CGSize {
-        let radius = min(size.width, size.height) / 1.75
+        let radius = min(size.width, size.height) / 1.5
         let dataRatio = (2 * data[..<index].reduce(0, +) + data[index]) / (2 * data.reduce(0, +))
         let angle = CGFloat(sliceOffset + 2 * .pi * dataRatio)
         return CGSize(width: radius * cos(angle), height: radius * sin(angle))

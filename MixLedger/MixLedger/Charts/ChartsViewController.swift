@@ -55,8 +55,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     let segmentedView = SegmentedControlModleView()
 
-    var pieChart = PieChart(data: .constant([30, 50, 20]),
-                            labels: .constant(["Label1", "Label2", "Label3"]),
+    var pieChart = PieAndListView(data: .constant([30, 50, 20]),
+                                  labels: .constant(["Label1", "Label2", "Label3"]), iconName: .constant(["", "", ""]),
                             colors: [.blue1, .blue2, .brightGreen1],
                             borderColor: .gray1)
 
@@ -160,16 +160,18 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
         var amountArray: [Double] = []
         var typeArray: [String] = []
-
+        var iconNameArray: [String] = []
+        
         for type in dic.keys {
             typeArray.append(type)
             amountArray.append(dic[type] ?? 0.0)
+            iconNameArray.append(SubTypeItem.item(forTitle: type)?.name ?? "")
         }
 
         let colorArray: [Color] = ColorManager.getAllColors() as [Color]
 
-        pieChart = PieChart(data: .constant(amountArray),
-                            labels: .constant(typeArray),
+        pieChart = PieAndListView(data: .constant(amountArray),
+                                  labels: .constant(typeArray), iconName: .constant(iconNameArray),
                             colors: colorArray,
                             borderColor: .brightGreen1)
 
@@ -185,12 +187,11 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         // Set constraints if needed
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-//            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-//            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 200),
-            hostingController.view.widthAnchor.constraint(equalToConstant: 200),
-            hostingController.view.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+            hostingController.view.topAnchor.constraint(equalTo: segmentedView.bottomAnchor, constant: 5),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+
         ])
         return hostingController.view
     }

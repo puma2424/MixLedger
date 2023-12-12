@@ -26,7 +26,8 @@ extension Color {
     static let brightGreen1 = Color(red: 91 / 255, green: 217 / 255, blue: 165 / 255)
     static let brightGreen2 = Color(red: 95 / 255, green: 113 / 255, blue: 149 / 255)
     static let brightGreen3 = Color(red: 42 / 255, green: 154 / 255, blue: 153 / 255)
-    static let brightGreen4 = Color(red: 171 / 255, green: 216 / 255, blue: 218 / 255)
+    static let brightGreen4 = Color(red: 185 / 255, green: 224 / 255, blue: 219 / 255)
+    static let brightGreen5 = Color(red: 171 / 255, green: 216 / 255, blue: 218 / 255)
 
     static let gray1 = Color(red: 94 / 255, green: 113 / 255, blue: 146 / 255)
     static let gray2 = Color(red: 194 / 255, green: 201 / 255, blue: 214 / 255)

@@ -31,6 +31,10 @@ enum SubTypeItem: SubTypeItemProtocol, CaseIterable {
     case dress
     case social
     case eProduct
+    
+    static func item(forTitle title: String) -> SubTypeItem? {
+            return SubTypeItem.allCases.first { $0.title == title }
+        }
 
     var image: UIImage? {
         switch self {
