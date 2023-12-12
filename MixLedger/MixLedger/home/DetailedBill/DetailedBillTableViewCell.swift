@@ -87,18 +87,21 @@ class DetailedBillTableViewCell: UITableViewCell {
         addSubview(iconImageView)
         addSubview(contentLabel)
         
-        iconImageView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(12)
-            make.leading.equalTo(self).offset(12)
-            make.width.height.equalTo(40)
-            make.bottom.equalTo(self).offset(-12)
+        contentLabel.snp.makeConstraints { make in
+//            make.centerY.equalTo(iconImageView)
+            make.top.equalTo(self).offset(18)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
+            make.bottom.equalTo(self).offset(-15)
         }
         
-        contentLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(iconImageView)
-            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
+        iconImageView.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(10)
+            make.leading.equalTo(self).offset(12)
+            make.width.height.equalTo(40)
 //            make.bottom.equalTo(self).offset(-12)
         }
+        
+        
     }
 
 }

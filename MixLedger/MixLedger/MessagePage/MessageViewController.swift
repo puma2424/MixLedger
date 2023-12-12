@@ -236,7 +236,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                     switch result {
                     case .success(let success):
                         self.datas?.inviteCard?.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+//                        self.tableView.deleteRows(at: [indexPath], with: .fade)
                     case .failure(let failure):
                         return
                     }
@@ -249,7 +249,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                     case .success(let success):
 //                        self.datas = self.saveData.myInfo
                         self.datas?.message?.remove(at: indexPath.row)
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+//                        self.tableView.deleteRows(at: [indexPath], with: .fade)
                         
                     case .failure(let failure):
                         return

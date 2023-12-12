@@ -66,7 +66,7 @@ class AddNewItemViewController: UIViewController {
                 var keys: [String] = []
                 for key in memberPayMoney.keys {
                     keys.append(key)
-                    memberShareMoney[key] = (amount ?? 0) / Double(memberPayMoney.keys.count)
+                    memberShareMoney[key] = Double(String(format: "%.1f", (amount ?? 0) / Double(memberPayMoney.keys.count))) ?? 0
                 }
                 memberPayMoney[keys[0]] = amount
             }
@@ -292,6 +292,7 @@ class AddNewItemViewController: UIViewController {
     // MARK: - 拍攝發票
 
     func selectPhotoButtonTapped() {
+        LKProgressHUD.show()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -313,14 +314,18 @@ class AddNewItemViewController: UIViewController {
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
+            LKProgressHUD.show()
         } else if sourceType == .camera {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = sourceType
                 present(imagePicker, animated: true, completion: nil)
+                
             } else {
+                LKProgressHUD.showFailure(text: "設備不支援相機")
                 print("設備不支援相機")
             }
         } else {
+            LKProgressHUD.showFailure(text: "相機不可用或其他情况")
             print("相機不可用或其他情况")
         }
     }
@@ -328,7 +333,7 @@ class AddNewItemViewController: UIViewController {
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        6
+       return 6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -455,6 +460,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
             present(subTypeVC, animated: true, completion: nil)
         } else if indexPath.row == 2 {
+            LKProgressHUD.show()
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
@@ -491,6 +497,7 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
+            
             scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
                 switch results {
                 case let .success(result):
@@ -502,12 +509,15 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
                         self.productDetails = self.scanInvoiceManager.productDetails
+                        LKProgressHUD.showSuccess()
                     case .formText:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
+                        LKProgressHUD.showSuccess()
                     }
                     self.table.reloadData()
                     
                 case .failure:
+                    LKProgressHUD.showFailure()
                     return
                 }
             }

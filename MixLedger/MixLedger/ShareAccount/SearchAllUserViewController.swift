@@ -38,11 +38,11 @@ class SearchAllUserViewController: UIViewController {
 
     var accountIDWithShare: String = ""
 
-    var searchResults: [UsersInfoResponse] = []
+//    var searchResults: [UsersInfoResponse] = []
 
     var allUsers: [UsersInfoResponse] = []
 
-    let searchController = UISearchController(searchResultsController: nil)
+//    let searchController = UISearchController(searchResultsController: nil)
     var searchBar = UISearchBar()
     var filteredData = [UsersInfoResponse]()
 
@@ -110,14 +110,14 @@ class SearchAllUserViewController: UIViewController {
         searchBar.placeholder = "搜尋"
     }
 
-    func filterContent(for searchText: String) {
-        searchResults = allUsers.filter { userInfo -> Bool in
-            let isMatch = userInfo.name.localizedCaseInsensitiveContains(searchText)
-            print(isMatch)
-            print(userInfo.name)
-            return isMatch
-        }
-    }
+//    func filterContent(for searchText: String) {
+//        searchResults = allUsers.filter { userInfo -> Bool in
+//            let isMatch = userInfo.name.localizedCaseInsensitiveContains(searchText)
+//            print(isMatch)
+//            print(userInfo.name)
+//            return isMatch
+//        }
+//    }
 
     func postInviteMessage(inviteeID: String) {
         LKProgressHUD.show()
