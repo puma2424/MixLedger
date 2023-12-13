@@ -81,6 +81,7 @@ class SelectMemberViewController: UIViewController {
         case nil:
             return
         }
+        dismiss(animated: true)
     }
 
     func setButton() {
@@ -150,6 +151,7 @@ extension SelectMemberViewController: UITableViewDelegate, UITableViewDataSource
                 self.usersMoney?[userID[indexPath.row]] = money
                 print(self.usersMoney)
             } else {
+                self.usersMoney?[userID[indexPath.row]] = 0.0
                 print("失敗")
             }
         }
