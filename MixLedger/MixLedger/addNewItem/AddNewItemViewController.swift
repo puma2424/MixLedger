@@ -305,13 +305,15 @@ class AddNewItemViewController: UIViewController {
             self.showImagePicker(sourceType: .camera)
         })
 
-        alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel){ _ in
+//            LKProgressHUD.dismiss()
+        })
 
         present(alertController, animated: true)
     }
 
     func showImagePicker(sourceType: UIImagePickerController.SourceType) {
-        LKProgressHUD.show(inView: self.view)
+//        LKProgressHUD.show(inView: self.view)
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
@@ -319,7 +321,7 @@ class AddNewItemViewController: UIViewController {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = sourceType
                 present(imagePicker, animated: true, completion: nil)
-                
+//                LKProgressHUD.dismiss()
             } else {
                 LKProgressHUD.showFailure(inView: self.view, text: "設備不支援相機")
                 print("設備不支援相機")
@@ -497,7 +499,8 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            
+//            LKProgressHUD.dismiss()
+            LKProgressHUD.show(inView: self.view)
             scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
                 switch results {
                 case let .success(result):
