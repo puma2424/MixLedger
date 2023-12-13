@@ -292,7 +292,7 @@ class AddNewItemViewController: UIViewController {
     // MARK: - 拍攝發票
 
     func selectPhotoButtonTapped() {
-        LKProgressHUD.show()
+//        LKProgressHUD.show(inView: self.view)
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -311,21 +311,21 @@ class AddNewItemViewController: UIViewController {
     }
 
     func showImagePicker(sourceType: UIImagePickerController.SourceType) {
+        LKProgressHUD.show(inView: self.view)
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
-            LKProgressHUD.show()
         } else if sourceType == .camera {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = sourceType
                 present(imagePicker, animated: true, completion: nil)
                 
             } else {
-                LKProgressHUD.showFailure(text: "設備不支援相機")
+                LKProgressHUD.showFailure(inView: self.view, text: "設備不支援相機")
                 print("設備不支援相機")
             }
         } else {
-            LKProgressHUD.showFailure(text: "相機不可用或其他情况")
+            LKProgressHUD.showFailure(inView: self.view, text: "相機不可用或其他情况")
             print("相機不可用或其他情况")
         }
     }
@@ -460,7 +460,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
             present(subTypeVC, animated: true, completion: nil)
         } else if indexPath.row == 2 {
-            LKProgressHUD.show()
+//            LKProgressHUD.show(inView: self.view)
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
@@ -509,15 +509,16 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
                         self.productDetails = self.scanInvoiceManager.productDetails
-                        LKProgressHUD.showSuccess()
+                        LKProgressHUD.showSuccess(inView: self.view)
+                        
                     case .formText:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
-                        LKProgressHUD.showSuccess()
+                        LKProgressHUD.showSuccess(inView: self.view)
                     }
                     self.table.reloadData()
                     
                 case .failure:
-                    LKProgressHUD.showFailure()
+                    LKProgressHUD.showFailure(inView: self.view)
                     return
                 }
             }
