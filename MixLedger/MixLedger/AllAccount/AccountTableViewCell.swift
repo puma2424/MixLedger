@@ -57,17 +57,17 @@ class AccountTableViewCell: UITableViewCell {
         return lable
     }()
 
-    let editButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: AllIcons.edit.rawValue), for: .normal)
-        return button
-    }()
+//    let editButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(UIImage(named: AllIcons.edit.rawValue), for: .normal)
+//        return button
+//    }()
 
     func setupLayout() {
         contentView.addSubview(checkmarkImageView)
         contentView.addSubview(accountIconImageView)
         contentView.addSubview(accountNameLable)
-        contentView.addSubview(editButton)
+//        contentView.addSubview(editButton)
         checkmarkImageView.snp.makeConstraints { mark in
             mark.width.height.equalTo(24)
             mark.centerY.equalTo(contentView)
@@ -81,19 +81,21 @@ class AccountTableViewCell: UITableViewCell {
         }
 
         accountNameLable.snp.makeConstraints { mark in
-            mark.centerX.centerY.equalTo(contentView)
-        }
-
-        editButton.snp.makeConstraints { mark in
+            mark.trailing.lessThanOrEqualTo(contentView.snp.trailing).offset(-12)
+            mark.leading.equalTo(accountIconImageView.snp.trailing).offset(12)
             mark.centerY.equalTo(contentView)
-            mark.width.height.equalTo(24)
-            mark.trailing.equalTo(contentView).offset(-20)
         }
+
+//        editButton.snp.makeConstraints { mark in
+//            mark.centerY.equalTo(contentView)
+//            mark.width.height.equalTo(24)
+//            mark.trailing.equalTo(contentView).offset(-20)
+//        }
     }
 
-    func setButton() {
-        editButton.addTarget(self, action: #selector(eaitActive), for: .touchUpInside)
-    }
-
-    @objc func eaitActive() {}
+//    func setButton() {
+//        editButton.addTarget(self, action: #selector(eaitActive), for: .touchUpInside)
+//    }
+//
+//    @objc func eaitActive() {}
 }

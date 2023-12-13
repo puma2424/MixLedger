@@ -160,7 +160,7 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
             let amount = MoneyType.money(userMoney)
             userCell.amount = amount
             if id == saveData.myInfo?.userID {
-                userCell.checkButton.isHidden = true
+//                userCell.checkButton.isHidden = true
                 userCell.setupNoButtonLayout()
                 myMoney = userMoney
             } else {
