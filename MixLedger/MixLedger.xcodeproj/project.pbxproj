@@ -1048,7 +1048,7 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
+				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1056,6 +1056,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1084,7 +1085,7 @@
 				DEVELOPMENT_TEAM = FP8RB3BHVD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "金錢豹";
+				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1092,6 +1093,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
