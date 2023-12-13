@@ -113,7 +113,13 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
                                                 amount: 0.0,
                                                 fromAccoundID: accountData.accountID,
                                                 fromAccoundName: accountData.accountName)
-                    { _ in
+                    { result in
+                        switch result {
+                        case .success(let success):
+                            LKProgressHUD.showSuccess(text: "訊息已發送")
+                        case .failure(let failure):
+                            LKProgressHUD.showFailure(text: "訊息發送失敗")
+                        }
                     }
                 }
             } else if cell.amount.checkButtonTitle == "還  款" {
