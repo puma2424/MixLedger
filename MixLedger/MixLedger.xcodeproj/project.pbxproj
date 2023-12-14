@@ -101,6 +101,9 @@
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
 		9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */; };
+		9AFCB3842B2AE252008CBADF /* ShowShareViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */; };
+		9AFCB3862B2AF387008CBADF /* ShareWithQRcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */; };
+		9AFCB3882B2AFA75008CBADF /* CreateQRCodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */; };
 		AC660F929AB6EEC8130B3645 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E51A323F08C4E303A24076 /* Pods_MixLedgerTests.framework */; };
 		D74B6B893F5AA3F608236B38 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */; };
 /* End PBXBuildFile section */
@@ -202,6 +205,9 @@
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRouteManager.swift; sourceTree = "<group>"; };
+		9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowShareViewManager.swift; sourceTree = "<group>"; };
+		9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWithQRcodeViewController.swift; sourceTree = "<group>"; };
+		9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRCodeManager.swift; sourceTree = "<group>"; };
 		A50C2A554C708C9D6C78C87E /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -284,6 +290,7 @@
 		9A0A33F22B17671700944AE3 /* modleView */ = {
 			isa = PBXGroup;
 			children = (
+				9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */,
 				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
 				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
 				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
@@ -305,6 +312,8 @@
 				9A00216B2B20452A0052A7A1 /* ColorManager.swift */,
 				9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */,
 				9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */,
+				9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */,
+				9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -818,6 +827,7 @@
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
 				9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */,
 				9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */,
+				9AFCB3862B2AF387008CBADF /* ShareWithQRcodeViewController.swift in Sources */,
 				9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */,
 				9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
@@ -855,6 +865,7 @@
 				9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */,
 				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
+				9AFCB3842B2AE252008CBADF /* ShowShareViewManager.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
@@ -867,6 +878,7 @@
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
+				9AFCB3882B2AFA75008CBADF /* CreateQRCodeManager.swift in Sources */,
 				9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 				9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */,

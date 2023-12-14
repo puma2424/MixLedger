@@ -47,6 +47,8 @@ enum AllIcons: String, CaseIterable {
     case eProduct
     case receipt
     case date
+    case qrcode
+    case share2
 
     var icon: UIImage? {
         return UIImage(named: rawValue)

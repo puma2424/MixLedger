@@ -1,5 +1,5 @@
 //
-//  SearchAllUserViewController.swift
+//  ShareAccountViewController.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/11/22.
@@ -7,7 +7,7 @@
 
 import SnapKit
 import UIKit
-class SearchAllUserViewController: UIViewController {
+class ShareAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -15,6 +15,7 @@ class SearchAllUserViewController: UIViewController {
         setupLayout()
         setupTable()
         setupSearch()
+        addRightBarButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -38,11 +39,8 @@ class SearchAllUserViewController: UIViewController {
 
     var accountIDWithShare: String = ""
 
-//    var searchResults: [UsersInfoResponse] = []
-
     var allUsers: [UsersInfoResponse] = []
 
-//    let searchController = UISearchController(searchResultsController: nil)
     var searchBar = UISearchBar()
     var filteredData = [UsersInfoResponse]()
 
@@ -60,18 +58,76 @@ class SearchAllUserViewController: UIViewController {
             }
         }
     }
+    
+    func addRightBarButton() {
+        let shareUrlImare = AllIcons.share2.icon?.withRenderingMode(.alwaysOriginal)
+        
+        let qrCodeImare = AllIcons.qrcode.icon?.withRenderingMode(.alwaysOriginal)
+        
+        // 導覽列右邊按鈕
+        let shareButton = UIBarButtonItem(
+            //          title:"設定",
+            image: shareUrlImare,
+            style: .plain,
+            target: self,
+            action: #selector(shareAccountBookWithUrl)
+        )
+        
+        let qrCodeButton = UIBarButtonItem(
+            //          title:"設定",
+            image: qrCodeImare,
+            style: .plain,
+            target: self,
+            action: #selector(shareAccountBookWithQrCode)
+        )
+        // 調整兩個按鈕之間的距離
+           let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+           fixedSpace.width = 0 // 調整距離
+        // 加到導覽列中
+        navigationItem.rightBarButtonItems = [shareButton, fixedSpace, qrCodeButton]
+    }
+    
+    func creatUrlString() -> String {
+        guard let accountID = saveData.accountData?.accountID else { return ""}
+        let endPoint = UrlRouteManager.EndPoint.account
+        return UrlRouteManager.createUrlString(for: endPoint, components: [accountID])
+    }
+    
+    @objc func shareAccountBookWithUrl(){
+        guard let accountName = saveData.accountData?.accountName else {
+            LKProgressHUD.showFailure()
+            return
+        }
+        var text = ""
+        text += "您被邀請進入共享帳簿：\(accountName)"
+        text += "\n"
+        text += "\n點擊以下連結加入帳簿"
+        text += "\n\(creatUrlString())"
+        
+        ShowShareViewManager.showShare(content: [text], vc: self)
+    }
+    
+    @objc func shareAccountBookWithQrCode(){
+        guard let accountName = saveData.accountData?.accountName else {
+            LKProgressHUD.showFailure()
+            return
+        }
+        
+        let qrCodeView = ShareWithQRcodeViewController()
+//        qrCodeView.setupQRCode(text: creatUrlString())
+        qrCodeView.urlString = creatUrlString()
+        qrCodeView.modalPresentationStyle = .automatic
+        qrCodeView.modalTransitionStyle = .coverVertical
+        qrCodeView.sheetPresentationController?.detents = [.custom(resolver: { context in
+            context.maximumDetentValue * 0.45
+        }
+        )]
+        present(qrCodeView, animated: true)
+    }
+    
 
     func setupLayout() {
         view.addSubview(tableView)
-//        view.addSubview(searchBar)
-//        
-//        searchBar.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide)
-//            make.leading.equalTo(view.safeAreaLayoutGuide)
-//            make.trailing.equalTo(view.safeAreaLayoutGuide)
-//            make.height.equalTo(50)
-//        }
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(view.safeAreaLayoutGuide)
@@ -91,16 +147,6 @@ class SearchAllUserViewController: UIViewController {
     }
 
     func setupSearch() {
-        //        // 將更新搜尋結果的對象設為 self
-        //        searchController.searchResultsUpdater = self
-        //        // 搜尋時是否隱藏 NavigationBar
-        //        searchController.hidesNavigationBarDuringPresentation = true
-        //        // 搜尋框的樣式
-        //        searchController.searchBar.searchBarStyle = .default
-        //        // 設置搜尋框的尺寸為自適應
-        //        // 因為會擺在 tableView 的 header
-        //        // 所以尺寸會與 tableView 的 header 一樣
-        //        searchController.searchBar.sizeToFit()
         
         searchBar.sizeToFit()
         searchBar.delegate = self
@@ -109,16 +155,7 @@ class SearchAllUserViewController: UIViewController {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "搜尋"
     }
-
-//    func filterContent(for searchText: String) {
-//        searchResults = allUsers.filter { userInfo -> Bool in
-//            let isMatch = userInfo.name.localizedCaseInsensitiveContains(searchText)
-//            print(isMatch)
-//            print(userInfo.name)
-//            return isMatch
-//        }
-//    }
-
+    
     func postInviteMessage(inviteeID: String) {
         LKProgressHUD.show()
         if let accountName = saveData.accountData?.accountName, let myName = saveData.myInfo?.name {
@@ -134,7 +171,7 @@ class SearchAllUserViewController: UIViewController {
     }
 }
 
-extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSource {
+extension ShareAccountViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
 //        searchResults.count
         filteredData.count
@@ -155,7 +192,7 @@ extension SearchAllUserViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-extension SearchAllUserViewController: UISearchBarDelegate {
+extension ShareAccountViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 使用filter方法來篩選data，並將結果更新到filteredData
@@ -170,7 +207,7 @@ extension SearchAllUserViewController: UISearchBarDelegate {
     }
 }
 //
-//extension SearchAllUserViewController: UISearchResultsUpdating {
+//extension ShareAccountViewController: UISearchResultsUpdating {
 //    func updateSearchResults(for searchController: UISearchController) {
 //        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
 //            filterContent(for: searchText)

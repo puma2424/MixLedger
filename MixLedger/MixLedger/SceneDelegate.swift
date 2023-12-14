@@ -44,6 +44,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 SaveData.shared.myID = userID
                 ShowScreenManager.showMainScreen(window: window)
+                guard let url = connectionOptions.urlContexts.first?.url
+                    else { return }
+                UrlRouteManager.open(url: url)
 
             case false:
                 ShowScreenManager.showSinginScreen(window: window)
@@ -60,7 +63,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // 尝试使用 UrlRouteManager 处理打开的 URL 上下文
         guard let url = URLContexts.first?.url else { return }
-        UrlRouteManager.shared.open(url: url)
+        UrlRouteManager.open(url: url)
     }
 
     func sceneDidDisconnect(_: UIScene) {

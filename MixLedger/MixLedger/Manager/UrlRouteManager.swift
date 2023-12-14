@@ -38,7 +38,7 @@ class UrlRouteManager {
     }
 
     // 打开给定的URL
-    func open(url: URL) {
+    static func open(url: URL) {
         print("open url")
         let components = url.pathComponents
         guard let host = url.host(),
@@ -47,7 +47,7 @@ class UrlRouteManager {
         // 根据不同的终端点执行相应的操作
         switch endpoint {
         case .account:
-            joinAccount(components)
+            self.shared.joinAccount(components)
             print("open Account")
         case .user:
             print("open User")
@@ -55,28 +55,38 @@ class UrlRouteManager {
     }
 
     // 创建URL字符串
-    func createUrlString(
+    static func createUrlString(
         for endPoint: EndPoint,
         components: [String]
     ) -> String {
-        appName + "://" + endPoint.rawValue +
+        self.shared.appName + "://" + endPoint.rawValue +
                     "/" + components.joined(separator: "/")
     }
 
     // MARK: - Meeting
     // 处理与会议相关的操作
-    func joinAccount(_ urlPathComponents: [String]) {
+    private func joinAccount(_ urlPathComponents: [String]) {
         // 确保根视图控制器是 FSTabBarController，并且 URL 路径组件数量为2
-        guard urlPathComponents.count == 2
-        else { return }
+        guard urlPathComponents.count == 2 else { return }
         print("==================")
         print(urlPathComponents)
         print(urlPathComponents.count)
         print("==================")
+        
+        
+        
         if let window = SceneDelegate.shared.window,
            let rootViewController = window.rootViewController
         {
             ShowCustomAlertManager.customAlert(title: "邀請你加入共享帳本", message: "請問要加入共享帳本嗎？", vc: rootViewController) {
+                FirebaseManager.shared.postRespondToInvitation(respond: true, accountID: urlPathComponents[1], accountName: "", inviterID: "", inviterName: "") { result in
+                    switch result {
+                    case .success(let success):
+                        LKProgressHUD.showSuccess(text: success)
+                    case .failure(let failure):
+                        LKProgressHUD.showFailure()
+                    }
+                }
                 return
             }
         }
