@@ -60,10 +60,10 @@ class ShareAccountViewController: UIViewController {
     }
     
     func addRightBarButton() {
-        let shareUrlImare = AllIcons.share2.icon?.withRenderingMode(.alwaysOriginal)
-        
-        let qrCodeImare = AllIcons.qrcode.icon?.withRenderingMode(.alwaysOriginal)
-        
+//        let shareUrlImare = AllIcons.share2.icon?.withRenderingMode(.alwaysOriginal)
+        let shareUrlImare = UIImage(systemName: "qrcode")?.withTintColor(.brightGreen3(), renderingMode: .alwaysOriginal)
+//        let qrCodeImare = AllIcons.qrcode.icon?.withRenderingMode(.alwaysOriginal)
+        let qrCodeImare = UIImage(systemName: "square.and.arrow.up")?.withTintColor(.brightGreen3(), renderingMode: .alwaysOriginal)
         // 導覽列右邊按鈕
         let shareButton = UIBarButtonItem(
             //          title:"設定",

@@ -24,11 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        // 如果存在 URL 上下文，则尝试使用 UrlRouteManager 处理 URL
-//            guard let url = connectionOptions.urlContexts.first?.url
-//            else { return }
-//            UrlRouteManager.shared.open(url: url)
-        
         guard let window = window else { return }
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window.windowScene = windowScene
@@ -60,10 +55,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ scene: UIScene,
         openURLContexts URLContexts: Set<UIOpenURLContext>
     ) {
+        guard let window = window else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window.windowScene = windowScene
+        window.backgroundColor = UIColor(named: "G3")
+        window.makeKeyAndVisible()
+        sceneWindow = window
+        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
+            switch result {
+            case true:
+                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+                    ShowScreenManager.showSinginScreen(window: window)
+                    return
+                }
+                SaveData.shared.myID = userID
+                ShowScreenManager.showMainScreen(window: window)
+                
+                // 尝试使用 UrlRouteManager 处理打开的 URL 上下文
+                guard let url = URLContexts.first?.url else { return }
+                UrlRouteManager.open(url: url)
 
-        // 尝试使用 UrlRouteManager 处理打开的 URL 上下文
-        guard let url = URLContexts.first?.url else { return }
-        UrlRouteManager.open(url: url)
+            case false:
+                ShowScreenManager.showSinginScreen(window: window)
+            }
+        }
     }
 
     func sceneDidDisconnect(_: UIScene) {
