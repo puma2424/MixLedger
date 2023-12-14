@@ -18,7 +18,7 @@ class ShowCustomAlertManager {
         ///   - actionHandler: 按下按鈕後要執行的動作，沒有的話，就填 nil
     static func customAlert(title: String, message: String, vc: UIViewController, actionHandler: (() -> Void)?) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let closeAction = UIAlertAction(title: "關閉", style: .default) { action in
+            let closeAction = UIAlertAction(title: "確認", style: .default) { action in
                 actionHandler?()
             }
             alertController.addAction(closeAction)

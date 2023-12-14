@@ -100,6 +100,7 @@
 		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
+		9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */; };
 		AC660F929AB6EEC8130B3645 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E51A323F08C4E303A24076 /* Pods_MixLedgerTests.framework */; };
 		D74B6B893F5AA3F608236B38 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */; };
 /* End PBXBuildFile section */
@@ -200,6 +201,7 @@
 		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRouteManager.swift; sourceTree = "<group>"; };
 		A50C2A554C708C9D6C78C87E /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -302,6 +304,7 @@
 				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
 				9A00216B2B20452A0052A7A1 /* ColorManager.swift */,
 				9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */,
+				9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
 				9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */,
+				9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
 				9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */,
