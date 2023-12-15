@@ -97,8 +97,13 @@ class MessageViewController: UIViewController {
         if index.section == 0 {
             print("agare in table \(index)")
             
-            if let data = datas?.inviteCard?[index.row] {
-                firebaseManager.postRespondToInvitation(respond: false, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { result in
+            if let data = datas?.inviteCard {
+                let inviteCard = data[index.row]
+                firebaseManager.postRespondToInvitation(respond: false,
+                                                        accountID: inviteCard.accountID,
+                                                        accountName: inviteCard.accountName,
+                                                        inviterID: inviteCard.inviterID,
+                                                        inviterName: inviteCard.inviterName) { result in
                     switch result {
                     case .success(let success):
                         print("--")
@@ -194,7 +199,8 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                 inviteCell.inviteMessageLabel.textColor = .gray
             }
         } else {
-            if datas?.message?.count != 0 {
+            if datas?.message?.count != 0,
+               datas?.message != nil {
                 if let data = datas?.message?[indexPath.row] {
                     inviteCell.inviteMessageLabel.textColor = .g1()
                     if data.isDunningLetter {
@@ -234,12 +240,16 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
     func deleteMessage(indexPath: IndexPath){
         if indexPath.section == 0 {
             if let data = datas?.inviteCard?[indexPath.row] {
-                FirebaseManager.postDeleteInvitation(accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.accountName) { result in
+                FirebaseManager.postDeleteInvitation(accountID: data.accountID, 
+                                                     accountName: data.accountName,
+                                                     inviterID: data.inviterID,
+                                                     inviterName: data.inviterName) { result in
                     switch result {
                     case .success(let success):
                         self.datas?.inviteCard?.remove(at: indexPath.row)
-//                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        self.tableView.reloadData()
                     case .failure(let failure):
+                        print(failure)
                         return
                     }
                 }
@@ -249,10 +259,8 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                 FirebaseManager.postDeleteMessage(userID: saveData.myID, messageInfo: data) { result in
                     switch result {
                     case .success(let success):
-//                        self.datas = self.saveData.myInfo
                         self.datas?.message?.remove(at: indexPath.row)
-//                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                        
+                        self.tableView.reloadData()
                     case .failure(let failure):
                         return
                     }
@@ -274,7 +282,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                 return .none
             }
         }else {
-            if self.datas?.message?.count == 0 {
+            if self.datas?.message?.count == 0 || self.datas?.message == nil {
                 return .none
             }
         }

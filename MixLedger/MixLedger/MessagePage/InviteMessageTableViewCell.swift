@@ -137,9 +137,6 @@ class InviteMessageTableViewCell: UITableViewCell {
     func setupLayoutNoButton() {
         rejectButton.removeFromSuperview()
         agreebutton.removeFromSuperview()
-//        contentView.addSubview(rejectButton)
-//        contentView.addSubview(agreebutton)
-//        contentView.addSubview(inviteMessageLabel)
 
         inviteMessageLabel.snp.remakeConstraints { mark in
             mark.top.equalTo(contentView).offset(12)

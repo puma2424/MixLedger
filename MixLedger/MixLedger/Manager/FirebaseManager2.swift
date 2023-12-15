@@ -103,7 +103,10 @@ extension FirebaseManager {
         let myID = SaveData.shared.myID
         
         shared.db.collection("users").document(myID).updateData([
-            "inviteCard": FieldValue.arrayRemove([["accountID": accountID, "inviterID": inviterID, "inviterName": inviterName, "accountName": accountName]]),
+            "inviteCard": FieldValue.arrayRemove([["accountID": accountID,
+                                                   "inviterID": inviterID,
+                                                   "inviterName": inviterName,
+                                                   "accountName": accountName]]),
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
