@@ -30,7 +30,7 @@
 		9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3043002B15A8C700FFEEB0 /* PieChartView.swift */; };
 		9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */; };
 		9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */; };
-		9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */; };
+		9A524CD72B0DCF0500B232D4 /* ShareAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD62B0DCF0500B232D4 /* ShareAccountViewController.swift */; };
 		9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */; };
 		9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */; };
 		9A524CDD2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */; };
@@ -160,7 +160,7 @@
 		9A3043002B15A8C700FFEEB0 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberTableViewCell.swift; sourceTree = "<group>"; };
-		9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllUserViewController.swift; sourceTree = "<group>"; };
+		9A524CD62B0DCF0500B232D4 /* ShareAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAccountViewController.swift; sourceTree = "<group>"; };
 		9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTableViewCell.swift; sourceTree = "<group>"; };
 		9A524CDA2B0E089E00B232D4 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		9A524CDC2B0E0F9D00B232D4 /* InviteMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMessageTableViewCell.swift; sourceTree = "<group>"; };
@@ -410,7 +410,7 @@
 		9A50ADC12B0EECB50099351D /* ShareAccount */ = {
 			isa = PBXGroup;
 			children = (
-				9A524CD62B0DCF0500B232D4 /* SearchAllUserViewController.swift */,
+				9A524CD62B0DCF0500B232D4 /* ShareAccountViewController.swift */,
 				9A524CD82B0DDFFE00B232D4 /* SearchUserTableViewCell.swift */,
 			);
 			path = ShareAccount;
@@ -844,7 +844,7 @@
 				9A3042FF2B14957100FFEEB0 /* LineMarkCharts.swift in Sources */,
 				9AEB5F7A2B062FE400DF5DFF /* SharedBillStatusOpenView.swift in Sources */,
 				9A3043012B15A8C700FFEEB0 /* PieChartView.swift in Sources */,
-				9A524CD72B0DCF0500B232D4 /* SearchAllUserViewController.swift in Sources */,
+				9A524CD72B0DCF0500B232D4 /* ShareAccountViewController.swift in Sources */,
 				9A524CDB2B0E089E00B232D4 /* MessageViewController.swift in Sources */,
 				9AEB5F742B0608D100DF5DFF /* ShowMoneyFormat.swift in Sources */,
 				9AEB5F7E2B07133400DF5DFF /* BillStatusTableViewCell.swift in Sources */,

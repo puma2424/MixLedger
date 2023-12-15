@@ -173,8 +173,6 @@ class ShareAccountViewController: UIViewController {
 
 extension ShareAccountViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-//        filteredData.removeAll { $0.userID == saveData.myID }
-        
         return filteredData.count
     }
 
@@ -198,7 +196,14 @@ extension ShareAccountViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 使用filter方法來篩選data，並將結果更新到filteredData
         filteredData = searchText.isEmpty ? allUsers : allUsers.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-        filteredData.removeAll { $0.userID == saveData.myID }
+        filteredData.removeAll {
+            let usreID = $0.userID
+            let user = saveData.userInfoData.filter{ $0.userID == usreID }
+            if user.count > 0 ||  $0.userID == saveData.myID {
+                return true
+            }
+            return false
+        }
         // 重新載入tableView，顯示更新後的結果
         tableView.reloadData()
     }

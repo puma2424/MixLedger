@@ -73,22 +73,32 @@ class UrlRouteManager {
         print(urlPathComponents.count)
         print("==================")
         
+        let accountID = urlPathComponents[1]
         
-        
-        if let window = SceneDelegate.shared.window,
-           let rootViewController = window.rootViewController
-        {
-            ShowCustomAlertManager.customAlert(title: "邀請你加入共享帳本", message: "請問要加入共享帳本嗎？", vc: rootViewController) {
-                FirebaseManager.shared.postRespondToInvitation(respond: true, accountID: urlPathComponents[1], accountName: "", inviterID: "", inviterName: "") { result in
-                    switch result {
-                    case .success(let success):
-                        LKProgressHUD.showSuccess(text: success)
-                    case .failure(let failure):
-                        LKProgressHUD.showFailure()
+        if let myAccoumt = SaveData.shared.myInfo?.shareAccount.filter({ $0 == accountID }),
+           myAccoumt.count == 0 {
+            if let window = SceneDelegate.shared.window,
+               let rootViewController = window.rootViewController {
+                ShowCustomAlertManager.customAlertYesAndNo(title: "邀請你加入共享帳本", 
+                                                           message: "請問要加入共享帳本嗎？",
+                                                           vc: rootViewController) {
+                    FirebaseManager.shared.postRespondToInvitation(respond: true, accountID: accountID, accountName: "", inviterID: "", inviterName: "") { result in
+                        switch result {
+                        case .success(let success):
+                            LKProgressHUD.showSuccess(text: success)
+                        case .failure(_):
+                            LKProgressHUD.showFailure()
+                        }
                     }
+                    return
                 }
-                return
             }
+        }else {
+            if let window = SceneDelegate.shared.window,
+               let rootViewController = window.rootViewController {
+                ShowCustomAlertManager.customAlert(title: "已加入共享帳本", message: "你已在共享帳本中", vc: rootViewController, actionHandler: nil)
+            }
+            
         }
         
     }
