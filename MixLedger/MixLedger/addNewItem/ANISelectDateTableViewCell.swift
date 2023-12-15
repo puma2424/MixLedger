@@ -5,7 +5,6 @@
 //  Created by 莊羚羊 on 2023/11/18.
 //
 
-import SnapKit
 import UIKit
 
 class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
