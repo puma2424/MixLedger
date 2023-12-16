@@ -229,7 +229,6 @@ class AddNewAccountViewController: UIViewController {
 
     @objc func checkButtonActive() {
         guard let name = accountName else { return }
-//        guard let budget = accountBudget as? Double else {return}
         guard let icon = selectedIcon else { return }
         if accountBudget != nil, let budget = accountBudget as? Double {
             firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon){ result in

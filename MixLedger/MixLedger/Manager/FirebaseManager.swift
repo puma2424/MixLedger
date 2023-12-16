@@ -86,7 +86,7 @@ class FirebaseManager {
                                                             currency: "新台幣", date: Date(),
                                                             from: messageInfo.fromAccoundName,
                                                             note: "",
-                                                            subType: TransactionType(iconName: "", name: "付款"))
+                                                            subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "付款"))
 
                 let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
                                                          amount: messageInfo.amount,
@@ -94,7 +94,7 @@ class FirebaseManager {
                                                          date: Date(),
                                                          from: messageInfo.fromAccoundName,
                                                          note: "",
-                                                         subType: TransactionType(iconName: "", name: "收支平衡"))
+                                                         subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "收支平衡"))
 
                 let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
                                                           amount: messageInfo.amount,
@@ -102,7 +102,7 @@ class FirebaseManager {
                                                           date: Date(),
                                                           from: messageInfo.fromAccoundName,
                                                           note: "",
-                                                          subType: TransactionType(iconName: "", name: "收款"))
+                                                          subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "收款"))
 
                 // value：同時間最多有1個thread可以存取某資源
                 var semaphore = DispatchSemaphore(value: 1)
@@ -467,8 +467,7 @@ class FirebaseManager {
               memberPayMoney: [String: Double],
               memberShareMoney: [String: Double],
               accountInfo: TransactionsResponse,
-              completion: @escaping (Result<Any, Error>) -> Void)
-    {
+              completion: @escaping (Result<Any, Error>) -> Void) {
         var account = accountInfo
 
         for id in memberPayMoney.keys {
@@ -511,7 +510,7 @@ class FirebaseManager {
             let dateD = dateFont.string(from: transaction.date)
 
             db.collection("accounts").document(toAccountID).updateData([
-                "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
+                "transactions.\(dateM).\(dateD).\(transaction.date)": postTransaction,
                 "shareUsersID": account.shareUsersID,
                 "accountInfo.expense": FieldValue.increment(transaction.amount),
                 "accountInfo.total": FieldValue.increment(transaction.amount),
@@ -524,33 +523,16 @@ class FirebaseManager {
                 }
             }
         }
-//
-//
-//
-//        if saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
-//            updatePayerAccount(isMyAccount: false, memberPayMoney: memberPayMoney, date: transaction.date, note: transaction.note, type: transaction.subType) { result in
-//                switch result {
-//                case .success:
-//                    print("同步到付費者的個人帳本：成功")
-//                case let .failure(err):
-//                    print("同步到付費者的個人帳本：失敗")
-//                    print(err)
-//                    print("-----------------------")
-//                }
-//            }
-//        }
     }
 
     func postData(toAccountID: String,
                   transaction: Transaction,
                   memberPayMoney: [String: Double],
                   memberShareMoney: [String: Double],
-                  completion: @escaping (Result<Any, Error>) -> Void)
-    {
+                  completion: @escaping (Result<Any, Error>) -> Void) {
         getAccountData(accountID: toAccountID) { result in
             switch result {
             case let .success(accountData):
-                //                    accountInfo = accountData
                 self.post(toAccountID: toAccountID,
                           transaction: transaction,
                           memberPayMoney: memberPayMoney,
@@ -578,8 +560,7 @@ class FirebaseManager {
                                 formAccountName: String,
                                 usersInfo: [UsersInfoResponse],
                                 transaction: Transaction,
-                                completion : @escaping (Result<Any, Error>) -> Void)
-    {
+                                completion : @escaping (Result<Any, Error>) -> Void) {
         dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: transaction.date)
         dateFont.dateFormat = "yyyy-MM-dd"
@@ -588,24 +569,26 @@ class FirebaseManager {
         let batch = db.batch()
 
         for userInfo in usersInfo {
-            let inputTransaction: [String: Any] = [
-                "amount": transaction.payUser?[userInfo.userID],
-                "date": transaction.date,
-                "note": transaction.note,
-                "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
-                "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
-                "currency": "新台幣",
-                "from": formAccountName,
-            ]
+            if transaction.payUser?[userInfo.userID] != 0 {
+                let inputTransaction: [String: Any] = [
+                    "amount": transaction.payUser?[userInfo.userID],
+                    "date": transaction.date,
+                    "note": transaction.note,
+                    "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+                    "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
+                    "currency": "新台幣",
+                    "from": formAccountName,
+                ]
 
-            // Update the population of 'userInfo.ownAccount'
-            let sfRef = db.collection("accounts").document(userInfo.ownAccount)
-            batch.updateData([
-                "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
-                "accountInfo.expense": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
-                "accountInfo.total": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
-            ],
-            forDocument: sfRef)
+                // Update the population of 'userInfo.ownAccount'
+                let sfRef = db.collection("accounts").document(userInfo.ownAccount)
+                batch.updateData([
+                    "transactions.\(dateM).\(dateD).\(transaction.date)": inputTransaction,
+                    "accountInfo.expense": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
+                    "accountInfo.total": FieldValue.increment(-(transaction.payUser?[userInfo.userID] ?? 0)),
+                ],
+                forDocument: sfRef)
+            }
         }
 
         // Commit the batch

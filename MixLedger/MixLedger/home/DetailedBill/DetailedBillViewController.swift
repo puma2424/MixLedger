@@ -72,12 +72,8 @@ class DetailedBillViewController: UIViewController {
 
 extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 + idOfPayUser.count + idOfShareUser.count
+        return 5 + idOfPayUser.count + idOfShareUser.count
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        64
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -99,12 +95,17 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
             case 3:
                 detailCell.iconImageView.image = AllIcons.date.icon
                 detailCell.contentLabel.text = "\(data.date)"
+            case 4:
+                detailCell.iconImageView.image = AllIcons.importIcon.icon
+                if let from = data.from {
+                    detailCell.contentLabel.text = "\(from)"
+                }
             default:
                 detailCell.setupForUserLayout()
-                if indexPath.row <= idOfPayUser.count + 3 {
+                if indexPath.row <= idOfPayUser.count + 4 {
                     detailCell.iconImageView.image = AllIcons.human.icon
                     if idOfPayUser.count > 0 {
-                        let id = idOfPayUser[indexPath.row - 4]
+                        let id = idOfPayUser[indexPath.row - 5]
                         
                         var name = SaveData.shared.userInfoData.filter { user in
                             user.userID == id
@@ -121,10 +122,10 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                             detailCell.payOrShareLabel.textColor = moneyType.color
                         }
                     }
-                } else if indexPath.row <= idOfPayUser.count + idOfShareUser.count + 3 {
+                } else if indexPath.row <= idOfPayUser.count + idOfShareUser.count + 4 {
                     detailCell.iconImageView.image = AllIcons.human.icon
                     if idOfShareUser.count > 0 {
-                        let id = idOfShareUser[indexPath.row - 4 - idOfPayUser.count]
+                        let id = idOfShareUser[indexPath.row - 5 - idOfPayUser.count]
                         
                         var name = SaveData.shared.userInfoData.filter { user in
                             user.userID == id

@@ -22,7 +22,8 @@ class BillTableViewCell: UITableViewCell {
     // 共用的初始化邏輯
     private func commonInit() {
         // 在這裡放置需要在初始化時執行的程式碼
-        setupView()
+//        setupView()
+        setView()
         backgroundColor = .g3()
     }
 
@@ -71,6 +72,40 @@ class BillTableViewCell: UITableViewCell {
         stackView.spacing = 5 // 設置子視圖之間的間距
         return stackView
     }()
+    
+    
+    func setView() {
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        titleLabel.textColor = .g1()
+        moneyLabel.font = UIFont.systemFont(ofSize: 18)
+        moneyLabel.textColor = .g1()
+
+        moneyLabel.textAlignment = .right
+
+        moneyLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 1
+        contentView.addSubview(sortImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(moneyLabel)
+
+        sortImageView.snp.makeConstraints { mark in
+            mark.width.height.equalTo(50)
+            mark.leading.equalTo(contentView).offset(5)
+            mark.centerY.equalTo(contentView)
+            mark.bottom.equalTo(contentView).offset(-5)
+        }
+
+        titleLabel.snp.makeConstraints { mark in
+            mark.centerY.equalTo(contentView)
+            mark.leading.equalTo(sortImageView.snp.trailing).offset(12)
+            mark.trailing.lessThanOrEqualTo(moneyLabel.snp.leading).offset(-8) // 設置 titleStackView 右邊不超過 moneyStackView 的左邊
+        }
+
+        moneyLabel.snp.makeConstraints { mark in
+            mark.centerY.equalTo(contentView)
+            mark.trailing.equalTo(contentView.snp.trailing).offset(-12)
+        }
+    }
 
     func setupView() {
         titleLabel.font = UIFont.systemFont(ofSize: 15)

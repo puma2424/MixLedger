@@ -89,6 +89,8 @@ class MessageViewController: UIViewController {
                 }
                 
             }
+        }else {
+            LKProgressHUD.dismiss()
         }
     }
 
@@ -115,7 +117,11 @@ class MessageViewController: UIViewController {
                     }
                     
                 }
+            }else {
+                LKProgressHUD.dismiss()
             }
+        }else {
+            LKProgressHUD.dismiss()
         }
     }
 
@@ -134,7 +140,11 @@ class MessageViewController: UIViewController {
                     }
                     
                 }
+            }else {
+                LKProgressHUD.dismiss()
             }
+        }else {
+            LKProgressHUD.showFailure()
         }
     }
 }
