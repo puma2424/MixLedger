@@ -75,7 +75,7 @@ class AddNewItemViewController: UIViewController {
 
     var member: String?
 
-    var selectDate: Date?
+    var selectDate: Date = Date()
 
     var type: TransactionType?
 
@@ -185,9 +185,9 @@ class AddNewItemViewController: UIViewController {
             let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
             let transaction = Transaction(transactionType: transactionType,
-                                          amount: -(amount ?? 0),
+                                          amount: -(amount),
                                           currency: "新台幣",
-                                          date: selectDate ?? Date(),
+                                          date: selectDate,
                                           note: note,
                                           payUser: memberPayMoney,
                                           shareUser: memberShareMoney,
@@ -401,7 +401,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
 //            selectDate = dateCell.datePicker.date
-            dateCell.datePicker.date = selectDate ?? Date()
+//            dateCell.datePicker.date = selectDate
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
 
             return dateCell
@@ -434,8 +434,15 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     // DatePicker 的值變化時的動作
     @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
         // 更新數據結構中相應 cell 的數據
+        // 將選擇的時間轉換為本地時間
+        DateFormatter().dateFormat = "yyyy-MM-dd HH:mm:ss"
+        print(Date())
         selectDate = datePicker.date
+        print(selectDate)
+        print("Current Time Zone: \(TimeZone.current.identifier)")
         
+        print(datePicker.date)
+        print(datePicker.timeZone)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {

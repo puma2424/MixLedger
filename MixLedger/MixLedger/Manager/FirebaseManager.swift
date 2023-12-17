@@ -393,7 +393,7 @@ class FirebaseManager {
             "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
             "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
-            "from": "",
+            "from": transaction.from,
         ]
         dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: transaction.date)
@@ -501,7 +501,7 @@ class FirebaseManager {
                 "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
                 "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
                 "currency": "新台幣",
-                "from": "",
+                "from": transaction.from,
             ]
 
             dateFont.dateFormat = "yyyy-MM"

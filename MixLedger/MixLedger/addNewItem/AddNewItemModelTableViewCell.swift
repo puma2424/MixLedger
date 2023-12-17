@@ -72,6 +72,8 @@ class AddNewItemModelTableViewCell: UITableViewCell {
         datePicker.datePickerMode = .dateAndTime
         let currentDate = Date()
         datePicker.setDate(currentDate, animated: true)
+        datePicker.calendar = .current
+        datePicker.timeZone = TimeZone.current  // 設置時區為當前時區
     }
 
     func setupLayout() {

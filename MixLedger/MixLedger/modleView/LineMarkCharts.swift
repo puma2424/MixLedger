@@ -39,11 +39,11 @@ struct LineMarkCharts: View {
                     .foregroundStyle(by: .value("Product Category", data.subType))
                 }
             }
-            .chartXAxis {
-                AxisMarks(values: stockData.map { $0.date }) { _ in
-                    AxisValueLabel(format: .dateTime.month(.defaultDigits), centered: true, offsetsMarks: true)
-                }
-            }
+//            .chartXAxis {
+//                AxisMarks(values: stockData.map { $0.date }) { _ in
+//                    AxisValueLabel(format: .dateTime.month(.defaultDigits), centered: true, offsetsMarks: true)
+//                }
+//            }
             .chartYAxis {
                 AxisMarks(position: .leading)
             }
