@@ -144,11 +144,11 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                     }
                 }
             }
-        if detailCell.contentLabel.text != "" {
-            detailCell.contentLabel.textColor = .g1()
-        } else {
+        if detailCell.contentLabel.text == "" || detailCell.contentLabel.text == nil {
             detailCell.contentLabel.textColor = .gray
             detailCell.contentLabel.text = "Nothing"
+        } else {
+            detailCell.contentLabel.textColor = .g1()
         }
         return detailCell
     }
