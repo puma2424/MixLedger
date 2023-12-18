@@ -94,7 +94,9 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
             detailCell.contentLabel.text = data.note
         case 3:
             detailCell.iconImageView.image = AllIcons.date.icon
-            detailCell.contentLabel.text = "\(data.date)"
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            detailCell.contentLabel.text = formatter.string(from: data.date)
         case 4:
             detailCell.iconImageView.image = AllIcons.importIcon.icon
             if let from = data.from {

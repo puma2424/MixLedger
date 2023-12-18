@@ -404,7 +404,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
 //            selectDate = dateCell.datePicker.date
-//            dateCell.datePicker.date = selectDate
+//            dateCell.datePicker.date = selectDatex
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
 
             return dateCell
@@ -436,16 +436,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
     // DatePicker 的值變化時的動作
     @objc func datePickerDidChange(_ datePicker: UIDatePicker) {
-        // 更新數據結構中相應 cell 的數據
-        // 將選擇的時間轉換為本地時間
-        DateFormatter().dateFormat = "yyyy-MM-dd HH:mm:ss"
-        print(Date())
         selectDate = datePicker.date
         print(selectDate)
-        print("Current Time Zone: \(TimeZone.current.identifier)")
-
-        print(datePicker.date)
-        print(datePicker.timeZone)
     }
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
