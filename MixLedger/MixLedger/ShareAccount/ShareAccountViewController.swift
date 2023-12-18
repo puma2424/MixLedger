@@ -104,7 +104,7 @@ class ShareAccountViewController: UIViewController {
         text += "\n點擊以下連結加入帳簿"
         text += "\n\(creatUrlString())"
 
-        ShowShareViewManager.showShare(content: [text], vc: self)
+        ShowShareViewManager.showShare(content: [text], viewController: self)
     }
 
     @objc func shareAccountBookWithQrCode() {

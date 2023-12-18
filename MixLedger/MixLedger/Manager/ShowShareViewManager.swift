@@ -11,8 +11,8 @@ import UIKit
 class ShowShareViewManager {
     static let shared = ShowShareViewManager()
 
-    static func showShare(content: [Any], vc: UIViewController) {
-        let ac = UIActivityViewController(activityItems: content, applicationActivities: nil)
-        vc.present(ac, animated: true, completion: nil)
+    static func showShare(content: [Any], viewController: UIViewController) {
+        let activityVC = UIActivityViewController(activityItems: content, applicationActivities: nil)
+        viewController.present(activityVC, animated: true, completion: nil)
     }
 }
