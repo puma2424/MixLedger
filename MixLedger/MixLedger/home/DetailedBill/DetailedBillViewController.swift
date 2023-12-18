@@ -107,7 +107,7 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                 if idOfPayUser.count > 0 {
                     let id = idOfPayUser[indexPath.row - 5]
 
-                    var userInfo = SaveData.shared.userInfoData.filter { user in
+                    let userInfo = SaveData.shared.userInfoData.filter { user in
                         user.userID == id
                     }
                     if userInfo.count > 0,
@@ -128,7 +128,7 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
                 if idOfShareUser.count > 0 {
                     let id = idOfShareUser[indexPath.row - 5 - idOfPayUser.count]
 
-                    var userInfo = SaveData.shared.userInfoData.filter { user in
+                    let userInfo = SaveData.shared.userInfoData.filter { user in
                         user.userID == id
                     }
 
