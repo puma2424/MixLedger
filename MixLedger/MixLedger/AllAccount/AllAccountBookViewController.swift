@@ -13,7 +13,10 @@ class AllAccountBookViewController: UIViewController {
         setNavigation()
         setTable()
         setLayout()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleAccountNotification), name: .myMessageNotification, object: nil)
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(handleAccountNotification),
+                                               name: .myMessageNotification,
+                                               object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +65,7 @@ class AllAccountBookViewController: UIViewController {
         if let myInfo = savaData.myInfo {
             let shareAccount = myInfo.shareAccount
             let myAccount = [myInfo.ownAccount]
-            var allAccount: [String] = myAccount + shareAccount
+            let allAccount: [String] = myAccount + shareAccount
             firebaseManager.findAccount(account: allAccount) { _ in
                 self.table.reloadData()
             }
@@ -108,7 +111,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         2
     }
 
-    func tableView(_: UITableView, numberOfRowsInSection numberOfRowsInSection: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection: Int) -> Int {
         guard let data = savaData.myInfo else { return 0 }
         if numberOfRowsInSection == 0 {
             return 1
@@ -133,8 +136,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
 
         if indexPath.section == 0 {
             if let id = savaData.myInfo?.ownAccount,
-               let data = savaData.myShareAccount[id]
-            {
+               let data = savaData.myShareAccount[id] {
                 accountCell.accountNameLable.text = data.name
                 accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }

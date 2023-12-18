@@ -66,7 +66,9 @@ class AddNewItemViewController: UIViewController {
                 var keys: [String] = []
                 for key in memberPayMoney.keys {
                     keys.append(key)
-                    memberShareMoney[key] = Double(String(format: "%.1f", (amount ?? 0) / Double(memberPayMoney.keys.count))) ?? 0
+                    let shareMoney = (amount ?? 0) / Double(memberPayMoney.keys.count)
+                    let shareMoneyString = String(format: "%.1f", shareMoney)
+                    memberShareMoney[key] = Double(shareMoneyString) ?? 0
                 }
                 memberPayMoney[keys[0]] = amount
             }
@@ -135,10 +137,9 @@ class AddNewItemViewController: UIViewController {
         }
 
         if let amount = amount,
-           let subType = type,
+           type != nil,
            paySum == amount,
-           shareSum == amount
-        {
+           shareSum == amount {
             checkButton.backgroundColor = .brightGreen3()
         } else {
             checkButton.backgroundColor = .g2()
@@ -155,16 +156,67 @@ class AddNewItemViewController: UIViewController {
         for shareID in memberShareMoney.keys {
             shareSum += memberPayMoney[shareID] ?? 0
         }
+        
+        var titleText: String = "" {
+            didSet {
+                ShowCustomAlertManager.customAlert(title: titleText,
+                                                   message: "",
+                                                   vc: self,
+                                                   actionHandler: nil)
+            }
+        }
 
         if amount == nil {
-            ShowCustomAlertManager.customAlert(title: "No amount entered", message: "", vc: self, actionHandler: nil)
+            titleText = "No amount entered"
         } else if type == nil {
-            ShowCustomAlertManager.customAlert(title: "No type selected", message: "", vc: self, actionHandler: nil)
+            titleText = "No type selected"
         } else if paySum != amount {
-            ShowCustomAlertManager.customAlert(title: "The total amount paid by the payers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
+            titleText = "The total amount paid by the payers is inconsistent with the input amount"
         } else if shareSum != amount {
-            ShowCustomAlertManager.customAlert(title: "The total amount paid by the sharers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
+            titleText = "The total amount paid by the sharers is inconsistent with the input amount"
         }
+    }
+    
+    func postDataToAddNewBill(postTransaction: Transaction) {
+         
+         LKProgressHUD.show()
+         firebase.postData(toAccountID: currentAccountID, 
+                           transaction: postTransaction,
+                           memberPayMoney: memberPayMoney,
+                           memberShareMoney: memberShareMoney) { result in
+             switch result {
+             case let .success(success):
+                 print(success)
+                 LKProgressHUD.showSuccess()
+             case let .failure(failure):
+                 print(failure)
+                 LKProgressHUD.showFailure()
+             }
+         }
+
+         var payUsersID: [String] = []
+         for userID in memberPayMoney.keys {
+             payUsersID.append(userID)
+         }
+
+         if let accountName = saveData.accountData?.accountName,
+            saveData.accountData?.accountID != saveData.myInfo?.ownAccount {
+             let usersInfo = saveData.userInfoData
+             firebase.postUpdatePayerAccount(isMyAccount: false,
+                                             formAccountName: accountName,
+                                             usersInfo: usersInfo,
+                                             transaction: postTransaction) { result in
+                 switch result {
+                 case let .success(success):
+                     print(success)
+                     LKProgressHUD.showSuccess(text: "同步到支出者帳本")
+                 case let .failure(failure):
+                     print(failure)
+                     LKProgressHUD.showSuccess(text: "無法同步到支出者帳本")
+                 }
+             }
+         }
+         
     }
 
     @objc func checkButtonActive() {
@@ -181,11 +233,10 @@ class AddNewItemViewController: UIViewController {
         if let amount = amount,
            let subType = type,
            paySum == amount,
-           shareSum == amount
-        {
+           shareSum == amount {
             // 找到對應的字典
             let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
-            // swiftlint:disable line_length
+            
             let transaction = Transaction(transactionType: transactionType,
                                           amount: -amount,
                                           currency: "新台幣",
@@ -194,38 +245,7 @@ class AddNewItemViewController: UIViewController {
                                           payUser: memberPayMoney,
                                           shareUser: memberShareMoney,
                                           subType: subType)
-            LKProgressHUD.show()
-            firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { result in
-                switch result {
-                case let .success(success):
-                    LKProgressHUD.showSuccess()
-                case let .failure(failure):
-                    LKProgressHUD.showFailure()
-                }
-            }
-
-            var payUsersID: [String] = []
-            for userID in memberPayMoney.keys {
-                payUsersID.append(userID)
-            }
-
-            if let accountName = saveData.accountData?.accountName,
-               saveData.accountData?.accountID != saveData.myInfo?.ownAccount
-            {
-                let usersInfo = saveData.userInfoData
-                firebase.postUpdatePayerAccount(isMyAccount: false,
-                                                formAccountName: accountName,
-                                                usersInfo: usersInfo,
-                                                transaction: transaction)
-                { result in
-                    switch result {
-                    case let .success(success):
-                        LKProgressHUD.showSuccess(text: "同步到支出者帳本")
-                    case let .failure(failure):
-                        LKProgressHUD.showSuccess(text: "無法同步到支出者帳本")
-                    }
-                }
-            }
+            postDataToAddNewBill(postTransaction: transaction)
             dismiss(animated: true)
         } else {
             whyCannotSend()
@@ -282,9 +302,7 @@ class AddNewItemViewController: UIViewController {
     }
 
     func memberInfo() {
-        if saveData.userInfoData != nil {
-//            var usersKey: [String] = []
-
+        if saveData.userInfoData.count != 0 {
             for user in saveData.userInfoData {
                 memberPayMoney[user.userID] = 0
                 memberShareMoney[user.userID] = 0
@@ -293,9 +311,7 @@ class AddNewItemViewController: UIViewController {
     }
 
     // MARK: - 拍攝發票
-
     func selectPhotoButtonTapped() {
-//        LKProgressHUD.show(inView: self.view)
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -308,15 +324,12 @@ class AddNewItemViewController: UIViewController {
             self.showImagePicker(sourceType: .camera)
         })
 
-        alertController.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in
-//            LKProgressHUD.dismiss()
-        })
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
 
         present(alertController, animated: true)
     }
 
     func showImagePicker(sourceType: UIImagePickerController.SourceType) {
-//        LKProgressHUD.show(inView: self.view)
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             present(imagePicker, animated: true, completion: nil)
@@ -324,7 +337,6 @@ class AddNewItemViewController: UIViewController {
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = sourceType
                 present(imagePicker, animated: true, completion: nil)
-//                LKProgressHUD.dismiss()
             } else {
                 LKProgressHUD.showFailure(inView: view, text: "設備不支援相機")
                 print("設備不支援相機")
@@ -349,10 +361,9 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
             moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
-//
+
             let amountString = String(format: "%.2f", amount ?? 0.0)
             moneyCell.inputTextField.text = amountString
-//                amount = Double(invoiceTotalAmount)
 
             moneyCell.inputTextField.addTarget(self, action: #selector(getAmount(_:)), for: .editingChanged)
             return moneyCell
@@ -361,17 +372,14 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
             cell.selectionStyle = .none
             guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
-
             return typeCell
-
         } else if indexPath.row == 2 {
             // 掃描發票
             cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
             cell.selectionStyle = .none
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
             invoiceCell.invoiceLabel.text = ""
-//            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
-
+            
             var text = ""
             if invoiceNumber != "" {
                 text = "發票號碼： \(invoiceNumber)"
@@ -403,19 +411,14 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
-//            selectDate = dateCell.datePicker.date
-//            dateCell.datePicker.date = selectDatex
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
-
             return dateCell
-
         } else if indexPath.row == 4 {
             cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
             cell.selectionStyle = .none
             guard let memberPayCell = cell as? ANIMemberTableViewCell else { return cell }
             memberPayCell.showTitleLabel.text = "付款"
             memberPayCell.usersMoney = memberPayMoney
-
             return memberPayCell
 
         } else {
@@ -424,7 +427,6 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
             memberShareCell.showTitleLabel.text = "分款"
             memberShareCell.usersMoney = memberShareMoney
-
             return memberShareCell
         }
     }
@@ -452,19 +454,16 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
             subTypeVC.selectedSubType = { iconName, title in
                 self.type = TransactionType(iconName: iconName, name: title)
-                if let index = subTypeVC.selectedIndex {
+                if subTypeVC.selectedIndex != nil {
                     let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? ANITypeTableViewCell
                     cell?.iconImageView.image = UIImage(named: iconName)
                     cell?.titleLabel.text = title
                 }
-                print(subTypeVC.selectedIndex)
-                print(self.type)
                 self.checkButtonColorChange()
             }
 
             present(subTypeVC, animated: true, completion: nil)
         } else if indexPath.row == 2 {
-//            LKProgressHUD.show(inView: self.view)
             selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
@@ -528,7 +527,6 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                 }
             }
         }
-
         dismiss(animated: true, completion: nil)
     }
 }

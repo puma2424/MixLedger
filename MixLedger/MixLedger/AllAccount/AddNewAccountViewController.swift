@@ -219,24 +219,25 @@ class AddNewAccountViewController: UIViewController {
         } else {
             checkButton.isHidden = true
         }
-//        textField.resignFirstResponder()
     }
 
     @objc func inputbudget(_ textField: UITextField) {
         accountBudget = textField.text
-        print(textField.text)
     }
 
     @objc func checkButtonActive() {
         guard let name = accountName else { return }
         guard let icon = selectedIcon else { return }
-        if accountBudget != nil, let budget = accountBudget as? Double {
+        if let accountBudget = accountBudget,
+           let budget = Double(accountBudget) {
             firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon) { result in
                 switch result {
                 case let .success(success):
+                    print(success)
                     self.dismiss(animated: true)
                     LKProgressHUD.showSuccess()
                 case let .failure(failure):
+                    print(failure)
                     self.dismiss(animated: true)
                     LKProgressHUD.showFailure()
                 }
@@ -245,9 +246,11 @@ class AddNewAccountViewController: UIViewController {
             firebaseManager.addNewAccount(name: name, iconName: icon) { result in
                 switch result {
                 case let .success(success):
+                    print(success)
                     self.dismiss(animated: true)
                     LKProgressHUD.showSuccess()
                 case let .failure(failure):
+                    print(failure)
                     self.dismiss(animated: true)
                     LKProgressHUD.showFailure()
                 }
