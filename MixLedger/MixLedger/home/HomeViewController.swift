@@ -181,7 +181,7 @@ class HomeViewController: UIViewController {
 
         addRightBarButton()
     }
-    
+
     func addRightBarButton() {
         // 導覽列右邊按鈕
         let shareButton = UIBarButtonItem(
@@ -194,7 +194,7 @@ class HomeViewController: UIViewController {
         // 加到導覽列中
         navigationItem.rightBarButtonItem = shareButton
     }
-    
+
     func removeRightBarButton() {
         // 移除右邊的按鈕
         navigationItem.rightBarButtonItem = nil
@@ -306,7 +306,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     func closeRepayView(subview: RepayView) {
         subview.removeFromSuperview()
     }
-    
+
     func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
         let mtName = saveData.myInfo?.name ?? ""
         let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"
@@ -319,11 +319,12 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
                                     isDunningLetter: true,
                                     amount: amount,
                                     fromAccoundID: accountData.accountID,
-                                    fromAccoundName: accountData.accountName) { result in
+                                    fromAccoundName: accountData.accountName)
+        { result in
             switch result {
-            case .success(let success):
+            case let .success(success):
                 LKProgressHUD.showSuccess(text: success)
-            case .failure(let failure):
+            case let .failure(failure):
                 print(failure)
                 LKProgressHUD.showFailure()
             }
@@ -356,7 +357,7 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
                 make.centerX.equalTo(self.showView)
                 make.centerY.equalTo(self.showView)
             }
-            self.view.layoutIfNeeded() 
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -461,7 +462,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let data = datas[transactionsDayDatasKeys[indexPath.row]] else { return cell }
                 billCell.sortImageView.image = UIImage(named: data.subType.iconName)
 
-
                 billCell.titleLabel.text = data.subType.name
                 var titleNote = ""
 
@@ -499,7 +499,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 subTypeVC.data = data
                 subTypeVC.tableView.reloadData()
             }
-            
 
             present(subTypeVC, animated: true, completion: nil)
         }

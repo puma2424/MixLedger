@@ -19,7 +19,6 @@ class SelectIconViewController: UIViewController {
         setupLayout()
         setCollectionView()
         delegate?.setupIconGroup(selectionIconView: self, selectIconManager: SelectIconManager())
-        
     }
 
     /*
@@ -31,7 +30,7 @@ class SelectIconViewController: UIViewController {
          // Pass the selected object to the new view controller.
      }
      */
-    
+
     var delegate: SelectIconViewControllerDelegate?
 
     var selectedSubType: ((String, String) -> Void)?
@@ -68,7 +67,7 @@ class SelectIconViewController: UIViewController {
 
 extension SelectIconViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        guard let iconGroup = iconGroup else { return 0}
+        guard let iconGroup = iconGroup else { return 0 }
         return iconGroup.items.count
     }
 
@@ -92,7 +91,7 @@ extension SelectIconViewController: UICollectionViewDataSource {
 
         guard let selectedCell = iconCollectionView.cellForItem(at: indexPath) as? SubTypeIconCollectionViewCell else { return }
         guard let iconItem = iconGroup?.items[indexPath.row] else { return }
-        
+
         selectedCell.didSeiected(selected: true)
         selectedSubType?(iconItem.name, iconItem.title)
 

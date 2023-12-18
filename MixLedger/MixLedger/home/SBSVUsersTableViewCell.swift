@@ -83,15 +83,12 @@ class SBSVUsersTableViewCell: UITableViewCell {
     }
 
     func setupNoButtonLayout() {
-        
-        
-        
         moneyLable.snp.removeConstraints()
         statusLable.snp.removeConstraints()
         userImage.snp.removeConstraints()
         nameLable.snp.removeConstraints()
         checkButton.snp.removeConstraints()
-        
+
         moneyLable.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
@@ -129,7 +126,7 @@ class SBSVUsersTableViewCell: UITableViewCell {
         userImage.snp.removeConstraints()
         nameLable.snp.removeConstraints()
         checkButton.snp.removeConstraints()
-        
+
         moneyLable.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)

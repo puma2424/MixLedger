@@ -51,7 +51,7 @@ enum AllIcons: String, CaseIterable {
     case share2
     case importIcon
     case cashInHand
-    
+
     var icon: UIImage? {
         return UIImage(named: rawValue)
     }

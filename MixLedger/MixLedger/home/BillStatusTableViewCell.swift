@@ -54,7 +54,7 @@ class BillStatusTableViewCell: UITableViewCell {
         superview?.layer.shadowOpacity = 1.0
         superview?.layer.masksToBounds = false
     }
-    
+
     var delegate: BillStatusTableViewCellDelegate?
 
     let lastMonthButton: UIButton = {
@@ -215,7 +215,7 @@ class BillStatusTableViewCell: UITableViewCell {
         moneyStackView.addArrangedSubview(totalStackView)
         moneyStackView.addArrangedSubview(payStackView)
         moneyStackView.addArrangedSubview(revenueStackView)
-        
+
         lastMonthButton.snp.makeConstraints { make in
             make.width.height.equalTo(16)
             make.leading.equalTo(contentView).offset(16)
@@ -238,7 +238,6 @@ class BillStatusTableViewCell: UITableViewCell {
             make.top.equalTo(monthLabel.snp.bottom).offset(16)
             make.bottom.equalTo(contentView).offset(-16)
         }
-
     }
 
     func addToView(superV: UIView, subs: UIView...) {

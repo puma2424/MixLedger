@@ -231,23 +231,23 @@ class AddNewAccountViewController: UIViewController {
         guard let name = accountName else { return }
         guard let icon = selectedIcon else { return }
         if accountBudget != nil, let budget = accountBudget as? Double {
-            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon){ result in
+            firebaseManager.addNewAccount(name: name, budget: budget, iconName: icon) { result in
                 switch result {
-                case .success(let success):
+                case let .success(success):
                     self.dismiss(animated: true)
                     LKProgressHUD.showSuccess()
-                case .failure(let failure):
+                case let .failure(failure):
                     self.dismiss(animated: true)
                     LKProgressHUD.showFailure()
                 }
             }
         } else {
-            firebaseManager.addNewAccount(name: name, iconName: icon){ result in
+            firebaseManager.addNewAccount(name: name, iconName: icon) { result in
                 switch result {
-                case .success(let success):
+                case let .success(success):
                     self.dismiss(animated: true)
                     LKProgressHUD.showSuccess()
-                case .failure(let failure):
+                case let .failure(failure):
                     self.dismiss(animated: true)
                     LKProgressHUD.showFailure()
                 }
@@ -263,7 +263,7 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        
+
         guard let iconItem = item as? ANAIconCollectionViewCell else { return item }
         iconItem.imageView.image = AllIcons.allCases[indexPath.row].icon
         return iconItem

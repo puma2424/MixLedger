@@ -28,7 +28,6 @@ class ANISelectDateTableViewCell: AddNewItemModelTableViewCell {
 
         // Configure the view for the selected state
     }
-    
 
     func setupCell() {
         backgroundColor = .clear

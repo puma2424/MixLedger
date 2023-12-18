@@ -107,7 +107,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     func numberOfSections(in _: UITableView) -> Int {
         2
     }
-    
+
     func tableView(_: UITableView, numberOfRowsInSection numberOfRowsInSection: Int) -> Int {
         guard let data = savaData.myInfo else { return 0 }
         if numberOfRowsInSection == 0 {
@@ -116,7 +116,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
             return data.shareAccount.count
         }
     }
-    
+
     func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "My Account"
@@ -124,48 +124,50 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
             return "Share Account"
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountCell", for: indexPath)
         cell.backgroundColor = .brightGreen4()
         cell.selectionStyle = .none
         guard let accountCell = cell as? AccountTableViewCell else { return cell }
-        
+
         if indexPath.section == 0 {
             if let id = savaData.myInfo?.ownAccount,
-               let data = savaData.myShareAccount[id] {
+               let data = savaData.myShareAccount[id]
+            {
                 accountCell.accountNameLable.text = data.name
                 accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         } else {
             if let id = savaData.myInfo?.shareAccount[indexPath.row],
-               let data = savaData.myShareAccount[id] {
+               let data = savaData.myShareAccount[id]
+            {
                 accountCell.accountNameLable.text = data.name
                 accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
         }
-        
+
         // 判斷是否為當前選中的 cell
         if indexPath == selectedIndexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
-        
+
         accountCell.checkmarkImageView.isHidden = true
         return accountCell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 取消先前選中的 cell 的勾勾
         if let selectedIndexPath = selectedIndexPath {
             guard let previousSelectedCell = tableView.cellForRow(at: selectedIndexPath) as? AccountTableViewCell else { return }
             previousSelectedCell.checkmarkImageView.isHidden = true
         }
-        
+
         // 更新當前選中的 indexPath
         selectedIndexPath = indexPath
-        
+
         // 在選中的 cell 上顯示勾勾
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? AccountTableViewCell else { return }
         if indexPath.section == 0 {
@@ -181,50 +183,48 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         }
         selectedCell.checkmarkImageView.isHidden = false
     }
-    
-    
+
     // 實現此方法以定義向右滑時顯示的編輯動作
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if indexPath.section == 1 {
 //            let editAction = UITableViewRowAction(style: .normal, title: "編輯") { _, _ in
 //                // 在這裡處理編輯操作
 //                self.editItemAt(indexPath: indexPath)
 //            }
-            
+
             let deleteAction = UITableViewRowAction(style: .normal, title: "刪除") { _, _ in
                 // 在這裡處理編輯操作
                 self.deleteMessage(indexPath: indexPath)
             }
             deleteAction.backgroundColor = .red
             // 可以新增更多的編輯動作
-            
+
 //            return [editAction, deleteAction]
             return [deleteAction]
         }
         return nil
     }
-    
+
     // 實作編輯操作的方法
-    func editItemAt(indexPath: IndexPath) {
+    func editItemAt(indexPath _: IndexPath) {
         // 在這裡處理編輯操作
         // 例如，彈出一個編輯視窗或導航到編輯畫面
         print("編輯 ")
 //        if let id = savaData.myInfo?.shareAccount[indexPath.row],
 //           let data = savaData.myShareAccount[id] {
-//            
+//
 //        }
     }
-    
-    
+
     func deleteMessage(indexPath: IndexPath) {
         print("刪除")
         if let id = savaData.myInfo?.shareAccount[indexPath.row] {
             FirebaseManager.postLeaveAccout(userID: savaData.myID, accountId: id) { result in
                 switch result {
-                case .success(let success):
+                case let .success(success):
                     LKProgressHUD.showSuccess(text: success)
                     self.table.reloadData()
-                case .failure(let failure):
+                case let .failure(failure):
                     print(failure)
                     LKProgressHUD.showFailure()
                 }

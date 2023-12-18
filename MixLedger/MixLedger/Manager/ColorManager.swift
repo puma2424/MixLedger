@@ -15,11 +15,11 @@ class ColorManager {
         return [
             Color.red1,
             Color.red2,
-            
+
 //            Color.gray2,
             Color.yellow1,
             Color.yellow2,
-            
+
             Color.mint1,
             Color.mint2,
             Color.purple1,

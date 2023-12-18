@@ -79,11 +79,11 @@ extension FirebaseManager {
                             //                print("\(document.documentID) => \(document.data())")
                             print(document.data()["accountName"])
                             if let id = document.data()["accountID"] as? String,
-                                let name = document.data()["accountName"] as? String,
-                               let iconName = document.data()["iconName"] as? String {
-                                
-                                    self.saveData.myShareAccount[id] = MyShareAccountInfo(name: name, id: id, iconName: iconName)
-                                
+                               let name = document.data()["accountName"] as? String,
+                               let iconName = document.data()["iconName"] as? String
+                            {
+                                self.saveData.myShareAccount[id] = MyShareAccountInfo(name: name, id: id, iconName: iconName)
+
                             } else {
                                 let id = document.data()["accountID"] as? String
                                 print(id)
@@ -98,10 +98,10 @@ extension FirebaseManager {
             }
         }
     }
-    
-    static func postDeleteInvitation(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void){
+
+    static func postDeleteInvitation(accountID: String, accountName: String, inviterID: String, inviterName: String, completion: @escaping (Result<String, Error>) -> Void) {
         let myID = SaveData.shared.myID
-        
+
         shared.db.collection("users").document(myID).updateData([
             "inviteCard": FieldValue.arrayRemove([["accountID": accountID,
                                                    "inviterID": inviterID,
@@ -117,8 +117,8 @@ extension FirebaseManager {
             }
         }
     }
-    
-    static func postDeleteMessage(userID: String, messageInfo: Message, completion: @escaping (Result<String, Error>) -> Void){
+
+    static func postDeleteMessage(userID: String, messageInfo: Message, completion: @escaping (Result<String, Error>) -> Void) {
         shared.db.collection("users").document(userID).updateData([
             "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
                                                 "toReceiverMessage": messageInfo.toReceiverMessage,
@@ -138,8 +138,8 @@ extension FirebaseManager {
             }
         }
     }
-    
-    static func postLeaveAccout(userID: String, accountId: String, completion: @escaping (Result<String, Error>) -> Void){
+
+    static func postLeaveAccout(userID: String, accountId: String, completion: @escaping (Result<String, Error>) -> Void) {
         shared.db.collection("users").document(userID).updateData([
             "shareAccount": FieldValue.arrayRemove([accountId]),
         ]) { err in
@@ -152,20 +152,20 @@ extension FirebaseManager {
             }
         }
     }
-    
+
     static func postUpdataUserInfo(iconName: String?, name: String?, completion: @escaping (Result<String, Error>) -> Void) {
         let batch = shared.db.batch()
-        
+
         if let iconName = iconName {
             let updataIcon = shared.db.collection("users").document(SaveData.shared.myID)
-            batch.updateData([ "iconName": iconName], forDocument: updataIcon)
+            batch.updateData(["iconName": iconName], forDocument: updataIcon)
         }
-        
+
         if let name = name {
             let updataIcon = shared.db.collection("users").document(SaveData.shared.myID)
-            batch.updateData([ "name": name], forDocument: updataIcon)
+            batch.updateData(["name": name], forDocument: updataIcon)
         }
-        
+
         batch.commit { err in
             if let err = err {
                 print("Error committing batch: \(err)")
@@ -175,6 +175,5 @@ extension FirebaseManager {
                 completion(.success("成功更新"))
             }
         }
-
     }
 }

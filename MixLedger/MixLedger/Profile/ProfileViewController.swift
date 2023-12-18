@@ -29,18 +29,18 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         setupUser()
     }
-    
+
     let fullScreenSize = UIScreen.main.bounds.size
-    
+
     var userIconName: String?
-    
+
     let userImageButton: UIButton = {
         let button = UIButton()
         button.setImage(AllIcons.human.icon, for: .normal)
         button.backgroundColor = .brightGreen4()
         return button
     }()
-    
+
     let checkChuangButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .g2()
@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController {
         button.setTitle("確 認 變 更", for: .normal)
         return button
     }()
-    
+
     let userNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .g1()
@@ -57,7 +57,7 @@ class ProfileViewController: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 30)
         return label
     }()
-    
+
     let singOutButton: UIButton = {
         let button = UIButton()
         button.setTitle("Sign Out", for: .normal)
@@ -69,9 +69,8 @@ class ProfileViewController: UIViewController {
     @objc func appleSingOutButtonTapped() {
         FirebaseAuthenticationManager.signOut()
     }
-    
-    @objc func userImageButtonTapped() {
 
+    @objc func userImageButtonTapped() {
         let subTypeVC = SelectUserIconViewController()
         subTypeVC.modalPresentationStyle = .automatic
         subTypeVC.modalTransitionStyle = .coverVertical
@@ -80,21 +79,21 @@ class ProfileViewController: UIViewController {
         }
         )]
 
-        subTypeVC.selectedSubType = { iconName, title in
+        subTypeVC.selectedSubType = { iconName, _ in
             self.userIconName = iconName
             self.changCheckButtonColor()
         }
 
         present(subTypeVC, animated: true, completion: nil)
     }
-    
+
     @objc func checkChuangButtonTapped() {
         if let userIconName = userIconName {
             FirebaseManager.postUpdataUserInfo(iconName: userIconName, name: nil) { result in
                 switch result {
-                case .success(_):
+                case .success:
                     LKProgressHUD.showSuccess()
-                case .failure(let err):
+                case let .failure(err):
                     print(err)
                     LKProgressHUD.showFailure()
                 }
@@ -103,47 +102,43 @@ class ProfileViewController: UIViewController {
                 self.setupUser()
             }
             print("post change")
-        }else {
-            ShowCustomAlertManager.customAlert(title: "點選頭貼可以變更頭像喔～", message: "", vc: self) {
-                return
-            }
+        } else {
+            ShowCustomAlertManager.customAlert(title: "點選頭貼可以變更頭像喔～", message: "", vc: self) {}
         }
-        
     }
-    
+
     func setupUser() {
         print("setUserImage")
         if let userInfo = SaveData.shared.myInfo,
-           let userImage = UserImageItem.item(userInfo.iconName) {
+           let userImage = UserImageItem.item(userInfo.iconName)
+        {
             userImageButton.setImage(userImage.image, for: .normal)
             userNameLabel.text = userInfo.name
-        }else {
+        } else {
             userImageButton.setImage(UserImageItem.human.image, for: .normal)
         }
     }
-    
+
     func changCheckButtonColor() {
         if let userIconName = userIconName {
             checkChuangButton.backgroundColor = .brightGreen3()
-        }else {
+        } else {
             checkChuangButton.backgroundColor = .g2()
         }
     }
-    
+
     func setupview() {
         setupLayout()
         setupButton()
     }
-    
 
     func setupButton() {
         userImageButton.layer.cornerRadius = fullScreenSize.width * 0.2
         singOutButton.layer.cornerRadius = 10
-        
-        
+
         userImageButton.addTarget(self, action: #selector(userImageButtonTapped), for: .touchUpInside)
         singOutButton.addTarget(self, action: #selector(appleSingOutButtonTapped), for: .touchUpInside)
-        checkChuangButton.addTarget(self, action:#selector(checkChuangButtonTapped), for: .touchUpInside)
+        checkChuangButton.addTarget(self, action: #selector(checkChuangButtonTapped), for: .touchUpInside)
     }
 
     func setupLayout() {
@@ -151,13 +146,13 @@ class ProfileViewController: UIViewController {
         view.addSubview(checkChuangButton)
         view.addSubview(userImageButton)
         view.addSubview(userNameLabel)
-        
+
         userImageButton.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.height.width.equalTo(fullScreenSize.width * 0.4)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
         }
-        
+
         checkChuangButton.snp.makeConstraints { make in
             make.height.equalTo(50)
             make.width.equalTo(fullScreenSize.width * 0.8)
@@ -171,7 +166,7 @@ class ProfileViewController: UIViewController {
             mark.centerX.equalTo(view.safeAreaLayoutGuide)
             mark.bottom.equalTo(view.safeAreaLayoutGuide).offset(-50)
         }
-        
+
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(userImageButton.snp.bottom).offset(30)
             make.centerX.equalTo(view).priority(.required)

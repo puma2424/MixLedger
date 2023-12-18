@@ -7,11 +7,8 @@
 
 import Foundation
 
-
-
 class SelectIconManager {
-
-    let subTypeGroup:IconGroup = IconGroup(
+    let subTypeGroup: IconGroup = .init(
         items: SubTypeItem.allCases
     )
 
@@ -21,4 +18,3 @@ class SelectIconManager {
 
     lazy var groups: [IconGroup] = [subTypeGroup, userIconGroup]
 }
-

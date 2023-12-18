@@ -72,8 +72,7 @@ class BillTableViewCell: UITableViewCell {
         stackView.spacing = 5 // 設置子視圖之間的間距
         return stackView
     }()
-    
-    
+
     func setView() {
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         titleLabel.textColor = .g1()

@@ -61,9 +61,7 @@ enum UserImageItem: IconItemProtocol, CaseIterable {
     case share2
     case importIcon
     case cashInHand
-    
-    
-    
+
     static func item(_ string: String) -> UserImageItem? {
         return UserImageItem.allCases.first(where: { $0.name == string })
     }
@@ -352,10 +350,10 @@ enum SubTypeItem: IconItemProtocol, CaseIterable {
     case dress
     case social
     case eProduct
-    
+
     static func item(forTitle title: String) -> SubTypeItem? {
-            return SubTypeItem.allCases.first { $0.title == title }
-        }
+        return SubTypeItem.allCases.first { $0.title == title }
+    }
 
     var image: UIImage? {
         switch self {

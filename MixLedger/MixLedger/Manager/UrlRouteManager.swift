@@ -26,6 +26,7 @@ class UrlRouteManager {
     }
 
     // MARK: 读取和创建URL
+
     // 检查是否能打开给定的URL
     func canOpen(url: URL) -> Bool {
         let components = url.pathComponents
@@ -47,7 +48,7 @@ class UrlRouteManager {
         // 根据不同的终端点执行相应的操作
         switch endpoint {
         case .account:
-            self.shared.joinAccount(components)
+            shared.joinAccount(components)
             print("open Account")
         case .user:
             print("open User")
@@ -59,11 +60,12 @@ class UrlRouteManager {
         for endPoint: EndPoint,
         components: [String]
     ) -> String {
-        self.shared.appName + "://" + endPoint.rawValue +
-                    "/" + components.joined(separator: "/")
+        shared.appName + "://" + endPoint.rawValue +
+            "/" + components.joined(separator: "/")
     }
 
     // MARK: - Meeting
+
     // 处理与会议相关的操作
     private func joinAccount(_ urlPathComponents: [String]) {
         // 确保根视图控制器是 FSTabBarController，并且 URL 路径组件数量为2
@@ -72,34 +74,35 @@ class UrlRouteManager {
         print(urlPathComponents)
         print(urlPathComponents.count)
         print("==================")
-        
+
         let accountID = urlPathComponents[1]
-        
+
         if let myAccoumt = SaveData.shared.myInfo?.shareAccount.filter({ $0 == accountID }),
-           myAccoumt.count == 0 {
+           myAccoumt.count == 0
+        {
             if let window = SceneDelegate.shared.window,
-               let rootViewController = window.rootViewController {
-                ShowCustomAlertManager.customAlertYesAndNo(title: "邀請你加入共享帳本", 
+               let rootViewController = window.rootViewController
+            {
+                ShowCustomAlertManager.customAlertYesAndNo(title: "邀請你加入共享帳本",
                                                            message: "請問要加入共享帳本嗎？",
-                                                           vc: rootViewController) {
+                                                           vc: rootViewController)
+                {
                     FirebaseManager.shared.postRespondToInvitation(respond: true, accountID: accountID, accountName: "", inviterID: "", inviterName: "") { result in
                         switch result {
-                        case .success(let success):
+                        case let .success(success):
                             LKProgressHUD.showSuccess(text: success)
-                        case .failure(_):
+                        case .failure:
                             LKProgressHUD.showFailure()
                         }
                     }
-                    return
                 }
             }
-        }else {
+        } else {
             if let window = SceneDelegate.shared.window,
-               let rootViewController = window.rootViewController {
+               let rootViewController = window.rootViewController
+            {
                 ShowCustomAlertManager.customAlert(title: "已加入共享帳本", message: "你已在共享帳本中", vc: rootViewController, actionHandler: nil)
             }
-            
         }
-        
     }
 }

@@ -33,7 +33,8 @@ class FirebaseManager {
                      amount: Double,
                      fromAccoundID: String,
                      fromAccoundName: String,
-                     completion: @escaping (Result<String, Error>) -> Void) {
+                     completion: @escaping (Result<String, Error>) -> Void)
+    {
         let message: [String: Any] = ["toSenderMessage": textToMyself,
                                       "toReceiverMessage": textToOtherUser,
                                       "fromUserID": saveData.myInfo?.userID,
@@ -287,7 +288,7 @@ class FirebaseManager {
     // MARK: - 發送共享帳簿的邀請 -
 
     // 發送共享帳簿的邀請
-    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion : @escaping (Result<String, Error>) -> Void) {
+    func postShareAccountInivite(inviteeID: String, shareAccountID: String, shareAccountName _: String, inviterName _: String, completion: @escaping (Result<String, Error>) -> Void) {
         db.collection("accounts").document(shareAccountID).updateData([
             "invitees": FieldValue.arrayUnion([inviteeID]),
         ]) { err in
@@ -327,7 +328,7 @@ class FirebaseManager {
 
     // MARK: - 新增新帳本 -
 
-    func addNewAccount(name: String, budget _: Double? = 0, iconName: String, completion:  @escaping (Result<String, Error>) -> Void) {
+    func addNewAccount(name: String, budget _: Double? = 0, iconName: String, completion: @escaping (Result<String, Error>) -> Void) {
         let newAccount = db.collection("account").document()
         guard let myInfo = saveData.myInfo else { return }
         let sharesID = [[myInfo.userID: 0.0]]
@@ -467,7 +468,8 @@ class FirebaseManager {
               memberPayMoney: [String: Double],
               memberShareMoney: [String: Double],
               accountInfo: TransactionsResponse,
-              completion: @escaping (Result<Any, Error>) -> Void) {
+              completion: @escaping (Result<Any, Error>) -> Void)
+    {
         var account = accountInfo
 
         for id in memberPayMoney.keys {
@@ -529,7 +531,8 @@ class FirebaseManager {
                   transaction: Transaction,
                   memberPayMoney: [String: Double],
                   memberShareMoney: [String: Double],
-                  completion: @escaping (Result<Any, Error>) -> Void) {
+                  completion: @escaping (Result<Any, Error>) -> Void)
+    {
         getAccountData(accountID: toAccountID) { result in
             switch result {
             case let .success(accountData):
@@ -560,7 +563,8 @@ class FirebaseManager {
                                 formAccountName: String,
                                 usersInfo: [UsersInfoResponse],
                                 transaction: Transaction,
-                                completion : @escaping (Result<Any, Error>) -> Void) {
+                                completion: @escaping (Result<Any, Error>) -> Void)
+    {
         dateFont.dateFormat = "yyyy-MM"
         let dateM = dateFont.string(from: transaction.date)
         dateFont.dateFormat = "yyyy-MM-dd"

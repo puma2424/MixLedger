@@ -58,11 +58,10 @@ class ShareAccountViewController: UIViewController {
             }
         }
     }
-    
+
     func addRightBarButton() {
-        
         navigationController?.navigationBar.tintColor = .brightGreen3()
-        
+
         let shareUrlImare = UIImage(systemName: "square.and.arrow.up")?.withTintColor(.brightGreen3(), renderingMode: .alwaysOriginal)
         let qrCodeImare = UIImage(systemName: "qrcode")?.withTintColor(.brightGreen3(), renderingMode: .alwaysOriginal)
         // 導覽列右邊按鈕
@@ -73,7 +72,7 @@ class ShareAccountViewController: UIViewController {
             target: self,
             action: #selector(shareAccountBookWithUrl)
         )
-        
+
         let qrCodeButton = UIBarButtonItem(
             //          title:"設定",
             image: qrCodeImare,
@@ -82,19 +81,19 @@ class ShareAccountViewController: UIViewController {
             action: #selector(shareAccountBookWithQrCode)
         )
         // 調整兩個按鈕之間的距離
-           let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-           fixedSpace.width = 0 // 調整距離
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 0 // 調整距離
         // 加到導覽列中
         navigationItem.rightBarButtonItems = [shareButton, fixedSpace, qrCodeButton]
     }
-    
+
     func creatUrlString() -> String {
-        guard let accountID = saveData.accountData?.accountID else { return ""}
+        guard let accountID = saveData.accountData?.accountID else { return "" }
         let endPoint = UrlRouteManager.EndPoint.account
         return UrlRouteManager.createUrlString(for: endPoint, components: [accountID])
     }
-    
-    @objc func shareAccountBookWithUrl(){
+
+    @objc func shareAccountBookWithUrl() {
         guard let accountName = saveData.accountData?.accountName else {
             LKProgressHUD.showFailure()
             return
@@ -104,16 +103,16 @@ class ShareAccountViewController: UIViewController {
         text += "\n"
         text += "\n點擊以下連結加入帳簿"
         text += "\n\(creatUrlString())"
-        
+
         ShowShareViewManager.showShare(content: [text], vc: self)
     }
-    
-    @objc func shareAccountBookWithQrCode(){
+
+    @objc func shareAccountBookWithQrCode() {
         guard let accountName = saveData.accountData?.accountName else {
             LKProgressHUD.showFailure()
             return
         }
-        
+
         let qrCodeView = ShareWithQRcodeViewController()
 //        qrCodeView.setupQRCode(text: creatUrlString())
         qrCodeView.urlString = creatUrlString()
@@ -125,7 +124,6 @@ class ShareAccountViewController: UIViewController {
         )]
         present(qrCodeView, animated: true)
     }
-    
 
     func setupLayout() {
         view.addSubview(tableView)
@@ -148,15 +146,14 @@ class ShareAccountViewController: UIViewController {
     }
 
     func setupSearch() {
-        
         searchBar.sizeToFit()
         searchBar.delegate = self
-        
+
         // 設定搜尋框的樣式和大小
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "搜尋"
     }
-    
+
     func postInviteMessage(inviteeID: String) {
         LKProgressHUD.show()
         if let accountName = saveData.accountData?.accountName, let myName = saveData.myInfo?.name {
@@ -193,14 +190,13 @@ extension ShareAccountViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 extension ShareAccountViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_: UISearchBar, textDidChange searchText: String) {
         // 使用filter方法來篩選data，並將結果更新到filteredData
         filteredData = searchText.isEmpty ? allUsers : allUsers.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         filteredData.removeAll {
             let usreID = $0.userID
-            let user = saveData.userInfoData.filter{ $0.userID == usreID }
-            if user.count > 0 ||  $0.userID == saveData.myID {
+            let user = saveData.userInfoData.filter { $0.userID == usreID }
+            if user.count > 0 || $0.userID == saveData.myID {
                 return true
             }
             return false
@@ -209,16 +205,17 @@ extension ShareAccountViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_: UISearchBar) {
         // 用戶按下鍵盤上的“Search”按鈕時的處理，你可以選擇實現或不實現這個方法，視你的需求而定。
     }
 }
+
 //
-//extension ShareAccountViewController: UISearchResultsUpdating {
+// extension ShareAccountViewController: UISearchResultsUpdating {
 //    func updateSearchResults(for searchController: UISearchController) {
 //        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
 //            filterContent(for: searchText)
 //            tableView.reloadData()
 //        }
 //    }
-//}
+// }

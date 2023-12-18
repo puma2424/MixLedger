@@ -115,9 +115,9 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
                                                 fromAccoundName: accountData.accountName)
                     { result in
                         switch result {
-                        case .success(let success):
+                        case let .success(success):
                             LKProgressHUD.showSuccess(text: "訊息已發送")
-                        case .failure(let failure):
+                        case let .failure(failure):
                             LKProgressHUD.showFailure(text: "訊息發送失敗")
                         }
                     }
@@ -141,7 +141,6 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
 }
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return usersInfo.count /* 1 */
     }

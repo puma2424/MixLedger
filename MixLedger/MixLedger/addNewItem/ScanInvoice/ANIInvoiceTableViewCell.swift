@@ -53,12 +53,12 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    func resetLayout(){
+
+    func resetLayout() {
         iconImageView.snp.removeConstraints()
         titleLabel.snp.removeConstraints()
         contentView.addSubview(invoiceLabel)
-        
+
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.top.equalTo(contentView).offset(12)
@@ -69,14 +69,12 @@ class ANIInvoiceTableViewCell: AddNewItemModelTableViewCell {
             make.centerY.equalTo(iconImageView)
             make.leading.equalTo(iconImageView.snp.trailing).offset(24)
         }
-        
+
         invoiceLabel.snp.makeConstraints { mark in
             mark.leading.equalTo(titleLabel)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.top.equalTo(titleLabel.snp.bottom).offset(12)
             mark.bottom.equalTo(contentView.snp.bottom).offset(-12)
         }
-        
     }
-
 }

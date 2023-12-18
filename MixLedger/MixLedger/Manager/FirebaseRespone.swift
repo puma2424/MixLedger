@@ -32,7 +32,6 @@ struct Transaction: Codable {
     var payUser: [String: Double]?
     var shareUser: [String: Double]?
     var subType: TransactionType
-
 }
 
 enum TransactionMainType {

@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var sceneWindow: UIWindow?
 //    static let shared = UIApplication.shared.delegate as! AppDelegate
-    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
@@ -49,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        }
         ShowScreenManager.showMainScreen(window: window)
     }
-    
+
     // 当应用程序通过 URL 被打开时调用
     func scene(
         _ scene: UIScene,
@@ -70,7 +70,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 SaveData.shared.myID = userID
                 ShowScreenManager.showMainScreen(window: window)
-                
+
                 // 尝试使用 UrlRouteManager 处理打开的 URL 上下文
                 guard let url = URLContexts.first?.url else { return }
                 UrlRouteManager.open(url: url)

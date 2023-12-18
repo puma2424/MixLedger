@@ -34,7 +34,7 @@ class RepayView: UIView {
      */
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         layer.shadowColor = UIColor.g2().cgColor
         layer.shadowOffset = CGSize(width: 5, height: 5)
         layer.shadowRadius = 2
@@ -103,7 +103,7 @@ class RepayView: UIView {
         button.setTitleColor(.g1(), for: .normal)
         return button
     }()
-    
+
     let closeButton: UIButton = {
         let button = UIButton()
         button.setTitle("X", for: .normal)
@@ -118,7 +118,7 @@ class RepayView: UIView {
         payTextField.addTarget(self, action: #selector(payTextFieldTarget(_:)), for: .editingChanged)
         closeButton.addTarget(self, action: #selector(closeButtonTarget), for: .touchUpInside)
     }
-    
+
     @objc func closeButtonTarget() {
         delegate?.closeRepayView(subview: self)
     }
@@ -145,7 +145,6 @@ class RepayView: UIView {
 //        addSubview(moneyLabel)
         addSubview(checkButton)
         addSubview(closeButton)
-        
 
         titleLabel.snp.makeConstraints { mark in
             mark.centerX.equalTo(self)
@@ -170,7 +169,7 @@ class RepayView: UIView {
             mark.top.equalTo(payTextField.snp.bottom).offset(45)
             mark.centerX.equalTo(self)
         }
-        
+
         closeButton.snp.makeConstraints { make in
             make.width.height.equalTo(20)
             make.top.equalTo(self).offset(12)

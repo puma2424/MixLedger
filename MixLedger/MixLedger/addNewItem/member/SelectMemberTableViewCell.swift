@@ -61,7 +61,7 @@ class SelectMemberTableViewCell: UITableViewCell {
         if let text = textField.text {
             print(textField.text)
             changeMoney?(text)
-        }else {
+        } else {
             changeMoney?("0.0")
         }
     }

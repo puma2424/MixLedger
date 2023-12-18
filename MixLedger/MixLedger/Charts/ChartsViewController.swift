@@ -57,8 +57,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     var pieChart = PieAndListView(data: .constant([30, 50, 20]),
                                   labels: .constant(["Label1", "Label2", "Label3"]), iconName: .constant(["", "", ""]),
-                            colors: [.blue1, .blue2, .brightGreen1],
-                            borderColor: .gray1)
+                                  colors: [.blue1, .blue2, .brightGreen1],
+                                  borderColor: .gray1)
 
     var mySwiftUIView = LineMarkCharts()
 
@@ -161,7 +161,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         var amountArray: [Double] = []
         var typeArray: [String] = []
         var iconNameArray: [String] = []
-        
+
         for type in dic.keys {
             typeArray.append(type)
             amountArray.append(dic[type] ?? 0.0)
@@ -172,8 +172,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
         pieChart = PieAndListView(data: .constant(amountArray),
                                   labels: .constant(typeArray), iconName: .constant(iconNameArray),
-                            colors: colorArray,
-                            borderColor: .brightGreen1)
+                                  colors: colorArray,
+                                  borderColor: .brightGreen1)
 
         // Create a UIHostingController to wrap the SwiftUI view
         let hostingController = UIHostingController(rootView: pieChart)
@@ -190,7 +190,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             hostingController.view.topAnchor.constraint(equalTo: segmentedView.bottomAnchor, constant: 5),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
         ])
         return hostingController.view

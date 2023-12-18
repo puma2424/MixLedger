@@ -75,21 +75,20 @@ class MessageViewController: UIViewController {
         print("agare in table \(index)")
         print(datas?.inviteCard?[index.row])
         LKProgressHUD.show()
-        
+
         if let data = datas?.inviteCard?[index.row] {
             firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { result in
                 switch result {
-                case .success(let success):
+                case let .success(success):
                     print("--")
                     self.datas = self.saveData.myInfo
                     self.tableView.reloadData()
                     LKProgressHUD.showSuccess()
-                case .failure(let failure):
+                case let .failure(failure):
                     LKProgressHUD.showFailure()
                 }
-                
             }
-        }else {
+        } else {
             LKProgressHUD.dismiss()
         }
     }
@@ -98,29 +97,29 @@ class MessageViewController: UIViewController {
         LKProgressHUD.show()
         if index.section == 0 {
             print("agare in table \(index)")
-            
+
             if let data = datas?.inviteCard {
                 let inviteCard = data[index.row]
                 firebaseManager.postRespondToInvitation(respond: false,
                                                         accountID: inviteCard.accountID,
                                                         accountName: inviteCard.accountName,
                                                         inviterID: inviteCard.inviterID,
-                                                        inviterName: inviteCard.inviterName) { result in
+                                                        inviterName: inviteCard.inviterName)
+                { result in
                     switch result {
-                    case .success(let success):
+                    case let .success(success):
                         print("--")
                         self.datas = self.saveData.myInfo
                         self.tableView.reloadData()
                         LKProgressHUD.showSuccess()
-                    case .failure(let failure):
+                    case let .failure(failure):
                         LKProgressHUD.showFailure()
                     }
-                    
                 }
-            }else {
+            } else {
                 LKProgressHUD.dismiss()
             }
-        }else {
+        } else {
             LKProgressHUD.dismiss()
         }
     }
@@ -129,21 +128,19 @@ class MessageViewController: UIViewController {
         LKProgressHUD.show()
         if let data = datas?.message?[index.row] {
             if data.isDunningLetter {
-                
                 firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: "") { result in
                     switch result {
-                    case .success(let success):
-                        
+                    case let .success(success):
+
                         LKProgressHUD.showSuccess()
-                    case .failure(let failure):
+                    case let .failure(failure):
                         LKProgressHUD.showFailure()
                     }
-                    
                 }
-            }else {
+            } else {
                 LKProgressHUD.dismiss()
             }
-        }else {
+        } else {
             LKProgressHUD.showFailure()
         }
     }
@@ -210,7 +207,8 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             if datas?.message?.count != 0,
-               datas?.message != nil {
+               datas?.message != nil
+            {
                 if let data = datas?.message?[indexPath.row] {
                     inviteCell.inviteMessageLabel.textColor = .g1()
                     if data.isDunningLetter {
@@ -222,10 +220,10 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                             //                        inviteCell.setupLayoutIncludeBothButton()
                             inviteCell.inviteMessageLabel.text = data.toReceiverMessage
                         }
-                        
+
                     } else {
                         inviteCell.setupLayoutNoButton()
-                        
+
                         if data.fromUserID == saveData.myInfo?.userID {
                             inviteCell.inviteMessageLabel.text = data.toSenderMessage
                         } else {
@@ -233,7 +231,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
-            }else {
+            } else {
                 inviteCell.setupLayoutNoButton()
                 inviteCell.inviteMessageLabel.text = "No Any Message"
                 inviteCell.inviteMessageLabel.textColor = .gray
@@ -246,53 +244,54 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
 
         return inviteCell
     }
-    
-    func deleteMessage(indexPath: IndexPath){
+
+    func deleteMessage(indexPath: IndexPath) {
         if indexPath.section == 0 {
             if let data = datas?.inviteCard?[indexPath.row] {
-                FirebaseManager.postDeleteInvitation(accountID: data.accountID, 
+                FirebaseManager.postDeleteInvitation(accountID: data.accountID,
                                                      accountName: data.accountName,
                                                      inviterID: data.inviterID,
-                                                     inviterName: data.inviterName) { result in
+                                                     inviterName: data.inviterName)
+                { result in
                     switch result {
-                    case .success(let success):
+                    case let .success(success):
                         self.datas?.inviteCard?.remove(at: indexPath.row)
                         self.tableView.reloadData()
-                    case .failure(let failure):
+                    case let .failure(failure):
                         print(failure)
                         return
                     }
                 }
             }
-        }else {
+        } else {
             if let data = datas?.message?[indexPath.row] {
                 FirebaseManager.postDeleteMessage(userID: saveData.myID, messageInfo: data) { result in
                     switch result {
-                    case .success(let success):
+                    case let .success(success):
                         self.datas?.message?.remove(at: indexPath.row)
                         self.tableView.reloadData()
-                    case .failure(let failure):
+                    case let .failure(failure):
                         return
                     }
                 }
             }
         }
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+    func tableView(_: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             deleteMessage(indexPath: indexPath)
         }
     }
 
     // 啟用滑動刪除功能
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    func tableView(_: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if indexPath.section == 0 {
-            if self.datas?.inviteCard?.count == 0 {
+            if datas?.inviteCard?.count == 0 {
                 return .none
             }
-        }else {
-            if self.datas?.message?.count == 0 || self.datas?.message == nil {
+        } else {
+            if datas?.message?.count == 0 || datas?.message == nil {
                 return .none
             }
         }
@@ -300,7 +299,7 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     // 提供刪除按鈕的標題，你可以自定義這個按鈕的外觀
-    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+    func tableView(_: UITableView, titleForDeleteConfirmationButtonForRowAt _: IndexPath) -> String? {
         return "刪除"
     }
 }

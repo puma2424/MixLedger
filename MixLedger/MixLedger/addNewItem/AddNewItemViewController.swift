@@ -75,7 +75,7 @@ class AddNewItemViewController: UIViewController {
 
     var member: String?
 
-    var selectDate: Date = Date()
+    var selectDate: Date = .init()
 
     var type: TransactionType?
 
@@ -122,70 +122,72 @@ class AddNewItemViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
-    
+
     func checkButtonColorChange() {
-        var paySum: Double = 0.0
-        var shareSum: Double = 0.0
-        
+        var paySum = 0.0
+        var shareSum = 0.0
+
         for payID in memberPayMoney.keys {
             paySum += memberPayMoney[payID] ?? 0
         }
         for shareID in memberShareMoney.keys {
             shareSum += memberPayMoney[shareID] ?? 0
         }
-        
+
         if let amount = amount,
            let subType = type,
-        paySum == amount,
-        shareSum == amount {
+           paySum == amount,
+           shareSum == amount
+        {
             checkButton.backgroundColor = .brightGreen3()
-        }else {
+        } else {
             checkButton.backgroundColor = .g2()
         }
     }
-    
-    func whyCannotSend(){
-        var paySum: Double = 0.0
-        var shareSum: Double = 0.0
-        
+
+    func whyCannotSend() {
+        var paySum = 0.0
+        var shareSum = 0.0
+
         for payID in memberPayMoney.keys {
             paySum += memberPayMoney[payID] ?? 0
         }
         for shareID in memberShareMoney.keys {
             shareSum += memberPayMoney[shareID] ?? 0
         }
-        
+
         if amount == nil {
             ShowCustomAlertManager.customAlert(title: "No amount entered", message: "", vc: self, actionHandler: nil)
-        }else if type == nil {
+        } else if type == nil {
             ShowCustomAlertManager.customAlert(title: "No type selected", message: "", vc: self, actionHandler: nil)
-        }else if paySum != amount {
+        } else if paySum != amount {
             ShowCustomAlertManager.customAlert(title: "The total amount paid by the payers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
-        }else if shareSum != amount {
+        } else if shareSum != amount {
             ShowCustomAlertManager.customAlert(title: "The total amount paid by the sharers is inconsistent with the input amount", message: "", vc: self, actionHandler: nil)
         }
     }
 
     @objc func checkButtonActive() {
-        var paySum: Double = 0.0
-        var shareSum: Double = 0.0
-        
+        var paySum = 0.0
+        var shareSum = 0.0
+
         for payID in memberPayMoney.keys {
             paySum += memberPayMoney[payID] ?? 0
         }
         for shareID in memberShareMoney.keys {
             shareSum += memberPayMoney[shareID] ?? 0
         }
-        
+
         if let amount = amount,
            let subType = type,
            paySum == amount,
-           shareSum == amount {
+           shareSum == amount
+        {
             // 找到對應的字典
             let transactionType = TransactionType(iconName: "", name: TransactionMainType.expenses.text)
             // swiftlint:disable line_length
             let transaction = Transaction(transactionType: transactionType,
-                                          amount: -(amount),
+                                          amount: -amount,
                                           currency: "新台幣",
                                           date: selectDate,
                                           note: note,
@@ -195,9 +197,9 @@ class AddNewItemViewController: UIViewController {
             LKProgressHUD.show()
             firebase.postData(toAccountID: currentAccountID, transaction: transaction, memberPayMoney: memberPayMoney, memberShareMoney: memberShareMoney) { result in
                 switch result {
-                case .success(let success):
+                case let .success(success):
                     LKProgressHUD.showSuccess()
-                case .failure(let failure):
+                case let .failure(failure):
                     LKProgressHUD.showFailure()
                 }
             }
@@ -206,9 +208,10 @@ class AddNewItemViewController: UIViewController {
             for userID in memberPayMoney.keys {
                 payUsersID.append(userID)
             }
-            
+
             if let accountName = saveData.accountData?.accountName,
-               saveData.accountData?.accountID != saveData.myInfo?.ownAccount{
+               saveData.accountData?.accountID != saveData.myInfo?.ownAccount
+            {
                 let usersInfo = saveData.userInfoData
                 firebase.postUpdatePayerAccount(isMyAccount: false,
                                                 formAccountName: accountName,
@@ -223,7 +226,7 @@ class AddNewItemViewController: UIViewController {
                     }
                 }
             }
-            self.dismiss(animated: true)
+            dismiss(animated: true)
         } else {
             whyCannotSend()
         }
@@ -305,7 +308,7 @@ class AddNewItemViewController: UIViewController {
             self.showImagePicker(sourceType: .camera)
         })
 
-        alertController.addAction(UIAlertAction(title: "取消", style: .cancel){ _ in
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel) { _ in
 //            LKProgressHUD.dismiss()
         })
 
@@ -323,11 +326,11 @@ class AddNewItemViewController: UIViewController {
                 present(imagePicker, animated: true, completion: nil)
 //                LKProgressHUD.dismiss()
             } else {
-                LKProgressHUD.showFailure(inView: self.view, text: "設備不支援相機")
+                LKProgressHUD.showFailure(inView: view, text: "設備不支援相機")
                 print("設備不支援相機")
             }
         } else {
-            LKProgressHUD.showFailure(inView: self.view, text: "相機不可用或其他情况")
+            LKProgressHUD.showFailure(inView: view, text: "相機不可用或其他情况")
             print("相機不可用或其他情况")
         }
     }
@@ -335,12 +338,12 @@ class AddNewItemViewController: UIViewController {
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-       return 6
+        return 6
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        
+
         if indexPath.row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
             cell.selectionStyle = .none
@@ -368,7 +371,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
             invoiceCell.invoiceLabel.text = ""
 //            invoiceCell.invoiceLabel.text = "\(invoiceString.count)\n"
-            
+
             var text = ""
             if invoiceNumber != "" {
                 text = "發票號碼： \(invoiceNumber)"
@@ -440,7 +443,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
         selectDate = datePicker.date
         print(selectDate)
         print("Current Time Zone: \(TimeZone.current.identifier)")
-        
+
         print(datePicker.date)
         print(datePicker.timeZone)
     }
@@ -507,7 +510,7 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
     func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
 //            LKProgressHUD.dismiss()
-            LKProgressHUD.show(inView: self.view)
+            LKProgressHUD.show(inView: view)
             scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
                 switch results {
                 case let .success(result):
@@ -520,13 +523,13 @@ extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigati
                         self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
                         self.productDetails = self.scanInvoiceManager.productDetails
                         LKProgressHUD.showSuccess(inView: self.view)
-                        
+
                     case .formText:
                         self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
                         LKProgressHUD.showSuccess(inView: self.view)
                     }
                     self.table.reloadData()
-                    
+
                 case .failure:
                     LKProgressHUD.showFailure(inView: self.view)
                     return
