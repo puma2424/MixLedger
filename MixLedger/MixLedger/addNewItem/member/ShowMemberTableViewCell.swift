@@ -33,19 +33,20 @@ class ShowMemberTableViewCell: UITableViewCell {
 
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "rrrrrr"
+        label.text = ""
         label.textColor = .g1()
         return label
     }()
 
     let moneyLabel: UILabel = {
         let label = UILabel()
-        label.text = "222222"
+        label.text = ""
         label.textColor = .g1()
         return label
     }()
 
     func setupLayout() {
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         addSubview(moneyLabel)
         addSubview(nameLabel)
 
@@ -58,7 +59,7 @@ class ShowMemberTableViewCell: UITableViewCell {
         nameLabel.snp.makeConstraints { mark in
             mark.centerY.equalTo(self)
             mark.leading.equalTo(self).offset(20)
-//            mark.trailing.equalTo(moneyLabel.snp.leading).offset(-12)
+            mark.trailing.lessThanOrEqualTo(moneyLabel.snp.leading).offset(-12)
         }
     }
 }
