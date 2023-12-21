@@ -512,7 +512,7 @@ class FirebaseManager {
             let dateD = dateFont.string(from: transaction.date)
 
             db.collection("accounts").document(toAccountID).updateData([
-                "transactions.\(dateM).\(dateD).\(transaction.date)": postTransaction,
+                "transactions.\(dateM).\(dateD).\(Date())": postTransaction,
                 "shareUsersID": account.shareUsersID,
                 "accountInfo.expense": FieldValue.increment(transaction.amount),
                 "accountInfo.total": FieldValue.increment(transaction.amount),

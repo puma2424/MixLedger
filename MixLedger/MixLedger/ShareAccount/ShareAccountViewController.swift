@@ -179,6 +179,7 @@ extension ShareAccountViewController: UITableViewDelegate, UITableViewDataSource
         guard let searchCell = cell as? SearchUserTableViewCell else { return cell }
         cell.selectionStyle = .none
         searchCell.nameLabel.text = filteredData[indexPath.row].name
+        searchCell.postShareInfo = nil
         if searchCell.postShareInfo == nil {
             searchCell.postShareInfo = {
                 print("post \(self.filteredData[indexPath.row].name)")
@@ -194,12 +195,13 @@ extension ShareAccountViewController: UISearchBarDelegate {
         // 使用filter方法來篩選data，並將結果更新到filteredData
         filteredData = searchText.isEmpty ? allUsers : allUsers.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         filteredData.removeAll {
-            let usreID = $0.userID
-            let user = saveData.userInfoData.filter { $0.userID == usreID }
-            if user.count > 0 || $0.userID == saveData.myID {
-                return true
-            }
-            return false
+//            let usreID = $0.userID
+//            let user = saveData.userInfoData.filter { $0.userID == usreID }
+//            if user.count > 0 || $0.userID == saveData.myID {
+//                return true
+//            }
+//            return false
+            $0.userID == saveData.myID
         }
         // 重新載入tableView，顯示更新後的結果
         tableView.reloadData()

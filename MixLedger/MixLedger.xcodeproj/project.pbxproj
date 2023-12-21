@@ -43,7 +43,7 @@
 		9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */; };
 		9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */; };
 		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
-		9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */; };
+		9A80F6032B22E68900D7F549 /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */; };
 		9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
@@ -176,7 +176,7 @@
 		9A792B352B272AB5004D97A4 /* DetailedBillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillTableViewCell.swift; sourceTree = "<group>"; };
 		9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillViewController.swift; sourceTree = "<group>"; };
 		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
-		9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconModel.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
@@ -465,7 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */,
-				9A80F6022B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift */,
+				9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */,
 			);
 			path = SubType;
 			sourceTree = "<group>";
@@ -872,7 +872,7 @@
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
-				9A80F6032B22E68900D7F549 /* SubTypeIconCollectionViewCell.swift in Sources */,
+				9A80F6032B22E68900D7F549 /* IconCollectionViewCell.swift in Sources */,
 				9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,

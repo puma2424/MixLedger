@@ -50,7 +50,7 @@ class SelectIconViewController: UIViewController {
     func setCollectionView() {
         iconCollectionView.dataSource = self
         iconCollectionView.delegate = self
-        iconCollectionView.register(SubTypeIconCollectionViewCell.self, forCellWithReuseIdentifier: "subTypeIconCell")
+        iconCollectionView.register(IconCollectionViewCell.self, forCellWithReuseIdentifier: "IconCell")
     }
 
     func setupLayout() {
@@ -72,24 +72,24 @@ extension SelectIconViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = iconCollectionView.dequeueReusableCell(withReuseIdentifier: "subTypeIconCell", for: indexPath)
-        guard let subTypeCell = cell as? SubTypeIconCollectionViewCell else { return cell }
+        let cell = iconCollectionView.dequeueReusableCell(withReuseIdentifier: "IconCell", for: indexPath)
+        guard let iconCell = cell as? IconCollectionViewCell else { return cell }
         guard let iconItem = iconGroup?.items[indexPath.row] else { return cell }
-        subTypeCell.didSeiected(selected: false)
-        subTypeCell.layoutCell(image: iconItem.image, text: iconItem.title)
+        iconCell.didSeiected(selected: false)
+        iconCell.layoutCell(image: iconItem.image, text: iconItem.title)
         return cell
     }
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let selected = selectedIndex {
-            if let selectedCell = iconCollectionView.cellForItem(at: selected) as? SubTypeIconCollectionViewCell {
+            if let selectedCell = iconCollectionView.cellForItem(at: selected) as? IconCollectionViewCell {
                 selectedCell.didSeiected(selected: false)
             }
         }
 
         selectedIndex = indexPath
 
-        guard let selectedCell = iconCollectionView.cellForItem(at: indexPath) as? SubTypeIconCollectionViewCell else { return }
+        guard let selectedCell = iconCollectionView.cellForItem(at: indexPath) as? IconCollectionViewCell else { return }
         guard let iconItem = iconGroup?.items[indexPath.row] else { return }
 
         selectedCell.didSeiected(selected: true)

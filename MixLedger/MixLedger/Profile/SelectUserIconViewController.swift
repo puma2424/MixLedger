@@ -12,7 +12,7 @@ class SelectUserIconViewController: SelectIconViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        delegate = self
+//        delegate = self
         iconGroup = SelectIconManager().userIconGroup
         iconCollectionView.reloadData()
     }
@@ -28,9 +28,9 @@ class SelectUserIconViewController: SelectIconViewController {
      */
 }
 
-extension SelectUserIconViewController: SelectIconViewControllerDelegate {
-    func setupIconGroup(selectionIconView _: SelectIconViewController, selectIconManager: SelectIconManager) {
-        iconGroup = selectIconManager.userIconGroup
-        iconCollectionView.reloadData()
-    }
-}
+//extension SelectUserIconViewController: SelectIconViewControllerDelegate {
+//    func setupIconGroup(selectionIconView: SelectIconViewController, selectIconManager: SelectIconManager) {
+//        self.iconGroup = selectIconManager.userIconGroup
+//        iconCollectionView.reloadData()
+//    }
+//}

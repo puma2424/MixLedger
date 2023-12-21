@@ -1,5 +1,5 @@
 //
-//  SubTypeIconCollectionViewCell.swift
+//  IconCollectionViewCell.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/12/8.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SubTypeIconCollectionViewCell: UICollectionViewCell {
+class IconCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()

@@ -66,9 +66,7 @@ class UrlRouteManager {
 
     // MARK: - Meeting
 
-    // 处理与会议相关的操作
     private func joinAccount(_ urlPathComponents: [String]) {
-        // 确保根视图控制器是 FSTabBarController，并且 URL 路径组件数量为2
         guard urlPathComponents.count == 2 else { return }
         print("==================")
         print(urlPathComponents)

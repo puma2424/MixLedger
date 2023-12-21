@@ -411,6 +411,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
             cell.selectionStyle = .none
             guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
+            dateCell.datePicker.date = selectDate
             dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
             return dateCell
         } else if indexPath.row == 4 {

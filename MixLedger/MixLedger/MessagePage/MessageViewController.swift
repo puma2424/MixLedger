@@ -75,19 +75,27 @@ class MessageViewController: UIViewController {
         print("agare in table \(index)")
         print(datas?.inviteCard?[index.row])
         LKProgressHUD.show()
-
         if let data = datas?.inviteCard?[index.row] {
-            firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { result in
-                switch result {
-                case let .success(success):
-                    print("--")
-                    self.datas = self.saveData.myInfo
-                    self.tableView.reloadData()
-                    LKProgressHUD.showSuccess()
-                case let .failure(failure):
-                    LKProgressHUD.showFailure()
+            let haveUser = SaveData.shared.myInfo?.shareAccount.filter({ account in
+                account == data.accountID
+            })
+            if haveUser == nil || haveUser?.count == 0 {
+                firebaseManager.postRespondToInvitation(respond: true, accountID: data.accountID, accountName: data.accountName, inviterID: data.inviterID, inviterName: data.inviterName) { result in
+                    switch result {
+                    case let .success(success):
+                        print("--")
+                        self.datas = self.saveData.myInfo
+                        self.tableView.reloadData()
+                        LKProgressHUD.showSuccess()
+                    case let .failure(failure):
+                        LKProgressHUD.showFailure()
+                    }
                 }
+            }else {
+                LKProgressHUD.dismiss()
+                ShowCustomAlertManager.customAlert(title: "已加入共享帳本", message: "你已在共享帳本中", vc: self, actionHandler: nil)
             }
+
         } else {
             LKProgressHUD.dismiss()
         }
