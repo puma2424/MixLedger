@@ -294,12 +294,12 @@
 		9A0A33F22B17671700944AE3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9A0A33F12B1766EE00944AE3 /* Charts */,
-				9A50ADC12B0EECB50099351D /* ShareAccount */,
-				9A50ADC02B0EEC900099351D /* MessagePage */,
-				9A524CD52B0DCE5800B232D4 /* AllAccount */,
 				9AEB5F7F2B0731D500DF5DFF /* home */,
+				9A524CD52B0DCE5800B232D4 /* AllAccount */,
+				9A50ADC12B0EECB50099351D /* ShareAccount */,
 				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
+				9A50ADC02B0EEC900099351D /* MessagePage */,
+				9A0A33F12B1766EE00944AE3 /* Charts */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
 				9A5C83C02B1F273100BB778A /* SignPage */,
 				9AF11A692B355D45000E9A45 /* Common */,
@@ -361,7 +361,6 @@
 				9A23798C2B037BE6001D6BAF /* LaunchScreen.storyboard */,
 				9A23798F2B037BE6001D6BAF /* Info.plist */,
 				9A2379872B037BE5001D6BAF /* MixLedger.xcdatamodeld */,
-				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
 				9A2379A12B037BE6001D6BAF /* MixLedgerUITests */,
@@ -517,6 +516,7 @@
 		9AF11A6A2B355DCA000E9A45 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9AF11A722B35934B000E9A45 /* MoneyType */,
 				9AF11A712B3561BD000E9A45 /* Icon */,
 				9AF11A6B2B355DF0000E9A45 /* Firebase */,
 			);
@@ -545,6 +545,14 @@
 				9A80F6042B22F2F300D7F549 /* IconType.swift */,
 			);
 			path = Icon;
+			sourceTree = "<group>";
+		};
+		9AF11A722B35934B000E9A45 /* MoneyType */ = {
+			isa = PBXGroup;
+			children = (
+				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
+			);
+			path = MoneyType;
 			sourceTree = "<group>";
 		};
 		9AF8A81D2B1CC929004DA5F6 /* Extensions */ = {
