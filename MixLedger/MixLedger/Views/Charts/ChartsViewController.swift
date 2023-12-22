@@ -49,8 +49,6 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     var currentIndex = 0
 
-    let saveData = SaveData.shared
-
     var currentChartView: UIView?
 
     let segmentedView = SegmentedControlModleView()
@@ -75,7 +73,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         currentChartView?.removeFromSuperview()
         currentChartView = nil
 
-        if saveData.transactionsArray.isEmpty {
+        if SaveData.getAccountArrayForCharts().isEmpty {
             currentChartView = setupLabelView()
         } else {
             if index == 0 {
@@ -118,7 +116,6 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         mySwiftUIView.stockData.removeAll()
 
         // 创建 SwiftUI 视图
-//        mySwiftUIView.vm.stockData = saveData.transactionsArray
         mySwiftUIView.stockData = dataToChartArray()
 
         // 将 SwiftUI 视图包装在 UIHostingController 中
@@ -142,7 +139,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 
     func setupPie() -> UIView {
-        let originaldatas = saveData.transactionsArray
+        let originaldatas = SaveData.getAccountArrayForCharts()
         let datas = originaldatas.filter { data in
             let calendar = Calendar.current
             let currentDateMon = calendar.dateComponents([.month], from: currentDate)
@@ -197,7 +194,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 
     func dataToChartArray() -> [TransactionForChart] {
-        var originalDataArray = saveData.transactionsArray
+        var originalDataArray = SaveData.getAccountArrayForCharts()
         var forLineMarkData: [TransactionForChart] = []
 
         let dateFont = DateFormatter()

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		938F6629FBE84235958723B2 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1079A6D879B3B4562FCDDB67 /* Pods_MixLedger_MixLedgerUITests.framework */; };
-		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
+		9A004A4C2B0A0DD4005C0258 /* SaveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* SaveData.swift */; };
 		9A08ED482B2EEFD30021BEB5 /* SelectIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */; };
 		9A08ED4A2B2EF3430021BEB5 /* SelectIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */; };
 		9A08ED4C2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED4B2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift */; };
@@ -136,7 +136,7 @@
 		6516F556B662D24A8DE0A876 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
 		6B07D4824EF896D9246B3C57 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.release.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
+		9A004A4B2B0A0DD4005C0258 /* SaveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveData.swift; sourceTree = "<group>"; };
 		9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIconViewController.swift; sourceTree = "<group>"; };
 		9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIconManager.swift; sourceTree = "<group>"; };
 		9A08ED4B2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserIconViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +310,7 @@
 		9A0A33F32B17673700944AE3 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				9A004A4B2B0A0DD4005C0258 /* SaveData.swift */,
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
@@ -327,8 +328,6 @@
 			children = (
 				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
 				9A23797D2B037BE5001D6BAF /* MixLedger */,
-				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
-				9A2379A12B037BE6001D6BAF /* MixLedgerUITests */,
 				9A23797C2B037BE5001D6BAF /* Products */,
 				982246AE0FCFC244BDF6DFD4 /* Pods */,
 				A17D149B4FBAAEA83597A93D /* Frameworks */,
@@ -365,7 +364,8 @@
 				9AEB5F732B0608D100DF5DFF /* ShowMoneyFormat.swift */,
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
-				9A004A4B2B0A0DD4005C0258 /* RealData.swift */,
+				9A2379A12B037BE6001D6BAF /* MixLedgerUITests */,
+				9A2379972B037BE6001D6BAF /* MixLedgerTests */,
 			);
 			path = MixLedger;
 			sourceTree = "<group>";
@@ -917,7 +917,7 @@
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
 				9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
-				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
+				9A004A4C2B0A0DD4005C0258 /* SaveData.swift in Sources */,
 				9AF8A81C2B1CB398004DA5F6 /* FirebaseResponse.swift in Sources */,
 				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,

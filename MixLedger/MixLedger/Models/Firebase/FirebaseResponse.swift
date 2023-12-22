@@ -23,7 +23,7 @@ struct AccountInfo: Codable {
 }
 
 struct Transaction: Codable {
-    var transactionType: TransactionType?
+    var transactionType: TransactionType
     var amount: Double
     var currency: String
     var date: Date

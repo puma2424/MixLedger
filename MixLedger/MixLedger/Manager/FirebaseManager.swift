@@ -392,7 +392,7 @@ class FirebaseManager {
             "payUser": memberPayMoney,
             "shareUser": memberShareMoney,
             "note": transaction.note,
-            "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+            "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
             "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
             "currency": "新台幣",
             "from": transaction.from,
@@ -494,14 +494,15 @@ class FirebaseManager {
 
         var postTransaction: [String: Any]?
 
-        if let transactionType = transaction.transactionType {
+//        if let transactionType = transaction.transactionType {
+        let transactionType = transaction.transactionType 
             postTransaction = [
                 "amount": transaction.amount,
                 "date": transaction.date,
                 "payUser": memberPayMoney,
                 "shareUser": memberShareMoney,
                 "note": transaction.note,
-                "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+                "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
                 "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
                 "currency": "新台幣",
                 "from": transaction.from,
@@ -525,7 +526,7 @@ class FirebaseManager {
                     completion(.success("Sent successfully"))
                 }
             }
-        }
+//        }
     }
 
     func postData(toAccountID: String,
@@ -579,7 +580,7 @@ class FirebaseManager {
                     "amount": transaction.payUser?[userInfo.userID],
                     "date": transaction.date,
                     "note": transaction.note,
-                    "transactionType": ["iconName": transaction.transactionType?.iconName, "name": transaction.transactionType?.name],
+                    "transactionType": ["iconName": transaction.transactionType.iconName, "name": transaction.transactionType.name],
                     "subType": ["iconName": transaction.subType.iconName, "name": transaction.subType.name],
                     "currency": "新台幣",
                     "from": formAccountName,

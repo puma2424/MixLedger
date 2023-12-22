@@ -287,8 +287,8 @@ class HomeViewController: UIViewController {
         for datasKeys in datas.keys {
             guard let data = datas[datasKeys] else { return }
             for dataKey in data.keys {
-                guard let transaction = data[dataKey],
-                      let mainTypeName = transaction.transactionType?.name else { return }
+                guard let transaction = data[dataKey] else { return }
+                let mainTypeName = transaction.transactionType.name
                 let mainType = TransactionMainType(text: mainTypeName)
 
                 if mainType == .expenses {
