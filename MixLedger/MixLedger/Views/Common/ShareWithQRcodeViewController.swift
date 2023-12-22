@@ -39,7 +39,7 @@ class ShareWithQRcodeViewController: UIViewController {
     }()
 
     func setupQRCode(text: String) {
-        guard let qrcodeImage = CreateQRCodeManager.createQRCodeForString(text, size: view.bounds.size) else { return }
+        guard let qrcodeImage = createQRCodeForString(text, size: view.bounds.size) else { return }
 
         qrCodeImageView.image = UIImage(ciImage: qrcodeImage)
     }

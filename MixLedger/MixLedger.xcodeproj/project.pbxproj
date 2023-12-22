@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		938F6629FBE84235958723B2 /* Pods_MixLedger_MixLedgerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1079A6D879B3B4562FCDDB67 /* Pods_MixLedger_MixLedgerUITests.framework */; };
-		9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00216B2B20452A0052A7A1 /* ColorManager.swift */; };
 		9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A004A4B2B0A0DD4005C0258 /* RealData.swift */; };
 		9A08ED482B2EEFD30021BEB5 /* SelectIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */; };
 		9A08ED4A2B2EF3430021BEB5 /* SelectIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */; };
@@ -44,7 +43,7 @@
 		9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */; };
 		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
 		9A80F6032B22E68900D7F549 /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */; };
-		9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */; };
+		9A80F6052B22F2F300D7F549 /* IconType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* IconType.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
 		9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */; };
@@ -100,13 +99,13 @@
 		9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */; };
 		9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */; };
 		9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */; };
-		9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */; };
+		9AF11A6D2B355F8B000E9A45 /* UIViewController+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF11A6C2B355F8B000E9A45 /* UIViewController+EXT.swift */; };
+		9AF11A702B356043000E9A45 /* qrcodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF11A6F2B356043000E9A45 /* qrcodeGenerator.swift */; };
+		9AF8A81C2B1CB398004DA5F6 /* FirebaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81B2B1CB398004DA5F6 /* FirebaseResponse.swift */; };
 		9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */; };
 		9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */; };
 		9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */; };
-		9AFCB3842B2AE252008CBADF /* ShowShareViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */; };
 		9AFCB3862B2AF387008CBADF /* ShareWithQRcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */; };
-		9AFCB3882B2AFA75008CBADF /* CreateQRCodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */; };
 		AC660F929AB6EEC8130B3645 /* Pods_MixLedgerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E51A323F08C4E303A24076 /* Pods_MixLedgerTests.framework */; };
 		D74B6B893F5AA3F608236B38 /* Pods_MixLedger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */; };
 /* End PBXBuildFile section */
@@ -137,7 +136,6 @@
 		6516F556B662D24A8DE0A876 /* Pods-MixLedger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger.release.xcconfig"; path = "Target Support Files/Pods-MixLedger/Pods-MixLedger.release.xcconfig"; sourceTree = "<group>"; };
 		6B07D4824EF896D9246B3C57 /* Pods-MixLedger-MixLedgerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedger-MixLedgerUITests.release.xcconfig"; path = "Target Support Files/Pods-MixLedger-MixLedgerUITests/Pods-MixLedger-MixLedgerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		94A3D24FC03A81F9338A8279 /* Pods_MixLedger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MixLedger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A00216B2B20452A0052A7A1 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		9A004A4B2B0A0DD4005C0258 /* RealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealData.swift; sourceTree = "<group>"; };
 		9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIconViewController.swift; sourceTree = "<group>"; };
 		9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIconManager.swift; sourceTree = "<group>"; };
@@ -177,7 +175,7 @@
 		9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillViewController.swift; sourceTree = "<group>"; };
 		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
 		9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionViewCell.swift; sourceTree = "<group>"; };
-		9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTypeIconModel.swift; sourceTree = "<group>"; };
+		9A80F6042B22F2F300D7F549 /* IconType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconType.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -207,13 +205,13 @@
 		9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager2.swift; sourceTree = "<group>"; };
 		9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthenticationMenager.swift; sourceTree = "<group>"; };
 		9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowScreenManager.swift; sourceTree = "<group>"; };
-		9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRespone.swift; sourceTree = "<group>"; };
+		9AF11A6C2B355F8B000E9A45 /* UIViewController+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EXT.swift"; sourceTree = "<group>"; };
+		9AF11A6F2B356043000E9A45 /* qrcodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qrcodeGenerator.swift; sourceTree = "<group>"; };
+		9AF8A81B2B1CB398004DA5F6 /* FirebaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResponse.swift; sourceTree = "<group>"; };
 		9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9AF8A8212B1DAA33004DA5F6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRouteManager.swift; sourceTree = "<group>"; };
-		9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowShareViewManager.swift; sourceTree = "<group>"; };
 		9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWithQRcodeViewController.swift; sourceTree = "<group>"; };
-		9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRCodeManager.swift; sourceTree = "<group>"; };
 		A50C2A554C708C9D6C78C87E /* Pods-MixLedgerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MixLedgerTests.debug.xcconfig"; path = "Target Support Files/Pods-MixLedgerTests/Pods-MixLedgerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -293,34 +291,32 @@
 			path = Charts;
 			sourceTree = "<group>";
 		};
-		9A0A33F22B17671700944AE3 /* modleView */ = {
+		9A0A33F22B17671700944AE3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */,
-				9A80F6042B22F2F300D7F549 /* SubTypeIconModel.swift */,
-				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
-				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
-				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
-				9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */,
-				9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */,
+				9A0A33F12B1766EE00944AE3 /* Charts */,
+				9A50ADC12B0EECB50099351D /* ShareAccount */,
+				9A50ADC02B0EEC900099351D /* MessagePage */,
+				9A524CD52B0DCE5800B232D4 /* AllAccount */,
+				9AEB5F7F2B0731D500DF5DFF /* home */,
+				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
+				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
+				9A5C83C02B1F273100BB778A /* SignPage */,
+				9AF11A692B355D45000E9A45 /* Common */,
 			);
-			path = modleView;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9A0A33F32B17673700944AE3 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				9A3042F22B123E4A00FFEEB0 /* ScanInvoiceManager.swift */,
-				9AF8A81B2B1CB398004DA5F6 /* FirebaseRespone.swift */,
 				9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */,
 				9AECC9BE2B1DFC6A0013A30A /* FirebaseManager2.swift */,
 				9AECC9C02B1F03730013A30A /* FirebaseAuthenticationMenager.swift */,
 				9AECC9C22B1F08650013A30A /* ShowScreenManager.swift */,
-				9A00216B2B20452A0052A7A1 /* ColorManager.swift */,
 				9A792B302B26F3D9004D97A4 /* ShowCustomAlertManager.swift */,
 				9AFCB3812B2AC9E0008CBADF /* UrlRouteManager.swift */,
-				9AFCB3832B2AE252008CBADF /* ShowShareViewManager.swift */,
-				9AFCB3872B2AFA75008CBADF /* CreateQRCodeManager.swift */,
 				9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */,
 			);
 			path = Manager;
@@ -352,19 +348,13 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9AF11A6E2B356010000E9A45 /* Utils */,
+				9AF11A6A2B355DCA000E9A45 /* Models */,
 				9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */,
 				9AF8A81D2B1CC929004DA5F6 /* Extensions */,
 				9A590F932B1AFE2800D4BCAA /* Third Party Wrappers */,
 				9A0A33F32B17673700944AE3 /* Manager */,
-				9A0A33F22B17671700944AE3 /* modleView */,
-				9A0A33F12B1766EE00944AE3 /* Charts */,
-				9A50ADC12B0EECB50099351D /* ShareAccount */,
-				9A50ADC02B0EEC900099351D /* MessagePage */,
-				9A524CD52B0DCE5800B232D4 /* AllAccount */,
-				9AEB5F7F2B0731D500DF5DFF /* home */,
-				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
-				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
-				9A5C83C02B1F273100BB778A /* SignPage */,
+				9A0A33F22B17671700944AE3 /* Views */,
 				9A23797E2B037BE5001D6BAF /* AppDelegate.swift */,
 				9A2379802B037BE5001D6BAF /* SceneDelegate.swift */,
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
@@ -511,12 +501,59 @@
 			path = addNewItem;
 			sourceTree = "<group>";
 		};
+		9AF11A692B355D45000E9A45 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9AFCB3852B2AF387008CBADF /* ShareWithQRcodeViewController.swift */,
+				9A3042FE2B14957100FFEEB0 /* LineMarkCharts.swift */,
+				9A3043002B15A8C700FFEEB0 /* PieChartView.swift */,
+				9A3042F42B14760F00FFEEB0 /* SegmentedControlModleView.swift */,
+				9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */,
+				9A08ED472B2EEFD30021BEB5 /* SelectIconViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9AF11A6A2B355DCA000E9A45 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9AF11A712B3561BD000E9A45 /* Icon */,
+				9AF11A6B2B355DF0000E9A45 /* Firebase */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9AF11A6B2B355DF0000E9A45 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				9AF8A81B2B1CB398004DA5F6 /* FirebaseResponse.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		9AF11A6E2B356010000E9A45 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9AF11A6F2B356043000E9A45 /* qrcodeGenerator.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		9AF11A712B3561BD000E9A45 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				9A80F6042B22F2F300D7F549 /* IconType.swift */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
 		9AF8A81D2B1CC929004DA5F6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				9AF8A81E2B1CC94D004DA5F6 /* Notification+Extension.swift */,
 				9AECC9BC2B1DECC70013A30A /* Color+extension.swift */,
 				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
+				9AF11A6C2B355F8B000E9A45 /* UIViewController+EXT.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -853,6 +890,7 @@
 				9A524CD92B0DDFFE00B232D4 /* SearchUserTableViewCell.swift in Sources */,
 				9AF8A81F2B1CC94D004DA5F6 /* Notification+Extension.swift in Sources */,
 				9A08ED482B2EEFD30021BEB5 /* SelectIconViewController.swift in Sources */,
+				9AF11A6D2B355F8B000E9A45 /* UIViewController+EXT.swift in Sources */,
 				9A3042F52B14760F00FFEEB0 /* SegmentedControlModleView.swift in Sources */,
 				9A3042ED2B11CFC200FFEEB0 /* ScanInvoiceViewController.swift in Sources */,
 				9AECC9C12B1F03730013A30A /* FirebaseAuthenticationMenager.swift in Sources */,
@@ -868,34 +906,32 @@
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,
 				9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */,
 				9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */,
-				9A80F6052B22F2F300D7F549 /* SubTypeIconModel.swift in Sources */,
+				9A80F6052B22F2F300D7F549 /* IconType.swift in Sources */,
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
 				9A80F6032B22E68900D7F549 /* IconCollectionViewCell.swift in Sources */,
 				9AFCB3822B2AC9E0008CBADF /* UrlRouteManager.swift in Sources */,
 				9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */,
+				9AF11A702B356043000E9A45 /* qrcodeGenerator.swift in Sources */,
 				9A3042F12B11DFCD00FFEEB0 /* ANIInvoiceTableViewCell.swift in Sources */,
 				9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */,
 				9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */,
 				9A004A4C2B0A0DD4005C0258 /* RealData.swift in Sources */,
-				9AF8A81C2B1CB398004DA5F6 /* FirebaseRespone.swift in Sources */,
+				9AF8A81C2B1CB398004DA5F6 /* FirebaseResponse.swift in Sources */,
 				9AB2CA902B0C911200AE677C /* ANAIconCollectionViewCell.swift in Sources */,
 				9A50ADC52B0F4BD50099351D /* SelectMemberViewController.swift in Sources */,
-				9AFCB3842B2AE252008CBADF /* ShowShareViewManager.swift in Sources */,
 				9AEB5F812B07335C00DF5DFF /* AllAccountBookViewController.swift in Sources */,
 				9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */,
 				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */,
 				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
-				9A00216C2B20452A0052A7A1 /* ColorManager.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
 				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
-				9AFCB3882B2AFA75008CBADF /* CreateQRCodeManager.swift in Sources */,
 				9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */,
 				9A3042F32B123E4A00FFEEB0 /* ScanInvoiceManager.swift in Sources */,
 				9AECC9BF2B1DFC6A0013A30A /* FirebaseManager2.swift in Sources */,

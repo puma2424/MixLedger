@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+//model
 enum MoneyType {
     case money(Double)
 
@@ -57,8 +58,8 @@ enum MoneyType {
         }
     }
 }
-
-struct UsersInfo {
-    var name: String
-    var image: UIImage
-}
+//
+//struct UsersInfo {
+//    var name: String
+//    var image: UIImage
+//}

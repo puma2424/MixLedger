@@ -71,7 +71,8 @@ class ProfileViewController: UIViewController {
     }
 
     @objc func userImageButtonTapped() {
-        let subTypeVC = SelectUserIconViewController()
+//        let subTypeVC = SelectUserIconViewController()
+        let subTypeVC = SelectIconViewController(iconGroup: SelectIconManager().userIconGroup)
         subTypeVC.modalPresentationStyle = .automatic
         subTypeVC.modalTransitionStyle = .coverVertical
         subTypeVC.sheetPresentationController?.detents = [.custom(resolver: { context in

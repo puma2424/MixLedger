@@ -168,7 +168,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             iconNameArray.append(SubTypeItem.item(forTitle: type)?.name ?? "")
         }
 
-        let colorArray: [Color] = ColorManager.getAllColors() as [Color]
+        let colorArray: [Color] = .getAllColors()
 
         pieChart = PieAndListView(data: .constant(amountArray),
                                   labels: .constant(typeArray), iconName: .constant(iconNameArray),

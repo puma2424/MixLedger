@@ -445,7 +445,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 1 {
-            let subTypeVC = SelectSubTypeViewController()
+            let subTypeVC = SelectIconViewController(iconGroup: SelectIconManager().subTypeGroup)
+//            let subTypeVC = SelectSubTypeViewController()
             subTypeVC.modalPresentationStyle = .automatic
             subTypeVC.modalTransitionStyle = .coverVertical
             subTypeVC.sheetPresentationController?.detents = [.custom(resolver: { context in

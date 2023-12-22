@@ -13,8 +13,8 @@ class SelectUserIconViewController: SelectIconViewController {
 
         // Do any additional setup after loading the view.
 //        delegate = self
-        iconGroup = SelectIconManager().userIconGroup
-        iconCollectionView.reloadData()
+//        iconGroup = SelectIconManager().userIconGroup
+//        iconCollectionView.reloadData()
     }
 
     /*
@@ -26,6 +26,7 @@ class SelectUserIconViewController: SelectIconViewController {
          // Pass the selected object to the new view controller.
      }
      */
+    
 }
 
 //extension SelectUserIconViewController: SelectIconViewControllerDelegate {

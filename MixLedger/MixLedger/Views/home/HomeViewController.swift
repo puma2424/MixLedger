@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
                         print("\(String(describing: self.saveData.accountData?.transactions))")
 
                         var userID: [String] = []
+                        // 用map 和 forEach
                         if let shareUsersID = accountData.shareUsersID {
                             for user in shareUsersID {
                                 for id in user.keys {

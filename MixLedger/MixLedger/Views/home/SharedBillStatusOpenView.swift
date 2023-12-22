@@ -35,7 +35,6 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
          // Drawing code
      }
      */
-//    var users: [UsersInfo]? = nil
     let saveData = SaveData.shared
     let firebaseManager = FirebaseManager.shared
     var openDelegate: SharedBillStatusOpenViewDelegate?

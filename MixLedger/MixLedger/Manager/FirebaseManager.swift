@@ -82,12 +82,13 @@ class FirebaseManager {
                 guard let myInfo = self.saveData.myInfo else { return /* completion(.failure(_)) */ }
                 print(othetUserAccountID)
 
-                let postTransactionToExpenses = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
-                                                            amount: -messageInfo.amount,
-                                                            currency: "新台幣", date: Date(),
-                                                            from: messageInfo.fromAccoundName,
-                                                            note: "",
-                                                            subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "付款"))
+                let postTransactionToExpenses = Transaction(
+                    transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
+                    amount: -messageInfo.amount,
+                    currency: "新台幣", date: Date(),
+                    from: messageInfo.fromAccoundName,
+                    note: "",
+                    subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "付款"))
 
                 let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
                                                          amount: messageInfo.amount,

@@ -1,5 +1,5 @@
 //
-//  SubTypeIconModel.swift
+//  IconType.swift
 //  MixLedger
 //
 //  Created by 莊羚羊 on 2023/12/8.

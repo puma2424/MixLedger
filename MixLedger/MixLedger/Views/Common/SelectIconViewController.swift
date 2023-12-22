@@ -18,7 +18,7 @@ class SelectIconViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupLayout()
         setCollectionView()
-        delegate?.setupIconGroup(selectionIconView: self, selectIconManager: SelectIconManager())
+//        delegate?.setupIconGroup(selectionIconView: self, selectIconManager: SelectIconManager())
     }
 
     /*
@@ -37,8 +37,20 @@ class SelectIconViewController: UIViewController {
 
     var selectedIndex: IndexPath?
 
-    var iconGroup: IconGroup?
-
+    let iconGroup: IconGroup
+    
+    init(delegate: SelectIconViewControllerDelegate? = nil, selectedSubType: ( (String, String) -> Void)? = nil, selectedIndex: IndexPath? = nil, iconGroup: IconGroup) {
+        self.delegate = delegate
+        self.selectedSubType = selectedSubType
+        self.selectedIndex = selectedIndex
+        self.iconGroup = iconGroup
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let iconCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -67,14 +79,14 @@ class SelectIconViewController: UIViewController {
 
 extension SelectIconViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        guard let iconGroup = iconGroup else { return 0 }
+//        guard let iconGroup = iconGroup else { return 0 }
         return iconGroup.items.count
     }
 
     func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = iconCollectionView.dequeueReusableCell(withReuseIdentifier: "IconCell", for: indexPath)
         guard let iconCell = cell as? IconCollectionViewCell else { return cell }
-        guard let iconItem = iconGroup?.items[indexPath.row] else { return cell }
+        let iconItem = iconGroup.items[indexPath.row]
         iconCell.didSeiected(selected: false)
         iconCell.layoutCell(image: iconItem.image, text: iconItem.title)
         return cell
@@ -90,7 +102,7 @@ extension SelectIconViewController: UICollectionViewDataSource {
         selectedIndex = indexPath
 
         guard let selectedCell = iconCollectionView.cellForItem(at: indexPath) as? IconCollectionViewCell else { return }
-        guard let iconItem = iconGroup?.items[indexPath.row] else { return }
+        let iconItem = iconGroup.items[indexPath.row]
 
         selectedCell.didSeiected(selected: true)
         selectedSubType?(iconItem.name, iconItem.title)
