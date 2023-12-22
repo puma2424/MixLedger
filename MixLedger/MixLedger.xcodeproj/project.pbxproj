@@ -326,7 +326,6 @@
 		9A2379722B037BE5001D6BAF = {
 			isa = PBXGroup;
 			children = (
-				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
 				9A23797D2B037BE5001D6BAF /* MixLedger */,
 				9A23797C2B037BE5001D6BAF /* Products */,
 				982246AE0FCFC244BDF6DFD4 /* Pods */,
@@ -347,9 +346,11 @@
 		9A23797D2B037BE5001D6BAF /* MixLedger */ = {
 			isa = PBXGroup;
 			children = (
+				9A23798F2B037BE6001D6BAF /* Info.plist */,
+				9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */,
+				9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */,
 				9AF11A6E2B356010000E9A45 /* Utils */,
 				9AF11A6A2B355DCA000E9A45 /* Models */,
-				9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */,
 				9AF8A81D2B1CC929004DA5F6 /* Extensions */,
 				9A590F932B1AFE2800D4BCAA /* Third Party Wrappers */,
 				9A0A33F32B17673700944AE3 /* Manager */,
@@ -359,7 +360,6 @@
 				9A2379842B037BE5001D6BAF /* Main.storyboard */,
 				9A23798A2B037BE6001D6BAF /* Assets.xcassets */,
 				9A23798C2B037BE6001D6BAF /* LaunchScreen.storyboard */,
-				9A23798F2B037BE6001D6BAF /* Info.plist */,
 				9A2379872B037BE5001D6BAF /* MixLedger.xcdatamodeld */,
 				9AEB5F822B07349400DF5DFF /* Allicon.swift */,
 				9AEB5F862B07420200DF5DFF /* FakeData.swift */,
