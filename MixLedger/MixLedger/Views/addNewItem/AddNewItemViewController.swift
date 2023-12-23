@@ -19,6 +19,7 @@ class AddNewItemViewController: UIViewController {
         setTable()
         setCheckButton()
         memberInfo()
+        scanInvoiceManager = ScanInvoiceManager(viewController: self)
     }
 
     /*
@@ -31,7 +32,7 @@ class AddNewItemViewController: UIViewController {
      }
      */
 
-    let scanInvoiceManager = ScanInvoiceManager.shared
+    var scanInvoiceManager: ScanInvoiceManager?
 
     var currentAccountID: String = ""
 
@@ -83,7 +84,7 @@ class AddNewItemViewController: UIViewController {
 
     let table = UITableView()
 
-    let imagePicker = UIImagePickerController()
+//    let imagePicker = UIImagePickerController()
 
     var invoiceString: [String] = []
 
@@ -98,8 +99,6 @@ class AddNewItemViewController: UIViewController {
             amount = Double(invoiceTotalAmount)
         }
     }
-
-    var invoiceOfChineseEncodingParameter: ChineseEncodingParameter?
 
     var productDetails: [ProductInfo] = []
 
@@ -310,42 +309,6 @@ class AddNewItemViewController: UIViewController {
         }
     }
 
-    // MARK: - 拍攝發票
-    func selectPhotoButtonTapped() {
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        alertController.addAction(UIAlertAction(title: "從相簿中選擇", style: .default) { _ in
-            self.showImagePicker(sourceType: .photoLibrary)
-        })
-
-        alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
-            self.showImagePicker(sourceType: .camera)
-        })
-
-        alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-
-        present(alertController, animated: true)
-    }
-
-    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
-        if sourceType == .photoLibrary {
-            imagePicker.sourceType = sourceType
-            present(imagePicker, animated: true, completion: nil)
-        } else if sourceType == .camera {
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                imagePicker.sourceType = sourceType
-                present(imagePicker, animated: true, completion: nil)
-            } else {
-                LKProgressHUD.showFailure(inView: view, text: "設備不支援相機")
-                print("設備不支援相機")
-            }
-        } else {
-            LKProgressHUD.showFailure(inView: view, text: "相機不可用或其他情况")
-            print("相機不可用或其他情况")
-        }
-    }
 }
 
 extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
@@ -466,7 +429,8 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
 
             present(subTypeVC, animated: true, completion: nil)
         } else if indexPath.row == 2 {
-            selectPhotoButtonTapped()
+            scanInvoiceManager?.imagePicker.delegate = self
+            scanInvoiceManager?.selectPhotoButtonTapped()
         } else if indexPath.row == 4 {
             let selectMemberView = SelectMemberViewController()
             selectMemberView.usersMoney = memberPayMoney
@@ -502,25 +466,25 @@ extension AddNewItemViewController: SelectMemberViewControllerDelegate {
 extension AddNewItemViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-//            LKProgressHUD.dismiss()
             LKProgressHUD.show(inView: view)
-            scanInvoiceManager.displayBarcodeResults(view: self, selectedImage: selectedImage) { results in
+            scanInvoiceManager?.displayBarcodeResults(selectedImage: selectedImage) { results in
                 switch results {
                 case let .success(result):
                     switch result {
                     case .formQRCode:
-                        self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
-                        self.invoiceDate = self.scanInvoiceManager.invoiceDateString
-                        self.selectDate = self.scanInvoiceManager.invoiceDate
-                        self.invoiceRandomNumber = self.scanInvoiceManager.invoiceRandomNumber
-                        self.invoiceTotalAmount = self.scanInvoiceManager.invoiceTotalAmount
-                        self.productDetails = self.scanInvoiceManager.productDetails
-                        LKProgressHUD.showSuccess(inView: self.view)
+                        guard let scanInvoiceManager = self.scanInvoiceManager else {
+                            LKProgressHUD.showFailure(inView: self.view)
+                            return
+                        }
+                        self.invoiceNumber = scanInvoiceManager.invoiceNumber
+                        self.invoiceDate = scanInvoiceManager.invoiceDateString
+                        self.selectDate = scanInvoiceManager.invoiceDate
+                        self.invoiceRandomNumber = scanInvoiceManager.invoiceRandomNumber
+                        self.invoiceTotalAmount = scanInvoiceManager.invoiceTotalAmount
+                        self.productDetails = scanInvoiceManager.productDetails
 
-                    case .formText:
-                        self.invoiceNumber = self.scanInvoiceManager.invoiceNumber
-                        LKProgressHUD.showSuccess(inView: self.view)
                     }
+                    LKProgressHUD.showSuccess(inView: self.view)
                     self.table.reloadData()
 
                 case .failure:
