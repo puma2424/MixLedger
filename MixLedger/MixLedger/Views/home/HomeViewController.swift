@@ -309,19 +309,24 @@ extension HomeViewController: SharedBillStatusSmallViewDelegate, SharedBillStatu
     }
 
     func postRepay(payView: UIView, otherUserName: String, otherUserID: String, amount: Double) {
-        let mtName = saveData.myInfo?.name ?? ""
-        let toOtherUserTest = "\(mtName) 向您還款：\(amount) 請確認收款"
+        guard let myInfo = saveData.myInfo else {
+            return LKProgressHUD.showFailure()
+        }
+        let myName = myInfo.name
+        let toOtherUserTest = "\(myName) 向您還款：\(amount) 請確認收款"
         let toMyselfTest = "您向\(otherUserName) 還款：\(amount)"
         guard let accountData = saveData.accountData else { return }
-
-        firebaseManager.postMessage(toUserID: otherUserID,
-                                    textToOtherUser: toOtherUserTest,
-                                    textToMyself: toMyselfTest,
-                                    isDunningLetter: true,
-                                    amount: amount,
-                                    fromAccoundID: accountData.accountID,
-                                    fromAccoundName: accountData.accountName)
-        { result in
+        
+        let message = Message(toSenderMessage: toMyselfTest,
+                              toReceiverMessage: toOtherUserTest,
+                              fromUserID: myInfo.userID,
+                              isDunningLetter: true,
+                              amount: amount,
+                              toUserID: otherUserID,
+                              formAccoundID: accountData.accountID,
+                              fromAccoundName: accountData.accountName)
+        
+        firebaseManager.postMessage(message: message) { result in
             switch result {
             case let .success(success):
                 LKProgressHUD.showSuccess(text: success)

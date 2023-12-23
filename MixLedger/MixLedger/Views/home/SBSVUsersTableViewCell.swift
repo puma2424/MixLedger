@@ -39,30 +39,31 @@ class SBSVUsersTableViewCell: UITableViewCell {
     var delegate: SBSVUsersTableViewCellDelegate?
 
     var amount: MoneyType = .money(0)
+    
     let userImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "human")
         return imageView
     }()
 
-    let nameLable: UILabel = {
-        let lable = UILabel()
-        lable.text = "puma"
-        lable.lineBreakMode = .byTruncatingTail
-        return lable
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "puma"
+        label.lineBreakMode = .byTruncatingTail
+        return label
     }()
 
-    let moneyLable: UILabel = {
-        let lable = UILabel()
-        lable.text = ""
-        return lable
+    let moneyLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        return label
     }()
 
-    let statusLable: UILabel = {
-        let lable = UILabel()
-        lable.text = "pay"
-        lable.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        return lable
+    let statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "pay"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        return label
     }()
 
     let checkButton: UIButton = {
@@ -77,42 +78,49 @@ class SBSVUsersTableViewCell: UITableViewCell {
     @objc func checkButtonTarget() {
         delegate?.checkButtonTarget(cell: self)
     }
+    
+    func updateUIWithAmount() {
+        moneyLabel.textColor = amount.color
+        statusLabel.text = amount.billTitle
+        statusLabel.textColor = amount.color
+        checkButton.setTitle(amount.checkButtonTitle, for: .normal)
+    }
 
     func setupButton() {
         checkButton.addTarget(self, action: #selector(checkButtonTarget), for: .touchUpInside)
     }
 
     func setupNoButtonLayout() {
-        moneyLable.snp.removeConstraints()
-        statusLable.snp.removeConstraints()
+        moneyLabel.snp.removeConstraints()
+        statusLabel.snp.removeConstraints()
         userImage.snp.removeConstraints()
-        nameLable.snp.removeConstraints()
+        nameLabel.snp.removeConstraints()
         checkButton.snp.removeConstraints()
 
-        moneyLable.snp.makeConstraints { mark in
+        moneyLabel.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
-            mark.leading.greaterThanOrEqualTo(nameLable.snp.trailing).offset(12)
+            mark.leading.greaterThanOrEqualTo(nameLabel.snp.trailing).offset(12)
         }
 
-        statusLable.snp.makeConstraints { make in
-            make.top.equalTo(moneyLable.snp.bottom).offset(5)
-            make.trailing.equalTo(moneyLable)
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(moneyLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(moneyLabel)
         }
 
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
-            mark.centerY.equalTo(moneyLable.snp.bottom)
+            mark.centerY.equalTo(moneyLabel.snp.bottom)
         }
 
-        nameLable.snp.makeConstraints { mark in
+        nameLabel.snp.makeConstraints { mark in
             mark.centerY.equalTo(userImage)
             mark.leading.equalTo(userImage.snp.trailing).offset(12)
-            mark.trailing.lessThanOrEqualTo(moneyLable.snp.leading).offset(-12)
+            mark.trailing.lessThanOrEqualTo(moneyLabel.snp.leading).offset(-12)
         }
         checkButton.snp.makeConstraints { mark in
-            mark.top.equalTo(statusLable.snp.bottom).offset(0)
+            mark.top.equalTo(statusLabel.snp.bottom).offset(0)
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.height.equalTo(0)
@@ -121,36 +129,36 @@ class SBSVUsersTableViewCell: UITableViewCell {
     }
 
     func setupHaveButtonView() {
-        moneyLable.snp.removeConstraints()
-        statusLable.snp.removeConstraints()
+        moneyLabel.snp.removeConstraints()
+        statusLabel.snp.removeConstraints()
         userImage.snp.removeConstraints()
-        nameLable.snp.removeConstraints()
+        nameLabel.snp.removeConstraints()
         checkButton.snp.removeConstraints()
 
-        moneyLable.snp.makeConstraints { mark in
+        moneyLabel.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
         }
 
-        statusLable.snp.makeConstraints { make in
-            make.top.equalTo(moneyLable.snp.bottom).offset(5)
-            make.trailing.equalTo(moneyLable)
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(moneyLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(moneyLabel)
         }
 
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
-            mark.centerY.equalTo(moneyLable.snp.bottom)
+            mark.centerY.equalTo(moneyLabel.snp.bottom)
         }
 
-        nameLable.snp.makeConstraints { mark in
+        nameLabel.snp.makeConstraints { mark in
             mark.centerY.equalTo(userImage)
             mark.leading.equalTo(userImage.snp.trailing).offset(12)
-            mark.trailing.lessThanOrEqualTo(moneyLable.snp.leading).offset(-12)
+            mark.trailing.lessThanOrEqualTo(moneyLabel.snp.leading).offset(-12)
         }
 
         checkButton.snp.makeConstraints { mark in
-            mark.top.equalTo(statusLable.snp.bottom).offset(12)
+            mark.top.equalTo(statusLabel.snp.bottom).offset(12)
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.height.equalTo(50)
@@ -159,37 +167,37 @@ class SBSVUsersTableViewCell: UITableViewCell {
     }
 
     func setupLayout() {
-        nameLable.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        moneyLable.setContentCompressionResistancePriority(.required, for: .horizontal)
-        contentView.addSubview(moneyLable)
-        contentView.addSubview(statusLable)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        moneyLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        contentView.addSubview(moneyLabel)
+        contentView.addSubview(statusLabel)
         contentView.addSubview(userImage)
-        contentView.addSubview(nameLable)
+        contentView.addSubview(nameLabel)
         contentView.addSubview(checkButton)
 
-        moneyLable.snp.makeConstraints { mark in
+        moneyLabel.snp.makeConstraints { mark in
             mark.top.equalTo(contentView).offset(5)
             mark.trailing.equalTo(contentView).offset(-5)
         }
 
-        statusLable.snp.makeConstraints { make in
-            make.top.equalTo(moneyLable.snp.bottom).offset(5)
-            make.trailing.equalTo(moneyLable)
+        statusLabel.snp.makeConstraints { make in
+            make.top.equalTo(moneyLabel.snp.bottom).offset(5)
+            make.trailing.equalTo(moneyLabel)
         }
 
         userImage.snp.makeConstraints { mark in
             mark.height.width.equalTo(20)
             mark.leading.equalTo(contentView).offset(12)
-            mark.centerY.equalTo(moneyLable.snp.bottom)
+            mark.centerY.equalTo(moneyLabel.snp.bottom)
         }
 
-        nameLable.snp.makeConstraints { mark in
+        nameLabel.snp.makeConstraints { mark in
             mark.centerY.equalTo(userImage)
             mark.leading.equalTo(userImage.snp.trailing).offset(12)
         }
 
         checkButton.snp.makeConstraints { mark in
-            mark.top.equalTo(statusLable.snp.bottom).offset(12)
+            mark.top.equalTo(statusLabel.snp.bottom).offset(12)
             mark.leading.equalTo(contentView).offset(12)
             mark.trailing.equalTo(contentView).offset(-12)
             mark.height.equalTo(50)

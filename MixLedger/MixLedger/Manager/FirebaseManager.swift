@@ -25,27 +25,19 @@ class FirebaseManager {
     var userMessageListener: ListenerRegistration?
 
     // MARK: - 發送訊息 -
+    func postMessage(message: Message,
+                     completion: @escaping (Result<String, Error>) -> Void) {
+        let messageContent: [String: Any] = ["toSenderMessage": message.toSenderMessage,
+                                      "toReceiverMessage": message.toReceiverMessage,
+                                      "fromUserID": message.fromUserID,
+                                      "toUserID": message.toUserID,
+                                      "isDunningLetter": message.isDunningLetter,
+                                      "amount": message.amount,
+                                      "formAccoundID": message.formAccoundID,
+                                      "fromAccoundName": message.fromAccoundName]
 
-    func postMessage(toUserID: String,
-                     textToOtherUser: String,
-                     textToMyself: String,
-                     isDunningLetter: Bool,
-                     amount: Double,
-                     fromAccoundID: String,
-                     fromAccoundName: String,
-                     completion: @escaping (Result<String, Error>) -> Void)
-    {
-        let message: [String: Any] = ["toSenderMessage": textToMyself,
-                                      "toReceiverMessage": textToOtherUser,
-                                      "fromUserID": saveData.myInfo?.userID,
-                                      "toUserID": toUserID,
-                                      "isDunningLetter": isDunningLetter,
-                                      "amount": amount,
-                                      "formAccoundID": fromAccoundID,
-                                      "fromAccoundName": fromAccoundName]
-
-        db.collection("users").document(toUserID).updateData([
-            "message": FieldValue.arrayUnion([message]),
+        db.collection("users").document(message.toUserID).updateData([
+            "message": FieldValue.arrayUnion([messageContent])
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -53,7 +45,7 @@ class FirebaseManager {
             } else {
                 if let myInfo = self.saveData.myInfo {
                     self.db.collection("users").document(myInfo.userID).updateData([
-                        "message": FieldValue.arrayUnion([message]),
+                        "message": FieldValue.arrayUnion([messageContent])
                     ]) { err in
                         if let err = err {
                             print("Error updating document: \(err)")
@@ -67,11 +59,8 @@ class FirebaseManager {
         }
     }
 
-    // swiftlint:disable line_length
-
     // MARK: - 確認還款 -
 
-    // swiftlint:disable function_body_length
     func confirmPayment(messageInfo: Message, textToOtherUser _: String, textToMyself _: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let accountID = saveData.myInfo?.ownAccount else { return }
         var othetUserAccountID = ""
@@ -419,7 +408,6 @@ class FirebaseManager {
 //
     }
 
-    // swiftlint:disable line_length
     func postIncome(toAccountID: String,
                     transaction: Transaction,
                     memberPayMoney: [String: Double],

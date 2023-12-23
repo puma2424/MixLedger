@@ -86,6 +86,44 @@ class SharedBillStatusOpenView: SharedBillStatusSmallView {
     @objc override func openOrCloseActive() {
         openDelegate?.closeView()
     }
+    
+    func handleDunningButton(id: String) {
+        if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }),
+            let money = billStatus?[index][id] {
+            
+            // 檢查所需的資料是否有效
+            guard let myName = saveData.myInfo?.name,
+                  let otherUserName = usersInfo.first(where: { $0.userID == id })?.name,
+                  let accountData = saveData.accountData else {
+                LKProgressHUD.showFailure()
+                return
+            }
+            
+            // 構建催款訊息
+            let toOutherText = "\(myName)從\"\(accountData.accountName)\"傳送訊息給您：\n 請還款\(abs(money))"
+            let myText = "從\"\(accountData.accountName)\"傳送訊息給\(otherUserName):\n請還款\(abs(money))"
+            
+            // 創建傳送訊息的模型
+            let message = Message(toSenderMessage: myText,
+                                  toReceiverMessage: toOutherText,
+                                  fromUserID:  saveData.myInfo?.userID ?? "",
+                                  isDunningLetter: false,
+                                  amount: 0.0,
+                                  toUserID: id,
+                                  formAccoundID: accountData.accountID,
+                                  fromAccoundName: accountData.accountName)
+            
+            // 使用 firebaseManager 傳送訊息
+            firebaseManager.postMessage(message: message) { result in
+                switch result {
+                case .success(_):
+                    LKProgressHUD.showSuccess(text: "訊息已發送")
+                case .failure(_):
+                    LKProgressHUD.showFailure(text: "訊息發送失敗")
+                }
+            }
+        }
+    }
 }
 
 extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
@@ -95,32 +133,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
             print(id)
 
             if cell.amount.checkButtonTitle == "催  款" {
-                if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
-                    print("\(billStatus?[index][id])")
-                    guard let myName = saveData.myInfo?.name else { return }
-                    guard let otherUserName = usersInfo.first(where: { $0.userID == id })?.name else { return }
-//                    guard let otherUserName = usersInfo?[id].name else {return}
-                    guard let accountData = saveData.accountData else { return }
-
-                    let toOutherText = "\(myName)從\"\(accountData.accountName)\"傳送訊息給您：\n 請還款\(abs(money))"
-                    let myText = "從\"\(accountData.accountName)\"傳送訊息給\(otherUserName):\n請還款\(abs(money))"
-
-                    firebaseManager.postMessage(toUserID: id,
-                                                textToOtherUser: toOutherText,
-                                                textToMyself: myText,
-                                                isDunningLetter: false,
-                                                amount: 0.0,
-                                                fromAccoundID: accountData.accountID,
-                                                fromAccoundName: accountData.accountName)
-                    { result in
-                        switch result {
-                        case let .success(success):
-                            LKProgressHUD.showSuccess(text: "訊息已發送")
-                        case let .failure(failure):
-                            LKProgressHUD.showFailure(text: "訊息發送失敗")
-                        }
-                    }
-                }
+                handleDunningButton(id: id)
             } else if cell.amount.checkButtonTitle == "還  款" {
                 if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }), let money = billStatus?[index][id] {
                     print(cell.amount.checkButtonTitle)
@@ -141,7 +154,7 @@ extension SharedBillStatusOpenView: SBSVUsersTableViewCellDelegate {
 
 extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return usersInfo.count /* 1 */
+        return usersInfo.count 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -152,34 +165,27 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
         let userInfo = usersInfo[indexPath.row]
 
         let id = userInfo.userID
-        userCell.nameLable.text = userInfo.name
+        
+        userCell.nameLabel.text = userInfo.name
         userCell.userImage.image = UIImage(named: userInfo.iconName)
+        
         if let index = billStatus?.firstIndex(where: { $0.keys.contains(id) }),
-           let userMoney = billStatus?[index][id]
-        {
-            let amount = MoneyType.money(userMoney)
-            userCell.amount = amount
+           let userMoney = billStatus?[index][id] {
+            
+            userCell.amount = MoneyType.money(userMoney)
             if id == saveData.myInfo?.userID {
-//                userCell.checkButton.isHidden = true
                 userCell.setupNoButtonLayout()
                 myMoney = userMoney
             } else {
                 if myMoney < 0 && userMoney < 0 {
-//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 } else if myMoney < 0 && userMoney > 0 {
-//                    userCell.checkButton.isHidden = false
                     userCell.setupHaveButtonView()
-                    userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
                 } else if myMoney > 0 && userMoney < 0 {
-//                    userCell.checkButton.isHidden = false
                     userCell.setupHaveButtonView()
-                    userCell.checkButton.setTitle(amount.checkButtonTitle, for: .normal)
                 } else if myMoney > 0 && userMoney > 0 {
-//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 } else if myMoney == 0 || userMoney == 0 {
-//                    userCell.checkButton.isHidden = true
                     userCell.setupNoButtonLayout()
                 }
             }
@@ -187,10 +193,8 @@ extension SharedBillStatusOpenView: UITableViewDelegate, UITableViewDataSource {
             let money = abs(userMoney)
             let moneyString = String(format: "%.1f", money)
 
-            userCell.moneyLable.text = "\(moneyString)"
-            userCell.moneyLable.textColor = amount.color
-            userCell.statusLable.text = amount.billTitle
-            userCell.statusLable.textColor = amount.color
+            userCell.moneyLabel.text = "\(moneyString)"
+            userCell.updateUIWithAmount()
         }
 
         return userCell
