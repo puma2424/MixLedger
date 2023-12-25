@@ -176,4 +176,209 @@ extension FirebaseManager {
             }
         }
     }
+    
+    func removeAccountListener() {
+        if accountListener != nil {
+            accountListener?.remove()
+        }
+    }
+
+    func addAccountListener(accountID: String, completion: @escaping (Result<TransactionsResponse, Error>) -> Void) {
+        // 從 Firebase 獲取數據
+        let docRef = db.collection("accounts").document(accountID)
+
+        removeAccountListener()
+
+        accountListener = docRef.addSnapshotListener { document, error in
+            if let error = error as NSError? {
+                self.errorMessage = "Error getting document: \(error.localizedDescription)"
+            } else {
+                if let document = document {
+                    do {
+                        print("-----get account undecode Data------")
+                        let accountData = try document.data(as: TransactionsResponse.self)
+                        print("-----get account decode Data------")
+                        self.saveData.accountData = accountData
+                        print("\(self.saveData.accountData?.accountName)")
+                        completion(.success(accountData))
+                    } catch {
+                        print(error)
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func getUsreInfo(userID: [String], completion: @escaping (Result<[UsersInfoResponse], Error>) -> Void) {
+        if !userID.isEmpty {
+            var responData: [UsersInfoResponse] = []
+
+            db.collection("users").whereField("userID", in: userID).getDocuments { querySnapshot, err in
+                do {
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                        throw err
+                    } else {
+                        for document in querySnapshot!.documents {
+                            let responseData = try document.data(as: UsersInfoResponse.self)
+                            responData.append(responseData)
+                        }
+                        completion(.success(responData))
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        print("\(saveData.userInfoData)")
+    }
+
+    
+    func removeUserMessageListener() {
+        userMessageListener?.remove()
+    }
+
+    func addUserListener(userID: String, completion: @escaping (Result<UsersInfoResponse, Error>) -> Void) {
+        removeUserMessageListener()
+
+        if !userID.isEmpty {
+            let docRef = db.collection("users").document(userID)
+
+            userMessageListener = docRef.addSnapshotListener { document, error in
+                if let error = error as NSError? {
+                    self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                    completion(.failure(error))
+                } else {
+                    if let document = document {
+                        print("-----find User------")
+                        print(document.data())
+                        do {
+                            let responseData = try document.data(as: UsersInfoResponse.self)
+                            print(responseData)
+                            completion(.success(responseData))
+                        } catch {
+                            print(error)
+                            completion(.failure(error))
+                        }
+                    }
+                }
+            }
+        }
+        print("\(saveData.userInfoData)")
+    }
 }
+
+
+
+
+//    func confirmPayment(messageInfo: Message, textToOtherUser _: String, textToMyself _: String, completion: @escaping (Result<String, Error>) -> Void) {
+//        guard let accountID = saveData.myInfo?.ownAccount else { return }
+//        var othetUserAccountID = ""
+//        getUsreInfo(userID: [messageInfo.fromUserID]) { result in
+//            switch result {
+//            case let .success(data):
+//                othetUserAccountID = data[0].ownAccount
+//                guard let myInfo = self.saveData.myInfo else { return /* completion(.failure(_)) */ }
+//                print(othetUserAccountID)
+//
+//                let postTransactionToExpenses = Transaction(
+//                    transactionType: TransactionType(iconName: "", name: TransactionMainType.expenses.text),
+//                    amount: -messageInfo.amount,
+//                    currency: "新台幣", date: Date(),
+//                    from: messageInfo.fromAccoundName,
+//                    note: "",
+//                    subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "付款"))
+//
+//                let postTransactionToShare = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
+//                                                         amount: messageInfo.amount,
+//                                                         currency: "新台幣",
+//                                                         date: Date(),
+//                                                         from: messageInfo.fromAccoundName,
+//                                                         note: "",
+//                                                         subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "收支平衡"))
+//
+//                let postTransactionToIncome = Transaction(transactionType: TransactionType(iconName: "", name: TransactionMainType.income.text),
+//                                                          amount: messageInfo.amount,
+//                                                          currency: "新台幣",
+//                                                          date: Date(),
+//                                                          from: messageInfo.fromAccoundName,
+//                                                          note: "",
+//                                                          subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "收款"))
+//
+//                // value：同時間最多有1個thread可以存取某資源
+//                var semaphore = DispatchSemaphore(value: 1)
+//                let queue = DispatchQueue(label: "myqueue")
+//
+//                queue.async {
+//                    semaphore.wait() // thread正在工作
+//                    self.postIncome(toAccountID: myInfo.ownAccount, transaction: postTransactionToIncome, memberPayMoney: [:], memberShareMoney: [:]) { result in
+//                        switch result {
+//                        case .success:
+//                            semaphore.signal() // thread結束工作，可以進行下一個
+//                            return
+//                        case .failure:
+//                            return
+//                        }
+//                    }
+//                }
+//
+//                queue.async {
+//                    semaphore.wait()
+//                    // thread正在工作
+//                    self.postData(toAccountID: othetUserAccountID, transaction: postTransactionToExpenses, memberPayMoney: [:], memberShareMoney: [:]) { result in
+//                        switch result {
+//                        case .success:
+//                            semaphore.signal() // thread結束工作，可以進行下一個
+//                        case .failure:
+//                            return
+//                        }
+//                    }
+//                }
+//
+//                queue.async {
+//                    semaphore.wait() // thread正在工作
+//                    self.postIncome(toAccountID: messageInfo.formAccoundID,
+//                                    transaction: postTransactionToShare,
+//                                    memberPayMoney: [messageInfo.fromUserID: messageInfo.amount, messageInfo.toUserID: 0.0],
+//                                    memberShareMoney: [messageInfo.toUserID: messageInfo.amount, messageInfo.fromUserID: 0.0])
+//                    { result in
+//                        switch result {
+//                        case .success:
+//                            print("qqqqqq===")
+//                            semaphore.signal() // thread結束工作，可以進行下一個
+//                        case let .failure(err):
+//                            print(err)
+//                            print("xxxxxxx===")
+//                        }
+//                    }
+//                }
+//
+//                queue.async {
+//                    semaphore.wait() // thread正在工作
+//                    self.db.collection("users").document(messageInfo.toUserID).updateData([
+//                        "message": FieldValue.arrayRemove([["toSenderMessage": messageInfo.toSenderMessage,
+//                                                            "toReceiverMessage": messageInfo.toReceiverMessage,
+//                                                            "fromUserID": messageInfo.fromUserID,
+//                                                            "toUserID": messageInfo.toUserID,
+//                                                            "isDunningLetter": messageInfo.isDunningLetter,
+//                                                            "amount": messageInfo.amount,
+//                                                            "formAccoundID": messageInfo.formAccoundID,
+//                                                            "fromAccoundName": messageInfo.fromAccoundName]]),
+//                    ]) { err in
+//                        if let err = err {
+//                            print("Error updating document: \(err)")
+//                            completion(.failure(err))
+//                        } else {
+//                            print("Document successfully updated postAgareShareAccount")
+//                            completion(.success("成功變動使用者擁有帳本資訊"))
+//                            semaphore.signal() // thread結束工作，可以進行下一個
+//                        }
+//                    }
+//                }
+//
+//            case .failure:
+//                return
+//            }
+//        }
+//    }

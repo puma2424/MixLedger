@@ -136,7 +136,7 @@ class MessageViewController: UIViewController {
         LKProgressHUD.show()
         if let data = datas?.message?[index.row] {
             if data.isDunningLetter {
-                firebaseManager.confirmPayment(messageInfo: data, textToOtherUser: "", textToMyself: "") { result in
+                firebaseManager.confirmPayment(messageInfo: data) { result in
                     switch result {
                     case let .success(success):
 
