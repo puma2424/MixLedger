@@ -584,6 +584,7 @@ class FirebaseManager {
             } else {
                 if let document = document {
                     do {
+                        
                         print("-----get account undecode Data------")
                         print("----\n\(document.data())")
                         let data = try document.data(as: TransactionsResponse.self)

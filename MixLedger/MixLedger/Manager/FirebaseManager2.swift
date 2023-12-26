@@ -196,6 +196,7 @@ extension FirebaseManager {
                 if let document = document {
                     do {
                         print("-----get account undecode Data------")
+                        print(document.data())
                         let accountData = try document.data(as: TransactionsResponse.self)
                         print("-----get account decode Data------")
                         self.saveData.accountData = accountData

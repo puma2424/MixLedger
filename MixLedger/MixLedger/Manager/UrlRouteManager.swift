@@ -30,9 +30,10 @@ class UrlRouteManager {
     // 检查是否能打开给定的URL
     func canOpen(url: URL) -> Bool {
         let components = url.pathComponents
-        guard let first = components.first,
-              EndPoint(rawValue: first) != nil
+        guard let endpoint = url.host(),
+              EndPoint(rawValue: endpoint) != nil
         else {
+            print(url.host())
             return false
         }
         return true
