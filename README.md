@@ -100,7 +100,7 @@ AppWorks School #22 iOS,Personal Project
 
 下載後若想在使用測試帳號在模擬器上運行，將 code 更改為以下。
 
-``` swift= 22
+``` swift=
 func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
