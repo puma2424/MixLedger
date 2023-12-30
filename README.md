@@ -10,17 +10,17 @@ AppWorks School #22 iOS,Personal Project
     - [Home](#home)
     - [分享帳本](#分享帳本)
     - [新增帳目](#新增帳目)
-    - [還款](#還款)
+    - [帳款狀態](#帳款狀態)
     - [訊息](#訊息)
     - [圖表](#charts)
 - [Library](#libraries)
-
-<img src="https://github.com/puma2424/MixLedger/assets/141214046/6e106337-4755-4b2b-a448-329ccfc3dd28" alt="chartPie" width="200"/>
 
 ## Features
 ### Home 
 
 共享帳本和個人帳本的首頁。
+
+共享帳本可以進行[分享](#分享帳本)，並查看[帳款狀態](#帳款狀態)。
 
 <img src="https://github.com/puma2424/MixLedger/assets/141214046/15c653d6-eb35-427d-9af4-f1637d2f4f0b" alt="hom2" width="200"/>  <img src="https://github.com/puma2424/MixLedger/assets/141214046/6e106337-4755-4b2b-a448-329ccfc3dd28" alt="home1" width="200"/>
 
@@ -45,13 +45,20 @@ AppWorks School #22 iOS,Personal Project
 
     <img src="https://github.com/puma2424/MixLedger/assets/141214046/54364fcd-7e31-49cc-86e1-27598e6e5509" alt="DistributionAmount" width="200"/>
 
-### 還款
+### 帳款狀態
 
-在共享帳本中，可以查看與其他共享者的還款狀態，並且進行還款或催款。
+在共享帳本中，可以查看與其他共享者的帳款狀態，並且進行還款或催款。
+- 催款
     
-若其他共享者在訊息中確認還款，將會在付款者、接受者的個人帳本以及共享帳本中，同步更新資料。
+    點擊後將發送訊息請對方還款。
 
-<img src="https://github.com/puma2424/MixLedger/assets/141214046/59e28556-fc01-4208-9685-6d315b466383" alt="repay" width="200"/>
+    <img src="https://github.com/puma2424/MixLedger/assets/141214046/6bb4c330-07b9-4946-a37b-4ddd710512a6" alt="chartPie" width="200"/>
+
+- 還款
+    
+    若其他共享者在訊息中確認還款，將會在付款者、接受者的個人帳本以及共享帳本中，同步更新資料。
+
+    <img src="https://github.com/puma2424/MixLedger/assets/141214046/59e28556-fc01-4208-9685-6d315b466383" alt="repay" width="200"/>
 
 ### 訊息
 
