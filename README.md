@@ -14,6 +14,8 @@ AppWorks School #22 iOS,Personal Project
     - [訊息](#訊息)
     - [圖表](#charts)
 - [Library](#libraries)
+- [安裝說明](#安裝說明)
+- [與我聯絡](#與我聯絡)
 
 ## Features
 ### Home 
@@ -98,14 +100,12 @@ AppWorks School #22 iOS,Personal Project
 
 ## 安裝說明
 
-下載後若想在使用測試帳號在模擬器上運行，將 code 更改為以下。
+下載後若想在使用 **測試帳號** 在模擬器上運行，將 code 更改為以下。
 
-``` swift=
+``` swift
+// SceneDelegate.swift
+
 func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-
         guard let window = window else { return }
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window.windowScene = windowScene
@@ -132,3 +132,61 @@ func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connection
         ShowScreenManager.showMainScreen(window: window)
     }
 ```
+
+```swift 
+// SaveData.swift
+
+//    var myID = ""
+    var myID = "bGzuwR00sPRNmBamK91D" // test
+```
+
+下載後若想在使用 **真實帳號** 在模擬器上運行，將 code 更改為以下。
+
+``` swift
+// SceneDelegate.swift
+
+func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
+        guard let window = window else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window.windowScene = windowScene
+        window.backgroundColor = UIColor(named: "G3")
+        window.makeKeyAndVisible()
+        sceneWindow = window
+        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
+            switch result {
+            case true:
+                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+                    ShowScreenManager.showSinginScreen(window: window)
+                    return
+                }
+                SaveData.shared.myID = userID
+                ShowScreenManager.showMainScreen(window: window)
+                guard let url = connectionOptions.urlContexts.first?.url
+                    else { return }
+                UrlRouteManager.open(url: url)
+
+            case false:
+                ShowScreenManager.showSinginScreen(window: window)
+            }
+        }
+//        ShowScreenManager.showMainScreen(window: window)
+    }
+```
+
+```swift 
+// SaveData.swift
+
+    var myID = ""
+//  var myID = "bGzuwR00sPRNmBamK91D" // test
+```
+
+## 與我聯絡
+作者：WenYu Chuang(Puma)
+
+e-mail: cwenyu2424@gmail.com
+
+若有任何疑問或建議都歡迎透過以上方式與我聯絡。

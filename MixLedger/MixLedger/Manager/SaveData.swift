@@ -34,9 +34,9 @@ class SaveData {
 
     var accountData: TransactionsResponse?
     
-//    var myID = ""
-    var myID = "bGzuwR00sPRNmBamK91D" // test
-//    var myID = "qmgOOutGItrZyzKqQOrh"  //porter
+    var myID = ""
+//    var myID = "bGzuwR00sPRNmBamK91D" // test
+    
     var userInfoData: [UsersInfoResponse] = []
     var myInfo: UsersInfoResponse? {
         didSet {
