@@ -95,3 +95,40 @@ AppWorks School #22 iOS,Personal Project
    - IQKeyboardManagerSwift是一個用於處理iOS應用程式中鍵盤的Swift庫。它提供功能，如自動管理鍵盤的顯示和隱藏，防止與鍵盤相關的UI問題。
 
 這些第三方套件已經被整合到專案中，除 Firebase 其他皆用使用 Cocoapods 做管理。因 Firebase 使用 Cocoapods 下載時存在一些問題，因此 Firebase 是用 Swift Package Manager 做下載與管理。
+
+## 安裝說明
+
+下載後若想在使用測試帳號在模擬器上運行，將 code 更改為以下。
+
+``` swift= 22
+func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
+        guard let window = window else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window.windowScene = windowScene
+        window.backgroundColor = UIColor(named: "G3")
+        window.makeKeyAndVisible()
+        sceneWindow = window
+//        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
+//            switch result {
+//            case true:
+//                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+//                    ShowScreenManager.showSinginScreen(window: window)
+//                    return
+//                }
+//                SaveData.shared.myID = userID
+//                ShowScreenManager.showMainScreen(window: window)
+//                guard let url = connectionOptions.urlContexts.first?.url
+//                    else { return }
+//                UrlRouteManager.open(url: url)
+//
+//            case false:
+//                ShowScreenManager.showSinginScreen(window: window)
+//            }
+//        }
+        ShowScreenManager.showMainScreen(window: window)
+    }
+```
