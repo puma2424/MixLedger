@@ -133,7 +133,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.heightAnchor.constraint(equalToConstant: 400),
+            hostingController.view.heightAnchor.constraint(equalToConstant: 400)
         ])
         return hostingController.view
     }
@@ -187,14 +187,13 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
             hostingController.view.topAnchor.constraint(equalTo: segmentedView.bottomAnchor, constant: 5),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
+            hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         return hostingController.view
     }
 
     func dataToChartArray() -> [TransactionForChart] {
-        var originalDataArray = SaveData.getAccountArrayForCharts()
+        let originalDataArray = SaveData.getAccountArrayForCharts()
         var forLineMarkData: [TransactionForChart] = []
 
         let dateFont = DateFormatter()
@@ -207,7 +206,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         var components = calendar.dateComponents([.year], from: currentDate)
 
         for originalData in originalDataArray {
-            if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr && originalData.year == dateYearString {
+            if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr &&
+                originalData.year == dateYearString {
                 // 获取当前年份和月份
                 components = calendar.dateComponents([.year, .month], from: originalData.date)
 
@@ -218,8 +218,10 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
                 // 创建日期对象
                 if let firstDayOfMonth = calendar.date(from: firstDayComponents) {
-                    if let index = forLineMarkData.firstIndex(where: { $0.date == firstDayOfMonth && $0.subType == originalData.subType.name }) {
-                        print("找到了，位置是 \(index)")
+                    if let index = forLineMarkData.firstIndex(where: {
+                        $0.date == firstDayOfMonth &&
+                        $0.subType == originalData.subType.name
+                    }) {
                         forLineMarkData[index].amount += abs(originalData.amount)
                     } else {
                         // 创建 TransactionForChart 对象，amount 设置为 0
