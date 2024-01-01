@@ -245,11 +245,11 @@ class AddNewItemViewController: UIViewController {
         table.backgroundColor = .clear
         table.delegate = self
         table.dataSource = self
-        table.register(ANIMoneyTableViewCell.self, forCellReuseIdentifier: "moneyCell")
-        table.register(ANITypeTableViewCell.self, forCellReuseIdentifier: "typeCell")
+        table.register(AddNewItemModelTableViewCell.self, forCellReuseIdentifier: "moneyCell")
+        table.register(AddNewItemModelTableViewCell.self, forCellReuseIdentifier: "typeCell")
         table.register(ANIInvoiceTableViewCell.self, forCellReuseIdentifier: "invoiceCell")
         table.register(ANIMemberTableViewCell.self, forCellReuseIdentifier: "memberCell")
-        table.register(ANISelectDateTableViewCell.self, forCellReuseIdentifier: "dateCell")
+        table.register(AddNewItemModelTableViewCell.self, forCellReuseIdentifier: "dateCell")
     }
 
     func setLayout() {
@@ -263,21 +263,18 @@ class AddNewItemViewController: UIViewController {
             mark.top.equalTo(view.safeAreaLayoutGuide).offset(12)
             mark.leading.equalTo(view.safeAreaLayoutGuide).offset(12)
         }
-
         lineView.snp.makeConstraints { mark in
             mark.height.equalTo(1)
             mark.width.equalTo(view.bounds.size.width * 0.9)
             mark.top.equalTo(closeButton.snp.bottom).offset(12)
             mark.centerX.equalTo(view)
         }
-
         checkButton.snp.makeConstraints { mark in
             mark.width.equalTo(view.bounds.size.width * 0.8)
             mark.height.equalTo(50)
             mark.centerX.equalTo(view)
             mark.bottom.equalTo(view.safeAreaLayoutGuide).offset(-12)
         }
-
         table.snp.makeConstraints { mark in
             mark.top.equalTo(lineView.snp.bottom)
             mark.leading.equalTo(view)
@@ -297,8 +294,9 @@ class AddNewItemViewController: UIViewController {
     
     func moneyCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
-        cell.selectionStyle = .none
-        guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
+        guard let moneyCell = cell as? AddNewItemModelTableViewCell else { return cell }
+        moneyCell.setupHiden(inputTextFieldHidden: false)
+        moneyCell.inputTextField.placeholder = "請輸入金額"
         moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
 
         let amountString = String(format: "%.2f", amount ?? 0.0)
@@ -310,15 +308,16 @@ class AddNewItemViewController: UIViewController {
     
     func typeCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
-        cell.selectionStyle = .none
-        guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
+        guard let typeCell = cell as? AddNewItemModelTableViewCell else { return cell }
+        typeCell.setupHiden(titleLabelHidden: false)
+        typeCell.titleLabel.text = "請選擇類別"
+        typeCell.iconImageView.image = UIImage(named: AllIcons.foodRice.rawValue)
         return typeCell
     }
     
     func invoiceCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 掃描發票
         let cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
-        cell.selectionStyle = .none
         guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
         invoiceCell.invoiceLabel.text = "" 
         var text = ""
@@ -348,8 +347,9 @@ class AddNewItemViewController: UIViewController {
     
     func dateCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
-        cell.selectionStyle = .none
-        guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
+        guard let dateCell = cell as? AddNewItemModelTableViewCell else { return cell }
+        dateCell.setupHiden(datePickerHidden: false)
+        dateCell.iconImageView.image = AllIcons.date.icon
         dateCell.datePicker.date = selectDate
         dateCell.datePicker.addTarget(self, action: #selector(datePickerDidChange(_:)), for: .valueChanged)
         return dateCell
@@ -397,6 +397,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
                                   title: "分款",
                                   usersMoney: memberShareMoney)
             }
+        cell.selectionStyle = .none
         return cell
      
     }
@@ -422,7 +423,7 @@ extension AddNewItemViewController: UITableViewDelegate, UITableViewDataSource {
             subTypeVC.selectedSubType = { iconName, title in
                 self.type = TransactionType(iconName: iconName, name: title)
                 if subTypeVC.selectedIndex != nil {
-                    let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? ANITypeTableViewCell
+                    let cell = self.table.cellForRow(at: IndexPath(row: 1, section: 0)) as? AddNewItemModelTableViewCell
                     cell?.iconImageView.image = UIImage(named: iconName)
                     cell?.titleLabel.text = title
                 }
