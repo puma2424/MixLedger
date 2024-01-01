@@ -33,18 +33,6 @@ class BillStatusTableViewCell: UITableViewCell {
         backgroundColor = .g3()
     }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        setupLayout()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         // 在 tableView 的父视图中设置阴影
