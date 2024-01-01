@@ -14,27 +14,12 @@ class ANIMemberTableViewCell: UITableViewCell {
         setupTable()
         setupLayout()
         backgroundColor = .g3()
-//        memberInfo()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-//    var uses: [UsersInfoResponse] = []
-
     var usersMoney: [String: Double]? {
         didSet {
             tableView.reloadData()
@@ -67,7 +52,6 @@ class ANIMemberTableViewCell: UITableViewCell {
         showTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(12)
             make.leading.equalTo(self).offset(12)
-//            make.centerY.equalTo(self)
         }
 
         let tableHeight = (saveData.accountData?.shareUsersID?.count ?? 0) * 45
