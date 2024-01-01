@@ -77,6 +77,7 @@
 		9AB3DC6E2B0905A3003E70D4 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC6D2B0905A3003E70D4 /* FirebaseStorageCombine-Community */; };
 		9ACA6EF12B08513900201A44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */; };
 		9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */; };
+		9AE05AF82B42BF870096AB86 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE05AF72B42BF870096AB86 /* Array+Extension.swift */; };
 		9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */; };
 		9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */; };
 		9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */; };
@@ -180,6 +181,7 @@
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		9AE05AF72B42BF870096AB86 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusSmallView.swift; sourceTree = "<group>"; };
 		9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex-image.swift"; sourceTree = "<group>"; };
 		9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 				9AECC9BC2B1DECC70013A30A /* Color+extension.swift */,
 				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
 				9AF11A6C2B355F8B000E9A45 /* UIViewController+EXT.swift */,
+				9AE05AF72B42BF870096AB86 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -883,6 +886,7 @@
 				9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */,
 				9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
+				9AE05AF82B42BF870096AB86 /* Array+Extension.swift in Sources */,
 				9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
 				9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */,

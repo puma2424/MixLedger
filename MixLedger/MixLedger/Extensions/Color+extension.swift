@@ -11,36 +11,6 @@ import UIKit
 
 // 顏色深 -> 淺：1 -> ...
 
-extension Array where Self.Element == Color {
-    static func getAllColors() -> [Color] {
-        return [
-            Color.red1,
-            Color.red2,
-            
-            Color.yellow1,
-            Color.yellow2,
-
-            Color.mint1,
-            Color.mint2,
-            
-            Color.purple1,
-            Color.purple2,
-            
-            Color.orange1,
-            Color.orange2,
-            
-            Color.pink1,
-            Color.pink2,
-            
-            Color.gray1,
-            
-            Color.blue1,
-            
-            Color.brightGreen1,
-            Color.brightGreen3
-        ]
-    }
-}
 extension Color {
     static let g1 = Color(red: 17 / 255, green: 54 / 255, blue: 29 / 255)
     static let g2 = Color(red: 178 / 255, green: 206 / 255, blue: 197 / 255)
