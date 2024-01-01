@@ -26,28 +26,7 @@ class BillTableViewCell: UITableViewCell {
         setView()
         backgroundColor = .g3()
     }
-
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        // 在 tableView 的父视图中设置阴影
-//        superview?.layer.shadowColor = UIColor.g2().cgColor
-//        superview?.layer.shadowOffset = CGSize(width: 0, height: 5)
-//        superview?.layer.shadowRadius = 4
-//        superview?.layer.shadowOpacity = 1.0
-//        superview?.layer.masksToBounds = false
-//    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
     let sortImageView = UIImageView()
     let titleLabel = UILabel()
     let titleNoteLabel = UILabel()
