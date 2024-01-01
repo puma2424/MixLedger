@@ -296,7 +296,7 @@ class AddNewItemViewController: UIViewController {
     }
     
     func moneyCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell", for: indexPath)
         cell.selectionStyle = .none
         guard let moneyCell = cell as? ANIMoneyTableViewCell else { return cell }
         moneyCell.iconImageView.image = UIImage(named: AllIcons.moneyAndCoin.rawValue)
@@ -309,7 +309,7 @@ class AddNewItemViewController: UIViewController {
     }
     
     func typeCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath)
         cell.selectionStyle = .none
         guard let typeCell = cell as? ANITypeTableViewCell else { return cell }
         return typeCell
@@ -317,7 +317,7 @@ class AddNewItemViewController: UIViewController {
     
     func invoiceCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 掃描發票
-        var cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "invoiceCell", for: indexPath)
         cell.selectionStyle = .none
         guard let invoiceCell = cell as? ANIInvoiceTableViewCell else { return cell }
         invoiceCell.invoiceLabel.text = "" 
@@ -347,7 +347,7 @@ class AddNewItemViewController: UIViewController {
     }
     
     func dateCell(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
         cell.selectionStyle = .none
         guard let dateCell = cell as? ANISelectDateTableViewCell else { return cell }
         dateCell.datePicker.date = selectDate
@@ -359,7 +359,7 @@ class AddNewItemViewController: UIViewController {
                     cellForRowAt indexPath: IndexPath,
                     title: String,
                     usersMoney: [String: Double]?) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "memberCell", for: indexPath)
         cell.selectionStyle = .none
         guard let memberShareCell = cell as? ANIMemberTableViewCell else { return cell }
         memberShareCell.showTitleLabel.text = title

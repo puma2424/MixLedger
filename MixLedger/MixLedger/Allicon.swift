@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//model
+// model
 enum AllIcons: String, CaseIterable {
     case add
     case add2
