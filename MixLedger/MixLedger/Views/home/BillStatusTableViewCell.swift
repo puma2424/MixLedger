@@ -7,7 +7,7 @@
 
 import SnapKit
 import UIKit
-protocol BillStatusTableViewCellDelegate {
+protocol BillStatusTableViewCellDelegate: AnyObject {
     func changeMonth(cell: BillStatusTableViewCell, date: Date)
 }
 
