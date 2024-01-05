@@ -43,8 +43,7 @@ class DetailedBillViewController: UIViewController {
         guard let data = data else { return }
 
         if let payUser = data.payUser,
-           let shareUser = data.shareUser
-        {
+           let shareUser = data.shareUser {
             for id in payUser.keys where payUser[id] ?? 0.0 > 0.0 {
                 idOfPayUser.append(id)
             }
@@ -79,7 +78,6 @@ extension DetailedBillViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.selectionStyle = .none
         guard let detailCell = cell as? DetailedBillTableViewCell else { return cell }
-        // Configure cells based on indexPath.row
         guard let data = data else { return cell }
 
         switch indexPath.row {

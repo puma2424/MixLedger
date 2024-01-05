@@ -264,7 +264,8 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
         return AllIcons.allCases.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, 
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
 
         guard let iconItem = item as? ANAIconCollectionViewCell else { return item }
@@ -278,7 +279,10 @@ extension AddNewAccountViewController: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.cellForItem(at: indexPath) as? ANAIconCollectionViewCell else { return }
         // 取消先前選中的 cell 的勾勾
         if let selectedIndexPath = selectedIndexPath {
-            guard let previousSelectedCell = collectionView.cellForItem(at: selectedIndexPath) as? ANAIconCollectionViewCell else { return }
+            guard let previousCell = collectionView.cellForItem(at: selectedIndexPath),
+                  let previousSelectedCell = previousCell as? ANAIconCollectionViewCell else {
+                return
+            }
             previousSelectedCell.colorView.backgroundColor = .clear
             previousSelectedCell.colorView.layer.borderWidth = 0
         }

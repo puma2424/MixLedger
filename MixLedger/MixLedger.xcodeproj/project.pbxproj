@@ -77,7 +77,7 @@
 		9AB3DC6E2B0905A3003E70D4 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 9AB3DC6D2B0905A3003E70D4 /* FirebaseStorageCombine-Community */; };
 		9ACA6EF12B08513900201A44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */; };
 		9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */; };
-		9ACA6F002B08ADF800201A44 /* ANISelectDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */; };
+		9AE05AF82B42BF870096AB86 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE05AF72B42BF870096AB86 /* Array+Extension.swift */; };
 		9AEB5F6C2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */; };
 		9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */; };
 		9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */; };
@@ -90,8 +90,6 @@
 		9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F842B073E8200DF5DFF /* AccountTableViewCell.swift */; };
 		9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F862B07420200DF5DFF /* FakeData.swift */; };
 		9AEB5F892B075E1800DF5DFF /* AddNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */; };
-		9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */; };
-		9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */; };
 		9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */; };
 		9AEB5F922B07BCA100DF5DFF /* ANIMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */; };
 		9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AECC9B82B1DBD740013A30A /* SignInViewController.swift */; };
@@ -183,7 +181,7 @@
 		9AB2CA8F2B0C911200AE677C /* ANAIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANAIconCollectionViewCell.swift; sourceTree = "<group>"; };
 		9ACA6EF02B08513900201A44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9ACA6EFD2B08AB3300201A44 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANISelectDateTableViewCell.swift; sourceTree = "<group>"; };
+		9AE05AF72B42BF870096AB86 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		9AEB5F6B2B05C4E800DF5DFF /* SharedBillStatusSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedBillStatusSmallView.swift; sourceTree = "<group>"; };
 		9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex-image.swift"; sourceTree = "<group>"; };
 		9AEB5F6F2B06041400DF5DFF /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
@@ -196,8 +194,6 @@
 		9AEB5F842B073E8200DF5DFF /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F862B07420200DF5DFF /* FakeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeData.swift; sourceTree = "<group>"; };
 		9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemViewController.swift; sourceTree = "<group>"; };
-		9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMoneyTableViewCell.swift; sourceTree = "<group>"; };
-		9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANITypeTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemModelTableViewCell.swift; sourceTree = "<group>"; };
 		9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANIMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AECC9B72B1DBBFE0013A30A /* MixLedger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MixLedger.entitlements; sourceTree = "<group>"; };
@@ -296,10 +292,10 @@
 		9A0A33F22B17671700944AE3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9AEB5F7F2B0731D500DF5DFF /* home */,
+				9AEB5F7F2B0731D500DF5DFF /* Home */,
 				9A524CD52B0DCE5800B232D4 /* AllAccount */,
 				9A50ADC12B0EECB50099351D /* ShareAccount */,
-				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
+				9AEB5F8A2B07630000DF5DFF /* AddNewItem */,
 				9A50ADC02B0EEC900099351D /* MessagePage */,
 				9A0A33F12B1766EE00944AE3 /* Charts */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
@@ -462,17 +458,17 @@
 			path = SubType;
 			sourceTree = "<group>";
 		};
-		9A83B1982B0F887100C4C263 /* member */ = {
+		9A83B1982B0F887100C4C263 /* Member */ = {
 			isa = PBXGroup;
 			children = (
 				9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */,
 				9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */,
 				9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */,
 			);
-			path = member;
+			path = Member;
 			sourceTree = "<group>";
 		};
-		9AEB5F7F2B0731D500DF5DFF /* home */ = {
+		9AEB5F7F2B0731D500DF5DFF /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				9A792B342B272A89004D97A4 /* DetailedBill */,
@@ -484,23 +480,20 @@
 				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
 				9A590F912B1872AC00D4BCAA /* RepayView.swift */,
 			);
-			path = home;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		9AEB5F8A2B07630000DF5DFF /* addNewItem */ = {
+		9AEB5F8A2B07630000DF5DFF /* AddNewItem */ = {
 			isa = PBXGroup;
 			children = (
 				9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */,
 				9A80F5FD2B21CC2100D7F549 /* SubType */,
 				9A3042EF2B11D02400FFEEB0 /* ScanInvoice */,
-				9A83B1982B0F887100C4C263 /* member */,
-				9AEB5F8B2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift */,
-				9AEB5F8D2B07B0E800DF5DFF /* ANITypeTableViewCell.swift */,
-				9ACA6EFF2B08ADF800201A44 /* ANISelectDateTableViewCell.swift */,
+				9A83B1982B0F887100C4C263 /* Member */,
 				9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */,
 				9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */,
 			);
-			path = addNewItem;
+			path = AddNewItem;
 			sourceTree = "<group>";
 		};
 		9AF11A692B355D45000E9A45 /* Common */ = {
@@ -565,6 +558,7 @@
 				9AECC9BC2B1DECC70013A30A /* Color+extension.swift */,
 				9AEB5F6D2B05F0E600DF5DFF /* ex-image.swift */,
 				9AF11A6C2B355F8B000E9A45 /* UIViewController+EXT.swift */,
+				9AE05AF72B42BF870096AB86 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -883,7 +877,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ACA6F002B08ADF800201A44 /* ANISelectDateTableViewCell.swift in Sources */,
 				9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */,
 				9AEB5F7C2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift in Sources */,
 				9A50ADC72B0F51EA0099351D /* SelectMemberTableViewCell.swift in Sources */,
@@ -893,6 +886,7 @@
 				9AECC9BD2B1DECC70013A30A /* Color+extension.swift in Sources */,
 				9AECC9C32B1F08650013A30A /* ShowScreenManager.swift in Sources */,
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
+				9AE05AF82B42BF870096AB86 /* Array+Extension.swift in Sources */,
 				9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
 				9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */,
@@ -937,10 +931,8 @@
 				9AECC9B92B1DBD740013A30A /* SignInViewController.swift in Sources */,
 				9A3042F72B1477E600FFEEB0 /* ChartsViewController.swift in Sources */,
 				9A792B362B272AB5004D97A4 /* DetailedBillTableViewCell.swift in Sources */,
-				9AEB5F8E2B07B0E800DF5DFF /* ANITypeTableViewCell.swift in Sources */,
 				9AEB5F852B073E8200DF5DFF /* AccountTableViewCell.swift in Sources */,
 				9A2379892B037BE5001D6BAF /* MixLedger.xcdatamodeld in Sources */,
-				9AEB5F8C2B0763C300DF5DFF /* ANIMoneyTableViewCell.swift in Sources */,
 				9AEB5F832B07349400DF5DFF /* Allicon.swift in Sources */,
 				9A590F922B1872AC00D4BCAA /* RepayView.swift in Sources */,
 				9AECC9BB2B1DEB170013A30A /* SignupViewController.swift in Sources */,
@@ -1131,8 +1123,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
-				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相簿權限，將用於拍攝及掃描發票";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限，將用於掃描發票";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1168,8 +1160,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
-				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相簿權限，將用於拍攝及掃描發票";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限，將用於掃描發票";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
