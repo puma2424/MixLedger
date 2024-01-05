@@ -13,10 +13,7 @@ class AllAccountBookViewController: UIViewController {
         setNavigation()
         setTable()
         setLayout()
-        NotificationCenter.default.addObserver(self, 
-                                               selector: #selector(handleAccountNotification),
-                                               name: .myMessageNotification,
-                                               object: nil)
+        setupNotificationCenter()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +42,13 @@ class AllAccountBookViewController: UIViewController {
         table.dataSource = self
         table.backgroundColor = UIColor(named: "G3")
         table.register(AccountTableViewCell.self, forCellReuseIdentifier: "accountCell")
+    }
+    
+    func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleAccountNotification),
+                                               name: .myAccountNotification,
+                                               object: nil)
     }
 
     @objc func handleAccountNotification() {
@@ -142,8 +146,7 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
             }
         } else {
             if let id = savaData.myInfo?.shareAccount[indexPath.row],
-               let data = savaData.myShareAccount[id]
-            {
+               let data = savaData.myShareAccount[id] {
                 accountCell.accountNameLable.text = data.name
                 accountCell.accountIconImageView.image = UIImage(named: data.iconName)
             }
@@ -163,7 +166,8 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 取消先前選中的 cell 的勾勾
         if let selectedIndexPath = selectedIndexPath {
-            guard let previousSelectedCell = tableView.cellForRow(at: selectedIndexPath) as? AccountTableViewCell else { return }
+            guard let previousCell = tableView.cellForRow(at: selectedIndexPath),
+            let previousSelectedCell = previousCell as? AccountTableViewCell else { return }
             previousSelectedCell.checkmarkImageView.isHidden = true
         }
 
@@ -175,47 +179,27 @@ extension AllAccountBookViewController: UITableViewDelegate, UITableViewDataSour
         if indexPath.section == 0 {
             if let id = savaData.myInfo?.ownAccount {
                 accountInfo?(id)
-                print(savaData.myShareAccount[id])
             }
         } else {
             if let id = savaData.myInfo?.shareAccount[indexPath.row] {
                 accountInfo?(id)
-                print(savaData.myShareAccount[id])
             }
         }
         selectedCell.checkmarkImageView.isHidden = false
     }
-
-    // 實現此方法以定義向右滑時顯示的編輯動作
-    func tableView(_: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, 
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
-//            let editAction = UITableViewRowAction(style: .normal, title: "編輯") { _, _ in
-//                // 在這裡處理編輯操作
-//                self.editItemAt(indexPath: indexPath)
-//            }
-
-            let deleteAction = UITableViewRowAction(style: .normal, title: "刪除") { _, _ in
-                // 在這裡處理編輯操作
-                self.deleteMessage(indexPath: indexPath)
+            let deleteAction = UIContextualAction(style: .destructive, title: "刪除") { [weak self] (_, _, completionHandler) in
+                self?.deleteMessage(indexPath: indexPath)
+                completionHandler(true)
             }
             deleteAction.backgroundColor = .red
-            // 可以新增更多的編輯動作
-
-//            return [editAction, deleteAction]
-            return [deleteAction]
+            
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            return configuration
         }
         return nil
-    }
-
-    // 實作編輯操作的方法
-    func editItemAt(indexPath _: IndexPath) {
-        // 在這裡處理編輯操作
-        // 例如，彈出一個編輯視窗或導航到編輯畫面
-        print("編輯 ")
-//        if let id = savaData.myInfo?.shareAccount[indexPath.row],
-//           let data = savaData.myShareAccount[id] {
-//
-//        }
     }
 
     func deleteMessage(indexPath: IndexPath) {

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Vision
+import AVFoundation
 
 struct ProductInfo {
     var name: String
@@ -23,7 +24,7 @@ class ScanInvoiceManager {
     
     let imagePicker = UIImagePickerController()
     
-    var viewController: UIViewController
+    weak var viewController: UIViewController?
     
     var invoiceString: [String] = []
     
@@ -192,6 +193,37 @@ class ScanInvoiceManager {
             print(invoiceNumber)
         }
     }
+    func checkCamera(canUseCamera: @escaping () -> Void) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { success in
+                guard success == true else { return }
+                canUseCamera()
+            }
+        case .denied, .restricted:
+            let alertController = UIAlertController(title: "相機啟用失敗", message: "相機服務未啟用", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "設定", 
+                                               style: .default) { (_) in
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                        print("Settings opened: \(success)") // Prints true
+                    })
+                }
+            }
+            alertController.addAction(settingsAction)
+            let cancelAction = UIAlertAction(title: "確認", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            self.viewController?.present(alertController, animated: true, completion: nil)
+            return
+        case .authorized:
+            print("Authorized, proceed")
+            canUseCamera()
+        }
+    }
     
     private func takePhotoAgain() {
         let alertController = UIAlertController(title: "偵測發票失敗", message: "請重新載入發票照片", preferredStyle: .actionSheet)
@@ -200,12 +232,14 @@ class ScanInvoiceManager {
         })
         
         alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
-            self.showImagePicker(sourceType: .camera)
+            self.checkCamera {
+                self.showImagePicker(sourceType: .camera)
+            }
         })
         
         alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
         
-        viewController.present(alertController, animated: true)
+        viewController?.present(alertController, animated: true)
     }
     
     func selectPhotoButtonTapped() {
@@ -217,15 +251,18 @@ class ScanInvoiceManager {
         })
         
         alertController.addAction(UIAlertAction(title: "拍照", style: .default) { _ in
-            self.showImagePicker(sourceType: .camera)
+            self.checkCamera {
+                self.showImagePicker(sourceType: .camera)
+            }
         })
         
         alertController.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         
-        viewController.present(alertController, animated: true)
+        viewController?.present(alertController, animated: true)
     }
     
     private func showImagePicker( sourceType: UIImagePickerController.SourceType) {
+        guard let viewController = viewController else { return }
         if sourceType == .photoLibrary {
             imagePicker.sourceType = sourceType
             viewController.present(imagePicker, animated: true, completion: nil)

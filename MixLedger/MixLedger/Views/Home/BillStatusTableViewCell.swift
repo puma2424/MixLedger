@@ -7,7 +7,7 @@
 
 import SnapKit
 import UIKit
-protocol BillStatusTableViewCellDelegate {
+protocol BillStatusTableViewCellDelegate: AnyObject {
     func changeMonth(cell: BillStatusTableViewCell, date: Date)
 }
 
@@ -31,18 +31,6 @@ class BillStatusTableViewCell: UITableViewCell {
         setButtonTarge()
         adjustDate(by: 0)
         backgroundColor = .g3()
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        setupLayout()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     override func layoutSubviews() {

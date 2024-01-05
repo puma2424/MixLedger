@@ -61,7 +61,10 @@ class FirebaseManager {
 
     // MARK: - 確認還款 -
     
-    func confirmPayment(messageInfo: Message, completion: @escaping (Result<String, Error>) -> Void) {
+    func confirmPayment(
+        messageInfo: Message,
+        completion: @escaping (Result<String, Error>) -> Void
+    ) {
         guard let accountID = saveData.myInfo?.ownAccount else {
             return
         }
@@ -98,7 +101,7 @@ class FirebaseManager {
                                                           from: messageInfo.fromAccoundName,
                                                           note: "",
                                                           subType: TransactionType(iconName: AllIcons.cashInHand.rawValue, name: "收款"))
-
+// combine
                 // value：同時間最多有1個thread可以存取某資源
                 var semaphore = DispatchSemaphore(value: 1)
                 let queue = DispatchQueue(label: "myqueue")
