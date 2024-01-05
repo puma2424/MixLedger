@@ -13,6 +13,7 @@
 		9A08ED4A2B2EF3430021BEB5 /* SelectIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */; };
 		9A08ED4C2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A08ED4B2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift */; };
 		9A1F1F2A2B281A9A00D9BAB4 /* PieAndListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */; };
+		9A22798B2B47FD4D0001469A /* IconType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A22798A2B47FD4D0001469A /* IconType.swift */; };
 		9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23797E2B037BE5001D6BAF /* AppDelegate.swift */; };
 		9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379802B037BE5001D6BAF /* SceneDelegate.swift */; };
 		9A2379832B037BE5001D6BAF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2379822B037BE5001D6BAF /* HomeViewController.swift */; };
@@ -43,7 +44,6 @@
 		9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */; };
 		9A80F6012B22E4DE00D7F549 /* SelectSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */; };
 		9A80F6032B22E68900D7F549 /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */; };
-		9A80F6052B22F2F300D7F549 /* IconType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A80F6042B22F2F300D7F549 /* IconType.swift */; };
 		9A83B19A2B0F889700C4C263 /* ShowMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */; };
 		9AAAAEAD2B39720200C821F8 /* UrlRouteManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAAAEA82B39704400C821F8 /* UrlRouteManagerTests.swift */; };
 		9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */; };
@@ -140,6 +140,7 @@
 		9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIconManager.swift; sourceTree = "<group>"; };
 		9A08ED4B2B2EFA6B0021BEB5 /* SelectUserIconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUserIconViewController.swift; sourceTree = "<group>"; };
 		9A1F1F292B281A9A00D9BAB4 /* PieAndListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieAndListView.swift; sourceTree = "<group>"; };
+		9A22798A2B47FD4D0001469A /* IconType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconType.swift; sourceTree = "<group>"; };
 		9A23797B2B037BE5001D6BAF /* MixLedger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MixLedger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A23797E2B037BE5001D6BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2379802B037BE5001D6BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,7 +175,6 @@
 		9A792B372B2731AA004D97A4 /* DetailedBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBillViewController.swift; sourceTree = "<group>"; };
 		9A80F6002B22E4DE00D7F549 /* SelectSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSubTypeViewController.swift; sourceTree = "<group>"; };
 		9A80F6022B22E68900D7F549 /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionViewCell.swift; sourceTree = "<group>"; };
-		9A80F6042B22F2F300D7F549 /* IconType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconType.swift; sourceTree = "<group>"; };
 		9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMemberTableViewCell.swift; sourceTree = "<group>"; };
 		9AAAAEA82B39704400C821F8 /* UrlRouteManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRouteManagerTests.swift; sourceTree = "<group>"; };
 		9AB2CA8D2B0C54FD00AE677C /* AddNewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAccountViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +319,14 @@
 				9A08ED492B2EF3430021BEB5 /* SelectIconManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		9A2279892B47FD340001469A /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				9A22798A2B47FD4D0001469A /* IconType.swift */,
+			);
+			path = Icon;
 			sourceTree = "<group>";
 		};
 		9A2379722B037BE5001D6BAF = {
@@ -512,8 +520,8 @@
 		9AF11A6A2B355DCA000E9A45 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9A2279892B47FD340001469A /* Icon */,
 				9AF11A722B35934B000E9A45 /* MoneyType */,
-				9AF11A712B3561BD000E9A45 /* Icon */,
 				9AF11A6B2B355DF0000E9A45 /* Firebase */,
 			);
 			path = Models;
@@ -533,14 +541,6 @@
 				9AF11A6F2B356043000E9A45 /* qrcodeGenerator.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		9AF11A712B3561BD000E9A45 /* Icon */ = {
-			isa = PBXGroup;
-			children = (
-				9A80F6042B22F2F300D7F549 /* IconType.swift */,
-			);
-			path = Icon;
 			sourceTree = "<group>";
 		};
 		9AF11A722B35934B000E9A45 /* MoneyType */ = {
@@ -888,6 +888,7 @@
 				9AEB5F872B07420200DF5DFF /* FakeData.swift in Sources */,
 				9AE05AF82B42BF870096AB86 /* Array+Extension.swift in Sources */,
 				9AF8A8222B1DAA33004DA5F6 /* ProfileViewController.swift in Sources */,
+				9A22798B2B47FD4D0001469A /* IconType.swift in Sources */,
 				9A23797F2B037BE5001D6BAF /* AppDelegate.swift in Sources */,
 				9AEB5F902B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift in Sources */,
 				9AB2CA8E2B0C54FD00AE677C /* AddNewAccountViewController.swift in Sources */,
@@ -911,7 +912,6 @@
 				9ACA6EFE2B08AB3300201A44 /* FirebaseManager.swift in Sources */,
 				9A590F952B1AFE5500D4BCAA /* JGProgressHUDWrapper.swift in Sources */,
 				9A792B382B2731AA004D97A4 /* DetailedBillViewController.swift in Sources */,
-				9A80F6052B22F2F300D7F549 /* IconType.swift in Sources */,
 				9AEB5F6E2B05F0E600DF5DFF /* ex-image.swift in Sources */,
 				9AEB5F712B06041400DF5DFF /* BillTableViewCell.swift in Sources */,
 				9A2379812B037BE5001D6BAF /* SceneDelegate.swift in Sources */,
