@@ -292,10 +292,10 @@
 		9A0A33F22B17671700944AE3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9AEB5F7F2B0731D500DF5DFF /* home */,
+				9AEB5F7F2B0731D500DF5DFF /* Home */,
 				9A524CD52B0DCE5800B232D4 /* AllAccount */,
 				9A50ADC12B0EECB50099351D /* ShareAccount */,
-				9AEB5F8A2B07630000DF5DFF /* addNewItem */,
+				9AEB5F8A2B07630000DF5DFF /* AddNewItem */,
 				9A50ADC02B0EEC900099351D /* MessagePage */,
 				9A0A33F12B1766EE00944AE3 /* Charts */,
 				9AF8A8202B1DA9CE004DA5F6 /* Profile */,
@@ -458,17 +458,17 @@
 			path = SubType;
 			sourceTree = "<group>";
 		};
-		9A83B1982B0F887100C4C263 /* member */ = {
+		9A83B1982B0F887100C4C263 /* Member */ = {
 			isa = PBXGroup;
 			children = (
 				9A83B1992B0F889700C4C263 /* ShowMemberTableViewCell.swift */,
 				9A50ADC42B0F4BD50099351D /* SelectMemberViewController.swift */,
 				9A50ADC62B0F51EA0099351D /* SelectMemberTableViewCell.swift */,
 			);
-			path = member;
+			path = Member;
 			sourceTree = "<group>";
 		};
-		9AEB5F7F2B0731D500DF5DFF /* home */ = {
+		9AEB5F7F2B0731D500DF5DFF /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				9A792B342B272A89004D97A4 /* DetailedBill */,
@@ -480,20 +480,20 @@
 				9AEB5F7B2B0635EA00DF5DFF /* SBSVUsersTableViewCell.swift */,
 				9A590F912B1872AC00D4BCAA /* RepayView.swift */,
 			);
-			path = home;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		9AEB5F8A2B07630000DF5DFF /* addNewItem */ = {
+		9AEB5F8A2B07630000DF5DFF /* AddNewItem */ = {
 			isa = PBXGroup;
 			children = (
 				9AEB5F882B075E1800DF5DFF /* AddNewItemViewController.swift */,
 				9A80F5FD2B21CC2100D7F549 /* SubType */,
 				9A3042EF2B11D02400FFEEB0 /* ScanInvoice */,
-				9A83B1982B0F887100C4C263 /* member */,
+				9A83B1982B0F887100C4C263 /* Member */,
 				9AEB5F912B07BCA100DF5DFF /* ANIMemberTableViewCell.swift */,
 				9AEB5F8F2B07B8E100DF5DFF /* AddNewItemModelTableViewCell.swift */,
 			);
-			path = addNewItem;
+			path = AddNewItem;
 			sourceTree = "<group>";
 		};
 		9AF11A692B355D45000E9A45 /* Common */ = {
@@ -1123,8 +1123,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
-				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相簿權限，將用於拍攝及掃描發票";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限，將用於掃描發票";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1160,8 +1160,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MixLedger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MixLedger;
-				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相機權限";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App想取用相簿權限，將用於拍攝及掃描發票";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App想取用相簿權限，將用於掃描發票";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
