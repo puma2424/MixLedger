@@ -250,9 +250,14 @@ class AddNewItemViewController: UIViewController {
             whyCannotSend()
         }
     }
+    
+    @objc func closeButtonActive() {
+        dismiss(animated: true)
+    }
 
     func setCheckButton() {
         checkButton.addTarget(self, action: #selector(checkButtonActive), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(closeButtonActive), for: .touchUpInside)
     }
 
     func setTable() {

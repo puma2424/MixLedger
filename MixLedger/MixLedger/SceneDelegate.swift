@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     var sceneWindow: UIWindow?
-//    static let shared = UIApplication.shared.delegate as! AppDelegate
+
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -30,24 +30,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.backgroundColor = UIColor(named: "G3")
         window.makeKeyAndVisible()
         sceneWindow = window
-//        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
-//            switch result {
-//            case true:
-//                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
-//                    ShowScreenManager.showSinginScreen(window: window)
-//                    return
-//                }
-//                SaveData.shared.myID = userID
-//                ShowScreenManager.showMainScreen(window: window)
-//                guard let url = connectionOptions.urlContexts.first?.url
-//                    else { return }
-//                UrlRouteManager.open(url: url)
-//
-//            case false:
-//                ShowScreenManager.showSinginScreen(window: window)
-//            }
-//        }
-        ShowScreenManager.showMainScreen(window: window)
+        FirebaseAuthenticationManager.checkUserAuthenticationState { result in
+            switch result {
+            case true:
+                guard let userID = FirebaseAuthenticationManager.shared.currentUser?.uid else {
+                    ShowScreenManager.showSinginScreen(window: window)
+                    return
+                }
+                SaveData.shared.myID = userID
+                ShowScreenManager.showMainScreen(window: window)
+                guard let url = connectionOptions.urlContexts.first?.url
+                    else { return }
+                UrlRouteManager.open(url: url)
+
+            case false:
+                ShowScreenManager.showSinginScreen(window: window)
+            }
+        }
+//        ShowScreenManager.showMainScreen(window: window)
     }
 
     // 当应用程序通过 URL 被打开时调用

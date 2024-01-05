@@ -77,15 +77,12 @@ class UrlRouteManager {
         let accountID = urlPathComponents[1]
 
         if let myAccoumt = SaveData.shared.myInfo?.shareAccount.filter({ $0 == accountID }),
-           myAccoumt.count == 0
-        {
+           myAccoumt.count == 0 {
             if let window = SceneDelegate.shared.window,
-               let rootViewController = window.rootViewController
-            {
+               let rootViewController = window.rootViewController {
                 ShowCustomAlertManager.customAlertYesAndNo(title: "邀請你加入共享帳本",
                                                            message: "請問要加入共享帳本嗎？",
-                                                           vc: rootViewController)
-                {
+                                                           vc: rootViewController) {
                     FirebaseManager.shared.postRespondToInvitation(respond: true, accountID: accountID, accountName: "", inviterID: "", inviterName: "") { result in
                         switch result {
                         case let .success(success):
