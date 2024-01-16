@@ -4,6 +4,7 @@ AppWorks School #22 iOS,Personal Project
 ## Summary
 
 為了滿足多人共同出遊或室友共享開支的需求，因此開發出 MixLedger ，這是一個可以與他人共享帳本並輕鬆結算金額的記帳 APP 。
+
 [TestFlight link](<https://testflight.apple.com/join/Qi1ggKpd>)
 
 ## Table of Contents
