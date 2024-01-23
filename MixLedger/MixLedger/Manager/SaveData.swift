@@ -31,6 +31,8 @@ struct ChartData: Identifiable {
 //manager
 class SaveData {
     static let shared = SaveData()
+    
+    private init() {}
 
     var accountData: TransactionsResponse?
     
@@ -48,8 +50,8 @@ class SaveData {
 
     var myShareAccount: [String: MyShareAccountInfo] = [:]
 
-    static func getAccountArrayForCharts() -> [ChartData] {
-        let transactions = self.shared.getTransactionArray()
+    func getAccountArrayForCharts() -> [ChartData] {
+        let transactions = getTransactionArray()
         
         var transactionsArray: [ChartData] = transactions.compactMap { transaction in
             guard let transactionType = TransactionMainType(text: transaction.transactionType.name),

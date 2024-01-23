@@ -29,7 +29,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        originalData = SaveData.shared.getAccountArrayForCharts()
         checkArrayhaveData(index: currentIndex)
     }
 
@@ -52,6 +52,8 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     var currentChartView: UIView?
 
     let segmentedView = SegmentedControlModleView()
+    
+    var originalData: [ChartData] = []
 
     var pieChart = PieAndListView(data: .constant([30, 50, 20]),
                                   labels: .constant(["Label1", "Label2", "Label3"]), iconName: .constant(["", "", ""]),
@@ -73,7 +75,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         currentChartView?.removeFromSuperview()
         currentChartView = nil
 
-        if SaveData.getAccountArrayForCharts().isEmpty {
+        if originalData.isEmpty {
             currentChartView = setupLabelView()
         } else {
             if index == 0 {
@@ -139,8 +141,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 
     func setupPie() -> UIView {
-        let originaldatas = SaveData.getAccountArrayForCharts()
-        let datas = originaldatas.filter { data in
+        let datas = originalData.filter { data in
             let calendar = Calendar.current
             let currentDateMon = calendar.dateComponents([.month], from: currentDate)
             let dataDateMon = calendar.dateComponents([.month], from: data.date)
@@ -193,7 +194,6 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
     }
 
     func dataToChartArray() -> [TransactionForChart] {
-        let originalDataArray = SaveData.getAccountArrayForCharts()
         var forLineMarkData: [TransactionForChart] = []
 
         let dateFont = DateFormatter()
@@ -205,7 +205,7 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
 
         var components = calendar.dateComponents([.year], from: currentDate)
 
-        for originalData in originalDataArray {
+        for originalData in originalData {
             if TransactionMainType(text: originalData.transactionType.name) == currentMainTypr &&
                 originalData.year == dateYearString {
                 // 获取当前年份和月份
