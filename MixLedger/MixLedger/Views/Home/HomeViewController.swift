@@ -67,17 +67,16 @@ class HomeViewController: UIViewController {
     var income: Double = 0.0
     var transactionsDayKeyArr: [String] = []
     var transactionsDayDatasKeys: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationItem.title = ""
-        setupTable()
         getMyOwnAccount()
         setupShareBillView()
         setupLayout()
         setNavigation()
         setupButton()
-//        showMonBill()
     }
 
     override func viewWillAppear(_ result: Bool) {
@@ -92,7 +91,18 @@ class HomeViewController: UIViewController {
     var selectDate: Date = .init()
 
     var showView = UIView()
-    var billTable = UITableView()
+    lazy var billTable: UITableView = {
+        let tableView = UITableView(frame: view.bounds, style: .insetGrouped)
+        tableView.layer.cornerRadius = 10
+        tableView.backgroundColor = .brightGreen4()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
+        tableView.register(BillStatusTableViewCell.self, forCellReuseIdentifier: "billCell")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        
+        return tableView
+    }()
     let addButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "add"), for: .normal)
@@ -102,7 +112,8 @@ class HomeViewController: UIViewController {
     func getMyOwnAccount() {
         // find my info
         firebaseManager.getUsreInfo(userID: [savaData.myID]) { result in
-            switch result { case let .success(data):
+            switch result { 
+            case let .success(data):
                 if data.count != 0 {
                     self.currentAccountID = data[0].ownAccount
                     self.saveData.myInfo = data[0]
@@ -199,16 +210,6 @@ class HomeViewController: UIViewController {
     func removeRightBarButton() {
         // 移除右邊的按鈕
         navigationItem.rightBarButtonItem = nil
-    }
-
-    func setupTable() {
-        billTable = UITableView(frame: view.bounds, style: .insetGrouped)
-        billTable.layer.cornerRadius = 10
-        billTable.backgroundColor = .brightGreen4()
-        billTable.delegate = self
-        billTable.dataSource = self
-        billTable.register(BillTableViewCell.self, forCellReuseIdentifier: "billItemCell")
-        billTable.register(BillStatusTableViewCell.self, forCellReuseIdentifier: "billCell")
     }
 
     func checkNowAccount() {
@@ -391,7 +392,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         } else {
             if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[section - 1]] {
-//
                 print("-------datas of numberOfRowsInSelection ------")
                 print("\(section)" + "\(datas.keys)")
                 return datas.keys.count
@@ -406,9 +406,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         return number
     }
 
-    func tableView(tableView _: UITableView,
-                   heightForHeaderInSection section: Int) -> CGFloat
-    {
+    func tableView(_: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 00
         } else {
@@ -459,7 +458,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
             if let datas = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?[transactionsDayKeyArr[indexPath.section - 1]] {
                 print(showMonBill(date: selectDate))
-//                var transactionsDayDatasKeys: [String] = []
                 transactionsDayDatasKeys = []
                 for dataKey in datas.keys {
                     transactionsDayDatasKeys.append(dataKey)
@@ -479,7 +477,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
                 billCell.moneyLabel.text = "\(data.amount)"
-//
             }
             return billCell
         }
