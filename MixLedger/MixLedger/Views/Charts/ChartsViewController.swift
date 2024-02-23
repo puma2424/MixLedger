@@ -139,13 +139,14 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
         ])
         return hostingController.view
     }
+    
 
     func setupPie() -> UIView {
         let datas = originalData.filter { data in
             let calendar = Calendar.current
-            let currentDateMon = calendar.dateComponents([.month], from: currentDate)
-            let dataDateMon = calendar.dateComponents([.month], from: data.date)
-            return data.amount != 0 && currentDateMon == dataDateMon
+            let currentDate = calendar.dateComponents([.year, .month], from: currentDate)
+            let dataDate = calendar.dateComponents([.year, .month], from: data.date)
+            return data.amount != 0 && currentDate == dataDate
         }
         var dic: [String: Double] = [:]
         for data in datas {
@@ -210,7 +211,9 @@ class ChartsViewController: UIViewController, SegmentedControlModleViewDelegate 
                 originalData.year == dateYearString {
                 // 获取当前年份和月份
                 components = calendar.dateComponents([.year, .month], from: originalData.date)
-
+                print("-----components------")
+                print(components)
+                print("-----components------")
                 // 设置为每个月的第一天
                 var firstDayComponents = components
 //                firstDayComponents.month = month
