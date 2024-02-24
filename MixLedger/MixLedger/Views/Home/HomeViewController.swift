@@ -91,6 +91,7 @@ class HomeViewController: UIViewController {
     var selectDate: Date = .init()
 
     var showView = UIView()
+    
     lazy var billTable: UITableView = {
         let tableView = UITableView(frame: view.bounds, style: .insetGrouped)
         tableView.layer.cornerRadius = 10
@@ -103,6 +104,7 @@ class HomeViewController: UIViewController {
         
         return tableView
     }()
+    
     let addButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "add"), for: .normal)
@@ -404,15 +406,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard var number = saveData.accountData?.transactions?[showMonBill(date: selectDate)]?.keys.count else { return 1 }
         number += 1
         return number
-    }
-
-    func tableView(_: UITableView,
-                   heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 00
-        } else {
-            return 80
-        }
     }
 
     func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
